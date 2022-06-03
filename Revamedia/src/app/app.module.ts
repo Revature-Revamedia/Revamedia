@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,8 +14,8 @@ import { LoginComponent } from './Components/login/login.component';
 import { RegisterComponent } from './Components/register/register.component';
 import { ErrorPageComponent } from './Components/error-page/error-page.component';
 import { ProfileComponent } from './Components/profile/profile.component';
-import { ValidateEqualModule } from 'ng-validate-equal';
-import { CookieService } from 'ngx-cookie-service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { CommentService } from './Shared/services/user-comments-service/comment.service';
 import { GiphyService } from './Shared/services/giphy-service/giphy.service';
 import { AuthenticationService } from './Shared/services/auth-service/authentication.service';
@@ -45,10 +42,8 @@ import { AuthenticationService } from './Shared/services/auth-service/authentica
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
-    FormsModule,
-    ValidateEqualModule
   ],
-  providers: [AuthenticationService, CommentService, GiphyService, CookieService],
+  providers: [AuthenticationService, CommentService, GiphyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

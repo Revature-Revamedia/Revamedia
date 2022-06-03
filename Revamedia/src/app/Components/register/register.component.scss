@@ -1,4 +1,3 @@
-$lightRed: #FF4433;
 $orange: #FEAE49;
 $blue: #57BEE6;
 $grey: rgb(192,192,190);
@@ -54,17 +53,14 @@ $darkgrey: rgb(61,66,74);
         margin-bottom: .6rem;
         display: flex;
         flex-direction: row;
-        align-items:flex-start;
+        align-items: center;
         justify-content: space-between;
-        min-height: max-content;
         div{
           width: 47%;
           display: flex;
           flex-direction: column;
-
           label{
-            font-size: 1.3rem;
-            font-weight: bolder;
+            font-size: 1.1rem;
             color: $darkgrey;
           }
           input{
@@ -89,16 +85,8 @@ $darkgrey: rgb(61,66,74);
             &:hover{
               color: #eda144;
             }
-            &.error{
-              display: inline;
-              text-align: left;
-              color:$lightRed;
-            }
-
           }
         }
-
-
       }
       .submit{
         margin-bottom: .5rem;
@@ -119,10 +107,6 @@ $darkgrey: rgb(61,66,74);
           &:hover{
             background: #eda144;
             color: black;
-          }
-          &:disabled{
-            background: #e0d4c5;
-            pointer-events: none;
           }
         }
       }
