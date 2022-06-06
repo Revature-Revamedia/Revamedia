@@ -1,3 +1,8 @@
+/**
+ * @Author: Giorgi Amirajibi, ...
+ * @Contributor: Jarod Heng
+ */
+
 import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
