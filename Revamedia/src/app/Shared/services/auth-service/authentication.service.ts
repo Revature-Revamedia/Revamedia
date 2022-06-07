@@ -17,7 +17,7 @@ export class AuthenticationService {
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
 
   checkLoginStatus(): boolean {
-    var loginCookie = sessionStorage.getItem('LoggedIn');
+    var loginCookie = sessionStorage.getItem('loggedIn');
     if (loginCookie == "1") {
       return true;
     } else {
@@ -44,6 +44,7 @@ export class AuthenticationService {
       console.log(response);
       sessionStorage.setItem('userId', response.body.userId.toString());
       sessionStorage.setItem('username', response.body.username);
+      sessionStorage.setItem('loggedIn', "1");
       console.log(sessionStorage.getItem('username'));
 
       this.loggedIn.next(true);

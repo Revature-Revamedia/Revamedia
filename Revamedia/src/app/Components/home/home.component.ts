@@ -43,13 +43,17 @@ export class HomeComponent implements OnInit {
     this.userService.getCurrentUser().subscribe({
       next: response => {
         this.user = response;
+        console.log(response);
 
         let f: any;
         this.posts = [];
         for(f of response.following) {
           this.posts.push(f.followedId.postsOwned);
         }
+        console.log(this.posts);
         this.posts = this.posts.flat();
+        //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
+        console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
         //b.date.getTime() - a.date.getTime();
 
       },
@@ -170,6 +174,7 @@ export class HomeComponent implements OnInit {
         // console.log(commentForm.value);
         //this.getCurrentUserData();
         this.addComment = false;
+        this.userService.setCurrentUser(response.body);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -184,6 +189,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         //this.getCurrentUserData();
         this.closeModal('edit', 'comment-modal');
+        this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -197,6 +203,7 @@ export class HomeComponent implements OnInit {
         //console.log(response);
         //this.getCurrentUserData();
         this.closeModal('delete', 'comment-modal');
+        this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)

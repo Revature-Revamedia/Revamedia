@@ -42,6 +42,12 @@ public class RevamediaApplication {
                 UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
                 UserFollowsService userFollowsService = context.getBean(UserFollowsService.class);
 
+                UserPosts post1 = userPostsService.getPostById(1);
+
+                post1.setDateCreated(new Timestamp(System.currentTimeMillis()));
+                userPostsService.save(post1);
+
+
         }
 }
 
