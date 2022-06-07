@@ -50,7 +50,6 @@ public class UserController {
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
-//        user.setPassword(encoder.encode(dto.getPassword()));
         return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     }
     public void setEncoder(BCryptPasswordEncoder encoder) {
