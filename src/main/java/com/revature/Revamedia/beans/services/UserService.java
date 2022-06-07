@@ -50,4 +50,16 @@ public class UserService {
 
     public boolean existsByUsername(String username){return userRepository.existsUserByUsername(username);}
 
+    public User findByResetPasswordToken(String token){
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    public boolean existsByResetPasswordToken(String token){
+        return userRepository.existsByResetPasswordToken(token);
+    }
+
+    public User getUserByUsername(String username){
+        return userRepository.getByUsername(username);
+    }
+
 }

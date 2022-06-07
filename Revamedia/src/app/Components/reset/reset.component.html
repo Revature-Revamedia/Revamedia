@@ -1,0 +1,23 @@
+<div class="reset">
+    <h2>Reset Password</h2>
+    <form #resetForm="ngForm" (ngSubmit)="resetPassword(resetForm)">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" ngModel required title="Letters, numbers and special characters" name="username" id="username" placeholder="Username...">
+        </div>
+        
+        <div>
+            <label for="password">New Password</label>
+            <input ngModel [type]="showPassword ? 'text' : 'password'" name="password" id="password"
+            placeholder="Password..." required>
+            <span (click)="toggleShowPassword()">
+            <fa-icon *ngIf="showPassword === false" [icon]="faEye"></fa-icon>
+            <fa-icon *ngIf="showPassword === true" [icon]="faEyeSlash"></fa-icon>
+            {{showPassword ? 'Hide Password' : 'Show Password' }}
+            </span>
+        </div>
+      <div class="submit">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+</div>

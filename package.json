@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "gsap": "^3.10.4",
     "ng-validate-equal": "^6.0.1",
     "ngx-cookie-service": "^14.0.0"
   },

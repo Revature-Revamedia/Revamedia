@@ -22,6 +22,7 @@ import { AuthenticationService } from './Shared/services/auth-service/authentica
 import { FormsModule } from '@angular/forms';
 import { ValidateEqualModule } from 'ng-validate-equal';
 import { CookieService } from 'ngx-cookie-service';
+import { ResetComponent } from './Components/reset/reset.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { CookieService } from 'ngx-cookie-service';
     RegisterComponent,
     ErrorPageComponent,
     ProfileComponent,
+    ResetComponent,
 
   ],
   imports: [
