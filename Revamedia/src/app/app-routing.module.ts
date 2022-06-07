@@ -21,7 +21,7 @@ const routes: Routes = [
   // { path: 'events', component: EventsComponent },
   // { path: 'groups', component: GroupsComponent },
   { path: 'settings', component: SettingsComponent,canActivate:[AuthGuard]},
-  { path: 'profile', component: ProfileComponent,canActivate:[AuthGuard]},
+  { path: 'profile/:id', component: ProfileComponent,canActivate:[AuthGuard]},
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: ErrorPageComponent },
 ];

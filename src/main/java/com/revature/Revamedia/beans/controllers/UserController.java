@@ -1,9 +1,12 @@
 package com.revature.Revamedia.beans.controllers;
 
+import com.revature.Revamedia.beans.services.UserFollowsService;
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.AuthDto;
+import com.revature.Revamedia.dtos.FollowDto;
 import com.revature.Revamedia.dtos.UpdateUserDto;
 import com.revature.Revamedia.entities.User;
+import com.revature.Revamedia.entities.UserFollows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +21,16 @@ import java.util.List;
 public class UserController {
     //Initialize Services
     private final UserService userService;
+    private final UserFollowsService userFollowsService;
 
     BCryptPasswordEncoder encoder;
 
 
     //Autowire Services
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserFollowsService userFollowsService) {
         this.encoder =  new BCryptPasswordEncoder(10);
+        this.userFollowsService = userFollowsService;
         this.userService = userService;
     }
 
@@ -55,4 +60,16 @@ public class UserController {
     public void setEncoder(BCryptPasswordEncoder encoder) {
         this.encoder = encoder;
     }
+
+    @PostMapping("/userFollows")
+    @ResponseStatus(HttpStatus.OK)
+    public UserFollows startedFollowing(@RequestBody FollowDto dto){
+        System.out.println("followed " + dto.getFollowedId() + "Follower " + dto.getFollowerId());
+        User follower = userService.getUserById(dto.getFollowerId());
+        User followed = userService.getUserById(dto.getFollowedId());
+        System.out.println("follower: " + follower + "followed: " + followed);
+        UserFollows userFollows = new UserFollows(followed, follower);
+        return userFollowsService.save(userFollows);
+    }
+
 }

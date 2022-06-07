@@ -5,9 +5,9 @@
       <h3>Revamedia</h3>
       <div class="page-subTitle">
         <div class="user">
-          <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-          <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
-          <span><p routerLink="/profile" routerLinkActive="active">{{ user?.username }}</p>'s Feed</span>
+          <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
+          <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(user?.userId)">
+          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
         </div>
       </div>
     </div>
@@ -24,9 +24,9 @@
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-              <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
-              <a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>
+              <img *ngIf="user?.profilePicture !== ''" src="{{me?.profilePicture}}" alt="{{ me?.username }}" (click)="goToProfile(me?.userId)">
+              <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(me?.userId)">
+              <a (click)="goToProfile(me?.userId)">{{ me?.username }}</a>
             </div>
             <div class="post-options">
               <fa-icon (click)="togglePostsOptions()" id="icon" [icon]="faEllipsis"></fa-icon>
@@ -106,7 +106,7 @@
             <div class="comment-title">
               <div class="comment-author">
                 <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
-                <a routerLink="/profile" routerLinkActive="active" title="View Profile" >leobarrientos02</a>
+                <p (click)="goToProfile(user?.userId)" title="View Profile" >leobarrientos02</p>
               </div>
               <div class="comment-option" id="comment-option">
                 <button (click)="openModal('edit', 'comment-modal', comment)" >Edit</button>

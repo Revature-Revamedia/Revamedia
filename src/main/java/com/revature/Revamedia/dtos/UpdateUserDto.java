@@ -20,7 +20,7 @@ public class UpdateUserDto {
     @NotEmpty(message = "Email can't be empty")
     @Email(message = "Not a valid email")
     private String email;
-    
+
     public UpdateUserDto() {
     }
 

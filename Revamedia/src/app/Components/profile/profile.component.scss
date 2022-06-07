@@ -214,66 +214,55 @@ $darkgrey: rgb(61,66,74);
     width: 100%;
     display: flex;
     flex-direction: column;
-    .follower,.following{
+    .following, .follower{
+      padding: .5rem;
+      margin-bottom: .5rem;
       width: 100%;
       border-top: 1px solid $lightgrey;
       border-bottom: 1px solid $lightgrey;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
       align-items: center;
-      padding: .5rem;
+      justify-content: space-between;
       .follower-data,.following-data{
         display: flex;
         flex-direction: row;
         align-items: center;
         img{
-          cursor: pointer;
           width: 2rem;
           height: 2rem;
           border-radius: 50%;
-          border: 2px solid $orange;
-          &:hover{
-            border: 2px solid $blue;
-          }
+          border: 1.2px solid $orange;
         }
         h5{
-          margin-left: .5rem;
+          font-size: 1rem;
           color: $darkgrey;
-          cursor: pointer;
-          &:hover{
-            color: $blue;
-          }
+          margin-right: .25rem;
         }
       }
       .follow-option{
         button{
-          margin-left: 1rem;
           border: none;
-          outline: none;
           background: $blue;
-          color: black;
-          font-size: .9rem;
-          padding: .25rem .5rem;
+          font-size: 1rem;
           border-radius: 4px;
           cursor: pointer;
-          transition: all .3s ease-in-out;
+          padding: .3rem .6rem;
+          margin-left: .5rem;
           &:hover{
-            background: $orange;
+            background-color: #469cbe;
           }
         }
         #unfollow{
           border: none;
-          outline: none;
-          background: rgb(184, 0, 0);
-          color: white;
-          font-size: .9rem;
-          padding: .25rem .5rem;
+          background: $orange;
+          font-size: 1rem;
           border-radius: 4px;
           cursor: pointer;
-          transition: all .3s ease-in-out;
+          padding: .3rem .6rem;
+          margin-left: .5rem;
           &:hover{
-            background: rgb(146, 0, 0);
+            background-color: #dc943c;
           }
         }
       }

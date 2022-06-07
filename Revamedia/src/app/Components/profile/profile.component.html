@@ -22,7 +22,12 @@
       </div>
 
       <div class="right-card">
-        <button routerLink="/messages" routerLinkActive="active">Message</button>
+        <form #followForm="ngForm" (ngSubmit)="followUser(followForm)">
+          <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followedId">
+          <input type="hidden" ngModel="{{ user?.userId }}" name="followerId">
+          <button>Follow</button>
+          <button>Unfollow</button>
+        </form>
         <h5 (click)="openModal('followers', user)">{{ user?.followers.length }} Follower</h5>
         <h5 (click)="openModal('following', user)">{{ user?.following.length }} Following</h5>
       </div>
@@ -55,19 +60,20 @@
     <h3>Followers</h3>
     <span (click)="closeModal('followers')">x</span>
   </div>
-  <div class="modal-body">
-    <div class="follower" *ngIf="user?.followers.length > 0">
-      <div class="follower-data">
-        <img src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="Name" routerLink="/profile" routerLinkActive="active">
-        <h5 routerLink="/profile" routerLinkActive="active">leobarrientos02</h5>
+  <div class="modal-body" *ngIf="user?.followers.length > 0">
+    <div class="follower" *ngFor="let follower of user?.followers">
+        <div class="follower-data">
+          <img src="{{follower?.followerId?.profilePicture }}" *ngIf="follower?.followerId?.profilePicture !== ''" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
+          <img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg" *ngIf="follower?.followerId?.profilePicture === ''" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
+          <h5 (click)="goToProfile(follower?.followedId?.userId)">{{ follower?.followerId?.username }}</h5>
+        </div>
+        <div class="follow-option">
+          <button id="unfollow">Unfollow</button>
+          <button >Follow Back</button>
+        </div>
       </div>
-      <div class="follow-option">
-        <button id="unfollow">Unfollow</button>
-        <button>Follow Back</button>
-      </div>
-    </div>
     <div class="noFollowers" *ngIf="user?.followers.length == 0">
-      <h4>Nobody is following you.</h4>
+      <h4>Nobody is following this account</h4>
     </div>
   </div>
 </div>
@@ -79,18 +85,19 @@
     <h3>Following</h3>
     <span (click)="closeModal('following')">x</span>
   </div>
-  <div class="modal-body">
-    <div class="following"  *ngIf="user?.following.length > 0">
-      <div class="following-data">
-        <img src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="Name" routerLink="/profile" routerLinkActive="active">
-        <h5 routerLink="/profile" routerLinkActive="active">leobarrientos02</h5>
-      </div>
-      <div class="follow-option">
-        <button id="unfollow">Unfollow</button>
-      </div>
+  <div class="modal-body"  *ngIf="user?.following.length != 0">
+    <div class="following" *ngFor="let following of user?.following">
+        <div class="following-data">
+          <img src="{{following?.followedId?.profilePicture }}" *ngIf="following?.followedId?.profilePicture !== ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
+          <img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg" *ngIf="following?.followedId?.profilePicture === ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
+          <h5 (click)="goToProfile( following?.followedId?.userId )">{{ following?.followedId?.username }}</h5>
+        </div>
+        <div class="follow-option">
+          <button id="unfollow">Unfollow</button>
+        </div>
     </div>
     <div class="noFollowing" *ngIf="user?.following.length == 0">
-      <h4>You don't follow anyone.</h4>
+      <h4>Don't follow anyone.</h4>
     </div>
   </div>
 </div>

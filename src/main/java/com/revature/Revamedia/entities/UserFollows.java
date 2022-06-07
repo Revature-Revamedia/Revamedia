@@ -53,6 +53,11 @@ public class UserFollows implements Serializable {
         this.dateFollowed = dateFollowed;
     }
 
+    public UserFollows( User followerId, User followedId) {
+        this.followedId = followedId;
+        this.followerId = followerId;
+    }
+
     public Integer getId() {
         return followId;
     }
