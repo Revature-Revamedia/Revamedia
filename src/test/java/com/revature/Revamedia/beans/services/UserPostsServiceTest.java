@@ -5,14 +5,13 @@
  */
 package com.revature.Revamedia.beans.services;
 
-import com.revature.Revamedia.beans.repositories.UserPostsRepository;
-import com.revature.Revamedia.beans.repositories.UserRepository;
+import com.revature.Revamedia.beans.services.repositories.UserPostsRepository;
+import com.revature.Revamedia.beans.services.repositories.UserRepository;
 import com.revature.Revamedia.dtos.UpdatePostLikesDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserPosts;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

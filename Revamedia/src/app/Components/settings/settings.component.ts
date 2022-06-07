@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
 import { faSun, faMoon, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from 'src/app/Shared/services/user-service/user.service';
+import { UserService } from '../../Shared/services/user-service/user.service';
 
 @Component({
   selector: 'app-settings',
@@ -17,7 +17,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUserData();
   }
-  
+
   // Back end work
   public user: any;
   public editUser: any; // Used for edit modal
@@ -64,7 +64,7 @@ export class SettingsComponent implements OnInit {
     document.body.classList.toggle('darkMode');
     this.darkTheme = !this.darkTheme;
   }
-  
+
   // DARK THEME
 
   // Show Password

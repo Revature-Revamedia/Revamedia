@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -68,10 +69,10 @@ public class UserPostsController {
         UserPosts post = new UserPosts();
         post.setMessage(dto.getMessage());
         post.setImage(dto.getImage());
-        post.setDateCreated(dto.getDateCreated());
+        post.setDateCreated(new Timestamp(System.currentTimeMillis()));
         post.setOwnerId(user);
-        post = userPostsService.save(post);
         user.addPost(post);
+        userPostsService.save(post);
         userService.save(user);
         return new ResponseEntity<>(post,HttpStatus.CREATED);
     }
@@ -85,9 +86,9 @@ public class UserPostsController {
         return ResponseEntity.ok(userPostsService.update(post));
     }
 
-    @DeleteMapping("/deletePost")
-    public void deletePost(@RequestBody DeleteUserPostsDto dto){
-        UserPosts post = userPostsService.getPostById(dto.getPostId());
+    @DeleteMapping("/delete/{id}")
+    public void deletePost(@PathVariable Integer id){
+        UserPosts post = userPostsService.getPostById(id);
         userPostsService.delete(post);
     }
 

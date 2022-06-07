@@ -1,6 +1,6 @@
 package com.revature.Revamedia.beans.services;
 
-import com.revature.Revamedia.beans.repositories.UserRepository;
+import com.revature.Revamedia.beans.services.repositories.UserRepository;
 import com.revature.Revamedia.dtos.UserServiceDto;
 import com.revature.Revamedia.entities.User;
 import org.junit.jupiter.api.Test;

@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
 import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars,faFaceGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
-import { CommentService } from 'app/Shared/services/user-comments-service/comment.service';
-import { UserPostsService } from 'app/Shared/services/user-posts-service/user-posts.service';
+import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
+import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from 'app/Shared/services/user-service/user.service';
-import { GiphyService } from 'app/Shared/services/giphy-service/giphy.service';
+import { UserService } from '../../Shared/services/user-service/user.service';
+import { GiphyService } from '../../Shared/services/giphy-service/giphy.service';
 import { ThisReceiver } from '@angular/compiler';
-import { AnimationService } from 'app/Shared/services/animation/animation.service';
+import { AnimationService } from '../../Shared/services/animation/animation.service';
 
 @Component({
   selector: 'app-home',
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
   }
 
   // // Back End Work
-  public 
+  public
   (currentPost: any): void {
     this.userPostsService.updatePostLikes(this.postToLike).subscribe(
       (data) => {
@@ -158,9 +158,6 @@ export class HomeComponent implements OnInit {
 
   // }
 
-  addPost(form: NgForm){
-    console.log(form.value);
-  }
   // Add Comment
   public onAddComment(commentForm: NgForm): void{
     this.CommentService.addComment(commentForm.value).subscribe(
@@ -221,7 +218,36 @@ export class HomeComponent implements OnInit {
   onAddPost(postForm: NgForm): void {
     this.userPostsService.addPost(postForm.value).subscribe(
       (response: any) => {
-        console.log(response)
+        console.log(response);
+        this.closeModal('add', 'post-modal');
+        this.getCurrentUserData();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+    //console.log(postForm.value);
+  }
+
+  onUpdatePost(postForm: NgForm): void {
+    //console.log(postForm.value);
+    this.userPostsService.updatePost(postForm.value).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('edit', 'post-modal');
+        this.getCurrentUserData();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
+
+  onDeletePost(id: number){
+    this.userPostsService.deletePost(id).subscribe(
+      (response: any) => {
+        this.closeModal('delete', 'post-modal');
+        this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
