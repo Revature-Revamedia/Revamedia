@@ -15,7 +15,7 @@ export class CommentService {
   constructor(private httpClient: HttpClient) { }
 
   public addComment(comment: any): Observable<any> {
-    return this.httpClient.post<any>(`${this.baseUrl}/comment/add`, comment);
+    return this.httpClient.post<any>(`${this.baseUrl}/comment/add`, comment, {'withCredentials': true, 'observe': `response`});
   }
 
   public getCommentById(commentId: number): Observable<any> {
@@ -27,11 +27,11 @@ export class CommentService {
   }
 
   public updateComment(comment: any): Observable<any> {
-    return this.httpClient.put<any>(`${this.baseUrl}/comment/update`, comment);
+    return this.httpClient.put<any>(`${this.baseUrl}/comment/update`, comment, {'withCredentials': true, 'observe': `response`});
   }
 
   public deleteComment(id: number): Observable<any> {
-    return this.httpClient.delete<any>(`${this.baseUrl}/comment/delete/${id}`);
+    return this.httpClient.delete<any>(`${this.baseUrl}/comment/delete/${id}`, {'withCredentials': true, 'observe': `response`});
   }
 
   public addReply(reply: any): Observable<any> {
