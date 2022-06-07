@@ -12,6 +12,8 @@ import java.util.Locale;
 
 import javax.persistence.EntityNotFoundException;
 
+import com.revature.Revamedia.beans.services.UserPostsService;
+import com.revature.Revamedia.beans.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -35,6 +37,12 @@ public class CommentControllerTest {
 
     @MockBean
     private UserCommentsService userCommentsService;
+
+    // They added these two dependencies in the controller
+    @MockBean
+    private UserService userServiceMock;
+    @MockBean
+    private UserPostsService userPostsServiceMock;
 
     @Test
     public void testGetById() throws Exception {
