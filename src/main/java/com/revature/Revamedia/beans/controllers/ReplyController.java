@@ -36,21 +36,22 @@ public class ReplyController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserReplies> getReplyById(@PathVariable int id){
-        try{
-            UserReplies reply = userRepliesService.getReplyById(id);
-            System.out.println(reply);
-            return ResponseEntity.ok(reply);
-        }catch(EntityNotFoundException e){
-            return ResponseEntity.notFound().build();
-        }
-    }
+    //not needed
+//    @GetMapping("/{id}")
+//    public ResponseEntity<UserReplies> getReplyById(@PathVariable int id){
+//        try{
+//            UserReplies reply = userRepliesService.getReplyById(id);
+//            System.out.println(reply);
+//            return ResponseEntity.ok(reply);
+//        }catch(EntityNotFoundException e){
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<UserReplies>> getAllReplies() {
-      return ResponseEntity.ok(userRepliesService.getAllReplies());
-    }
+//    @GetMapping("/all")
+//    public ResponseEntity<List<UserReplies>> getAllReplies() {
+//      return ResponseEntity.ok(userRepliesService.getAllReplies());
+//    }
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
