@@ -7,12 +7,11 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 
 
-fdescribe('AuthenticationService', () => {
+describe('AuthenticationService', () => {
   let authService: AuthenticationService;
   let routerSpy: { navigateByUrl: jasmine.Spy };
   let httpClient: HttpClient;
   let httpController: HttpTestingController;
-  let error: HttpErrorResponse;
   beforeEach(() => {
     routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
     let store: any = {};
