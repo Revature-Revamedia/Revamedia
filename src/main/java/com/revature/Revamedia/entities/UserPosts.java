@@ -5,18 +5,28 @@
  */
 package com.revature.Revamedia.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @JsonIgnoreProperties
@@ -27,16 +37,16 @@ public class UserPosts implements Serializable {
     @Column(name = "post_id")
     private Integer postId;
 
-//    @JsonBackReference ??
+    @JsonBackReference
     @ManyToOne()
     @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
     private User ownerId;
 
-//    @JsonManagedReference() ??
+    @JsonManagedReference
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
     private List<UserComments> comments;
 
-    @JsonBackReference(value = "groupId")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "group_id")
     private UserGroups groupId;
