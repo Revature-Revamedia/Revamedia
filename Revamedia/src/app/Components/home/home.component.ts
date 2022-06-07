@@ -85,8 +85,7 @@ export class HomeComponent implements OnInit {
   }
 
   // // Back End Work
-  public 
-  (currentPost: any): void {
+  public (currentPost: any): void {
     this.userPostsService.updatePostLikes(this.postToLike).subscribe(
       (data) => {
         // console.log(data.body.likes.length);

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { environment } from 'src/environments/environment';
+import { environment } from 'environments/environment';
 
 
 @Injectable({

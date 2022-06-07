@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
 import { faSun, faMoon, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from 'src/app/Shared/services/user-service/user.service';
+import { UserService } from 'app/Shared/services/user-service/user.service';
 
 @Component({
   selector: 'app-settings',
@@ -17,14 +17,14 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUserData();
   }
-  
+
   // Back end work
   public user: any;
   public editUser: any; // Used for edit modal
   public deleteUser: any; // Used for delete modal
 
   // GET CURRENT USER
-  public getCurrentUserData(){
+  public getCurrentUserData() {
     this.userService.getUser().subscribe(
       (response: any) => {
         this.user = response;
@@ -37,7 +37,7 @@ export class SettingsComponent implements OnInit {
   }
 
   // Update User
-  public onUpdateUser(updateForm: NgForm, id: number){
+  public onUpdateUser(updateForm: NgForm, id: number) {
     this.userService.updateUser(updateForm.value, id).subscribe(
       (response: any) => {
         this.closeModal('edit');
@@ -64,7 +64,7 @@ export class SettingsComponent implements OnInit {
     document.body.classList.toggle('darkMode');
     this.darkTheme = !this.darkTheme;
   }
-  
+
   // DARK THEME
 
   // Show Password
@@ -75,22 +75,22 @@ export class SettingsComponent implements OnInit {
   // SHOW PASSWORD
 
   // MODALS FUNCTION
-  public openModal(mode: string, user: any){
+  public openModal(mode: string, user: any) {
     // Screen
     const screen = document.getElementById('screen');
     screen?.classList.add('openScreen');
     // Form
     const form = document.getElementById(`${mode}-account-modal`);
     form?.classList.add('openModal');
-    if(mode === 'edit'){
+    if (mode === 'edit') {
       this.editUser = this.user;
     }
-    if(mode === 'delete'){
+    if (mode === 'delete') {
       this.deleteUser = this.user;
     }
   }
 
-  public closeModal(modalType: string){
+  public closeModal(modalType: string) {
     // Screen
     const screen = document.getElementById('screen');
     screen?.classList.remove('openScreen');
@@ -98,5 +98,5 @@ export class SettingsComponent implements OnInit {
     const form = document.getElementById(`${modalType}-account-modal`);
     form?.classList.remove('openModal');
   }
-// MODALS FUNCTION END
+  // MODALS FUNCTION END
 }
