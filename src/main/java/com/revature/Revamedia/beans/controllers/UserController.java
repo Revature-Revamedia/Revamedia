@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -69,6 +70,7 @@ public class UserController {
         User followed = userService.getUserById(dto.getFollowedId());
         System.out.println("follower: " + follower + "followed: " + followed);
         UserFollows userFollows = new UserFollows(followed, follower);
+        userFollows.setDateFollowed(new Timestamp(System.currentTimeMillis()));
         return userFollowsService.save(userFollows);
     }
 
