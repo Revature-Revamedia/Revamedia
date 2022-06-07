@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/Shared/services/auth-service/auth
 import { anything, instance, mock, verify, when, } from "ts-mockito"
 
 
+
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -37,8 +38,11 @@ describe('LoginComponent', () => {
       }
     };
     component.logIn(testForm);
+    spyOn(component, 'logIn').call(component.logIn, testForm);
+    expect(component.logIn).toHaveBeenCalledTimes(1);
     verify(auth.login(testForm)).once;
-  })
+    expect(auth.login).toHaveBeenCalled;
+  });
 
   it('toggleShowPassword() should flip the value of showPassword', () => {
     let StoreVal = false;

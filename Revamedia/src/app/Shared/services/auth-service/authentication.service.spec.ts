@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+
 
 
 
@@ -61,15 +62,17 @@ describe('AuthenticationService', () => {
   it('checkLoginStatusReturns true when loginCookie is equal to 1', () => {
     sessionStorage.setItem('LoggedIn', '1');
     let result = authService.checkLoginStatus();
-    expect(result).toBeTrue;
+    let test = true;
+    expect(result).toEqual(test);
   });
 
   it('checkLoginStatusReturns false when loginCookie is not equal to 1', () => {
+    let test = false;
     let result = authService.checkLoginStatus();
-    expect(result).toBeFalse;
+    expect(test).toEqual(result);
   });
 
-  it('Login should navigate to homepage if successful', () => {
+  it('Login should navigate to homepage if successful', async () => {
     const testForm = <NgForm>{
       value: {
         username: "shady",
@@ -80,7 +83,7 @@ describe('AuthenticationService', () => {
       username: "shady",
       password: "Passowrd1!"
     };
-    authService.login(testForm);
+    await authService.login(testForm);
     const request = httpController.expectOne(authService.authUrl);
     request.flush(user);
     expect(authService.loggedIn).toBeTrue;
@@ -90,7 +93,7 @@ describe('AuthenticationService', () => {
 
   });
 
-  it('Login should not navigate to home page if there was an error ', () => {
+  it('Login should not navigate to home page if there was an error ', async () => {
     const testForm = <NgForm>{
       value: {
         username: "",
@@ -107,7 +110,7 @@ describe('AuthenticationService', () => {
     expect(authService.loggedIn).toBeFalse;
     expect(sessionStorage.setItem).not.toHaveBeenCalled;
     expect(routerSpy.navigateByUrl).not.toHaveBeenCalled;
-    authService.login(testForm);
+
 
 
   })
