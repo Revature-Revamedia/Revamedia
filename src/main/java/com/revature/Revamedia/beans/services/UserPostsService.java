@@ -5,16 +5,17 @@
  */
 package com.revature.Revamedia.beans.services;
 
-import com.revature.Revamedia.beans.services.repositories.UserPostsRepository;
-import com.revature.Revamedia.beans.services.repositories.UserRepository;
-import com.revature.Revamedia.dtos.UpdatePostLikesDto;
-import com.revature.Revamedia.entities.User;
-import com.revature.Revamedia.entities.UserPosts;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import com.revature.Revamedia.beans.repositories.UserPostsRepository;
+import com.revature.Revamedia.beans.repositories.UserRepository;
+import com.revature.Revamedia.dtos.UpdatePostLikesDto;
+import com.revature.Revamedia.entities.User;
+import com.revature.Revamedia.entities.UserPosts;
 
 @Service
 public class UserPostsService {
