@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { ValidateEqualModule } from 'ng-validate-equal';
 import { CookieService } from 'ngx-cookie-service';
 import { ResetComponent } from './Components/reset/reset.component';
+import { ForgotComponent } from './Components/forgot/forgot.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ResetComponent } from './Components/reset/reset.component';
     ErrorPageComponent,
     ProfileComponent,
     ResetComponent,
+    ForgotComponent,
 
   ],
   imports: [

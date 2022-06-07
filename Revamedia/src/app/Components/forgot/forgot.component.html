@@ -1,0 +1,13 @@
+<div class="reset">
+    <h2>Enter your email</h2>
+    <form #sendEmailForm="ngForm" (ngSubmit)="sendEmail(sendEmailForm)">
+        <div>
+            <label for="email">Email</label>
+            <input type="email" required title="Valid Email" name="email" id="email"placeholder="Email..." ngModel >
+          </div>
+        
+      <div class="submit">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+</div>

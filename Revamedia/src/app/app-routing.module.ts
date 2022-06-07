@@ -10,6 +10,7 @@ import { RegisterComponent } from './Components/register/register.component';
 import { ErrorPageComponent } from './Components/error-page/error-page.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { ResetComponent } from './Components/reset/reset.component';
+import { ForgotComponent } from './Components/forgot/forgot.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'groups', component: GroupsComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'forgot', component: ForgotComponent},
   { path: 'forgot/reset', component: ResetComponent},
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: ErrorPageComponent },

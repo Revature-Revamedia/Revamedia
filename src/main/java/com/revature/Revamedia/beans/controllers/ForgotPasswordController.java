@@ -23,18 +23,21 @@ public class ForgotPasswordController {
 
     private final SendEmailService sendEmailService;
     private final UserService userService;
-    private final JsonWebToken jsonWebToken;
 
-    public ForgotPasswordController(SendEmailService sendEmailService, UserService userService,JsonWebToken jsonWebToken){
+    public ForgotPasswordController(SendEmailService sendEmailService, UserService userService){
         this.sendEmailService = sendEmailService;
         this.userService = userService;
-        this.jsonWebToken = jsonWebToken;
     }
 
-    @PostMapping
-    public ResponseEntity<Object> generateEmail(@RequestBody EmailDto emailDto){
-        sendEmailService.sendEmail(emailDto.getEmail());
-        return ResponseEntity.ok("Email was sent to " + emailDto.getEmail());
+    @PostMapping("/email")
+    public ResponseEntity<Object> generateEmail(@RequestBody String email){
+        if(userService.existsByEmail(email)){
+            sendEmailService.sendEmail(email);
+            return ResponseEntity.ok("Email was sent to " + email);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No such email");
+        }
 
     }
 
