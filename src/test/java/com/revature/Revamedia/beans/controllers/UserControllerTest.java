@@ -99,7 +99,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUserByIdTest(@Autowired UserController userController) throws Exception {
+    void updateUserByIdTest(@Autowired UserController userController) throws Exception {
         //arrange
         userController.setEncoder(mockEncoder);
         Integer id = 1;
