@@ -205,7 +205,7 @@
     <h3>Create new post</h3>
     <span (click)="closeModal('add', 'post-modal')">x</span>
   </div>
-  <form  #addPostForm="ngForm" (ngSubmit)="addPost(addPostForm)">
+  <form  #addPostForm="ngForm">
     <div class="form-data">
       <h4>Add Image or Youtube Link</h4>
       <input type="text" name="image" id="image" placeholder="ImageUrl or Youtube Link">
