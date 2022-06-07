@@ -61,31 +61,11 @@ export class HomeComponent implements OnInit {
 
   // GET CURRENT USER
   public getCurrentUserData(){
-    this.userService.getUser().subscribe(
-      (response: any) => {
-        this.user = response;
-        let userPosts = [];
-        userPosts = response?.postsOwned;
-        let followingPost = [];
-        for(let f of response?.following) {
-          followingPost = f?.followedId?.postsOwned;
-        }
-        this.posts = followingPost.concat(userPosts);
-        // for(let p of response?.postsOwned){
-        //   this.posts.push(p);
-        //   this.posts = this.posts.flat();
-        // }
-        this.openingAnimation();
-        // console.log(this.posts);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message)
-      }
-    );
+    this.user = this.userService.getUser();
   }
 
   // // Back End Work
-  public 
+  public
   (currentPost: any): void {
     this.userPostsService.updatePostLikes(this.postToLike).subscribe(
       (data) => {

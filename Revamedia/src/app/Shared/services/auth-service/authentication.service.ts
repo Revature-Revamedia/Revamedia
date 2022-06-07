@@ -6,6 +6,25 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
 
+import jwt_decode from "jwt-decode";
+
+function getCookie(cname: any) {
+  let name = cname + "=";
+
+  let decodedCookie = decodeURIComponent(document.cookie);
+  console.log("decoded",decodedCookie)
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +69,10 @@ export class AuthenticationService {
       // sessionStorage.setItem('lastname', response.lastName);
       // sessionStorage.setItem('phone', response.phone);
 
-      sessionStorage.setItem('LoggedIn', '1');
+      var decoded = jwt_decode(getCookie("user_session")) as any;
+      const userId = (JSON.parse(decoded.Json) as any).userId;
+      sessionStorage.setItem('LoggedIn',  '1');
+      sessionStorage.setItem('UserId',  userId);
       this.loggedIn.next(true);
       this.router.navigateByUrl('/home');
     }, (error: HttpErrorResponse) => {

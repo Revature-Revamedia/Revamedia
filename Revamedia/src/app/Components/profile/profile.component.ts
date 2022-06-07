@@ -22,15 +22,7 @@ export class ProfileComponent implements OnInit {
   // GET CURRENT USER
   // GET CURRENT USER
   public getCurrentUserData(){
-    this.userService.getUser().subscribe(
-      (response: any) => {
-        this.user = response;
-        console.log(this.user);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message)
-      }
-    );
+    this.user = this.userService.getUser();
   }
 
   // FRONT END WORK
