@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 import { GiphyService } from './giphy.service';
 
-fdescribe('GiphyService', () => {
+describe('GiphyService', () => {
   let service: GiphyService;
   let apiBaseUrl: string;
   const search: string = "buffalo";
