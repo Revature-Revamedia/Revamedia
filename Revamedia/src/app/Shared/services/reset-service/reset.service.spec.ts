@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { ResetService } from './reset.service';
 
-fdescribe('ResetService', () => {
+describe('ResetService', () => {
   let service: ResetService;
   let resetUrl: string;
   let httpClientSpy: {
