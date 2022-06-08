@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/Shared/services/user-service/user.service';
+import { UserService } from '../../Shared/services/user-service/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   public posts: any[] = [];
   // GET CURRENT USER
   // GET CURRENT USER
-  public getCurrentUserData(){
+  public getCurrentUserData() {
     this.userService.getUser().subscribe(
       (response: any) => {
         this.user = response;
@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
   }
 
   // FRONT END WORK
-  public openModal(modalType: string, data: any){
+  public openModal(modalType: string, data: any) {
     // Screen
     const screen = document.getElementById('screen');
     screen?.classList.add('openScreen');
@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
     modal?.classList.add('openModal');
   }
 
-  public closeModal(modalType: string){
+  public closeModal(modalType: string) {
     // Screen
     const screen = document.getElementById('screen');
     screen?.classList.remove('openScreen');
