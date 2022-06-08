@@ -11,7 +11,7 @@ export class UserService {
   private user: any;
   private userSubject: BehaviorSubject<any>;
 
-  constructor(private http:HttpClient, private userPostsService:UserPostsService) {
+  constructor(private http: HttpClient, private userPostsService: UserPostsService) {
     this.userSubject = new BehaviorSubject<any>(this.user);
     this.getUserById(sessionStorage.getItem('userId')).subscribe((response: any) => {
       console.log("1: ", response.body);
@@ -20,8 +20,8 @@ export class UserService {
       this.setCurrentUser(this.user);
     });
 
-      //sessionStorage.getItem('userid')
-   }
+    //sessionStorage.getItem('userid')
+  }
 
   userURL: string = "http://localhost:8080/user"
 
@@ -33,13 +33,13 @@ export class UserService {
     this.userSubject.next(user);
   }
 
-  userLikesPost(currentPost: any) :number {
+  userLikesPost(currentPost: any): number {
     let num: number = 0;
     this.userPostsService.updatePostLikes(currentPost).subscribe((data) => {
       console.log(data.body);
       num = data.body.userPosts.likes.length;
       this.setCurrentUser(data.body.user);
-  });
+    });
     return num
   }
 
@@ -55,9 +55,9 @@ export class UserService {
   //      this.eventsJoined = new HashSet<>();
   //      this.eventsOwned = new HashSet<>();
 
-        // this.conversations = new HashSet<>();
+  // this.conversations = new HashSet<>();
 
-   //     this.likedPosts = new ArrayList<>();
+  //     this.likedPosts = new ArrayList<>();
   //1. when user logs in-
   //2.you store their user id in local storage.
   //3. call method to get user information.
@@ -74,20 +74,21 @@ export class UserService {
   //
 
 
-  getAllUsers() : Observable<any> {
-    return this.http.get<any>(`${this.userURL}/allUsers`, {observe : `response`})
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>(`${this.userURL}/allUsers`, { observe: `response` })
   }
 
-  getUserById(id: any) : Observable<any> {
+  getUserById(id: any): Observable<any> {
     console.log("test");
-    return this.http.get<any>(`${this.userURL}/` + id, {observe : `response`})
+    return this.http.get<any>(`${this.userURL}/` + id, { observe: `response` })
   }
 
   public getUser() : Observable<any> {
     return this.http.get<any>(`${this.userURL}/5`);
   }
+ 
 
-  public updateUser(user: any, id: number) : Observable<any> {
+  public updateUser(user: any, id: number): Observable<any> {
     return this.http.put<any>(`${this.userURL}/update/${id}`, user);
   }
 

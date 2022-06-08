@@ -1,10 +1,7 @@
 package com.revature.Revamedia.beans.services;
 
 import com.revature.Revamedia.beans.repositories.UserRepository;
-import com.revature.Revamedia.dtos.AuthDto;
 import com.revature.Revamedia.entities.User;
-import com.revature.Revamedia.entities.UserComments;
-import com.revature.Revamedia.exceptions.UnauthorizedUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
