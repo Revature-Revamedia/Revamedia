@@ -29,7 +29,8 @@ public class UserPostsService {
     }
 
     public UserPosts getPostById(Integer id) {
-        return userPostsRepository.getById(id);
+        UserPosts posts = userPostsRepository.getById(id);
+        return posts;
     }
 
     public UserPosts save(UserPosts post) {

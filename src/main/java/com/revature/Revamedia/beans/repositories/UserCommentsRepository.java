@@ -1,4 +1,4 @@
-package com.revature.Revamedia.beans.repositories;
+package com.revature.Revamedia.beans.services.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
