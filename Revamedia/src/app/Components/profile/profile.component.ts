@@ -81,6 +81,8 @@ export class ProfileComponent implements OnInit {
     this.userService.followUser(follow.value).subscribe(
       (response: any) => {
         console.log(response);
+        this.getCurrentUserData();
+        this.getUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -89,14 +91,18 @@ export class ProfileComponent implements OnInit {
   }
 
   public unFollowUser(follow: NgForm){
-    this.userService.unFollowUser(follow.value).subscribe(
-      (response: any) => {
-        console.log(response);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message)
-      }
-    )
+    console.log(follow.value);
+
+    // this.userService.unFollowUser(follow.value).subscribe(
+    //   (response: any) => {
+    //     console.log(response);
+    //     this.getCurrentUserData();
+    //     this.getUserData();
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     console.log(error.message)
+    //   }
+    // )
   }
 
   public goToProfile(userId: any){

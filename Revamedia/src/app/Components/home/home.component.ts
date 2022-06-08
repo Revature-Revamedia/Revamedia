@@ -494,7 +494,7 @@ export class HomeComponent implements OnInit {
 
   public me: any;
   getNextUser(){
-    this.userService.getProfile(1).subscribe(
+    this.userService.getProfile(2).subscribe(
       (response: any) => {
         console.log(response);
         this.me = response;

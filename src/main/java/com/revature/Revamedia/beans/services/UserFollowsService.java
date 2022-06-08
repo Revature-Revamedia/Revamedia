@@ -32,4 +32,5 @@ public class UserFollowsService {
         return userFollowsRepository.findAll();
     }
 
+    public void delete(UserFollows follow){ userFollowsRepository.delete(follow); }
 }

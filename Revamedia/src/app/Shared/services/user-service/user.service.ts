@@ -100,8 +100,9 @@ export class UserService {
   public followUser(Follow: any) : Observable<any> {
     return this.http.post<any>(`${this.userURL}/userFollows`, Follow);
   }
-  public unFollowUser(Follow: any) : Observable<any> {
-    return this.http.delete<any>(`${this.userURL}/deleteFollowing`, Follow);
+
+  public unFollowUser(id: any) : Observable<any> {
+    return this.http.delete<any>(`${this.userURL}/unfollow`);
   }
 
 }
