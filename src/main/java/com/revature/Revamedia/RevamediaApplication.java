@@ -32,7 +32,7 @@ public class RevamediaApplication {
                 SendEmailService sendEmailService = context.getBean(SendEmailService.class);
 
                 String secretKey = "H6IBCSTYM52GL33OKU5INPCTXUDNGCO5";
-                String email = "nolovexx@gmail.com";
+                String email = "revamedia@gmail.com";
                 String companyName = "Revamedia";
                 String barCodeUrl = TwoFactorAuthentication.getGoogleAuthenticatorBarCode(secretKey, email, companyName);
                 TwoFactorAuthentication.createQRCode(barCodeUrl,"/Users/Laflammex/IdeaProjects/Project3/QRCode.png",400,400);
@@ -46,7 +46,7 @@ public class RevamediaApplication {
                         lastCode = code;
                         try {
                                 Thread.sleep(1000);
-                        } catch (InterruptedException e) {};
+                        } catch (InterruptedException e) {}
                 }
         }
 }

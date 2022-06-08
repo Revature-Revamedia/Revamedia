@@ -49,6 +49,9 @@ public class User implements Serializable {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
+    @Column(name = "two_factor_auth")
+    private boolean twoFactorAuth;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "followedId", cascade = CascadeType.ALL)
     private Set<UserFollows> followers;
@@ -336,6 +339,14 @@ public class User implements Serializable {
 
     public void setResetPasswordToken(String resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public boolean getTwoFactorAuth() {
+        return twoFactorAuth;
+    }
+
+    public void setTwoFactorAuth(boolean twoFactorAuth) {
+        this.twoFactorAuth = twoFactorAuth;
     }
 
     @Override
