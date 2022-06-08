@@ -33,7 +33,6 @@ public class CorsFilter extends OncePerRequestFilter {
         if(request.getHeader("Origin") == null){
             originHeader = "http://";
             originHeader += request.getHeader("host");
-            System.out.println(originHeader);
         }
 
         if(allowedOrigins.contains(originHeader)) {
