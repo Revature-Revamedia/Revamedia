@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ResetService } from 'src/app/Shared/services/reset-service/reset.service';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset',
@@ -10,13 +11,14 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 })
 export class ResetComponent implements OnInit {
 
-  constructor(private resetService: ResetService) { }
+  constructor(private resetService: ResetService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   public resetPassword(resetForm: NgForm) {
     this.resetService.resetPassword(resetForm);
+    this.router.navigateByUrl('/login');
   }
 
   // Front End Work
