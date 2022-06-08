@@ -15,9 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -25,12 +23,25 @@ public class CorsFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String[] allowDomain = {"http://localhost:4200","http://localhost:8080","http://220328-revamedia-ui.s3-website-us-east-1.amazonaws.com",
+                                "http://revamedia-ui.s3-website-us-west-1.amazonaws.com"};
+        Set<String> allowedOrigins = new HashSet<>(Arrays.asList(allowDomain));
 
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200"); // Cannot be '*'. If in production we change this to production domain url.
-        //response.setHeader("Access-Control-Allow-Origin", "http://220328-revamedia-ui.s3-website-us-east-1.amazonaws.com"); // Cannot be '*'. If in production we change this to production domain url.
-        response.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, mode"); // Cannot be '*'. Add additional headers we need here.
-        filterChain.doFilter(request, response);
+        String originHeader;
+        originHeader = request.getHeader("Origin");
+
+        if(request.getHeader("Origin") == null){
+            originHeader = "http://";
+            originHeader += request.getHeader("host");
+            System.out.println(originHeader);
+        }
+
+        if(allowedOrigins.contains(originHeader)) {
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
+            response.setHeader("Access-Control-Allow-Origin", originHeader); // Cannot be '*'. If in production we change this to production domain url.
+            response.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, mode"); // Cannot be '*'. Add additional headers we need here.
+            filterChain.doFilter(request, response);
+        }
     }
 }
