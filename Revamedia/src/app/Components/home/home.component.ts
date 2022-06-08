@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
     // this.getAllComments();
     this.getGifs('funny');
     this.posts = [];
+    this.getNextUser();
     //this.getCurrentUserData();
     this.userService.getCurrentUser().subscribe({
       next: response => {

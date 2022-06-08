@@ -90,7 +90,7 @@ export class UserService {
   public getProfile(id: number) : Observable<any> {
     return this.http.get<any>(`${this.userURL}/${id}`);
   }
- 
+
 
   public updateUser(user: any, id: number): Observable<any> {
     return this.http.put<any>(`${this.userURL}/update/${id}`, user);
@@ -99,6 +99,9 @@ export class UserService {
   // FOLLOW
   public followUser(Follow: any) : Observable<any> {
     return this.http.post<any>(`${this.userURL}/userFollows`, Follow);
+  }
+  public unFollowUser(Follow: any) : Observable<any> {
+    return this.http.delete<any>(`${this.userURL}/deleteFollowing`, Follow);
   }
 
 }

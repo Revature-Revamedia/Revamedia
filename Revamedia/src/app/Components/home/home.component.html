@@ -8,6 +8,7 @@
           <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
           <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(user?.userId)">
           <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
+          <span (click)="goToProfile(me?.userId)">{{ me?.username }}</span>
         </div>
       </div>
     </div>
