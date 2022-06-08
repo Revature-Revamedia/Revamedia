@@ -9,7 +9,9 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../Shared/services/user-service/user.service';
 import { GiphyService } from '../../Shared/services/giphy-service/giphy.service';
 import { ThisReceiver } from '@angular/compiler';
-import { AnimationService } from '../../Shared/services/animation/animation.service';
+import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -32,7 +34,7 @@ export class HomeComponent implements OnInit {
   // Variables Used In Home Component
   public totalLikes: number = 0;
 
-  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService) { }
+  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router) { }
 
 
   ngOnInit(): void {
@@ -90,8 +92,7 @@ export class HomeComponent implements OnInit {
   // }
 
   // // Back End Work
-  public
-    (currentPost: any): void {
+  public (currentPost: any): void {
     this.userPostsService.updatePostLikes(this.postToLike).subscribe(
       (data) => {
         // console.log(data.body.likes.length);
@@ -355,6 +356,10 @@ export class HomeComponent implements OnInit {
   public toggleHideComments(): void {
     this.viewComments = !this.viewComments;
   }
+  public toggleComments():void{
+    this.addComment = !this.addComment;
+  }
+
 
   // Add comment
   public addComment = false;
@@ -482,5 +487,20 @@ export class HomeComponent implements OnInit {
     const main = '#main';
     anim.fadeIn(main, 0.5, 0, 0);
   }
+  public goToProfile(userId: any){
+    this.router.navigate([`profile/${userId}`]);
+  }
 
+  public me: any;
+  getNextUser(){
+    this.userService.getProfile(1).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.me = response;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
 }
