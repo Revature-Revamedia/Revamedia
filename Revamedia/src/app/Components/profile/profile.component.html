@@ -29,7 +29,7 @@
             <input type="hidden" ngModel="{{ user?.userId }}" name="followerId">
             <button>Follow</button>
           </form>
-          <form>
+          <form #unFollowForm="ngForm" (ngSubmit)="unFollowUser(unFollowForm)">
             <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followedId">
             <input type="hidden" ngModel="{{ user?.userId }}" name="followerId">
             <button id="unFollow">Unfollow</button>

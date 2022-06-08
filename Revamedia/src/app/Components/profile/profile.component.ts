@@ -88,6 +88,17 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  public unFollowUser(follow: NgForm){
+    this.userService.unFollowUser(follow.value).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
+
   public goToProfile(userId: any){
     this.router.navigate([`profile/${userId}`]);
   }
