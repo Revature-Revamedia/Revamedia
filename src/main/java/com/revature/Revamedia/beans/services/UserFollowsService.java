@@ -1,6 +1,6 @@
 package com.revature.Revamedia.beans.services;
 
-import com.revature.Revamedia.beans.services.repositories.UserFollowsRepository;
+import com.revature.Revamedia.beans.repositories.UserFollowsRepository;
 import com.revature.Revamedia.entities.UserFollows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.revature.Revamedia.beans.services.repositories;
+package com.revature.Revamedia.beans.repositories;
 
 import com.revature.Revamedia.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

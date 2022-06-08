@@ -31,37 +31,7 @@ public class RevamediaApplication {
         public static void main(String[] args) {
 
             ConfigurableApplicationContext context = SpringApplication.run(RevamediaApplication.class, args);
-
-            UserPostsService userPostsService = context.getBean(UserPostsService.class);
-            UserService userService = context.getBean(UserService.class);
-
-            User user1 = new User();
-            user1.setFirstName("Brandon");
-            user1.setUsername("b1");
-            user1.setPassword("password");
-            userService.save(user1);
-
-            User user2 = new User();
-            user2.setFirstName("gio");
-            user2.setUsername("g1");
-            user2.setPassword("password");
-            userService.save(user2);
-
-
-            UserPosts post1 = new UserPosts();
-            post1.setOwnerId(user1);
-            post1.setImage("helloWorld.jpeg");
-            userPostsService.save(post1);
-
-            UserPosts post2 = new UserPosts();
-            post2.setOwnerId(user1);
-            post2.setImage("helloWorld2.jpeg");
-            userPostsService.save(post2);
-
-            UserPosts post3 = new UserPosts();           
-            post3.setOwnerId(user2);
-            userPostsService.save(post3);
-
+            context.start();
         }
 }
 
