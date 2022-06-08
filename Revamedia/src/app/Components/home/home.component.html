@@ -5,9 +5,9 @@
       <h3>Revamedia</h3>
       <div class="page-subTitle">
         <div class="user">
-          <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-          <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
-          <span><p routerLink="/profile" routerLinkActive="active">{{ user?.username }}</p>'s Feed</span>
+          <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
+          <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(user?.userId)">
+          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
         </div>
       </div>
     </div>
@@ -17,16 +17,15 @@
 
   <!-- main feed start -->
   <div class="main" id="main">
-
       <!-- post start -->
       <div class="post-data" *ngFor="let p of posts">
 
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-              <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
-              <a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>
+              <img *ngIf="user?.profilePicture !== ''" src="{{me?.profilePicture}}" alt="{{ me?.username }}" (click)="goToProfile(me?.userId)">
+              <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(me?.userId)">
+              <a (click)="goToProfile(me?.userId)">{{ me?.username }}</a>
             </div>
             <div class="post-options">
               <fa-icon (click)="togglePostsOptions()" id="icon" [icon]="faEllipsis"></fa-icon>
@@ -52,8 +51,9 @@
                   </fa-icon>
                    <span>{{ p?.likes?.length }} likes</span>
                 </div>
-                <div class="comment">
-                  <fa-icon id="commentIcon" (click)="openAddComment()" title="Comment" [icon]="faComment" size="lg"></fa-icon>
+                <div class="comment" (click)="toggleComments()">
+                  <fa-icon id="commentIcon" title="Comment" [icon]="faComment" size="lg"></fa-icon>
+                  <span>Comment</span>
                 </div>
               </div>
               <div class="bookmark">
@@ -105,7 +105,7 @@
             <div class="comment-title">
               <div class="comment-author">
                 <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
-                <a routerLink="/profile" routerLinkActive="active" title="View Profile" >leobarrientos02</a>
+                <p (click)="goToProfile(user?.userId)" title="View Profile" >leobarrientos02</p>
               </div>
               <div class="comment-option" id="comment-option">
                 <button (click)="openModal('edit', 'comment-modal', comment)" >Edit</button>
@@ -180,18 +180,16 @@
         </div>
 
       </div>
-    <!-- post end -->
-
-      <!-- NO POST AVAILABLE START-->
-      <div class="noPost" *ngIf="posts.length == 0">
-        <h1>No Post</h1>
-        <p>Seems like there are no posts available to show</p>
-        <p>Sorry for the inconvience.</p>
-        <span>Be the first to make a post.</span>
-      </div>
-      <!-- NO POST AVAILABLE END-->
+      <!-- post end -->
   </div>
   <!-- main feed end -->
+  <div class="noPost" *ngIf="posts.length === 0">
+    <div class="content">
+      <h1>No Post</h1>
+      <p>Seems like there are no posts available to show.</p>
+      <span>Be the first to make a post.</span>
+    </div>
+  </div>
 </div>
 
 
@@ -204,7 +202,7 @@
     <h3>Create new post</h3>
     <span (click)="closeModal('add', 'post-modal')">x</span>
   </div>
-  <form  #addPostForm="ngForm" (ngSubmit)="addPost(addPostForm)">
+  <form  #addPostForm="ngForm">
     <div class="form-data">
       <h4>Add Image or Youtube Link</h4>
       <input type="text" name="image" id="image" placeholder="ImageUrl or Youtube Link">

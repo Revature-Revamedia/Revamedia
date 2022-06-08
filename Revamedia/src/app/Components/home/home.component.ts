@@ -328,6 +328,9 @@ export class HomeComponent implements OnInit {
   public toggleCommentsOptions() {
     this.commentOptionsClicked = !this.commentOptionsClicked;
   }
+  public toggleComments():void{
+    this.addComment = !this.addComment;
+  }
 
   public editComment: any;
   public deleteComment: any;
