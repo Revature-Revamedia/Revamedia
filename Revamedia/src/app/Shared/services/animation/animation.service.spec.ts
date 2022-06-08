@@ -3,7 +3,7 @@ import gsap from 'gsap';
 
 import { AnimationService } from './animation.service';
 
-fdescribe('AnimationService', () => {
+describe('AnimationService', () => {
   let service: AnimationService;
 
   beforeEach(() => {

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { RegisterService } from './register.service';
 
-fdescribe('RegisterService', () => {
+describe('RegisterService', () => {
 
   let httpClientSpy: { post: jasmine.Spy };
   let registerService: RegisterService;
