@@ -311,6 +311,9 @@ public class RevamediaApplication {
  * // // user_id : database
  * // // all caps and underscore for constant variables
  * 
- * =======
- * >>>>>>> dev
+            ConfigurableApplicationContext context = SpringApplication.run(RevamediaApplication.class, args);
+            context.start();
+ * 
  */
+        }
+}
