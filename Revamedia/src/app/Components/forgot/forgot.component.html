@@ -1,0 +1,37 @@
+<div class="forgot-page" id="forgot-page">
+  <div class="forgot-nav">
+    <h1>Revamedia</h1>
+  </div>
+  <div class="forgot">
+    <h2>Reset Password</h2>
+    <form #sendEmailForm="ngForm" (ngSubmit)="sendEmail(sendEmailForm)" ngNativeValidate>
+      <div class="form-row">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          required
+          title="Valid Email"
+          name="email"
+          id="email"
+          placeholder="Enter email..."
+          ngModel
+          pattern="^[a-zA-Z0-9!$]{3,12}@[a-zA-Z0-9]{3,12}.[a-z]{2,3}$">
+      </div>
+      <div class="submit">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--NOTIFICATION START-->
+<div class="notification" id="notification">
+  <div class="content">
+    <h2>Email Sent</h2>
+    <div class="email-animation">
+      <fa-icon id="email-icon" [icon]="faEnvelope"></fa-icon>
+      <fa-icon id="house-icon" [icon]="faHouseChimney"></fa-icon>
+    </div>
+  </div>
+</div>
+<!--NOTIFICATION END-->

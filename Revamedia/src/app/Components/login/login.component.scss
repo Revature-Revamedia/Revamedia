@@ -81,14 +81,16 @@ $darkgrey: rgb(61, 66, 74);
 
         input {
           font-size: 1rem;
-          border-radius: 7px;
+          border-radius: 5px;
           color: $darkgrey;
           border: solid 1px $grey;
           padding: .3rem;
           width: 100%;
+          outline: none;
+          border: solid 1px $grey;
 
           &:focus {
-            border: solid 1.2px $blue;
+            border: solid 1.4px $orange;
           }
         }
 
