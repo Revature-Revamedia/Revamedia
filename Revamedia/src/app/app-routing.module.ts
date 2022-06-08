@@ -9,7 +9,9 @@ import { LoginComponent } from './Components/login/login.component';
 import { RegisterComponent } from './Components/register/register.component';
 import { ErrorPageComponent } from './Components/error-page/error-page.component';
 import { ProfileComponent } from './Components/profile/profile.component';
-import {AuthGuard} from './Shared/guard/auth.guard';
+import { AuthGuard } from './Shared/guard/auth.guard';
+import { ResetComponent } from './Components/reset/reset.component';
+import { ForgotComponent } from './Components/forgot/forgot.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,8 +22,12 @@ const routes: Routes = [
   // { path: 'groups', component: GroupsComponent },
   { path: 'settings', component: SettingsComponent,canActivate:[AuthGuard]},
   { path: 'profile/:id', component: ProfileComponent,canActivate:[AuthGuard]},
+  { path: 'forgot', component: ForgotComponent},
+  { path: 'forgot/reset', component: ResetComponent},
+
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: ErrorPageComponent },
+
 ];
 
 @NgModule({

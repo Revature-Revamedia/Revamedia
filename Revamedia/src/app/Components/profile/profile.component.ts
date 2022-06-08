@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -51,7 +52,7 @@ export class ProfileComponent implements OnInit {
   }
 
   // FRONT END WORK
-  public openModal(modalType: string, data: any){
+  public openModal(modalType: string, data: any) {
     // Screen
     const screen = document.getElementById('screen');
     screen?.classList.add('openScreen');
@@ -60,7 +61,7 @@ export class ProfileComponent implements OnInit {
     modal?.classList.add('openModal');
   }
 
-  public closeModal(modalType: string){
+  public closeModal(modalType: string) {
     // Screen
     const screen = document.getElementById('screen');
     screen?.classList.remove('openScreen');
