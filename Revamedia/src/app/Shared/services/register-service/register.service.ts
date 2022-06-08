@@ -18,7 +18,7 @@ export class RegisterService {
 
   constructor(private http : HttpClient) { }
   createUser(body: object, options: object): Observable<any> {
-    console.log("Post: ", this.registerUrl, body, options)
+    // console.log("Post: ", this.registerUrl, body, options)
     return this.http.post<any>(this.registerUrl ,  JSON.stringify(body), options)
       .pipe(
         retry(3),
