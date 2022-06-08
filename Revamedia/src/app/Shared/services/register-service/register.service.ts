@@ -1,3 +1,8 @@
+/**
+ * @Author: Giorgi Amirajibi, ...
+ * @Contributor: Jarod Heng
+ */
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, retry, throwError, catchError } from 'rxjs';
