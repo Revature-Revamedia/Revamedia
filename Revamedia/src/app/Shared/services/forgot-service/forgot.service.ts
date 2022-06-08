@@ -10,7 +10,6 @@ export class ForgotService {
 
   constructor(private http: HttpClient) { }
 
-
   sendEmailUrl = environment.apiBaseUrl + "/forgot/email";
   sendEmail(sendEmailForm: NgForm){
     let email = sendEmailForm.value.email;
