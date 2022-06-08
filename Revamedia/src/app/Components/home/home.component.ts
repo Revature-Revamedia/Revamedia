@@ -289,6 +289,10 @@ export class HomeComponent implements OnInit {
   public toggleHideComments(): void {
     this.viewComments = !this.viewComments;
   }
+  public toggleComments():void{
+    this.addComment = !this.addComment;
+  }
+
 
   // Add comment
   public addComment = false;
