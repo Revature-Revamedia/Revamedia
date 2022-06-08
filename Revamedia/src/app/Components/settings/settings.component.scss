@@ -166,7 +166,18 @@ $darkgrey: rgb(61,66,74);
 }
 @media screen and (max-width: 800px) {
   .settings-page{
-    margin-left: 10%;
+    margin-left: 0;
+    margin-top: 10%;
+    .settings{
+      .user-settings{
+        width: 90%;
+      }
+
+      .system-settings{
+        width: 90%;
+        padding: 2rem;
+      }
+    }
   }
 }
 
@@ -336,7 +347,7 @@ $darkgrey: rgb(61,66,74);
 // media queries for modals
 @media screen and (max-width: 800px) {
   .modal{
-    width: 85%;
+    width: 90%;
     .form-header{
       h3{
         font-size: 2rem;
@@ -346,15 +357,15 @@ $darkgrey: rgb(61,66,74);
 }
 
 .openModal{
-  top: 5%;
-  left: 20%;
+  top: 10%;
+  left: 5%;
   transform: scale(1);
 }
 // media queries for modals
 @media screen and (max-width: 800px) {
   .openModal{
-    top: 5%;
-    left: 10%;
+    top: 10%;
+    left: 5%;
   }
 }
 

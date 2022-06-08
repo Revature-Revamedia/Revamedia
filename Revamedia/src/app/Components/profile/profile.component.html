@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <h4 class="profile-posts-title" id="setBackgroundColor">{{ user?.username }}'s Posts</h4>
+    <h4 class="profile-posts-title" id="setBackgroundColor" *ngIf="user?.postsOwned.length != 0">{{ user?.username }}'s Posts</h4>
     <div class="users-post">
       <div class="post" *ngFor="let post of user?.postsOwned">
         <img src="{{ post?.image }}" alt="POST">
@@ -73,7 +73,7 @@
         </div>
       </div>
     <div class="noFollowers" *ngIf="user?.followers.length == 0">
-      <h4>0 followers</h4>
+      <h4>0 Followers</h4>
     </div>
   </div>
 </div>
@@ -97,7 +97,7 @@
         </div>
     </div>
     <div class="noFollowing" *ngIf="user?.following.length == 0">
-      <h4>0 following</h4>
+      <h4>0 Following</h4>
     </div>
   </div>
 </div>

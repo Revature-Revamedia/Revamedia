@@ -777,16 +777,52 @@ $darkgrey: rgb(61,66,74);
       }
     }
   }
+  @media screen and (max-width: 800px) {
+    .noPost{
+      width: 100%;
+      display:flex;
+      align-items: center;
+      justify-content:center;
+      .content{
+        width: 90%;
+        padding: 2rem;
+        margin: 5rem 0;
+        border-radius: 8px;
+        background-color: #FBAB7E;
+        background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+        box-shadow: rgba(0, 0, 0, 0.075) 0px 3px 8px;
+      }
+    }
+  }
+
 }
 // media queries for homepage
 @media screen and (max-width: 800px) {
   .home-page{
-    margin-left: 10%;
+    margin-left: 0;
+    margin-top: 10%;
     .main{
       .post-data{
         width: 90%;
         margin: 2rem 0;
       }
+    }
+  }
+}
+@media screen and (max-width: 800px) {
+  .noPost{
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    .content{
+      width: 90%;
+      padding: 2rem;
+      margin: 0;
+      border-radius: 8px;
+      background-color: #FBAB7E;
+      background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+      box-shadow: rgba(0, 0, 0, 0.075) 0px 3px 8px;
     }
   }
 }
@@ -986,7 +1022,7 @@ $darkgrey: rgb(61,66,74);
 // media queries for modals
 @media screen and (max-width: 800px) {
   .modal{
-    width: 85%;
+    width: 90%;
     .form-header{
       h3{
         font-size: 2rem;
@@ -997,13 +1033,13 @@ $darkgrey: rgb(61,66,74);
 
 .openModal{
   top: 9%;
-  left: 20%;
+  left: 5%;
   transform: scale(1);
 }
 // media queries for modals
 @media screen and (max-width: 800px) {
   .openModal{
     top: 5%;
-    left: 10%;
+    left: 5%;
   }
 }

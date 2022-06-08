@@ -285,14 +285,14 @@ $darkgrey: rgb(61,66,74);
 // media queries for modals
 @media screen and (max-width: 800px) {
   .openModal{
-    top: 10%;
+    top: 20%;
     right: 5%;
   }
 }
 // media queries for modals
 @media screen and (max-width: 800px) {
   .modal{
-    width: 85%;
+    width: 90%;
     .form-header{
       h3{
         font-size: 2rem;
@@ -302,8 +302,8 @@ $darkgrey: rgb(61,66,74);
 }
 @media screen and (max-width: 800px) {
   .profile-page{
-    margin-left: 10%;
-
+    margin-left: 0;
+    margin-top: 10%;
     .profile{
       width: 100%;
       // Profile header start
