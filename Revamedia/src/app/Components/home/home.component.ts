@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars,faFaceGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
 import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
 import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
 import { HttpClient } from '@angular/common/http';
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
 
         let f: any;
         this.posts = [];
-        for(f of response.following) {
+        for (f of response.following) {
           this.posts.push(f.followedId.postsOwned);
         }
         console.log(this.posts);
@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit {
 
   // // Back End Work
   public
-  (currentPost: any): void {
+    (currentPost: any): void {
     this.userPostsService.updatePostLikes(this.postToLike).subscribe(
       (data) => {
         // console.log(data.body.likes.length);
@@ -164,7 +164,7 @@ export class HomeComponent implements OnInit {
   // }
 
   // Add Comment
-  public onAddComment(commentForm: NgForm): void{
+  public onAddComment(commentForm: NgForm): void {
     this.CommentService.addComment(commentForm.value).subscribe(
       (response: any) => {
         // console.log(response);
@@ -194,7 +194,7 @@ export class HomeComponent implements OnInit {
     )
   }
   // DELETE REPLY
-  public onDeleteComment(id: number){
+  public onDeleteComment(id: number) {
     this.CommentService.deleteComment(id).subscribe(
       (response: any) => {
         //console.log(response);
@@ -228,7 +228,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         console.log(response);
         this.closeModal('add', 'post-modal');
-        this.getCurrentUserData();
+        // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -243,7 +243,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         console.log(response);
         this.closeModal('edit', 'post-modal');
-        this.getCurrentUserData();
+        // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -251,11 +251,11 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  onDeletePost(id: number){
+  onDeletePost(id: number) {
     this.userPostsService.deletePost(id).subscribe(
       (response: any) => {
         this.closeModal('delete', 'post-modal');
-        this.getCurrentUserData();
+        // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -294,7 +294,7 @@ export class HomeComponent implements OnInit {
   //   console.log(this.posts);
 
   // Add REPLY
-  public onAddReply(replyForm: NgForm): void{
+  public onAddReply(replyForm: NgForm): void {
     this.CommentService.addReply(replyForm.value).subscribe(
       (response: any) => {
         // console.log(response);
@@ -310,7 +310,7 @@ export class HomeComponent implements OnInit {
 
 
   // EDIT REPLY START
-  public onEditReply(replyForm: NgForm): void{
+  public onEditReply(replyForm: NgForm): void {
     let message = replyForm.value.message;
     let replyId = replyForm.value.reply_id;
     this.CommentService.updateReply(message, replyId).subscribe(
@@ -327,7 +327,7 @@ export class HomeComponent implements OnInit {
   // EDIT REPLY END
 
   // DELETE REPLY
-  public onDeleteReply(id: number){
+  public onDeleteReply(id: number) {
     this.CommentService.deleteReply(id).subscribe(
       (response: any) => {
         // console.log(response);
@@ -422,7 +422,7 @@ export class HomeComponent implements OnInit {
       this.deleteReply = object;
       this.deletePost = object;
     }
-    if(modalType === "add"){
+    if (modalType === "add") {
       this.post = object;
     }
   }
@@ -455,7 +455,7 @@ export class HomeComponent implements OnInit {
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
-    if(query === ""){
+    if (query === "") {
       this.getGifs("happy");
     }
   }
@@ -466,7 +466,7 @@ export class HomeComponent implements OnInit {
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
-    if(query === ""){
+    if (query === "") {
       this.getGifs("happy");
     }
   }

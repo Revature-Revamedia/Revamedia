@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
 import { faSun, faMoon, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from 'app/Shared/services/user-service/user.service';
+import { UserService } from '../../Shared/services/user-service/user.service';
+
 
 @Component({
   selector: 'app-settings',
