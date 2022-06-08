@@ -1,3 +1,8 @@
+/**
+ * @Author: Giorgi Amirajibi, ...
+ * @Contributor: Jarod Heng
+ */
+
 import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +22,7 @@ export class AuthenticationService {
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
 
   checkLoginStatus(): boolean {
-    var loginCookie = sessionStorage.getItem('LoggedIn');
+    var loginCookie = sessionStorage.getItem('loggedIn');
     if (loginCookie == "1") {
       return true;
     } else {
@@ -39,18 +44,14 @@ export class AuthenticationService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      'withCredentials': true
+      'withCredentials': true, 'observe': `response`
     }).subscribe((response: any) => {
-      //If login was successful store the user's info in session storage
-      // user = response;
-      // sessionStorage.setItem('userid', response.userId.toString());
-      // sessionStorage.setItem('username', response.username);
-      // sessionStorage.setItem('email', response.email);
-      // sessionStorage.setItem('firstname', response.firstName);
-      // sessionStorage.setItem('lastname', response.lastName);
-      // sessionStorage.setItem('phone', response.phone);
+      console.log(response);
+      sessionStorage.setItem('userId', response.body.userId.toString());
+      sessionStorage.setItem('username', response.body.username);
+      sessionStorage.setItem('loggedIn', "1");
+      console.log(sessionStorage.getItem('username'));
 
-      sessionStorage.setItem('LoggedIn', '1');
       this.loggedIn.next(true);
       this.router.navigateByUrl('/home');
     }, (error: HttpErrorResponse) => {
