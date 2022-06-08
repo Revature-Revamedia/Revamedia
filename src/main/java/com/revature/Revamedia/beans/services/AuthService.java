@@ -51,6 +51,7 @@ public class AuthService {
         else {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+
     }
 
     /**
@@ -66,7 +67,7 @@ public class AuthService {
                 HttpHeaders headers= new HttpHeaders();
                 headers.add("Set-Cookie", "user_session="+ headerValue +"; Max-Age=86400; Path=/;");
                 //If the give password matches hashed password in DB t
-                return new ResponseEntity<>(jwt.verify(headerValue), headers, HttpStatus.OK);
+                return ResponseEntity.ok().headers(headers).build();
             } else {
                 //throw new UnauthorizedUserException("Unauthorized!");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

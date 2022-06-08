@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
+<<<<<<< HEAD
     this.getCurrentUserData();
     this.getNextUser(); // Temp just to get another user to show
     this.openingAnimation();
@@ -92,6 +93,53 @@ export class HomeComponent implements OnInit {
   //     }
   //   );
   // }
+=======
+    this.posts = [];
+    this.getCurrentUserData();
+    // this.userService.getCurrentUser().subscribe({
+    //   next: response => {
+    //     this.user = response;
+
+    //     let f: any;
+    //     this.posts = [];
+    //     for(f of response.following) {
+    //       this.posts.push(f.followedId.postsOwned);
+    //     }
+    //     this.posts = this.posts.flat();
+    //     //b.date.getTime() - a.date.getTime();
+
+    //   },
+    //   error: err => {
+    //     console.error(err);
+    //   }
+    // });
+  }
+
+  // GET CURRENT USER
+  public getCurrentUserData(){
+    this.userService.getUser().subscribe(
+      (response: any) => {
+        this.user = response;
+        let userPosts = [];
+        userPosts = response?.postsOwned;
+        let followingPost = [];
+        for(let f of response?.following) {
+          followingPost = f?.followedId?.postsOwned;
+        }
+        this.posts = followingPost.concat(userPosts);
+        // for(let p of response?.postsOwned){
+        //   this.posts.push(p);
+        //   this.posts = this.posts.flat();
+        // }
+        this.openingAnimation();
+        // console.log(this.posts);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    );
+  }
+>>>>>>> parent of 3f6aaa4 (Merge branch 'dev' of https://github.com/Revature-Revamedia/Revamedia into dev)
 
   // // Back End Work
   public(currentPost: any): void {
@@ -170,9 +218,12 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         // console.log(response);
         // console.log(commentForm.value);
+<<<<<<< HEAD
         // this.getCurrentUserData();
+=======
+        this.getCurrentUserData();
+>>>>>>> parent of 3f6aaa4 (Merge branch 'dev' of https://github.com/Revature-Revamedia/Revamedia into dev)
         this.addComment = false;
-        this.userService.setCurrentUser(response.body);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -185,9 +236,12 @@ export class HomeComponent implements OnInit {
   public onEditComment(commentForm: NgForm): void{
     this.CommentService.updateComment(commentForm.value).subscribe(
       (response: any) => {
+<<<<<<< HEAD
         // this.getCurrentUserData();
+=======
+        this.getCurrentUserData();
+>>>>>>> parent of 3f6aaa4 (Merge branch 'dev' of https://github.com/Revature-Revamedia/Revamedia into dev)
         this.closeModal('edit', 'comment-modal');
-        this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -199,9 +253,12 @@ export class HomeComponent implements OnInit {
     this.CommentService.deleteComment(id).subscribe(
       (response: any) => {
         //console.log(response);
+<<<<<<< HEAD
         // this.getCurrentUserData();
+=======
+        this.getCurrentUserData();
+>>>>>>> parent of 3f6aaa4 (Merge branch 'dev' of https://github.com/Revature-Revamedia/Revamedia into dev)
         this.closeModal('delete', 'comment-modal');
-        this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -282,7 +339,7 @@ export class HomeComponent implements OnInit {
   public faFaceGrinTongueSquint = faFaceGrinTongueSquint; //icon
 
   // hide Comments
-  public viewComments = true;
+  public viewComments = false;
   public toggleHideComments(): void {
     this.viewComments = !this.viewComments;
   }

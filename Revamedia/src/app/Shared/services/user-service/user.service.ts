@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http:HttpClient, private userPostsService:UserPostsService) {
     this.userSubject = new BehaviorSubject<any>(this.user);
-    this.getUserById(sessionStorage.getItem('userId')).subscribe((response: any) => {
+    this.getUserById(1).subscribe((response: any) => {
       console.log("1: ", response.body);
       this.user = response.body;
       console.log("userservice: ", this.user);
@@ -84,11 +84,15 @@ export class UserService {
   }
 
   public getUser() : Observable<any> {
+<<<<<<< HEAD
     return this.http.get<any>(`${this.userURL}/${sessionStorage.getItem('userId')}`);
   }
 
   public getProfile(id: number) : Observable<any> {
     return this.http.get<any>(`${this.userURL}/${id}`);
+=======
+    return this.http.get<any>(`${this.userURL}/1`);
+>>>>>>> parent of 3f6aaa4 (Merge branch 'dev' of https://github.com/Revature-Revamedia/Revamedia into dev)
   }
 
   public updateUser(user: any, id: number) : Observable<any> {

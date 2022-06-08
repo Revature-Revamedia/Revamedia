@@ -1,4 +1,4 @@
-package com.revature.Revamedia.beans.services;
+package com.revature.Revamedia.beans;
 
 import com.revature.Revamedia.beans.repositories.UserRepliesRepository;
 import com.revature.Revamedia.beans.services.UserCommentsService;

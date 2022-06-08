@@ -18,7 +18,7 @@ describe('RegisterService', () => {
     });
     registerService = TestBed.inject(RegisterService);
 
-    baseUrl = registerService.registerUrl;
+    baseUrl = registerService.baseUrl;
   });
 
   // Smoke test
@@ -48,7 +48,7 @@ describe('RegisterService', () => {
       };
     });
 
-    it("Should create and return an observable", () => {
+    fit("Should create and return an observable", () => {
       let returnedObservable: Observable<any> = registerService.createUser(body, options);
 
       expect(returnedObservable).toBeInstanceOf(Observable);
