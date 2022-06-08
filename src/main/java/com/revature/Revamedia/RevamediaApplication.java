@@ -43,7 +43,6 @@ public class RevamediaApplication {
                 UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
                 UserFollowsService userFollowsService = context.getBean(UserFollowsService.class);
 
-
         }
 }
 
