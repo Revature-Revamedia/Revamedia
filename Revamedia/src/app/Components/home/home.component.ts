@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     this.getGifs('funny');
     this.posts = [];
     this.getCurrentUserData();
-    this.getNextUser();
+    this.getNextUser(); // Temp just to get another user to show
     this.openingAnimation();
   }
 
