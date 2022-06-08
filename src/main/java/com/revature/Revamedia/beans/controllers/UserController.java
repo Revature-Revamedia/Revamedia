@@ -96,7 +96,7 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("test fail");
     }
-    
+
     public void setEncoder(BCryptPasswordEncoder encoder) {
         this.encoder = encoder;
     }
