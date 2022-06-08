@@ -6,14 +6,19 @@
 
 package com.revature.Revamedia;
 
+import com.google.zxing.WriterException;
 import com.revature.Revamedia.beans.services.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.io.IOException;
+
+import static com.revature.Revamedia.beans.services.TwoFactorAuthentication.getTOTPCode;
+
 @SpringBootApplication(scanBasePackages = "com.revature.Revamedia.beans")
 public class RevamediaApplication {
-        public static void main(String[] args) {
+        public static void main(String[] args) throws IOException, WriterException {
 
                 ConfigurableApplicationContext context = SpringApplication.run(RevamediaApplication.class, args);
                 UserPostsService userPostsService = context.getBean(UserPostsService.class);
@@ -24,9 +29,25 @@ public class RevamediaApplication {
                 UserGroupsService userGroupsService = context.getBean(UserGroupsService.class);
                 UserConversationsService userConversationsService = context.getBean(UserConversationsService.class);
                 UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
-
-
                 SendEmailService sendEmailService = context.getBean(SendEmailService.class);
+
+                String secretKey = "H6IBCSTYM52GL33OKU5INPCTXUDNGCO5";
+                String email = "nolovexx@gmail.com";
+                String companyName = "Revamedia";
+                String barCodeUrl = TwoFactorAuthentication.getGoogleAuthenticatorBarCode(secretKey, email, companyName);
+                TwoFactorAuthentication.createQRCode(barCodeUrl,"/Users/Laflammex/IdeaProjects/Project3/QRCode.png",400,400);
+
+                String lastCode = null;
+                while (true) {
+                        String code = getTOTPCode(secretKey);
+                        if (!code.equals(lastCode)) {
+                                System.out.println(code);
+                        }
+                        lastCode = code;
+                        try {
+                                Thread.sleep(1000);
+                        } catch (InterruptedException e) {};
+                }
         }
 }
 
