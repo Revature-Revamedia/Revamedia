@@ -92,18 +92,37 @@ $darkgrey: rgb(61,66,74);
       .right-card{
         display: flex;
         flex-direction: row;
-        button{
-          border: none;
-          outline: none;
-          background: $blue;
-          color: black;
-          font-size: 1.3rem;
-          padding: .2rem 1rem;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: all .3s ease-in-out;
-          &:hover{
-            background: $orange;
+        .right-card-container{
+          display: flex;
+          flex-direction: row;
+          button{
+            border: none;
+            outline: none;
+            background: $blue;
+            color: black;
+            font-size: 1rem;
+            padding: .2rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
+            &:hover{
+              background: $orange;
+            }
+          }
+          #unFollow {
+            margin-left: 1rem;
+            border: none;
+            outline: none;
+            background: rgb(193, 0, 0);
+            color: white;
+            font-size: 1rem;
+            padding: .2rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
+            &:hover{
+              background: rgb(150, 0, 0);
+            }
           }
         }
         h5{
@@ -310,15 +329,18 @@ $darkgrey: rgb(61,66,74);
       width: 100%;
       // Profile header start
       .profile-header{
+        width: 100%;
         padding: .5rem;
         .left-card{
+          display: flex;
+          flex-direction: column;
           img{
             width: 3rem;
             height: 3rem;
           }
           h5{
             margin-left: .5rem;
-            font-size: .9rem;
+            font-size: 1rem;
             color: $darkgrey;
           }
         }
@@ -330,6 +352,20 @@ $darkgrey: rgb(61,66,74);
             margin-left: 0;
             margin-bottom: .3rem;
             font-size: 1.1rem;
+          }
+          .right-card-container{
+            display: flex;
+            flex-direction: column;
+            button{
+              margin-bottom: .5rem;
+              font-size: 1rem;
+              padding: .2rem 0;
+              border-radius: 4px;
+              width: 7rem;
+            }
+            #unFollow {
+              margin-left: 0;
+            }
           }
         }
       }

@@ -132,14 +132,6 @@ public class RevamediaApplication {
                 follow1.setDateFollowed(new Timestamp(System.currentTimeMillis()));
                 leo.addFollower(follow1);
                 userFollowsService.save(follow1);
-
-                UserFollows follow2 = new UserFollows();
-                follow2.setFollowedId(userService.getUserById(1));
-                follow2.setDateFollowed(new Timestamp(System.currentTimeMillis()));
-                leo.addFollower(follow2);
-                userFollowsService.save(follow2);
-                userService.update(leo);
-
-
+                
         }
 }

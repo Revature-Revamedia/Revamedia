@@ -49,15 +49,14 @@ export class HomeComponent implements OnInit {
     this.userService.getUser().subscribe(
       (response: any) => {
         this.user = response;
-        let f: any;
         let userPosts: any[] = [];
         let followingPosts: any[] = [];
-        for(f of response.following) {
-          //this.posts.push(f.followedId.postsOwned);
-          userPosts = f.followedId.postsOwned;
+        this.posts = [];
+        for(let f of response.following) {
+          this.posts.push(f.followedId.postsOwned);
+          // userPosts = f.followedId.postsOwned;
         }
-        this.posts = followingPosts.concat(userPosts);
-        console.log(this.posts);
+        // this.posts = followingPosts.concat(userPosts);
         // for(let p of response?.postsOwned){
         //   this.posts.push(p);
         //   this.posts = this.posts.flat();
@@ -69,7 +68,6 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     );
-    this.openingAnimation();
   }
 
   // GET CURRENT USER
@@ -172,7 +170,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         // console.log(response);
         // console.log(commentForm.value);
-        //this.getCurrentUserData();
+        // this.getCurrentUserData();
         this.addComment = false;
         this.userService.setCurrentUser(response.body);
       },
@@ -187,7 +185,7 @@ export class HomeComponent implements OnInit {
   public onEditComment(commentForm: NgForm): void{
     this.CommentService.updateComment(commentForm.value).subscribe(
       (response: any) => {
-        //this.getCurrentUserData();
+        // this.getCurrentUserData();
         this.closeModal('edit', 'comment-modal');
         this.userService.setCurrentUser(response.body.data);
       },
@@ -201,7 +199,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.deleteComment(id).subscribe(
       (response: any) => {
         //console.log(response);
-        //this.getCurrentUserData();
+        // this.getCurrentUserData();
         this.closeModal('delete', 'comment-modal');
         this.userService.setCurrentUser(response.body.data);
       },
@@ -232,7 +230,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         // console.log(response);
         // console.log(replyForm.value);
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.addReply = false;
       },
       (error: HttpErrorResponse) => {
@@ -249,7 +247,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.updateReply(message, replyId).subscribe(
       (response: any) => {
         // console.log(response);
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.closeModal('edit', 'reply-modal');
       },
       (error: HttpErrorResponse) => {
@@ -264,7 +262,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.deleteReply(id).subscribe(
       (response: any) => {
         // console.log(response);
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.closeModal('delete', 'reply-modal');
       },
       (error: HttpErrorResponse) => {
