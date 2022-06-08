@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { CommentService } from './comment.service';
 
-fdescribe('CommentService', () => {
+describe('CommentService', () => {
   let service: CommentService;
   let baseUrl: string;
   let options: object = {'withCredentials': true, 'observe': `response`};
