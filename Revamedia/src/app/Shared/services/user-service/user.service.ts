@@ -84,11 +84,20 @@ export class UserService {
   }
 
   public getUser() : Observable<any> {
-    return this.http.get<any>(`${this.userURL}/5`);
+    return this.http.get<any>(`${this.userURL}/${sessionStorage.getItem('userId')}`);
+  }
+
+  public getProfile(id: number) : Observable<any> {
+    return this.http.get<any>(`${this.userURL}/${id}`);
   }
 
   public updateUser(user: any, id: number) : Observable<any> {
     return this.http.put<any>(`${this.userURL}/update/${id}`, user);
+  }
+
+  // FOLLOW
+  public followUser(Follow: any) : Observable<any> {
+    return this.http.post<any>(`${this.userURL}/userFollows`, Follow);
   }
 
 }
