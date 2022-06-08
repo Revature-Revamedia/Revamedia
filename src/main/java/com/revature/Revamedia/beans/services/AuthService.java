@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
  * @Contributor: Kenneth Strohm, Randall Hale
@@ -39,9 +41,7 @@ public class AuthService {
             user.setFirstName(userRegisterDto.getFirstName());
             user.setLastName(userRegisterDto.getLastName());
             user.setEmail(userRegisterDto.getEmail());
-            System.out.println("User in register");
-            System.out.println(user);
-            System.out.println(ResponseEntity.ok(user));
+            user.setDateCreated(new Timestamp(System.currentTimeMillis()));
             userService.save(user);
             return ResponseEntity.ok().build();
         }
