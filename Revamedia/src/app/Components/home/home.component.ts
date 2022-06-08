@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
-    this.posts = [];
     this.getCurrentUserData();
     this.getNextUser(); // Temp just to get another user to show
     this.openingAnimation();

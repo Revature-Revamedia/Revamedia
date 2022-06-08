@@ -5,8 +5,8 @@
       <h3>Revamedia</h3>
       <div class="page-subTitle">
         <div class="user">
-          <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
-          <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(user?.userId)">
+          <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
+          <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(user?.userId)">
           <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
         </div>
       </div>
@@ -184,7 +184,7 @@
     <!-- post end -->
 
       <!-- NO POST AVAILABLE START-->
-      <div class="noPost" *ngIf="posts.length == 0">
+      <div class="noPost" *ngIf="posts.length === 0">
         <h1>No Post</h1>
         <p>Seems like there are no posts available to show</p>
         <p>Sorry for the inconvience.</p>

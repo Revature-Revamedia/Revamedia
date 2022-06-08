@@ -84,7 +84,7 @@ export class UserService {
   }
 
   public getUser() : Observable<any> {
-    return this.http.get<any>(`${this.userURL}/2`);
+    return this.http.get<any>(`${this.userURL}/1`);
   }
 
   public getProfile(id: number) : Observable<any> {

@@ -4,8 +4,8 @@
     <h3>Revamedia</h3>
     <div class="page-subTitle">
       <div class="user">
-        <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-        <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
+        <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
+        <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
         <span><p>{{ user?.username }}</p>'s Profile</span>
       </div>
     </div>
@@ -16,8 +16,8 @@
   <div class="profile" id="profile">
     <div class="profile-header" id="setBackgroundColor">
       <div class="left-card">
-        <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}">
-        <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic">
+        <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}">
+        <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic">
         <h5>{{ user?.username }}</h5>
       </div>
 
@@ -41,9 +41,9 @@
     </div>
 
     <!-- NO POST AVAILABLE START-->
-    <div class="noPost" *ngIf="user?.postsOwned.length === 0">
+    <div class="noPost" *ngIf="user?.postsOwned.length == 0">
       <h1>No Post</h1>
-      <p>Seems like there are no posts available to show.</p>
+      <p>Seems like {{ user?.username }} doesn't have any posts.</p>
     </div>
     <!-- NO POST AVAILABLE END-->
   </div>
@@ -60,11 +60,11 @@
     <h3>Followers</h3>
     <span (click)="closeModal('followers')">x</span>
   </div>
-  <div class="modal-body" *ngIf="user?.followers.length > 0">
+  <div class="modal-body">
     <div class="follower" *ngFor="let follower of user?.followers">
         <div class="follower-data">
-          <img src="{{follower?.followerId?.profilePicture }}" *ngIf="follower?.followerId?.profilePicture !== ''" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
-          <img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg" *ngIf="follower?.followerId?.profilePicture === ''" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
+          <img src="{{follower?.followerId?.profilePicture }}" *ngIf="follower?.followerId?.profilePicture != null" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
+          <img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg" *ngIf="follower?.followerId?.profilePicture == null" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
           <h5 (click)="goToProfile(follower?.followedId?.userId)">{{ follower?.followerId?.username }}</h5>
         </div>
         <div class="follow-option">
@@ -73,7 +73,7 @@
         </div>
       </div>
     <div class="noFollowers" *ngIf="user?.followers.length == 0">
-      <h4>Nobody is following this account</h4>
+      <h4>0 followers</h4>
     </div>
   </div>
 </div>
@@ -85,7 +85,7 @@
     <h3>Following</h3>
     <span (click)="closeModal('following')">x</span>
   </div>
-  <div class="modal-body"  *ngIf="user?.following.length != 0">
+  <div class="modal-body">
     <div class="following" *ngFor="let following of user?.following">
         <div class="following-data">
           <img src="{{following?.followedId?.profilePicture }}" *ngIf="following?.followedId?.profilePicture !== ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
@@ -97,7 +97,7 @@
         </div>
     </div>
     <div class="noFollowing" *ngIf="user?.following.length == 0">
-      <h4>Don't follow anyone.</h4>
+      <h4>0 following</h4>
     </div>
   </div>
 </div>
