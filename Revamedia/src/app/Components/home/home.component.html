@@ -16,8 +16,16 @@
   <!-- Page title End -->
 
   <!-- main feed start -->
+  <div class="noPost" *ngIf="posts.length < 1">
+    <div class="content">
+      <h1>No Post</h1>
+      <p>Seems like there are no posts available to show.</p>
+      <span>Be the first to make a post.</span>
+    </div>
+  </div>
   <div class="main" id="main">
-
+      <!-- NO POST AVAILABLE START-->
+      <!-- NO POST AVAILABLE END-->
       <!-- post start -->
       <div class="post-data" *ngFor="let p of posts">
 
@@ -181,16 +189,7 @@
         </div>
 
       </div>
-    <!-- post end -->
-
-      <!-- NO POST AVAILABLE START-->
-      <div class="noPost" *ngIf="posts.length === 0">
-        <h1>No Post</h1>
-        <p>Seems like there are no posts available to show</p>
-        <p>Sorry for the inconvience.</p>
-        <span>Be the first to make a post.</span>
-      </div>
-      <!-- NO POST AVAILABLE END-->
+      <!-- post end -->
   </div>
   <!-- main feed end -->
 </div>

@@ -49,10 +49,7 @@ export class HomeComponent implements OnInit {
     this.userService.getUser().subscribe(
       (response: any) => {
         this.user = response;
-        console.log(response);
-
         let f: any;
-        this.posts = [];
         let userPosts: any[] = [];
         let followingPosts: any[] = [];
         for(f of response.following) {
@@ -60,6 +57,7 @@ export class HomeComponent implements OnInit {
           userPosts = f.followedId.postsOwned;
         }
         this.posts = followingPosts.concat(userPosts);
+        console.log(this.posts);
         // for(let p of response?.postsOwned){
         //   this.posts.push(p);
         //   this.posts = this.posts.flat();

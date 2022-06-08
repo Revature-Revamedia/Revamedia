@@ -734,7 +734,22 @@ $darkgrey: rgb(61,66,74);
       // COMMENT DISPLAY END
     }
 
-    .noPost{
+    @media screen and (max-width: 800px) {
+      .noPost{
+        width: 80%;
+        margin: 1rem 0;
+        border-radius: 8px;
+        text-align: center;
+      }
+    }
+  }
+  // main end
+  .noPost{
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    .content{
       width: 60%;
       padding: 4rem 2rem;
       margin: 5rem 0;
@@ -761,16 +776,7 @@ $darkgrey: rgb(61,66,74);
         color: $darkgrey;
       }
     }
-    @media screen and (max-width: 800px) {
-      .noPost{
-        width: 80%;
-        margin: 1rem 0;
-        border-radius: 8px;
-        text-align: center;
-      }
-    }
   }
-  // main end
 }
 // media queries for homepage
 @media screen and (max-width: 800px) {

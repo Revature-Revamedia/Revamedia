@@ -43,11 +43,7 @@ public class RevamediaApplication {
                 UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
                 UserFollowsService userFollowsService = context.getBean(UserFollowsService.class);
 
-
-        }
-}
-
-/*                // KYLE
+                // KYLE
                 User kyle = new User();
                 kyle.setFirstName("Kyle");
                 kyle.setLastName("Plummer");
@@ -66,7 +62,7 @@ public class RevamediaApplication {
                 leo.setEmail("leoBarrientos02@gmail.com");
                 leo.setPassword("Password1!");
                 leo.setProfilePicture(
-                                "https://avatars.githubusercontent.com/u/77355023?s=400&u=149ab70c25dbfa4dbfb3afc5c5c9eabefe0f7c7c&v=4");
+                        "https://avatars.githubusercontent.com/u/77355023?s=400&u=149ab70c25dbfa4dbfb3afc5c5c9eabefe0f7c7c&v=4");
                 leo.setDateCreated(new Timestamp(System.currentTimeMillis()));
                 userService.save(leo);
 
@@ -99,7 +95,7 @@ public class RevamediaApplication {
                 comment1.setMessage("Awesome picture bro, i hope you enjoyed your time off.");
                 comment1.setDateCreated(new Timestamp(System.currentTimeMillis()));
                 comment1.setGiphyUrl(
-                                "https://media1.giphy.com/media/fpWxOVANhGVkwCFJor/giphy.gif?cid=ecf05e47capt30np9brv7c6kv0f0m9wyxgm0vqf89tdtj69w&rid=giphy.gif&ct=ts");
+                        "https://media1.giphy.com/media/fpWxOVANhGVkwCFJor/giphy.gif?cid=ecf05e47capt30np9brv7c6kv0f0m9wyxgm0vqf89tdtj69w&rid=giphy.gif&ct=ts");
                 userCommentsService.save(comment1);
                 post2.addComment(comment1);
                 userPostsService.save(post2);
@@ -109,10 +105,10 @@ public class RevamediaApplication {
                 reply1.setOwnerId(kyle);
                 reply1.setCommentId(comment1);
                 reply1.setMessage(
-                                "Thank you, but i believe you should be getting ready for your interview. Good luck!!");
+                        "Thank you, but i believe you should be getting ready for your interview. Good luck!!");
                 reply1.setDateCreated(new Timestamp(System.currentTimeMillis()));
                 reply1.setGiphyUrl(
-                                "https://media0.giphy.com/media/12XDYvMJNcmLgQ/giphy.gif?cid=ecf05e47wqxq3jqldfwi6vb0xt0fkvpf3k9w0lpp5uq24lyj&rid=giphy.gif&ct=g");
+                        "https://media0.giphy.com/media/12XDYvMJNcmLgQ/giphy.gif?cid=ecf05e47wqxq3jqldfwi6vb0xt0fkvpf3k9w0lpp5uq24lyj&rid=giphy.gif&ct=g");
                 comment1.addReply(reply1);
                 userRepliesService.save(reply1);
                 comment1.addReply(reply1);
@@ -130,20 +126,20 @@ public class RevamediaApplication {
                 userService.update(leo);
 
                 //Follows
-                 UserFollows follow1 = new UserFollows();
-                 follow1.setFollowedId(userService.getUserById(2));
-                 follow1.setFollowerId(userService.getUserById(1));
-                 follow1.setDateFollowed(new Timestamp(System.currentTimeMillis()));
-                 leo.addFollower(follow1);
-                 userFollowsService.save(follow1);
+                UserFollows follow1 = new UserFollows();
+                follow1.setFollowedId(userService.getUserById(2));
+                follow1.setFollowerId(userService.getUserById(1));
+                follow1.setDateFollowed(new Timestamp(System.currentTimeMillis()));
+                leo.addFollower(follow1);
+                userFollowsService.save(follow1);
 
-//                UserFollows follow2 = new UserFollows();
-//                follow2.setFollowedId(userService.getUserById(1));
-//                follow2.setDateFollowed(new Timestamp(System.currentTimeMillis()));
-//                leo.addFollower(follow2);
-//                userFollowsService.save(follow2);
-//                userService.update(leo);
+                UserFollows follow2 = new UserFollows();
+                follow2.setFollowedId(userService.getUserById(1));
+                follow2.setDateFollowed(new Timestamp(System.currentTimeMillis()));
+                leo.addFollower(follow2);
+                userFollowsService.save(follow2);
+                userService.update(leo);
+
 
         }
 }
-*/
