@@ -23,7 +23,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User getByUsername(String username);
 
-    @Query(value = "FROM User WHERE lower(username) LIKE :username% ")
+
+    @Query(value = "FROM User WHERE lower(username) LIKE :username% OR lower(first_name) LIKE :username% OR lower(last_name) LIKE :username%  ")
     List<User>searchByUsername(@Param("username") String username);
 
 }

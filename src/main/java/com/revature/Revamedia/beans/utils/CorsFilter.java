@@ -1,6 +1,6 @@
 /**
  * Author(s): @George Henderson
- * Contributor(s): @Jarod Heng
+ * Contributor(s): @Jarod Heng @Giorgi Amirajibi
  * Purpose: CorsFilter
  */
 package com.revature.Revamedia.beans.utils;
@@ -31,6 +31,7 @@ public class CorsFilter extends OncePerRequestFilter {
 
         String originHeader = request.getHeader("Origin");
 
+        // this header check is to handle some backend requests using the host header (namely password reset)
         if(request.getHeader("Origin") == null){
             originHeader = "http://";
             originHeader += request.getHeader("host");

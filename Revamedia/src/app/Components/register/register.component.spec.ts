@@ -20,7 +20,6 @@ describe('RegisterComponent', () => {
   });
 
   it('should create', () => {
-    
     expect(component.registerHandler).toBeTruthy();
   });
 });
