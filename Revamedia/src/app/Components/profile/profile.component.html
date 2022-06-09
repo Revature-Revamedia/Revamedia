@@ -22,16 +22,12 @@
       <div class="right-card">
         <!-- *ngIf="user?.username != currentUser?.username" -->
         <div class="right-card-container" *ngIf="user?.username != currentUser?.username">
-          <form #followForm="ngForm" (ngSubmit)="followUser(followForm)"
-          *ngIf="isFollowing == false"
-          >
+          <form #followForm="ngForm" (ngSubmit)="followUser(followForm)" *ngIf="isFollowing">
             <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followerId">
             <input type="hidden" ngModel="{{ user?.userId }}" name="followedId">
             <button>Follow</button>
           </form>
-          <form #unfollowForm="ngForm" (ngSubmit)="unfollowUser(unfollowForm)"
-          *ngIf="isFollowing == true"
-          >
+          <form #unfollowForm="ngForm" (ngSubmit)="unfollowUser(unfollowForm)" *ngIf="!isFollowing">
             <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followerId">
             <input type="hidden" ngModel="{{ user?.userId }}" name="followedId">
             <button id="unFollow">Unfollow</button>
@@ -73,12 +69,9 @@
     <div class="follower" *ngFor="let follower of user?.followers">
         <div class="follower-data">
           <img src="{{follower?.followerId?.profilePicture }}" alt="{{follower?.followerId?.username}}" (click)="goToProfile(follower?.followerId?.userId)">
-          <h5 (click)="goToProfile(follower?.followedId?.userId)">{{ follower?.followerId?.username }}</h5>
+          <h5>{{ follower?.followerId?.username }}</h5>
         </div>
-        <div class="follow-option">
-          <button id="unfollow">Unfollow</button>
-          <button >Follow Back</button>
-        </div>
+        <span (click)="goToProfile(follower?.followerId?.userId)">View Profile</span>
       </div>
     <div class="noFollowers" *ngIf="user?.followers.length == 0">
       <h4>0 Followers</h4>
@@ -99,9 +92,7 @@
           <img src="{{following?.followedId?.profilePicture }}" alt="{{following?.followedId?.username}}" (click)="goToProfile(following?.followedId?.userId)">
           <h5 (click)="goToProfile( following?.followedId?.userId )">{{ following?.followedId?.username }}</h5>
         </div>
-        <div class="follow-option">
-          <button id="unfollow">Unfollow</button>
-        </div>
+        <span (click)="goToProfile(following?.followedId?.userId)">View Profile</span>
     </div>
     <div class="noFollowing" *ngIf="user?.following.length == 0">
       <h4>0 Following</h4>
