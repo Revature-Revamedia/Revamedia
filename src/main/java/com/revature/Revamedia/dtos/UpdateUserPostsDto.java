@@ -1,7 +1,5 @@
 package com.revature.Revamedia.dtos;
 
-import java.sql.Timestamp;
-
 public class UpdateUserPostsDto {
     private Integer postId;
     private String message;

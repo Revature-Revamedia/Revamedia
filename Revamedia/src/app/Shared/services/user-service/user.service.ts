@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserPostsService } from '../user-posts-service/user-posts.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ import { UserPostsService } from '../user-posts-service/user-posts.service';
 export class UserService {
   private user: any;
   private userSubject: BehaviorSubject<any>;
+
+  private baseUrl = `${environment.apiBaseUrl}`;
 
   constructor(private http: HttpClient, private userPostsService: UserPostsService) {
     this.userSubject = new BehaviorSubject<any>(this.user);
@@ -23,7 +26,7 @@ export class UserService {
     //sessionStorage.getItem('userid')
   }
 
-  userURL: string = "http://localhost:8080/user"
+  userURL: string = `${this.baseUrl}/user`;
 
   getCurrentUser(): BehaviorSubject<any> {
     return this.userSubject;
@@ -90,7 +93,7 @@ export class UserService {
   public getProfile(id: number) : Observable<any> {
     return this.http.get<any>(`${this.userURL}/${id}`);
   }
- 
+
 
   public updateUser(user: any, id: number): Observable<any> {
     return this.http.put<any>(`${this.userURL}/update/${id}`, user);
@@ -98,7 +101,13 @@ export class UserService {
 
   // FOLLOW
   public followUser(Follow: any) : Observable<any> {
+    console.log('information from form', Follow);
     return this.http.post<any>(`${this.userURL}/userFollows`, Follow);
+  }
+  public unfollowUser(unfollow: any) : Observable<any> {
+    console.log('information from form', unfollow);
+    console.log(`${this.userURL}/deleteFollowing`);
+    return this.http.post<any>(`${this.userURL}/deleteFollowing`, unfollow);
   }
 
 }

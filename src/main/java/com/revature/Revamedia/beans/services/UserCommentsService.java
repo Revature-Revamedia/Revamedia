@@ -1,12 +1,11 @@
 package com.revature.Revamedia.beans.services;
 
-import java.util.List;
-
+import com.revature.Revamedia.beans.repositories.UserCommentsRepository;
+import com.revature.Revamedia.entities.UserComments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revature.Revamedia.beans.repositories.UserCommentsRepository;
-import com.revature.Revamedia.entities.UserComments;
+import java.util.List;
 
 @Service
 public class UserCommentsService {

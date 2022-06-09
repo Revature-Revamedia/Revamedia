@@ -5,11 +5,8 @@
  */
 package com.revature.Revamedia.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -101,16 +98,17 @@ public class UserReplies implements Serializable {
     }
 
     public String getGiphyUrl() {
-        return replyGiphyUrl;
+        return giphyUrl;
     }
 
     public void setGiphyUrl(String giphyUrl) {
-        this.replyGiphyUrl = giphyUrl;
+        this.giphyUrl = giphyUrl;
     }
 
     @Override
     public String toString() {
         return "UserReplies{" +
+
                 "replyId=" + replyId +
                 ", ownerId=" + replyOwnerId +
                 ", message='" + replyMessage + '\'' +
