@@ -1,6 +1,5 @@
 package com.revature.Revamedia.beans.controllers;
 
-
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.AuthDto;
 import com.revature.Revamedia.dtos.UpdateUserDto;
@@ -21,10 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
 public class UserController {
+  
     //Initialize Services
     private final UserService userService;
     private final UserFollowsService userFollowsService;
-
     BCryptPasswordEncoder encoder;
 
     @Autowired
@@ -39,23 +38,24 @@ public class UserController {
 
 
     @PostMapping("/userFollows")
-    public ResponseEntity<String> startedFollowing(@RequestBody UserFollowDto ufdto){
+    public ResponseEntity<User> startedFollowing(@RequestBody UserFollowDto ufdto){
         User follower = userService.getUserById(ufdto.getFollowerId());
         User followed = userService.getUserById(ufdto.getFollowedId());
         UserFollows userFollows = new UserFollows(follower, followed);
         for(UserFollows uf : follower.getFollowing()){
             System.out.println("list user is following:" + uf.getFollowedId());
             if(uf.getFollowedId().getUserId().equals(followed.getUserId())){
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("You are already following this user");
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
         }
         follower.follow(userFollows);
         userService.save(follower);
-        return ResponseEntity.status(HttpStatus.OK).body("You are now following this user");
+        return ResponseEntity.status(HttpStatus.OK).body(followed);
     }
 
-    @DeleteMapping("/deleteFollowing")
-    public ResponseEntity<String> stoppedFollowing(@RequestBody UserFollowDto ufdto){
+    @PostMapping("/deleteFollowing")
+    public ResponseEntity<User> stoppedFollowing(@RequestBody UserFollowDto ufdto){
+        System.out.println("made it to the delete mapping");
         User follower = userService.getUserById(ufdto.getFollowerId());
         User followed = userService.getUserById(ufdto.getFollowedId());
         for(UserFollows uf : follower.getFollowing()){
@@ -65,10 +65,10 @@ public class UserController {
                 userService.update(follower);
                 System.out.println("deleted user follows " + uf);
                 userFollowsService.delete(uf);
-                return ResponseEntity.status(HttpStatus.OK).body("You are no longer following this user");
+                return ResponseEntity.status(HttpStatus.OK).body(followed);
             }
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("You are not currently following this user");
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
 

@@ -42,11 +42,12 @@ public class AuthService {
             user.setLastName(userRegisterDto.getLastName());
             user.setEmail(userRegisterDto.getEmail());
             user.setDateCreated(new Timestamp(System.currentTimeMillis()));
+            user.setProfilePicture("https://randomuser.me/api/portraits/lego/1.jpg");
             userService.save(user);
             return ResponseEntity.ok().build();
         }
         else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("The username or email is not unique");
         }
     }
 

@@ -101,16 +101,17 @@ public class UserReplies implements Serializable {
     }
 
     public String getGiphyUrl() {
-        return replyGiphyUrl;
+        return giphyUrl;
     }
 
     public void setGiphyUrl(String giphyUrl) {
-        this.replyGiphyUrl = giphyUrl;
+        this.giphyUrl = giphyUrl;
     }
 
     @Override
     public String toString() {
         return "UserReplies{" +
+
                 "replyId=" + replyId +
                 ", ownerId=" + replyOwnerId +
                 ", message='" + replyMessage + '\'' +
