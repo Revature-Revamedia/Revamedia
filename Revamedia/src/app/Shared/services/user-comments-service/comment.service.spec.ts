@@ -28,7 +28,7 @@ describe('CommentService', () => {
       ]
     });
     service = TestBed.inject(CommentService);
-    baseUrl = service['baseUrl']; // <-- square bracket accessor hack for private fields
+    baseUrl = service['apiBaseUrl']; // <-- square bracket accessor hack for private fields
 
     httpClientSpy.get.and.returnValue(of({}));
     httpClientSpy.put.and.returnValue(of({}));
