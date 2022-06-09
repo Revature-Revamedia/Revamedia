@@ -28,7 +28,7 @@
       <div class="form-row">
         <div>
           <label for="email">Email</label>
-          <input type="email" required title="Valid Email" pattern="^((?![\.!@#$%^&*()-_=+])[\w/-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$" name="email" id="email"
+          <input type="email" required title="Valid Email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" name="email" id="email"
                  placeholder="Email..." [(ngModel)]="email" (blur) = "checkInput('email')">
           <span *ngIf="error.errorEmail != ''" class="error">
             <fa-icon [icon]="faWarning"></fa-icon>{{error.errorEmail}}</span>

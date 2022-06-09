@@ -1,6 +1,7 @@
 package com.revature.Revamedia.beans.controllers;
 
 import com.revature.Revamedia.beans.services.UserService;
+import com.revature.Revamedia.dtos.CookieDto;
 import com.revature.Revamedia.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class SearchController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<List<User>> search(@RequestBody String username){
+    public ResponseEntity<List<CookieDto>> search(@RequestBody String username){
 
         return ResponseEntity.status(HttpStatus.OK).body(userService.searchByUsername(username));
 

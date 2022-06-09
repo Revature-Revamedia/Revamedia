@@ -31,6 +31,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@Valid @RequestBody UserRegisterDto userRegisterDto) {
+        userRegisterDto.setEmail(userRegisterDto.getEmail().toLowerCase());
         return authService.register(userRegisterDto);
     }
 

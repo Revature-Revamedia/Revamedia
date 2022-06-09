@@ -1,5 +1,6 @@
 package com.revature.Revamedia.beans.repositories;
 
+import com.revature.Revamedia.dtos.CookieDto;
 import com.revature.Revamedia.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +26,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User getByUsername(String username);
 
     @Query(value = "FROM User WHERE username LIKE :username% ")
-    List<User> searchByUsername(@Param("username") String username);
+    List<User>searchByUsername(@Param("username") String username);
 
 }
