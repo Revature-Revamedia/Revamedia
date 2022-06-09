@@ -492,18 +492,18 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`profile/${userId}`]);
   }
 
-  public me: any;
-  getNextUser(){
-    this.userService.getProfile(1).subscribe(
-      (response: any) => {
-        console.log(response);
-        this.me = response;
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.message)
-      }
-    )
-  }
+  // public me: any;
+  // getNextUser(){
+  //   this.userService.getProfile(1).subscribe(
+  //     (response: any) => {
+  //       console.log(response);
+  //       this.me = response;
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       console.log(error.message)
+  //     }
+  //   )
+  // }
 
 
   allUsers: any[] = [];

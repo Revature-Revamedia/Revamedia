@@ -50,8 +50,7 @@
       </div>
       <div class="user-settings-row" style="border:none;">
         <h5>Profile Pic</h5>
-        <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}">
-        <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic">
+        <img src="{{user?.profilePicture}}" alt="{{ user?.username }}">
       </div>
       <!-- <div class="user-settings-title">
         <h3>Delete Account</h3>
