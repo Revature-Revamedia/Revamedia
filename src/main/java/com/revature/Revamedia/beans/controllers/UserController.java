@@ -1,6 +1,5 @@
 package com.revature.Revamedia.beans.controllers;
 
-
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.AuthDto;
 import com.revature.Revamedia.dtos.UpdateUserDto;
@@ -21,10 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
 public class UserController {
+  
     //Initialize Services
     private final UserService userService;
     private final UserFollowsService userFollowsService;
-
     BCryptPasswordEncoder encoder;
 
     @Autowired
@@ -92,7 +91,6 @@ public class UserController {
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
-        user.setPassword(encoder.encode(dto.getPassword()));
         return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     }
 

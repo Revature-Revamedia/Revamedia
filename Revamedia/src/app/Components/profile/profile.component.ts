@@ -97,6 +97,7 @@ export class ProfileComponent implements OnInit {
       (response: any) => {
         console.log(response);
         this.followerLength = response.followers.length
+
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)

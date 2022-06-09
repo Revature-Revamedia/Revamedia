@@ -91,13 +91,15 @@ $darkgrey: rgb(61, 66, 74);
           }
         }
 
-        .users-list {
+        .users-list{
+          transform:translate(0%, 0%);
           display: flex;
           flex-direction: column;
           position: absolute;
-          transform: translate(0%, 0%);
-          background: $lightgrey;
+          background: rgb(234, 234, 234);
           width: 17rem;
+          max-height: 40vh;
+          overflow-y: scroll;
           padding: .5rem;
           border-bottom-left-radius: 8px;
           border-bottom-right-radius: 8px;
@@ -114,17 +116,9 @@ $darkgrey: rgb(61, 66, 74);
               cursor: pointer;
               padding: .5rem 0;
               border-bottom: 1px solid $grey;
-              background-color: $lightgrey;
-
-              img {
-                border-radius: 50%;
-                width: 1.5rem;
-                height: 1.5rem;
-                border: 1px solid $blue;
-                margin: 0 .5rem;
-              }
-
-              p {
+              background-color:$lightgrey;
+              p{
+                margin-left: .5rem;
                 color: black;
                 font-size: 1rem;
                 font-weight: 700;
@@ -349,16 +343,13 @@ $darkgrey: rgb(61, 66, 74);
             align-items: center;
             justify-content: space-between;
             border-top: 1px solid $lightgrey;
-            padding: 1rem;
-
-            .container {
-              width: 25%;
+            padding:1rem;
+            .container{
               display: flex;
               flex-direction: row;
-              justify-content: space-between;
-
-              .likes {
-                #heartIcon {
+              justify-content: space-evenly;
+              .likes{
+                .NoLike{
                   color: pink;
                   cursor: pointer;
                   transition: all .3s ease-in-out;
@@ -367,15 +358,30 @@ $darkgrey: rgb(61, 66, 74);
                     color: red;
                   }
                 }
-
-                span {
+                .OneLike{
+                  color: red;
+                  cursor: pointer;
+                  transition: all .3s ease-in-out;
+                  &:hover{
+                    color: rgb(187, 0, 0);
+                  }
+                }
+                span{
                   margin-left: .5rem;
                   font-size: .9rem;
                 }
               }
-
-              .comment {
-                #commentIcon {
+              .comment{
+                margin-left: 1rem;
+                cursor: pointer;
+                span{
+                  font-size: .8rem;
+                  color: $grey;
+                  &:hover{
+                    color: $darkgrey;
+                  }
+                }
+                #commentIcon{
                   color: lightblue;
                   cursor: pointer;
                   transition: all .3s ease-in-out;
@@ -968,10 +974,9 @@ $darkgrey: rgb(61, 66, 74);
         color: white;
         font-weight: bold;
       }
-
-      span {
-        margin-top: 1rem;
-        font-size: 1rem;
+      span{
+        margin-top:1rem;
+        font-size: 1.3rem;
         color: $darkgrey;
       }
     }
@@ -1012,7 +1017,7 @@ $darkgrey: rgb(61, 66, 74);
 .screen {
   position: fixed;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.38);
+  background-color: rgba(0, 0, 0, 0.002);
   top: -100%;
   left: -100%;
   opacity: 0;

@@ -5,8 +5,7 @@
       <h3>Revamedia</h3>
       <div class="page-subTitle">
         <div class="user">
-          <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
-          <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(user?.userId)">
+          <img src="{{ user?.profilePicture }}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
           <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
         </div>
       </div>
@@ -16,9 +15,7 @@
         <input type="search" #searchValue id="search-user" placeholder="Search users..." (keyup)="searchUser(searchValue.value)">
         <div class="users-list" *ngIf="allUsers.length != 0">
           <div *ngFor="let u of allUsers" class="userFound">
-            <div class="user" (click)="goToProfile(u?.userId)" title="View Profile">
-              <img *ngIf="u?.profilePicture !== null" src="{{ u?.profilePicture }}" alt="{{ u?.username }}">
-              <img *ngIf="u?.profilePicture === null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic">
+            <div class="user" (click)="goToProfile(u?.userId)" title="View {{u?.username}}'s Profile">
               <p>{{u?.username}}</p>
             </div>
           </div>
@@ -35,9 +32,8 @@
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img *ngIf="user?.profilePicture !== ''" src="{{me?.profilePicture}}" alt="{{ me?.username }}" (click)="goToProfile(me?.userId)">
-              <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(me?.userId)">
-              <a (click)="goToProfile(me?.userId)">{{ me?.username }}</a>
+              <img src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
+              <a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>
             </div>
             <div class="post-options">
               <fa-icon (click)="togglePostsOptions()" id="icon" [icon]="faEllipsis"></fa-icon>
@@ -126,7 +122,7 @@
             </div>
             <div class="comment-content">
               <p>{{ comment?.message }}</p>
-              <img *ngIf="comment?.giphyUrl !== ''" src="{{ comment?.giphyUrl }}" alt="Attached Image">
+              <img *ngIf="comment?.giphyUrl != null" src="{{ comment?.giphyUrl }}" alt="Attached Image">
             </div>
 
             <div class="reply-card">
@@ -183,7 +179,7 @@
               </div>
               <div class="reply-content">
                 <p>{{ reply?.message }}</p>
-                <img src="{{ reply?.giphyUrl }}" *ngIf="reply?.giphyUrl !== null" alt="Attached Image">
+                <img src="{{ reply?.giphyUrl }}" *ngIf="reply?.giphyUrl != null" alt="Attached Image">
               </div>
             </div>
             <!-- Replies End -->
@@ -195,7 +191,7 @@
     <!-- post end -->
 
       <!-- NO POST AVAILABLE START-->
-      <div class="noPost" *ngIf="user?.postsOwned.length == 0">
+      <div class="noPost" *ngIf="posts.length == 0">
 
         <h1>No Post</h1>
         <p>Seems like there are no posts available to show</p>

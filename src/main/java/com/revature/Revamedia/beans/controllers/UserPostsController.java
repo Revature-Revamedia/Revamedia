@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -36,7 +35,6 @@ public class UserPostsController {
         this.userPostsService = userPostsService;
         this.userService = userService;
     }
-
 
      /**
      * Get all posts made by the given user

@@ -4,8 +4,7 @@
     <h3>Revamedia</h3>
     <div class="page-subTitle">
       <div class="user">
-        <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-        <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
+        <img src="{{user?.profilePicture}}" alt="{{ user?.username }}">
         <span><p>{{ user?.username }}</p>'s Profile</span>
       </div>
     </div>
@@ -16,12 +15,12 @@
   <div class="profile" id="profile">
     <div class="profile-header" id="setBackgroundColor">
       <div class="left-card">
-        <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}">
-        <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic">
+        <img src="{{user?.profilePicture}}" alt="{{ user?.username }}">
         <h5>{{ user?.username }}</h5>
       </div>
 
       <div class="right-card">
+        <!-- *ngIf="user?.username != currentUser?.username" -->
         <div class="right-card-container" *ngIf="user?.username != currentUser?.username">
           <form #followForm="ngForm" (ngSubmit)="followUser(followForm)" >
             <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followerId">
@@ -69,8 +68,7 @@
   <div class="modal-body">
     <div class="follower" *ngFor="let follower of user?.followers">
         <div class="follower-data">
-          <img src="{{follower?.followerId?.profilePicture }}" *ngIf="follower?.followerId?.profilePicture != null" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
-          <img src="https://randomuser.me/api/portraits/lego/1.jpg" *ngIf="follower?.followerId?.profilePicture == null" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
+          <img src="{{follower?.followerId?.profilePicture }}" alt="{{follower?.followerId?.username}}" (click)="goToProfile(follower?.followerId?.userId)">
           <h5 (click)="goToProfile(follower?.followedId?.userId)">{{ follower?.followerId?.username }}</h5>
         </div>
         <div class="follow-option">
@@ -94,8 +92,7 @@
   <div class="modal-body">
     <div class="following" *ngFor="let following of user?.following">
         <div class="following-data">
-          <img src="{{following?.followedId?.profilePicture }}" *ngIf="following?.followedId?.profilePicture !== ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
-          <img src="https://randomuser.me/api/portraits/lego/1.jpg" *ngIf="following?.followedId?.profilePicture === ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
+          <img src="{{following?.followedId?.profilePicture }}" alt="{{following?.followedId?.username}}" (click)="goToProfile(following?.followedId?.userId)">
           <h5 (click)="goToProfile( following?.followedId?.userId )">{{ following?.followedId?.username }}</h5>
         </div>
         <div class="follow-option">
