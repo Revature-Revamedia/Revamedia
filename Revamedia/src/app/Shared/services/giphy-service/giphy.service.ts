@@ -9,9 +9,9 @@ import {environment} from "../../../../environments/environment";
   providedIn: 'root'
 })
 export class GiphyService {
+  private apiBaseUrl = 'http://api.giphy.com/v1/';
 
   constructor(private http: HttpClient) { }
-  private apiBaseUrl = 'http://api.giphy.com/v1/';
 
   public getGIFS(search: string): Observable<any[]> {
     return this.http.get<any[]>(
