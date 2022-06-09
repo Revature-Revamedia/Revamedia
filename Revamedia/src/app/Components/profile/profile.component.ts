@@ -84,7 +84,9 @@ export class ProfileComponent implements OnInit {
     this.userService.followUser(follow.value).subscribe(
       (response: any) => {
         console.log(response);
-        this.followerLength = response.followers.length
+        this.followerLength = response.followers.length;
+        this.getUserData();
+        this.isFollowing = true;
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -96,7 +98,9 @@ export class ProfileComponent implements OnInit {
     this.userService.unfollowUser(unfollow.value).subscribe(
       (response: any) => {
         console.log(response);
-        this.followerLength = response.followers.length
+        this.followerLength = response.followers.length;
+        this.getUserData();
+        this.isFollowing = false;
 
       },
       (error: HttpErrorResponse) => {
@@ -108,4 +112,6 @@ export class ProfileComponent implements OnInit {
   public goToProfile(userId: any){
     this.router.navigate([`profile/${userId}`]);
   }
+
+  public isFollowing = false;
 }
