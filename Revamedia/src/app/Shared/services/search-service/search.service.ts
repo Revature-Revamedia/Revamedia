@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,9 +12,9 @@ export class SearchService {
 
   searchUrl = environment.apiBaseUrl + "/search/user";
 
-  searchUser(searchKey: string){
+  searchUser(searchKey: string): Observable<any>{
 
-    this.http.post<any>(this.searchUrl,searchKey).subscribe((data: any) => {console.log(data)});
+    return this.http.post<any>(this.searchUrl,searchKey);
 
   }
 

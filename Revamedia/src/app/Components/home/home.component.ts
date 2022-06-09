@@ -505,8 +505,21 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  data : any = []
+
+  allUsers: any[] = [];
   searchUser(searchKey: string){
-      this.data = this.searchService.searchUser(searchKey);
+    // this.data = this.searchService.searchUser(searchKey);
+    this.searchService.searchUser(searchKey).subscribe(
+      (response: any) => {
+        this.allUsers = response;
+        console.log(this.allUsers);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+    if(searchKey === ''){
+      this.allUsers = [];
+    }
   }
 }

@@ -75,7 +75,33 @@ $darkgrey: rgb(61,66,74);
           &:focus{
             border: 1.2px solid $orange;
           }
-
+        }
+        .users-list{
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: 12%;
+          background: $lightgrey;
+          width: 15rem;
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
+          .userFound{
+            width: 100%;
+            p{
+              cursor: pointer;
+              padding: .5rem 0;
+              width: 100%;
+              text-align: center;
+              color: black;
+              font-size: 1rem;
+              font-weight: 700;
+              border-bottom: 1px solid $grey;
+              background-color:$lightgrey;
+              &:hover{
+                background-color: $grey;
+              }
+            }
+          }
         }
       }
       button{

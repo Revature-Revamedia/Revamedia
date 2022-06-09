@@ -13,13 +13,17 @@
     </div>
     <div class="right-side">
       <form class="searchUser">
-        <input type="search" #searchValue id="search-user" placeholder="Search users..." (keyup) = "searchUser(searchValue.value)" >
+        <input type="search" #searchValue id="search-user" placeholder="Search users..." (keyup)="searchUser(searchValue.value)">
+        <div class="users-list" *ngIf="allUsers.length != 0">
+          <div *ngFor="let u of allUsers" class="userFound">
+            <p (click)="goToProfile(u?.userId)">{{u?.username}}</p>
+          </div>
+        </div>
       </form>
       <button (click)="openModal('add','post-modal', user)">Add Post</button>
     </div>
   </div>
   <!-- Page title End -->
-
   <!-- main feed start -->
   <div class="main" id="main">
       <!-- post start -->
@@ -188,7 +192,7 @@
 
       <!-- NO POST AVAILABLE START-->
       <div class="noPost" *ngIf="user?.postsOwned.length == 0">
-        
+
         <h1>No Post</h1>
         <p>Seems like there are no posts available to show</p>
         <p>Sorry for the inconvience.</p>
