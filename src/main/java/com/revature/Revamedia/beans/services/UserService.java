@@ -37,6 +37,26 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public boolean existsByEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
+
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public boolean existsByUsername(String username){return userRepository.existsUserByUsername(username);}
+
+    public User findByResetPasswordToken(String token){
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    public boolean existsByResetPasswordToken(String token){
+        return userRepository.existsByResetPasswordToken(token);
+    }
+
+    public User getUserByUsername(String username){
+        return userRepository.getByUsername(username);
+    }
 
 }

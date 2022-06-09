@@ -46,6 +46,9 @@ public class User implements Serializable {
     @Column(name = "date_created")
     private Timestamp dateCreated;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "followedId", cascade = CascadeType.ALL)
     private Set<UserFollows> followers;
@@ -325,6 +328,14 @@ public class User implements Serializable {
 
     public void removeLikedPost(UserPosts post) {
         this.likedPosts.remove(post);
+    }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 
     @Override
