@@ -7,12 +7,6 @@ package com.revature.Revamedia.entities;
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -30,8 +24,8 @@ public class UserComments implements Serializable {
 
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
-    private User ownerId;
+    @JoinColumn(name = "comment_owner_id", referencedColumnName = "user_id")
+    private User commentOwnerId;
 
 
     @JsonIgnore
@@ -43,8 +37,8 @@ public class UserComments implements Serializable {
     @OneToMany(mappedBy = "commentId", cascade = CascadeType.ALL)
     private List<UserReplies> replies;
 
-    @Column(name = "message", length = 500)
-    private String message;
+    @Column(name = "comment_message", length = 500)
+    private String commentMessage;
 
     @Column(name = "date_created")
     private Timestamp dateCreated;
@@ -56,12 +50,14 @@ public class UserComments implements Serializable {
         this.replies = new ArrayList<>();
     }
 
-    public UserComments(Integer commentId, User ownerId, UserPosts postId, List<UserReplies> replies, String message, Timestamp dateCreated, String giphyUrl) {
+    public UserComments(Integer commentId, User commentOwnerId, UserPosts postId, List<UserReplies> replies, String commentMessage,
+            Timestamp dateCreated, String giphyUrl) {
+
         this.commentId = commentId;
-        this.ownerId = ownerId;
+        this.commentOwnerId = commentOwnerId;
         this.postId = postId;
         this.replies = replies;
-        this.message = message;
+        this.commentMessage = commentMessage;
         this.dateCreated = dateCreated;
         this.giphyUrl = giphyUrl;
     }
@@ -75,11 +71,11 @@ public class UserComments implements Serializable {
     }
 
     public User getOwnerId() {
-        return ownerId;
+        return commentOwnerId;
     }
 
     public void setOwnerId(User ownerId) {
-        this.ownerId = ownerId;
+        this.commentOwnerId = ownerId;
     }
 
     public UserPosts getPostId() {
@@ -91,11 +87,11 @@ public class UserComments implements Serializable {
     }
 
     public String getMessage() {
-        return message;
+        return commentMessage;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.commentMessage = message;
     }
 
     public Timestamp getDateCreated() {
@@ -134,9 +130,9 @@ public class UserComments implements Serializable {
     public String toString() {
         return "UserComments{" +
                 "commentId=" + commentId +
-                ", ownerId=" + ownerId +
+                ", ownerId=" + commentOwnerId +
                 ", replies=" + replies +
-                ", message='" + message + '\'' +
+                ", message='" + commentMessage + '\'' +
                 ", giphyUrl=" + giphyUrl +
                 ", dateCreated='" + dateCreated + '\'' +
                 '}';

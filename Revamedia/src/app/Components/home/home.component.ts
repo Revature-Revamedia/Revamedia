@@ -10,6 +10,7 @@ import { UserService } from '../../Shared/services/user-service/user.service';
 import { GiphyService } from '../../Shared/services/giphy-service/giphy.service';
 import { ThisReceiver } from '@angular/compiler';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { SearchService } from 'src/app/Shared/services/search-service/search.service';
 import { Router } from '@angular/router';
 
 
@@ -34,14 +35,13 @@ export class HomeComponent implements OnInit {
   // Variables Used In Home Component
   public totalLikes: number = 0;
 
-  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router) { }
-
+  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router, private searchService: SearchService) { }
 
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
     this.posts = [];
-    //this.getCurrentUserData();
+    // this.getCurrentUserData();
     this.userService.getCurrentUser().subscribe({
       next: response => {
         this.user = response;
@@ -491,16 +491,34 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`profile/${userId}`]);
   }
 
-  public me: any;
-  getNextUser(){
-    this.userService.getProfile(1).subscribe(
+  // public me: any;
+  // getNextUser(){
+  //   this.userService.getProfile(1).subscribe(
+  //     (response: any) => {
+  //       console.log(response);
+  //       this.me = response;
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       console.log(error.message)
+  //     }
+  //   )
+  // }
+
+
+  allUsers: any[] = [];
+  searchUser(searchKey: string){
+    // this.data = this.searchService.searchUser(searchKey);
+    this.searchService.searchUser(searchKey).subscribe(
       (response: any) => {
-        console.log(response);
-        this.me = response;
+        this.allUsers = response;
+        console.log(this.allUsers);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
     )
+    if(searchKey === ''){
+      this.allUsers = [];
+    }
   }
 }

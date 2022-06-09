@@ -9,7 +9,6 @@ package com.revature.Revamedia.beans.controllers;
 import com.revature.Revamedia.beans.services.UserPostsService;
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.CreateUserPostsDto;
-import com.revature.Revamedia.dtos.DeleteUserPostsDto;
 import com.revature.Revamedia.dtos.UpdatePostLikesDto;
 import com.revature.Revamedia.dtos.UpdateUserPostsDto;
 import com.revature.Revamedia.entities.User;
@@ -18,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -35,16 +33,6 @@ public class UserPostsController {
     public UserPostsController(UserPostsService userPostsService, UserService userService) {
         this.userPostsService = userPostsService;
         this.userService = userService;
-    }
-
-
-    /**
-     * Get all posts from the database
-     * @return List of all UserPosts
-     */
-    @GetMapping("/getAllPosts")
-    public ResponseEntity<List<UserPosts>> getAllPosts(){
-        return ResponseEntity.ok(userPostsService.getAllPosts()) ;
     }
 
      /**
@@ -107,6 +95,34 @@ public class UserPostsController {
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+
+    /**
+     * Get all posts from the database
+     * @return List of all UserPosts
+     */
+    @GetMapping("/allPosts")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserPosts> getAllPosts() {
+        return userPostsService.getAllPosts();
+    }
+
+    @GetMapping("/userFeed")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object> getUserFeed(@RequestHeader Integer id) {
+        return userPostsService.getUserFeed(id);
+    }
+
+    /**
+     * Get all posts made by the given user
+     * @param id UserId as a path variable
+     * @return List of UserPosts owned by user
+     */
+    @GetMapping("/postsByUser/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserPosts> getPostsByUserId(@PathVariable Integer id) {
+        return userPostsService.getPostsByUser(id);
     }
 
 }

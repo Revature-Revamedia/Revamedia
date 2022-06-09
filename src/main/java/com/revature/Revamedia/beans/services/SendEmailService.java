@@ -1,6 +1,5 @@
 package com.revature.Revamedia.beans.services;
 
-import com.revature.Revamedia.dtos.CookieDto;
 import com.revature.Revamedia.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,9 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-
 import java.security.SecureRandom;
-import java.util.Random;
 
 @Component
 public class SendEmailService {
