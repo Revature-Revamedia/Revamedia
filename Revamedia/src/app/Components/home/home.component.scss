@@ -172,19 +172,8 @@ $darkgrey: rgb(61,66,74);
           }
         }
         button{
-          border: none;
-          background: $orange;
-          font-size: 1rem;
-          border-radius: 5px;
-          border: none;
-          outline: none;
-          padding: .5rem 1rem;
-          cursor: pointer;
-          color: black;
-          transition: all .3s ease-in-out;
-          &:hover{
-            background: $blue;
-          }
+          border-radius: 3px;
+          padding: .5rem;
         }
       }
     }
@@ -1069,7 +1058,7 @@ $darkgrey: rgb(61,66,74);
 // media queries for modals
 @media screen and (max-width: 800px) {
   .modal{
-    width: 85%;
+    width: 90%;
     .form-header{
       h3{
         font-size: 2rem;
@@ -1092,6 +1081,6 @@ $darkgrey: rgb(61,66,74);
 @media screen and (max-width: 800px) {
   .openModal{
     top: 5%;
-    left: 10%;
+    left: 5%;
   }
 }
