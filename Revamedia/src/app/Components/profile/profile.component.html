@@ -71,7 +71,7 @@
     <div class="follower" *ngFor="let follower of user?.followers">
         <div class="follower-data">
           <img src="{{follower?.followerId?.profilePicture }}" *ngIf="follower?.followerId?.profilePicture != null" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
-          <img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg" *ngIf="follower?.followerId?.profilePicture == null" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
+          <img src="https://randomuser.me/api/portraits/lego/1.jpg" *ngIf="follower?.followerId?.profilePicture == null" alt="Name" (click)="goToProfile(follower?.followerId?.userId)">
           <h5 (click)="goToProfile(follower?.followedId?.userId)">{{ follower?.followerId?.username }}</h5>
         </div>
         <div class="follow-option">
