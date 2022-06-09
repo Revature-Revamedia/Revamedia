@@ -1,11 +1,8 @@
 package com.revature.Revamedia.beans.controllers;
 
-import com.revature.Revamedia.beans.services.UserService;
-import com.revature.Revamedia.dtos.AuthDto;
-import com.revature.Revamedia.dtos.UpdateUserDto;
 import com.revature.Revamedia.beans.services.UserFollowsService;
 import com.revature.Revamedia.beans.services.UserService;
-import com.revature.Revamedia.dtos.AuthDto;
+import com.revature.Revamedia.dtos.UpdateUserDto;
 import com.revature.Revamedia.dtos.UserFollowDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserFollows;
@@ -14,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -43,7 +39,6 @@ public class UserController {
         User followed = userService.getUserById(ufdto.getFollowedId());
         UserFollows userFollows = new UserFollows(follower, followed);
         for(UserFollows uf : follower.getFollowing()){
-            System.out.println("list user is following:" + uf.getFollowedId());
             if(uf.getFollowedId().getUserId().equals(followed.getUserId())){
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
@@ -55,11 +50,9 @@ public class UserController {
 
     @PostMapping("/deleteFollowing")
     public ResponseEntity<User> stoppedFollowing(@RequestBody UserFollowDto ufdto){
-        System.out.println("made it to the delete mapping");
         User follower = userService.getUserById(ufdto.getFollowerId());
         User followed = userService.getUserById(ufdto.getFollowedId());
         for(UserFollows uf : follower.getFollowing()){
-            System.out.println("list user is following:" + uf.getFollowedId());
             if(uf.getFollowedId().getUserId().equals(followed.getUserId())){
                 follower.unFollow(uf);
                 userService.update(follower);

@@ -9,7 +9,6 @@ package com.revature.Revamedia.beans.controllers;
 import com.revature.Revamedia.beans.services.UserPostsService;
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.CreateUserPostsDto;
-import com.revature.Revamedia.dtos.DeleteUserPostsDto;
 import com.revature.Revamedia.dtos.UpdatePostLikesDto;
 import com.revature.Revamedia.dtos.UpdateUserPostsDto;
 import com.revature.Revamedia.entities.User;

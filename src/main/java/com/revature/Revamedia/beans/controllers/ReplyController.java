@@ -3,22 +3,16 @@ package com.revature.Revamedia.beans.controllers;
 import com.revature.Revamedia.beans.services.UserCommentsService;
 import com.revature.Revamedia.beans.services.UserRepliesService;
 import com.revature.Revamedia.beans.services.UserService;
-import com.revature.Revamedia.dtos.*;
+import com.revature.Revamedia.dtos.AddReplyDto;
+import com.revature.Revamedia.dtos.HttpResponseDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserComments;
-import com.revature.Revamedia.entities.UserPosts;
 import com.revature.Revamedia.entities.UserReplies;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
-import java.util.List;
 
 @RestController
 @RequestMapping("/reply")

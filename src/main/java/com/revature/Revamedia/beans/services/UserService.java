@@ -5,7 +5,6 @@ import com.revature.Revamedia.dtos.CookieDto;
 import com.revature.Revamedia.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
