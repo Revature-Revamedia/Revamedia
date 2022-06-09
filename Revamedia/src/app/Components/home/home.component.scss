@@ -1,9 +1,10 @@
 $orange: #FEAE49;
 $blue: #57BEE6;
-$grey: rgb(192,192,190);
+$grey: rgb(192, 192, 190);
 $lightgrey: #e6e5de;
-$darkgrey: rgb(61,66,74);
-.home-page{
+$darkgrey: rgb(61, 66, 74);
+
+.home-page {
   padding: 2rem 1rem;
   margin-left: 6%;
   min-height: 100vh;
@@ -11,8 +12,9 @@ $darkgrey: rgb(61,66,74);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='0' y1='1' y2='0' gradientTransform='rotate(0,0.5,0.5)'%3E%3Cstop offset='0' stop-color='%230FF'/%3E%3Cstop offset='1' stop-color='%23CF6'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' x2='0' y1='0' y2='1' gradientTransform='rotate(0,0.5,0.5)'%3E%3Cstop offset='0' stop-color='%23F00'/%3E%3Cstop offset='1' stop-color='%23FC0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='%23FFF' fill-opacity='0' stroke-miterlimit='10'%3E%3Cg stroke='url(%23a)' stroke-width='5.9399999999999995'%3E%3Cpath d='M1409 581 1450.35 511 1490 581z'/%3E%3Ccircle stroke-width='1.9800000000000002' transform='' cx='500' cy='100' r='40'/%3E%3Cpath transform='' d='M400.86 735.5h-83.73c0-23.12 18.74-41.87 41.87-41.87S400.86 712.38 400.86 735.5z'/%3E%3C/g%3E%3Cg stroke='url(%23b)' stroke-width='1.8'%3E%3Cpath transform='' d='M149.8 345.2 118.4 389.8 149.8 434.4 181.2 389.8z'/%3E%3Crect stroke-width='3.9600000000000004' transform='' x='1039' y='709' width='100' height='100'/%3E%3Cpath transform='' d='M1426.8 132.4 1405.7 168.8 1363.7 168.8 1342.7 132.4 1363.7 96 1405.7 96z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   background-attachment: fixed;
   background-size: cover;
+
   // page title start
-  .page-title{
+  .page-title {
     width: 100%;
     background: white;
     padding-right: 2rem;
@@ -22,49 +24,60 @@ $darkgrey: rgb(61,66,74);
     align-items: center;
     border-bottom: .7px solid $lightgrey;
     padding-bottom: .5rem;
-    .card{
+
+    .card {
       width: 50%;
-      h3{
+
+      h3 {
         font-size: 1.5rem;
         font-weight: bold;
         color: $darkgrey;
       }
-      .user{
+
+      .user {
         display: flex;
         flex-direction: row;
         align-items: center;
-        img{
+
+        img {
           width: 1.25rem;
           height: 1.25rem;
           border-radius: 50%;
           border: 1px solid $orange;
           cursor: pointer;
-          &:hover{
+
+          &:hover {
             border: 1px solid $blue;
           }
         }
-        span{
+
+        span {
           display: flex;
           flex-direction: row;
-          p{
+
+          p {
             font-size: 1rem;
             cursor: pointer;
-            &:hover{
+
+            &:hover {
               text-decoration: underline;
             }
           }
+
           font-size: 1rem;
         }
       }
     }
-    .right-side{
+
+    .right-side {
       width: 40%;
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content:space-between;
-      form{
-        input{
+      justify-content: space-between;
+
+      form {
+        input {
           width: 17rem;
           font-size: 1rem;
           border: 1.2px solid $grey;
@@ -72,23 +85,27 @@ $darkgrey: rgb(61,66,74);
           border-radius: 8px;
           padding: .5rem 1rem;
           color: $darkgrey;
-          &:focus{
+
+          &:focus {
             border: 1.2px solid $orange;
           }
         }
-        .users-list{
+
+        .users-list {
           display: flex;
           flex-direction: column;
           position: absolute;
-          top: 13%;
+          transform: translate(0%, 0%);
           background: $lightgrey;
           width: 17rem;
           padding: .5rem;
           border-bottom-left-radius: 8px;
           border-bottom-right-radius: 8px;
-          .userFound{
+
+          .userFound {
             width: 100%;
-            .user{
+
+            .user {
               width: 100%;
               display: flex;
               flex-direction: row;
@@ -97,27 +114,31 @@ $darkgrey: rgb(61,66,74);
               cursor: pointer;
               padding: .5rem 0;
               border-bottom: 1px solid $grey;
-              background-color:$lightgrey;
-              img{
+              background-color: $lightgrey;
+
+              img {
                 border-radius: 50%;
                 width: 1.5rem;
                 height: 1.5rem;
                 border: 1px solid $blue;
                 margin: 0 .5rem;
               }
-              p{
+
+              p {
                 color: black;
                 font-size: 1rem;
                 font-weight: 700;
               }
-              &:hover{
+
+              &:hover {
                 background-color: $grey;
               }
             }
           }
         }
       }
-      button{
+
+      button {
         border: none;
         background: $orange;
         font-size: 1rem;
@@ -128,29 +149,35 @@ $darkgrey: rgb(61,66,74);
         cursor: pointer;
         color: black;
         transition: all .3s ease-in-out;
-        &:hover{
+
+        &:hover {
           background: $blue;
         }
       }
     }
   }
-  @media screen and (max-width: 800px){
-    .page-title{
+
+  @media screen and (max-width: 800px) {
+    .page-title {
       width: 100%;
       padding-right: 0;
       display: flex;
       flex-direction: column;
-      .card{
+
+      .card {
         width: 100%;
-        h3{
+
+        h3 {
           font-size: 1.25rem;
         }
       }
-      .right-side{
+
+      .right-side {
         margin-top: .5rem;
         width: 100%;
-        form{
-          input{
+
+        form {
+          input {
             width: 15rem;
             font-size: 1rem;
             border: 1.2px solid $grey;
@@ -158,11 +185,13 @@ $darkgrey: rgb(61,66,74);
             border-radius: 5px;
             padding: .5rem;
             color: $darkgrey;
-            &:focus{
+
+            &:focus {
               border: 1.2px solid $orange;
             }
           }
-          .users-list{
+
+          .users-list {
             display: flex;
             flex-direction: column;
             position: absolute;
@@ -171,26 +200,29 @@ $darkgrey: rgb(61,66,74);
             padding: .25rem;
           }
         }
-        button{
+
+        button {
           border-radius: 3px;
           padding: .5rem;
         }
       }
     }
   }
+
   // page title end
 
   // main start
-  .main{
+  .main {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    .post-data{
+    .post-data {
       width: 55%;
       margin: 2rem 0;
-      .post{
+
+      .post {
         max-width: 100%;
         border: 1px solid $lightgrey;
         border-radius: 8px;
@@ -199,28 +231,32 @@ $darkgrey: rgb(61,66,74);
         box-shadow: rgba(0, 0, 0, 0.075) 0px 3px 8px;
 
         // POST TITLE START
-        .post-title{
+        .post-title {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
           border-bottom: 1px solid $lightgrey;
-          padding:1rem;
-          .post-author{
+          padding: 1rem;
+
+          .post-author {
             display: flex;
             flex-direction: row;
             align-items: center;
-            img{
+
+            img {
               cursor: pointer;
-              border-radius:50%;
+              border-radius: 50%;
               width: 1.5rem;
               height: 1.5rem;
               border: 1.5px solid $blue;
-              &:hover{
+
+              &:hover {
                 border: 1.5px solid $orange;
               }
             }
-            a{
+
+            a {
               text-decoration: none;
               color: $darkgrey;
               margin-left: .5rem;
@@ -228,23 +264,27 @@ $darkgrey: rgb(61,66,74);
               font-weight: 500;
             }
           }
-          .post-options{
+
+          .post-options {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            #icon{
+
+            #icon {
               color: $darkgrey;
               font-size: 1.5rem;
               cursor: pointer;
             }
-            ul{
+
+            ul {
               border: 1px solid $grey;
               position: absolute;
-              transform:translate(45%, 25%);
+              transform: translate(45%, 25%);
               list-style: none;
               background-color: $lightgrey;
               border-radius: 3px;
-              li{
+
+              li {
                 background-color: $lightgrey;
                 margin: .75rem 0;
                 width: 100%;
@@ -252,92 +292,108 @@ $darkgrey: rgb(61,66,74);
                 text-align: center;
                 color: #000;
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                   background-color: $grey;
                 }
               }
             }
           }
         }
-        @media screen and (max-width: 800px){
-          .post-title{
-            .post-options{
-              #icon{
+
+        @media screen and (max-width: 800px) {
+          .post-title {
+            .post-options {
+              #icon {
                 font-size: 1.2rem;
               }
-              ul{
+
+              ul {
                 width: 20%;
-                transform:translate(40%, 24%);
+                transform: translate(40%, 24%);
               }
             }
           }
         }
+
         // POST TITLE END
 
-        .post-body{
-          img{
+        .post-body {
+          img {
             width: 100%;
             object-fit: cover;
           }
-          .post-description{
+
+          .post-description {
             width: 100%;
             padding: 1rem;
-            p{
-              a{
+
+            p {
+              a {
                 margin-right: 1rem;
                 text-decoration: none;
                 color: $darkgrey;
                 font-weight: 500;
                 font-size: 1rem;
-                &:hover{
+
+                &:hover {
                   text-decoration: underline;
                 }
               }
             }
           }
-          .post-options{
+
+          .post-options {
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
             border-top: 1px solid $lightgrey;
-            padding:1rem;
-            .container{
+            padding: 1rem;
+
+            .container {
               width: 25%;
               display: flex;
               flex-direction: row;
               justify-content: space-between;
-              .likes{
-                #heartIcon{
+
+              .likes {
+                #heartIcon {
                   color: pink;
                   cursor: pointer;
                   transition: all .3s ease-in-out;
-                  &:hover{
+
+                  &:hover {
                     color: red;
                   }
                 }
-                span{
+
+                span {
                   margin-left: .5rem;
                   font-size: .9rem;
                 }
               }
-              .comment{
-                #commentIcon{
+
+              .comment {
+                #commentIcon {
                   color: lightblue;
                   cursor: pointer;
                   transition: all .3s ease-in-out;
-                  &:hover{
+
+                  &:hover {
                     color: $blue;
                   }
                 }
               }
             }
-            .bookmark{
-              #icon{
+
+            .bookmark {
+              #icon {
                 color: $grey;
                 cursor: pointer;
                 transition: all .3s ease-in-out;
-                &:hover{
+
+                &:hover {
                   color: $darkgrey;
                 }
               }
@@ -347,58 +403,68 @@ $darkgrey: rgb(61,66,74);
       }
 
       //  ADD COMMENT START
-      .add-comment{
+      .add-comment {
         margin: .5rem 0;
         width: 100%;
         background: white;
         border-radius: 8px;
         box-shadow: rgba(0, 0, 0, 0.075) 0px 3px 8px;
         padding: 1rem;
-        .add-comment-header{
+
+        .add-comment-header {
           width: 100%;
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           margin-bottom: .5rem;
-          h5{
+
+          h5 {
             font-size: 1rem;
             color: $darkgrey;
             text-decoration: underline
           }
-          button{
+
+          button {
             background: none;
             border: none;
             font-size: 1.3rem;
             color: grey;
             cursor: pointer;
-            &:hover{
+
+            &:hover {
               color: $darkgrey;
             }
           }
         }
-        Form{
+
+        Form {
           display: flex;
           flex-direction: column;
           width: 100%;
-          textarea{
+
+          textarea {
             resize: vertical;
             font-size: 1rem;
             color: $darkgrey;
             padding: .4rem;
           }
-          .reactions{
+
+          .reactions {
             margin: .5rem 0;
             width: 100%;
             display: flex;
             flex-direction: column;
-            span{
+
+            span {
               font-size: 1.7rem;
             }
-            .search{
+
+            .search {
               width: 100%;
               display: flex;
               flex-direction: row;
-              input{
+
+              input {
                 border-radius: 2px;
                 width: 100%;
                 font-size: 1rem;
@@ -407,28 +473,33 @@ $darkgrey: rgb(61,66,74);
                 border: none;
                 border: 1px solid $grey;
                 outline: none;
-                &:focus{
+
+                &:focus {
                   border: 1px solid $blue;
                 }
               }
-              span{
+
+              span {
                 background: $blue;
                 font-size: 1rem;
                 cursor: pointer;
                 color: $darkgrey;
                 padding: .2rem .5rem;
                 transition: all .3s ease-in-out;
-                &:hover{
+
+                &:hover {
                   background: $orange;
                 }
               }
             }
-            #reaction-title{
+
+            #reaction-title {
               font-size: 1.25rem;
               color: $blue;
               margin-top: .5rem;
             }
-            .gifs{
+
+            .gifs {
               margin: .5rem 0;
               width: 100%;
               height: 40vh;
@@ -436,18 +507,21 @@ $darkgrey: rgb(61,66,74);
               display: grid;
               grid-template-columns: repeat(4, 1fr);
               grid-row-gap: 1rem;
-              .gif{
+
+              .gif {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                img{
+
+                img {
                   object-fit: cover;
                   width: 6rem;
                   height: 6rem;
                   border-radius: 3px;
                   cursor: pointer;
                   border: 2px solid $blue;
-                  &:hover{
+
+                  &:hover {
                     border: 2px solid $orange;
                   }
 
@@ -455,7 +529,8 @@ $darkgrey: rgb(61,66,74);
               }
             }
           }
-          button{
+
+          button {
             margin-top: .5rem;
             align-self: flex-end;
             width: 20%;
@@ -466,21 +541,24 @@ $darkgrey: rgb(61,66,74);
             font-size: .9rem;
             color: $darkgrey;
             cursor: pointer;
-            &:hover{
+
+            &:hover {
               background: $grey;
             }
           }
         }
       }
+
       @media screen and (max-width: 800px) {
-        .add-comment{
-          Form{
-            .reactions{
-              .gifs{
+        .add-comment {
+          Form {
+            .reactions {
+              .gifs {
                 grid-template-columns: repeat(3, 1fr);
                 grid-template-rows: repeat(4, 1fr);
-                .gif{
-                  img{
+
+                .gif {
+                  img {
                     object-fit: cover;
                     width: 5rem;
                     height: 5rem;
@@ -491,88 +569,103 @@ $darkgrey: rgb(61,66,74);
           }
         }
       }
+
       // ADD COMMENT END
 
-      #viewComments{
+      #viewComments {
         cursor: pointer;
         background: white;
         padding: .2rem .5rem;
         border-radius: 3px;
         color: $darkgrey;
         margin: .5rem 0;
-        &:hover{
+
+        &:hover {
           text-decoration: underline
         }
       }
 
       // COMMENTS DISPLAY
-      .post-comments-section{
+      .post-comments-section {
         margin-top: .5rem;
         background: white;
         width: 100%;
         border-radius: 6px;
         padding: 2rem;
         box-shadow: rgba(0, 0, 0, 0.075) 0px 3px 8px;
-        h5{
+
+        h5 {
           font-size: 1rem;
           color: $darkgrey;
           margin-bottom: .5rem;
-          text-decoration:underline;
+          text-decoration: underline;
         }
-        .comment{
+
+        .comment {
           border-bottom: 1px solid $lightgrey;
           padding-bottom: .5rem;
-          .comment-title{
+
+          .comment-title {
             width: 100%;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            .comment-author{
+
+            .comment-author {
               display: flex;
               flex-direction: row;
               align-items: center;
-              img{
-                border-radius:50%;
+
+              img {
+                border-radius: 50%;
                 width: 1.5rem;
                 height: 1.5rem;
                 border: 1.5px solid $blue;
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                   border: 1.5px solid $orange;
                 }
               }
-              a{
+
+              a {
                 text-decoration: none;
                 color: $darkgrey;
                 margin-left: .5rem;
                 font-size: 1rem;
                 font-weight: 500;
-                &:hover{
+
+                &:hover {
                   text-decoration: underline;
                 }
               }
             }
-            .comment-option{
-              button{
+
+            .comment-option {
+              button {
                 border: none;
                 background: none;
                 font-size: 1rem;
                 cursor: pointer;
                 margin-left: 1rem;
                 color: $darkgrey;
-                &:hover{
+
+                &:hover {
                   text-decoration: underline;
                 }
               }
             }
           }
-          .comment-content{
+
+          .comment-content {
             margin-left: 2rem;
-            p{
+
+            p {
               font-size: 1rem;
             }
-            img{
+
+            img {
               margin: .4rem 0 0 .4rem;
               border: 1px solid $lightgrey;
               width: 12rem;
@@ -580,11 +673,13 @@ $darkgrey: rgb(61,66,74);
               border-radius: 3px;
             }
           }
-          .reply-card{
+
+          .reply-card {
             width: 100%;
             display: flex;
             justify-content: flex-end;
-            button{
+
+            button {
               border: none;
               padding: .4rem;
               border-radius: 4px;
@@ -592,65 +687,76 @@ $darkgrey: rgb(61,66,74);
               font-size: .7rem;
               color: $darkgrey;
               cursor: pointer;
-              &:hover{
+
+              &:hover {
                 background: $grey;
               }
             }
           }
 
           // ADD REPLY FORM START
-          .add-reply{
+          .add-reply {
             margin: .5rem 0;
             width: 100%;
             background: white;
             border-radius: 8px;
             box-shadow: rgba(0, 0, 0, 0.075) 0px 3px 8px;
             padding: 1rem;
-            .add-reply-header{
+
+            .add-reply-header {
               width: 100%;
               display: flex;
               flex-direction: row;
               justify-content: space-between;
               margin-bottom: .5rem;
-              h5{
+
+              h5 {
                 font-size: 1rem;
                 color: $darkgrey;
                 text-decoration: underline
               }
-              button{
+
+              button {
                 background: none;
                 border: none;
                 font-size: 1.3rem;
                 color: grey;
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                   color: $darkgrey;
                 }
               }
             }
-            Form{
+
+            Form {
               display: flex;
               flex-direction: column;
               width: 100%;
-              textarea{
+
+              textarea {
                 resize: vertical;
                 font-size: 1rem;
                 color: $darkgrey;
                 padding: .4rem;
               }
-              .reactions{
+
+              .reactions {
                 margin: .5rem 0;
                 width: 100%;
                 display: flex;
                 flex-direction: column;
-                span{
+
+                span {
                   font-size: 1.5rem;
                 }
-                .search{
+
+                .search {
                   width: 100%;
                   display: flex;
                   flex-direction: row;
-                  input{
+
+                  input {
                     border-radius: 2px;
                     width: 100%;
                     font-size: 1rem;
@@ -659,28 +765,33 @@ $darkgrey: rgb(61,66,74);
                     border: none;
                     border: 1px solid $grey;
                     outline: none;
-                    &:focus{
+
+                    &:focus {
                       border: 1px solid $blue;
                     }
                   }
-                  span{
+
+                  span {
                     background: $blue;
                     font-size: 1rem;
                     cursor: pointer;
                     color: $darkgrey;
                     padding: .2rem .5rem;
                     transition: all .3s ease-in-out;
-                    &:hover{
+
+                    &:hover {
                       background: $orange;
                     }
                   }
                 }
-                #reaction-title{
+
+                #reaction-title {
                   font-size: 1.25rem;
                   color: $blue;
                   margin-top: .5rem;
                 }
-                .gifs{
+
+                .gifs {
                   margin: .5rem 0;
                   width: 100%;
                   height: 40vh;
@@ -688,18 +799,21 @@ $darkgrey: rgb(61,66,74);
                   display: grid;
                   grid-template-columns: repeat(4, 1fr);
                   grid-row-gap: 1rem;
-                  .gif{
+
+                  .gif {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    img{
+
+                    img {
                       object-fit: cover;
                       width: 6rem;
                       height: 6rem;
                       border-radius: 3px;
                       cursor: pointer;
                       border: 2px solid $blue;
-                      &:hover{
+
+                      &:hover {
                         border: 2px solid $orange;
                       }
 
@@ -707,7 +821,8 @@ $darkgrey: rgb(61,66,74);
                   }
                 }
               }
-              button{
+
+              button {
                 margin-top: .5rem;
                 align-self: flex-end;
                 width: 20%;
@@ -718,21 +833,24 @@ $darkgrey: rgb(61,66,74);
                 font-size: .9rem;
                 color: $darkgrey;
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                   background: $grey;
                 }
               }
             }
           }
+
           @media screen and (max-width: 800px) {
-            .add-reply{
-              Form{
-                .reactions{
-                  .gifs{
+            .add-reply {
+              Form {
+                .reactions {
+                  .gifs {
                     grid-template-columns: repeat(3, 1fr);
                     grid-template-rows: repeat(4, 1fr);
-                    .gif{
-                      img{
+
+                    .gif {
+                      img {
                         object-fit: cover;
                         width: 4rem;
                         height: 4rem;
@@ -743,64 +861,77 @@ $darkgrey: rgb(61,66,74);
               }
             }
           }
+
           // ADD REPLY FORM END
 
         }
-        .reply{
+
+        .reply {
           border-top: 1px solid $lightgrey;
-          margin: .5rem 0  0 2rem;
+          margin: .5rem 0 0 2rem;
           padding: .5rem 0;
-          .reply-title{
+
+          .reply-title {
             width: 100%;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            .reply-author{
+
+            .reply-author {
               display: flex;
               flex-direction: row;
               align-items: center;
-              img{
-                border-radius:50%;
+
+              img {
+                border-radius: 50%;
                 width: 1.5rem;
                 height: 1.5rem;
                 border: 1.5px solid $blue;
                 cursor: pointer;
-                &:hover{
+
+                &:hover {
                   border: 1.5px solid $orange;
                 }
               }
-              a{
+
+              a {
                 text-decoration: none;
                 color: $darkgrey;
                 margin-left: .5rem;
                 font-size: 1rem;
                 font-weight: 500;
-                &:hover{
+
+                &:hover {
                   text-decoration: underline;
                 }
               }
             }
-            .reply-option{
-              button{
+
+            .reply-option {
+              button {
                 border: none;
                 background: none;
                 font-size: 1rem;
                 cursor: pointer;
                 margin-left: 1rem;
                 color: $darkgrey;
-                &:hover{
+
+                &:hover {
                   text-decoration: underline;
                 }
               }
             }
           }
-          .reply-content{
+
+          .reply-content {
             margin-left: 2rem;
-            p{
+
+            p {
               font-size: 1rem;
             }
-            img{
+
+            img {
               margin: .4rem 0 0 .4rem;
               border: 1px solid $lightgrey;
               width: 12rem;
@@ -810,10 +941,11 @@ $darkgrey: rgb(61,66,74);
           }
         }
       }
+
       // COMMENT DISPLAY END
     }
 
-    .noPost{
+    .noPost {
       width: 60%;
       padding: 4rem 2rem;
       margin: 5rem 0;
@@ -825,23 +957,27 @@ $darkgrey: rgb(61,66,74);
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      h1{
+
+      h1 {
         font-size: 3rem;
         color: white;
       }
-      p{
+
+      p {
         font-size: 1.5rem;
         color: white;
         font-weight: bold;
       }
-      span{
-        margin-top:1rem;
+
+      span {
+        margin-top: 1rem;
         font-size: 1rem;
         color: $darkgrey;
       }
     }
+
     @media screen and (max-width: 800px) {
-      .noPost{
+      .noPost {
         width: 80%;
         margin: 1rem 0;
         border-radius: 8px;
@@ -849,18 +985,22 @@ $darkgrey: rgb(61,66,74);
       }
     }
   }
+
   // main end
 }
+
 // media queries for homepage
 @media screen and (max-width: 800px) {
-  .home-page{
+  .home-page {
     margin-left: 0;
     margin-top: 10%;
     background-color: #FFFFFF;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='250' viewBox='0 0 1080 900'%3E%3Cg fill-opacity='0.18'%3E%3Cpolygon fill='%23444' points='90 150 0 300 180 300'/%3E%3Cpolygon points='90 150 180 0 0 0'/%3E%3Cpolygon fill='%23AAA' points='270 150 360 0 180 0'/%3E%3Cpolygon fill='%23DDD' points='450 150 360 300 540 300'/%3E%3Cpolygon fill='%23999' points='450 150 540 0 360 0'/%3E%3Cpolygon points='630 150 540 300 720 300'/%3E%3Cpolygon fill='%23DDD' points='630 150 720 0 540 0'/%3E%3Cpolygon fill='%23444' points='810 150 720 300 900 300'/%3E%3Cpolygon fill='%23FFF' points='810 150 900 0 720 0'/%3E%3Cpolygon fill='%23DDD' points='990 150 900 300 1080 300'/%3E%3Cpolygon fill='%23444' points='990 150 1080 0 900 0'/%3E%3Cpolygon fill='%23DDD' points='90 450 0 600 180 600'/%3E%3Cpolygon points='90 450 180 300 0 300'/%3E%3Cpolygon fill='%23666' points='270 450 180 600 360 600'/%3E%3Cpolygon fill='%23AAA' points='270 450 360 300 180 300'/%3E%3Cpolygon fill='%23DDD' points='450 450 360 600 540 600'/%3E%3Cpolygon fill='%23999' points='450 450 540 300 360 300'/%3E%3Cpolygon fill='%23999' points='630 450 540 600 720 600'/%3E%3Cpolygon fill='%23FFF' points='630 450 720 300 540 300'/%3E%3Cpolygon points='810 450 720 600 900 600'/%3E%3Cpolygon fill='%23DDD' points='810 450 900 300 720 300'/%3E%3Cpolygon fill='%23AAA' points='990 450 900 600 1080 600'/%3E%3Cpolygon fill='%23444' points='990 450 1080 300 900 300'/%3E%3Cpolygon fill='%23222' points='90 750 0 900 180 900'/%3E%3Cpolygon points='270 750 180 900 360 900'/%3E%3Cpolygon fill='%23DDD' points='270 750 360 600 180 600'/%3E%3Cpolygon points='450 750 540 600 360 600'/%3E%3Cpolygon points='630 750 540 900 720 900'/%3E%3Cpolygon fill='%23444' points='630 750 720 600 540 600'/%3E%3Cpolygon fill='%23AAA' points='810 750 720 900 900 900'/%3E%3Cpolygon fill='%23666' points='810 750 900 600 720 600'/%3E%3Cpolygon fill='%23999' points='990 750 900 900 1080 900'/%3E%3Cpolygon fill='%23999' points='180 0 90 150 270 150'/%3E%3Cpolygon fill='%23444' points='360 0 270 150 450 150'/%3E%3Cpolygon fill='%23FFF' points='540 0 450 150 630 150'/%3E%3Cpolygon points='900 0 810 150 990 150'/%3E%3Cpolygon fill='%23222' points='0 300 -90 450 90 450'/%3E%3Cpolygon fill='%23FFF' points='0 300 90 150 -90 150'/%3E%3Cpolygon fill='%23FFF' points='180 300 90 450 270 450'/%3E%3Cpolygon fill='%23666' points='180 300 270 150 90 150'/%3E%3Cpolygon fill='%23222' points='360 300 270 450 450 450'/%3E%3Cpolygon fill='%23FFF' points='360 300 450 150 270 150'/%3E%3Cpolygon fill='%23444' points='540 300 450 450 630 450'/%3E%3Cpolygon fill='%23222' points='540 300 630 150 450 150'/%3E%3Cpolygon fill='%23AAA' points='720 300 630 450 810 450'/%3E%3Cpolygon fill='%23666' points='720 300 810 150 630 150'/%3E%3Cpolygon fill='%23FFF' points='900 300 810 450 990 450'/%3E%3Cpolygon fill='%23999' points='900 300 990 150 810 150'/%3E%3Cpolygon points='0 600 -90 750 90 750'/%3E%3Cpolygon fill='%23666' points='0 600 90 450 -90 450'/%3E%3Cpolygon fill='%23AAA' points='180 600 90 750 270 750'/%3E%3Cpolygon fill='%23444' points='180 600 270 450 90 450'/%3E%3Cpolygon fill='%23444' points='360 600 270 750 450 750'/%3E%3Cpolygon fill='%23999' points='360 600 450 450 270 450'/%3E%3Cpolygon fill='%23666' points='540 600 630 450 450 450'/%3E%3Cpolygon fill='%23222' points='720 600 630 750 810 750'/%3E%3Cpolygon fill='%23FFF' points='900 600 810 750 990 750'/%3E%3Cpolygon fill='%23222' points='900 600 990 450 810 450'/%3E%3Cpolygon fill='%23DDD' points='0 900 90 750 -90 750'/%3E%3Cpolygon fill='%23444' points='180 900 270 750 90 750'/%3E%3Cpolygon fill='%23FFF' points='360 900 450 750 270 750'/%3E%3Cpolygon fill='%23AAA' points='540 900 630 750 450 750'/%3E%3Cpolygon fill='%23FFF' points='720 900 810 750 630 750'/%3E%3Cpolygon fill='%23222' points='900 900 990 750 810 750'/%3E%3Cpolygon fill='%23222' points='1080 300 990 450 1170 450'/%3E%3Cpolygon fill='%23FFF' points='1080 300 1170 150 990 150'/%3E%3Cpolygon points='1080 600 990 750 1170 750'/%3E%3Cpolygon fill='%23666' points='1080 600 1170 450 990 450'/%3E%3Cpolygon fill='%23DDD' points='1080 900 1170 750 990 750'/%3E%3C/g%3E%3C/svg%3E");
-    .main{
+
+    .main {
       width: 100%;
-      .post-data{
+
+      .post-data {
         width: 90%;
         margin: 2rem 0;
       }
@@ -869,7 +1009,7 @@ $darkgrey: rgb(61,66,74);
 }
 
 // ADD POST FORM
-.screen{
+.screen {
   position: fixed;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.38);
@@ -881,7 +1021,7 @@ $darkgrey: rgb(61,66,74);
   transition: all .6s ease-in-out;
 }
 
-.modal{
+.modal {
   position: fixed;
   z-index: 15;
   top: -100%;
@@ -898,48 +1038,57 @@ $darkgrey: rgb(61,66,74);
   background: white;
   padding: 2rem;
   width: 60%;
-  .form-header{
+
+  .form-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    h3{
+
+    h3 {
       font-size: 2.5rem;
       color: $darkgrey;
       text-decoration: underline;
     }
-    span{
+
+    span {
       font-size: 2.5rem;
       color: $darkgrey;
       cursor: pointer;
       transition: all .3s ease-in-out;
-      &:hover{
-       color: $blue;
+
+      &:hover {
+        color: $blue;
       }
     }
   }
-  form{
+
+  form {
     width: 100%;
     display: flex;
     flex-direction: column;
     margin: .5rem 0;
-    h2{
+
+    h2 {
       color: $darkgrey;
       font-size: 1.5rem;
       font-weight: 500;
       margin: .5rem 0;
     }
-    .form-data{
+
+    .form-data {
       margin-bottom: .5rem;
       width: 100%;
       display: flex;
       flex-direction: column;
-      h4{
+
+      h4 {
         font-size: 1.25rem;
         color: $darkgrey;
         margin-bottom: .5rem;
       }
-      input{
+
+      input {
         width: 100%;
         padding: .3rem;
         font-size: 1rem;
@@ -947,16 +1096,19 @@ $darkgrey: rgb(61,66,74);
         border: 1px solid $grey;
         border-radius: 4px;
         outline: none;
-        &:focus{
+
+        &:focus {
           border: 1px solid $blue;
         }
       }
+
       .file {
         opacity: 0;
         width: 0.1px;
         height: 0.1px;
         position: absolute;
       }
+
       .file-input label {
         margin: .5rem 0;
         display: block;
@@ -980,18 +1132,18 @@ $darkgrey: rgb(61,66,74);
         color: #555;
       }
 
-      input:hover + label,
-      input:focus + label {
+      input:hover+label,
+      input:focus+label {
         transform: scale(1.02);
       }
 
       /* Adding an outline to the label on focus */
-      input:focus + label {
+      input:focus+label {
         outline: 1px solid #000;
         outline: -webkit-focus-ring-color auto 2px;
       }
 
-      button{
+      button {
         align-self: flex-end;
         width: 20%;
         border: none;
@@ -1001,11 +1153,13 @@ $darkgrey: rgb(61,66,74);
         font-size: .9rem;
         color: $darkgrey;
         cursor: pointer;
-        &:hover{
+
+        &:hover {
           background: $grey;
         }
       }
-      textarea{
+
+      textarea {
         width: 100%;
         resize: none;
         overflow: auto;
@@ -1016,17 +1170,20 @@ $darkgrey: rgb(61,66,74);
         border: none;
         border: 1px solid $grey;
         border-radius: 3px;
-        &:focus{
+
+        &:focus {
           border: 1.2px solid $orange;
         }
       }
     }
-    .post-submit{
+
+    .post-submit {
       margin-top: 1rem;
       width: 100%;
       display: flex;
       justify-content: flex-end;
-      button{
+
+      button {
         border: none;
         background: $orange;
         font-size: 1.25rem;
@@ -1035,11 +1192,13 @@ $darkgrey: rgb(61,66,74);
         padding: .4rem 1rem;
         border-radius: 3px;
         transition: all .3s ease-in-out;
-        &:hover{
+
+        &:hover {
           background: #e4993f;
         }
       }
-      #deleteBtn{
+
+      #deleteBtn {
         border: none;
         background: rgb(206, 0, 0);
         font-size: 1.25rem;
@@ -1048,38 +1207,43 @@ $darkgrey: rgb(61,66,74);
         padding: .4rem 1rem;
         border-radius: 3px;
         transition: all .3s ease-in-out;
-        &:hover{
+
+        &:hover {
           background: rgb(162, 0, 0);
         }
       }
     }
   }
 }
+
 // media queries for modals
 @media screen and (max-width: 800px) {
-  .modal{
+  .modal {
     width: 90%;
-    .form-header{
-      h3{
+
+    .form-header {
+      h3 {
         font-size: 2rem;
       }
     }
   }
 }
 
-.openScreen{
+.openScreen {
   top: 0;
   left: 0;
   opacity: 1;
 }
-.openModal{
+
+.openModal {
   top: 5%;
   left: 20%;
   transform: scale(1);
 }
+
 // media queries for modals
 @media screen and (max-width: 800px) {
-  .openModal{
+  .openModal {
     top: 5%;
     left: 5%;
   }

@@ -22,21 +22,20 @@
       </div>
 
       <div class="right-card">
-        <!-- *ngIf="user?.username != currentUser?.username" -->
-        <div class="right-card-container">
+        <div class="right-card-container" *ngIf="user?.username != currentUser?.username">
           <form #followForm="ngForm" (ngSubmit)="followUser(followForm)" >
-            <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followedId">
-            <input type="hidden" ngModel="{{ user?.userId }}" name="followerId">
+            <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followerId">
+            <input type="hidden" ngModel="{{ user?.userId }}" name="followedId">
             <button>Follow</button>
           </form>
-          <form>
-            <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followedId">
-            <input type="hidden" ngModel="{{ user?.userId }}" name="followerId">
+          <form #unfollowForm="ngForm" (ngSubmit)="unfollowUser(unfollowForm)">
+            <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followerId">
+            <input type="hidden" ngModel="{{ user?.userId }}" name="followedId">
             <button id="unFollow">Unfollow</button>
           </form>
         </div>
-        <h5 (click)="openModal('followers', user)">{{ user?.followers.length }} Follower</h5>
-        <h5 (click)="openModal('following', user)">{{ user?.following.length }} Following</h5>
+        <h5 (click)="openModal('followers', user)">{{ followerLength }} Follower</h5>
+        <h5 (click)="openModal('following', user)">{{ followingLength }} Following</h5>
       </div>
     </div>
 

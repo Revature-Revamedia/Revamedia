@@ -21,7 +21,8 @@ export class ProfileComponent implements OnInit {
     this.getCurrentUserData(); // Gets current user
     this.openingAnimation();
   }
-
+  public followingLength: any;
+  public followerLength: any;
   // User data
   public user: any;
   // Posts
@@ -32,6 +33,8 @@ export class ProfileComponent implements OnInit {
       (response: any) => {
         this.user = response;
         console.log(this.user);
+        this.followerLength = response.followers.length
+        this.followingLength = response.following.length
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -81,6 +84,19 @@ export class ProfileComponent implements OnInit {
     this.userService.followUser(follow.value).subscribe(
       (response: any) => {
         console.log(response);
+        this.followerLength = response.followers.length
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
+  public unfollowUser(unfollow: NgForm){
+    console.log(unfollow.value)
+    this.userService.unfollowUser(unfollow.value).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.followerLength = response.followers.length
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
