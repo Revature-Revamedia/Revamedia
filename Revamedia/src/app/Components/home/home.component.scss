@@ -103,12 +103,12 @@ $darkgrey: rgb(61,66,74);
                 width: 1.5rem;
                 height: 1.5rem;
                 border: 1px solid $blue;
+                margin: 0 .5rem;
               }
               p{
                 color: black;
                 font-size: 1rem;
                 font-weight: 700;
-                margin-left: .5rem;
               }
               &:hover{
                 background-color: $grey;
