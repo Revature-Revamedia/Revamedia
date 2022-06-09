@@ -36,12 +36,11 @@ export class HomeComponent implements OnInit {
 
   constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router) { }
 
-
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
     this.posts = [];
-    //this.getCurrentUserData();
+    // this.getCurrentUserData();
     this.userService.getCurrentUser().subscribe({
       next: response => {
         this.user = response;
