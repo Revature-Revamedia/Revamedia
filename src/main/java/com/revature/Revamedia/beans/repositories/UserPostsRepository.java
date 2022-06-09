@@ -1,4 +1,4 @@
-package com.revature.Revamedia.beans.services.repositories;
+package com.revature.Revamedia.beans.repositories;
 
 import java.util.List;
 

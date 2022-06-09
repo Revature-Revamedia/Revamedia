@@ -9,13 +9,13 @@ describe('ProfileComponent', () => {
   let component: ProfileComponent; // <-- Reference to component class (access/change properties, call methods, etc.)
   let fixture: ComponentFixture<ProfileComponent>; // <-- This is the parent of the component class (contains component, debugElement(html template), etc.). We don't need to test html template bindings.
   // Mock UserService (getUser method)
-  // Second param is an array of method identifiers you wish to instantiate as spies.
   // We are only using 'getUser' in this component
   let userServiceSpy: { getUser: jasmine.Spy };
 
-  // Spin up Test Module (Notice this is async because of line 24)
+  // Spin up Test Module (Notice this is async because of line 28)
   beforeEach(async () => {
     // Initialize the spy before each test & before we inject it in our test module. (If we don't do this some stats that are kept track of, i.e. method invocation count will not be reset each test)
+    // Second param is an array of method identifiers you wish to instantiate as spies.
     userServiceSpy = jasmine.createSpyObj('UserService', ['getUser']);
 
     await TestBed.configureTestingModule({

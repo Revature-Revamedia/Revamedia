@@ -1,7 +1,6 @@
 package com.revature.Revamedia.beans.services;
 
-import com.revature.Revamedia.beans.services.UserCommentsService;
-import com.revature.Revamedia.beans.services.repositories.UserCommentsRepository;
+import com.revature.Revamedia.beans.repositories.UserCommentsRepository;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserComments;
 import com.revature.Revamedia.entities.UserPosts;

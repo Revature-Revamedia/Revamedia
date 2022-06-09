@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { faSun, faMoon, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../../Shared/services/user-service/user.service';
 
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
