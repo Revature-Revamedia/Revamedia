@@ -50,8 +50,8 @@ export class HomeComponent implements OnInit {
 
         let f: any;
         this.posts = [];
-        for (f of response.following) {
-          this.posts.push(f.followedId.postsOwned);
+        for (f of response?.following) {
+          this.posts.push(f?.followedId?.postsOwned);
         }
         console.log(this.posts);
         this.posts = this.posts.flat();
@@ -494,7 +494,7 @@ export class HomeComponent implements OnInit {
 
   public me: any;
   getNextUser(){
-    this.userService.getProfile(2).subscribe(
+    this.userService.getProfile(6).subscribe(
       (response: any) => {
         console.log(response);
         this.me = response;
