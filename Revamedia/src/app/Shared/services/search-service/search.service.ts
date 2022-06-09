@@ -14,7 +14,7 @@ export class SearchService {
 
   searchUser(searchKey: string): Observable<any>{
 
-    return this.http.post<any>(this.searchUrl,searchKey);
+    return this.http.post<any>(this.searchUrl,searchKey.toLowerCase());
 
   }
 
