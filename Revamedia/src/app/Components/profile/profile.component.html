@@ -4,8 +4,8 @@
     <h3>Revamedia</h3>
     <div class="page-subTitle">
       <div class="user">
-        <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-        <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
+        <img *ngIf="user?.profilePicture != ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
+        <img *ngIf="user?.profilePicture == ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
         <span><p>{{ user?.username }}</p>'s Profile</span>
       </div>
     </div>
@@ -16,8 +16,8 @@
   <div class="profile" id="profile">
     <div class="profile-header" id="setBackgroundColor">
       <div class="left-card">
-        <img *ngIf="user?.profilePicture != null" src="{{user?.profilePicture}}" alt="{{ user?.username }}">
-        <img *ngIf="user?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic">
+        <img *ngIf="user?.profilePicture != ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}">
+        <img *ngIf="user?.profilePicture == ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic">
         <h5>{{ user?.username }}</h5>
       </div>
 
@@ -95,8 +95,8 @@
   <div class="modal-body">
     <div class="following" *ngFor="let following of user?.following">
         <div class="following-data">
-          <img src="{{following?.followedId?.profilePicture }}" *ngIf="following?.followedId?.profilePicture != null" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
-          <img src="https://randomuser.me/api/portraits/lego/1.jpg" *ngIf="following?.followedId?.profilePicture == null" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
+          <img src="{{following?.followedId?.profilePicture }}" *ngIf="following?.followedId?.profilePicture != ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
+          <img src="https://randomuser.me/api/portraits/lego/1.jpg" *ngIf="following?.followedId?.profilePicture == ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
           <h5 (click)="goToProfile( following?.followedId?.userId )">{{ following?.followedId?.username }}</h5>
         </div>
         <div class="follow-option">
