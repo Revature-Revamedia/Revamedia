@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
  * @Contributor: Kenneth Strohm, Randall Hale
@@ -39,15 +41,13 @@ public class AuthService {
             user.setFirstName(userRegisterDto.getFirstName());
             user.setLastName(userRegisterDto.getLastName());
             user.setEmail(userRegisterDto.getEmail());
-            System.out.println("User in register");
-            System.out.println(user);
-            System.out.println(ResponseEntity.ok(user));
+            user.setDateCreated(new Timestamp(System.currentTimeMillis()));
+            userService.save(user);
             return ResponseEntity.ok().build();
         }
         else {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-
     }
 
     /**
@@ -63,7 +63,7 @@ public class AuthService {
                 HttpHeaders headers= new HttpHeaders();
                 headers.add("Set-Cookie", "user_session="+ headerValue +"; Max-Age=86400; Path=/;");
                 //If the give password matches hashed password in DB t
-                return ResponseEntity.ok().headers(headers).build();
+                return new ResponseEntity<>(jwt.verify(headerValue), headers, HttpStatus.OK);
             } else {
                 //throw new UnauthorizedUserException("Unauthorized!");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

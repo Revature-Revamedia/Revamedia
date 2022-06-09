@@ -5,8 +5,11 @@ package com.revature.Revamedia.entities;
  * Contributor(s):
  * Purpose:
  */
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -24,17 +27,19 @@ public class UserComments implements Serializable {
     @Column(name = "comment_id")
     private Integer commentId;
 
-    @JsonBackReference
+
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "comment_owner_id", referencedColumnName = "user_id")
     private User commentOwnerId;
 
-    @JsonBackReference
+
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")
     private UserPosts postId;
 
-    @JsonManagedReference
+//    @JsonIgnore
     @OneToMany(mappedBy = "commentId", cascade = CascadeType.ALL)
     private List<UserReplies> replies;
 
@@ -53,6 +58,7 @@ public class UserComments implements Serializable {
 
     public UserComments(Integer commentId, User commentOwnerId, UserPosts postId, List<UserReplies> replies, String commentMessage,
             Timestamp dateCreated, String giphyUrl) {
+
         this.commentId = commentId;
         this.commentOwnerId = commentOwnerId;
         this.postId = postId;

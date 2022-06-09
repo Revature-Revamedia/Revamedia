@@ -6,13 +6,12 @@
 
 package com.revature.Revamedia.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "user_follows", schema = _SchemaName.schemaName)
@@ -22,15 +21,16 @@ public class UserFollows implements Serializable {
     @Column(name = "follow_id")
     private Integer followId;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"followers", "following", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "followed_id", referencedColumnName = "user_id")
     private User followedId;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"followers", "following", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_id", referencedColumnName = "user_id")
     private User followerId;
+
 
     @Column(name = "bookmarked")
     private boolean bookmarked;
