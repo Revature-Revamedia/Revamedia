@@ -109,5 +109,33 @@ public class UserPostsController {
         }
     }
 
+
+    /**
+     * Get all posts from the database
+     * @return List of all UserPosts
+     */
+    @GetMapping("/allPosts")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserPosts> getAllPosts() {
+        return userPostsService.getAllPosts();
+    }
+
+    @GetMapping("/userFeed")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object> getUserFeed(@RequestHeader Integer id) {
+        return userPostsService.getUserFeed(id);
+    }
+
+    /**
+     * Get all posts made by the given user
+     * @param id UserId as a path variable
+     * @return List of UserPosts owned by user
+     */
+    @GetMapping("/postsByUser/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserPosts> getPostsByUserId(@PathVariable Integer id) {
+        return userPostsService.getPostsByUser(id);
+    }
+
 }
 

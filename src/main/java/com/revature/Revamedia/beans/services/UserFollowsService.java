@@ -1,6 +1,7 @@
 package com.revature.Revamedia.beans.services;
 
 import com.revature.Revamedia.beans.repositories.UserFollowsRepository;
+import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserFollows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class UserFollowsService {
     public UserFollows update(UserFollows follow) {
         return userFollowsRepository.save(follow);
     }
+
+    public void delete(UserFollows follow){ userFollowsRepository.delete(follow); }
 
     public List<UserFollows> getAllFollows() {
         return userFollowsRepository.findAll();
