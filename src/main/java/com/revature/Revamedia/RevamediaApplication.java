@@ -15,7 +15,6 @@ public class RevamediaApplication {
         public static void main(String[] args) {
 
                 ConfigurableApplicationContext context = SpringApplication.run(RevamediaApplication.class, args);
-                context.start();
                 UserPostsService userPostsService = context.getBean(UserPostsService.class);
                 UserService userService = context.getBean(UserService.class);
                 UserCommentsService userCommentsService = context.getBean(UserCommentsService.class);
@@ -24,6 +23,7 @@ public class RevamediaApplication {
                 UserGroupsService userGroupsService = context.getBean(UserGroupsService.class);
                 UserConversationsService userConversationsService = context.getBean(UserConversationsService.class);
                 UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
+                //userPostsService.getUserFeed(1);
                 // User user1 = new User();
                 // user1.setFirstName("Brandon");
                 // user1.setUsername("b1");

@@ -22,7 +22,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { CommentService } from './Shared/services/user-comments-service/comment.service';
 import { GiphyService } from './Shared/services/giphy-service/giphy.service';
 import { AuthenticationService } from './Shared/services/auth-service/authentication.service';
-import { HttpErrorInterceptor } from './Shared/services/HttpInterceptor/http-error.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import { HttpErrorInterceptor } from './Shared/services/HttpInterceptor/http-err
     FormsModule,
     ValidateEqualModule
   ],
-  providers: [AuthenticationService, CommentService, GiphyService, CookieService, { provide: HTTP_INTERCEPTORS,useClass: HttpErrorInterceptor,multi: true }],
+  providers: [AuthenticationService, CommentService, GiphyService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

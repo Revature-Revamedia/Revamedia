@@ -42,12 +42,9 @@ public class UserFollows implements Serializable {
     public UserFollows() {
     }
 
-    public UserFollows(Integer id, User followedId, User followerId, boolean bookmarked, Timestamp dateFollowed) {
-        this.followId = id;
-        this.followedId = followedId;
+    public UserFollows(User followerId, User followedId) {
         this.followerId = followerId;
-        this.bookmarked = bookmarked;
-        this.dateFollowed = dateFollowed;
+        this.followedId = followedId;
     }
 
     public Integer getId() {
