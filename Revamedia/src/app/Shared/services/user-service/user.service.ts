@@ -27,6 +27,12 @@ export class UserService {
     //sessionStorage.getItem('userid')
   }
 
+<<<<<<< Updated upstream
+=======
+  baseURL: string = environment.apiBaseUrl;
+  userURL = this.baseURL + "/user";
+
+>>>>>>> Stashed changes
   getCurrentUser(): BehaviorSubject<any> {
     return this.userSubject;
   }
