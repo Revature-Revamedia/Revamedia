@@ -13,7 +13,7 @@
     </div>
     <div class="right-side">
       <form class="searchUser">
-        <input type="search" id="search-user" placeholder="Search users...">
+        <input type="search" #searchValue id="search-user" placeholder="Search users..." (keyup) = "searchUser(searchValue.value)" >
       </form>
       <button (click)="openModal('add','post-modal', user)">Add Post</button>
     </div>
@@ -24,7 +24,6 @@
   <div class="main" id="main">
       <!-- post start -->
       <div class="post-data" *ngFor="let p of posts">
-
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
@@ -189,6 +188,7 @@
 
       <!-- NO POST AVAILABLE START-->
       <div class="noPost" *ngIf="user?.postsOwned.length == 0">
+        
         <h1>No Post</h1>
         <p>Seems like there are no posts available to show</p>
         <p>Sorry for the inconvience.</p>

@@ -10,6 +10,7 @@ import { UserService } from '../../Shared/services/user-service/user.service';
 import { GiphyService } from '../../Shared/services/giphy-service/giphy.service';
 import { ThisReceiver } from '@angular/compiler';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { SearchService } from 'src/app/Shared/services/search-service/search.service';
 import { Router } from '@angular/router';
 
 
@@ -34,7 +35,7 @@ export class HomeComponent implements OnInit {
   // Variables Used In Home Component
   public totalLikes: number = 0;
 
-  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router) { }
+  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router, private searchService: SearchService) { }
 
 
   ngOnInit(): void {
@@ -502,5 +503,10 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     )
+  }
+
+  data : any = []
+  searchUser(searchKey: string){
+      this.data = this.searchService.searchUser(searchKey);
   }
 }
