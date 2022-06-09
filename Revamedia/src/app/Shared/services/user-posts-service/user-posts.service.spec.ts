@@ -9,8 +9,7 @@ import { identifierName } from '@angular/compiler';
 describe('UserPostsService', () => {
   let service: UserPostsService;
   let httpMock: HttpTestingController;
-  let userPostURL: string = "http://localhost:8080/posts";
-  let baseURL: string;
+  let userPostURL: string;
   let dummyPost: object = {};
 
   beforeEach(() => {
@@ -20,6 +19,7 @@ describe('UserPostsService', () => {
     });
     service = TestBed.inject(UserPostsService);
     httpMock = TestBed.inject(HttpTestingController);
+    userPostURL = service['userPostURL'];
   });
 
   afterEach(() => {
