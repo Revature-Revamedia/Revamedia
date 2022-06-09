@@ -35,8 +35,8 @@
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img *ngIf="user?.profilePicture !== ''" src="{{me?.profilePicture}}" alt="{{ me?.username }}" (click)="goToProfile(me?.userId)">
-              <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(me?.userId)">
+              <img *ngIf="user?.profilePicture !== null" src="{{me?.profilePicture}}" alt="{{ me?.username }}" (click)="goToProfile(me?.userId)">
+              <img *ngIf="user?.profilePicture === null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" (click)="goToProfile(me?.userId)">
               <a (click)="goToProfile(me?.userId)">{{ me?.username }}</a>
             </div>
             <div class="post-options">

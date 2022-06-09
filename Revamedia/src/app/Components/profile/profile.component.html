@@ -95,8 +95,8 @@
   <div class="modal-body">
     <div class="following" *ngFor="let following of user?.following">
         <div class="following-data">
-          <img src="{{following?.followedId?.profilePicture }}" *ngIf="following?.followedId?.profilePicture !== ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
-          <img src="https://randomuser.me/api/portraits/lego/1.jpg" *ngIf="following?.followedId?.profilePicture === ''" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
+          <img src="{{following?.followedId?.profilePicture }}" *ngIf="following?.followedId?.profilePicture != null" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
+          <img src="https://randomuser.me/api/portraits/lego/1.jpg" *ngIf="following?.followedId?.profilePicture == null" alt="Name" (click)="goToProfile(following?.followedId?.userId)">
           <h5 (click)="goToProfile( following?.followedId?.userId )">{{ following?.followedId?.username }}</h5>
         </div>
         <div class="follow-option">
