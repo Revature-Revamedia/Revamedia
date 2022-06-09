@@ -53,6 +53,7 @@ public class UserController {
         user.setPassword(encoder.encode(dto.getPassword()));
         return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     }
+
     public void setEncoder(BCryptPasswordEncoder encoder) {
         this.encoder = encoder;
     }
