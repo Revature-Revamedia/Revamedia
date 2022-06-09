@@ -42,10 +42,10 @@ public class UserPostsController {
      * Get all posts from the database
      * @return List of all UserPosts
      */
-    @GetMapping("/getAllPosts")
-    public ResponseEntity<List<UserPosts>> getAllPosts(){
-        return ResponseEntity.ok(userPostsService.getAllPosts()) ;
-    }
+//    @GetMapping("/getAllPosts")
+//    public ResponseEntity<List<UserPosts>> getAllPosts(){
+//        return ResponseEntity.ok(userPostsService.getAllPosts()) ;
+//    }
 
      /**
      * Get all posts made by the given user
