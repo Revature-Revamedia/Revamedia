@@ -47,7 +47,7 @@ public class AuthService {
             return ResponseEntity.ok().build();
         }
         else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("The username or email is not unique");
         }
     }
 

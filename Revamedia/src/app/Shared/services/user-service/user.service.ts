@@ -98,7 +98,13 @@ export class UserService {
 
   // FOLLOW
   public followUser(Follow: any) : Observable<any> {
+    console.log('information from form', Follow);
     return this.http.post<any>(`${this.userURL}/userFollows`, Follow);
+  }
+  public unfollowUser(unfollow: any) : Observable<any> {
+    console.log('information from form', unfollow);
+    console.log(`${this.userURL}/deleteFollowing`);
+    return this.http.post<any>(`${this.userURL}/deleteFollowing`, unfollow);
   }
 
 }
