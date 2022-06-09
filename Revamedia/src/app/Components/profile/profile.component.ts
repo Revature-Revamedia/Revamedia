@@ -81,6 +81,8 @@ export class ProfileComponent implements OnInit {
     this.userService.followUser(follow.value).subscribe(
       (response: any) => {
         console.log(response);
+        this.getCurrentUserData();
+        this.getUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
