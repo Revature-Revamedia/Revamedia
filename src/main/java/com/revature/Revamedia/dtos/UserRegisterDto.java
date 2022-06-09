@@ -28,7 +28,7 @@ public class UserRegisterDto {
     @Pattern(regexp = "([a-zA-ZÀ-ÿ][-,a-z. ']+[ ]*)+", message = "Last name should consist of letters only and be a minimum of 2 characters")
     private String lastName;
     @NotEmpty(message = "Email can't be empty")
-    @Email(message = "Not a valid email")
+    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Invalid email format")
     private String email;
 
     public UserRegisterDto() {

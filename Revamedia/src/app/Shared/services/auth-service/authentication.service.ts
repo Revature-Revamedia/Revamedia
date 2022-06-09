@@ -63,8 +63,8 @@ export class AuthenticationService {
 
   public logout() {
     this.loggedIn.next(false);
+    sessionStorage.removeItem('loggedIn');
     this.router.navigateByUrl('/login');
     this.cookieService.deleteAll();
-    sessionStorage.removeItem('LoggedIn');
   }
 }
