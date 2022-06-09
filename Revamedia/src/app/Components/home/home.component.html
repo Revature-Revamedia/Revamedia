@@ -17,8 +17,6 @@
         <div class="users-list" *ngIf="allUsers.length != 0">
           <div *ngFor="let u of allUsers" class="userFound">
             <div class="user" (click)="goToProfile(u?.userId)" title="View Profile">
-              <img *ngIf="u?.profilePicture != null" src="{{ u?.profilePicture }}" alt="{{ u?.username }}">
-              <img *ngIf="u?.profilePicture == null" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic">
               <p>{{u?.username}}</p>
             </div>
           </div>

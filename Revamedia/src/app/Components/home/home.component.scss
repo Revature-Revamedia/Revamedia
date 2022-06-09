@@ -100,14 +100,8 @@ $darkgrey: rgb(61,66,74);
               padding: .5rem 0;
               border-bottom: 1px solid $grey;
               background-color:$lightgrey;
-              img{
-                border-radius: 50%;
-                width: 1.5rem;
-                height: 1.5rem;
-                border: 1px solid $blue;
-                margin: 0 .5rem;
-              }
               p{
+                margin-left: .5rem;
                 color: black;
                 font-size: 1rem;
                 font-weight: 700;
