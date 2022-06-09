@@ -5,11 +5,8 @@
  */
 package com.revature.Revamedia.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -25,20 +22,24 @@ public class UserReplies implements Serializable {
 
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
-    private User ownerId;
+    @JoinColumn(name = "reply_owner_id", referencedColumnName = "user_id")
+    private User replyOwnerId;
 
     @JsonBackReference
     @ManyToOne()
     @JoinColumn(name = "comment_id", referencedColumnName = "comment_id")
     private UserComments commentId;
 
-    @Column(name = "message", length = 500)
-    private String message;
+    @Column(name = "reply_message", length = 500)
+    private String replyMessage;
+
 
 
     @Column(name = "giphyUrl")
     private String giphyUrl;
+
+    @Column(name = "reply_giphy_Url")
+    private String replyGiphyUrl;
 
     @Column(name = "date_created")
     private Timestamp dateCreated;
@@ -46,14 +47,14 @@ public class UserReplies implements Serializable {
     public UserReplies() {
     }
 
-    public UserReplies(Integer replyId, User ownerId, UserComments commentId, String message, Timestamp dateCreated,
-            String giphyUrl) {
+    public UserReplies(Integer replyId, User replyOwnerId, UserComments commentId, String replyMessage, Timestamp dateCreated,
+            String replyGiphyUrl) {
         this.replyId = replyId;
-        this.ownerId = ownerId;
+        this.replyOwnerId = replyOwnerId;
         this.commentId = commentId;
-        this.message = message;
+        this.replyMessage = replyMessage;
         this.dateCreated = dateCreated;
-        this.giphyUrl = giphyUrl;
+        this.replyGiphyUrl = replyGiphyUrl;
     }
 
     public Integer getReplyId() {
@@ -65,11 +66,11 @@ public class UserReplies implements Serializable {
     }
 
     public User getOwnerId() {
-        return ownerId;
+        return replyOwnerId;
     }
 
     public void setOwnerId(User ownerId) {
-        this.ownerId = ownerId;
+        this.replyOwnerId = ownerId;
     }
 
     public UserComments getCommentId() {
@@ -81,11 +82,11 @@ public class UserReplies implements Serializable {
     }
 
     public String getMessage() {
-        return message;
+        return replyMessage;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.replyMessage = message;
     }
 
     public Timestamp getDateCreated() {
@@ -107,10 +108,11 @@ public class UserReplies implements Serializable {
     @Override
     public String toString() {
         return "UserReplies{" +
+
                 "replyId=" + replyId +
-                ", ownerId=" + ownerId +
-                ", message='" + message + '\'' +
-                ", giphyUrl=" + giphyUrl +
+                ", ownerId=" + replyOwnerId +
+                ", message='" + replyMessage + '\'' +
+                ", giphyUrl=" + replyGiphyUrl +
                 ", dateCreated='" + dateCreated + '\'' +
                 '}';
     }
