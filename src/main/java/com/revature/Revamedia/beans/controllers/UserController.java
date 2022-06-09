@@ -23,6 +23,7 @@ import java.util.List;
 public class UserController {
     //Initialize Services
     private final UserService userService;
+    private final UserFollowsService userFollowsService;
 
 
     BCryptPasswordEncoder encoder;
@@ -91,7 +92,6 @@ public class UserController {
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
-        user.setPassword(encoder.encode(dto.getPassword()));
         return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     }
 
