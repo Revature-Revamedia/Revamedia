@@ -49,7 +49,7 @@
     <div class="shared-youtube-links-container">
       <h5>Shared Youtube Links</h5>
       <div class="youtube-post-wrapper" *ngFor="let post of user?.postsOwned">
-        <div class="youtube-post" *ngIf="post?.image === null">
+        <div class="youtube-post" *ngIf="post?.image === null" id="post-body">
           <div class="youtube-link">
             <div class="youtube-logo">
               <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">

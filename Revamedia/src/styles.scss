@@ -125,7 +125,13 @@ $darkgrey: rgb(61,66,74);
       }
     }
   }
-  #delete-post-modal,#edit-post-modal,#add-post-modal,#following-modal,#followers-modal,#edit-account-modal{
+  #post-body{
+    background-color: rgb(31, 31, 31);
+    a, p, span{
+      color: white;
+    }
+  }
+  #delete-post-modal,#edit-post-modal,#add-post-modal,#following-modal,#followers-modal,#edit-account-modal, #add-youtube-modal, #edit-youtube-modal, #delete-youtube-modal{
     background-color: rgb(31, 31, 31);
     transition: all 0.4s ease-in-out;
     color: white;
