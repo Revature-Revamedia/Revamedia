@@ -1,7 +1,9 @@
 package com.revature.Revamedia.beans.services;
 
+import com.google.zxing.WriterException;
 import com.revature.Revamedia.dtos.AuthDto;
 import com.revature.Revamedia.dtos.CookieDto;
+import com.revature.Revamedia.dtos.TwoFactorAuthDto;
 import com.revature.Revamedia.dtos.UserRegisterDto;
 import com.revature.Revamedia.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
@@ -20,14 +26,19 @@ public class AuthService {
 
     private final UserService userService;
     private final JsonWebToken jwt;
+    private final TwoFactorAuthentication twoFactorAuthentication;
+    private final FileUploadService fileUploadService;
 
     BCryptPasswordEncoder encoder;
 
     @Autowired
-    public AuthService(UserService userService, JsonWebToken jwt){
+    public AuthService(UserService userService, JsonWebToken jwt, TwoFactorAuthentication twoFactorAuthentication, FileUploadService fileUploadService){
         this.jwt=jwt;
         this.userService = userService;
+        this.twoFactorAuthentication = twoFactorAuthentication;
+        this.fileUploadService = fileUploadService;
         this.encoder =  new BCryptPasswordEncoder(10);
+
     }
 
     public ResponseEntity<Object> register(UserRegisterDto userRegisterDto){
@@ -72,6 +83,25 @@ public class AuthService {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    //handle exceptions
+    public ResponseEntity<Object> enableTwoFactorAuth(TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
+        User currentUser = userService.getUserById(twoFactorAuthDto.getUserId());
+        currentUser.setTwoFactorAuth(true);
+        String secretForCurrentUser = twoFactorAuthentication.generateSecretKey();
+        currentUser.setSecretTwoFactorKey(secretForCurrentUser);
+        String email = "revamedia@gmail.com";
+        String companyName = "Revamedia";
+        String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretForCurrentUser, email, companyName);
+        ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,400,400);
+        ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
+        fileUploadService.uploadFile("image.png",inStream);
+        String QRCodeUrl = fileUploadService.getFileUrl("fileholderbucket","image.png");
+        currentUser.setQRCodeUrl(QRCodeUrl);
+        userService.update(currentUser);
+        return ResponseEntity.status(HttpStatus.OK).body(QRCodeUrl);
+
     }
 
     public void setEncoder(BCryptPasswordEncoder encoder) {

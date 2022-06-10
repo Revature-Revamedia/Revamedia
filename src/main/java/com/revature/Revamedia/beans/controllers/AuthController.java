@@ -1,9 +1,11 @@
 package com.revature.Revamedia.beans.controllers;
 
+import com.google.zxing.WriterException;
 import com.revature.Revamedia.beans.services.AuthService;
 import com.revature.Revamedia.beans.services.JsonWebToken;
 import com.revature.Revamedia.dtos.AuthDto;
 import com.revature.Revamedia.dtos.CookieDto;
+import com.revature.Revamedia.dtos.TwoFactorAuthDto;
 import com.revature.Revamedia.dtos.UserRegisterDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.exceptions.UnauthorizedUserException;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.io.IOException;
 
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
@@ -37,5 +40,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody AuthDto authDto) {
         return authService.login(authDto);
+    }
+
+    @PostMapping("/enable")
+    public ResponseEntity<Object> enableTwoFactorAuth(@RequestBody TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
+        return authService.enableTwoFactorAuth(twoFactorAuthDto);
     }
 }

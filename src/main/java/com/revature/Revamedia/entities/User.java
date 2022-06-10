@@ -52,6 +52,12 @@ public class User implements Serializable {
     @Column(name = "two_factor_auth")
     private boolean twoFactorAuth;
 
+    @Column(name = "secret_two_factor_key")
+    private String secretTwoFactorKey;
+
+    @Column(name = "qr_code_url")
+    private String QRCodeUrl;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "followedId", cascade = CascadeType.ALL)
     private Set<UserFollows> followers;
@@ -347,6 +353,26 @@ public class User implements Serializable {
 
     public void setTwoFactorAuth(boolean twoFactorAuth) {
         this.twoFactorAuth = twoFactorAuth;
+    }
+
+    public boolean isTwoFactorAuth() {
+        return twoFactorAuth;
+    }
+
+    public String getSecretTwoFactorKey() {
+        return secretTwoFactorKey;
+    }
+
+    public void setSecretTwoFactorKey(String secretTwoFactorKey) {
+        this.secretTwoFactorKey = secretTwoFactorKey;
+    }
+
+    public String getQRCodeUrl() {
+        return QRCodeUrl;
+    }
+
+    public void setQRCodeUrl(String QRCodeUrl) {
+        this.QRCodeUrl = QRCodeUrl;
     }
 
     @Override
