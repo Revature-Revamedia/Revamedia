@@ -6,7 +6,7 @@ import { anything, instance, mock, verify, when, } from "ts-mockito"
 
 
 
-describe('LoginComponent', () => {
+fdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let mockAuthService: AuthenticationService = mock(AuthenticationService);

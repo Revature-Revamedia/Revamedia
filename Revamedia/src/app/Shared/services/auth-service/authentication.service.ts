@@ -18,9 +18,11 @@ import { environment } from 'src/environments/environment';
 export class AuthenticationService {
 
   public loggedIn = new BehaviorSubject<boolean>(this.checkLoginStatus());
+  http: HttpClient;
 
-
-  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private router: Router, http: HttpClient, private cookieService: CookieService) {
+    this.http = http;
+  }
 
   checkLoginStatus(): boolean {
     var loginCookie = sessionStorage.getItem('loggedIn');
@@ -49,13 +51,15 @@ export class AuthenticationService {
     }).subscribe((response: any) => {
       //If login was successful store the user's info in session storage
       user = response;
-      sessionStorage.setItem('LoggedIn', '1');
-      this.loggedIn.next(true);
+      sessionStorage.setItem('userId', response.body.userId.toString());
+      sessionStorage.setItem('username', response.body.username);
       this.router.navigateByUrl('/home');
     }, (error: HttpErrorResponse) => {
       document.getElementById('invalid')!.style.display = "flex";
       //console.log(error);
-    })
+    });
+    sessionStorage.setItem('loggedIn', '1');
+    this.loggedIn.next(true);
 
   }
 
