@@ -8,12 +8,9 @@ import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserComments;
 import com.revature.Revamedia.entities.UserPosts;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.LinkedList;

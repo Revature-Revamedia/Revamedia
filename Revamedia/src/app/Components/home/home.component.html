@@ -5,28 +5,35 @@
       <h3>Revamedia</h3>
       <div class="page-subTitle">
         <div class="user">
-          <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-          <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
-          <span><p routerLink="/profile" routerLinkActive="active">{{ user?.username }}</p>'s Feed</span>
+          <img src="{{ user?.profilePicture }}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
+          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
         </div>
       </div>
     </div>
-    <button (click)="openModal('add','post-modal', user)">Add Post</button>
+    <div class="right-side">
+      <form class="searchUser">
+        <input type="search" #searchValue id="search-user" placeholder="Search users..." (keyup)="searchUser(searchValue.value)">
+        <div class="users-list" *ngIf="allUsers.length != 0">
+          <div *ngFor="let u of allUsers" class="userFound">
+            <div class="user" (click)="goToProfile(u?.userId)" title="View {{u?.username}}'s Profile">
+              <p>{{u?.firstName +" "+ u?.lastName}}</p>
+            </div>
+          </div>
+        </div>
+      </form>
+      <button (click)="openModal('add','post-modal', user)">Add Post</button>
+    </div>
   </div>
   <!-- Page title End -->
-
   <!-- main feed start -->
   <div class="main" id="main">
-
       <!-- post start -->
       <div class="post-data" *ngFor="let p of posts">
-
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img *ngIf="user?.profilePicture !== ''" src="{{user?.profilePicture}}" alt="{{ user?.username }}"  routerLink="/profile" routerLinkActive="active">
-              <img *ngIf="user?.profilePicture === ''" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="No Pic" routerLink="/profile" routerLinkActive="active">
-              <a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>
+              <img src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
+              <a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>
             </div>
             <div class="post-options">
               <fa-icon (click)="togglePostsOptions()" id="icon" [icon]="faEllipsis"></fa-icon>
@@ -52,8 +59,9 @@
                   </fa-icon>
                    <span>{{ p?.likes?.length }} likes</span>
                 </div>
-                <div class="comment">
-                  <fa-icon id="commentIcon" (click)="openAddComment()" title="Comment" [icon]="faComment" size="lg"></fa-icon>
+                <div class="comment" (click)="toggleComments()">
+                  <fa-icon id="commentIcon" title="Comment" [icon]="faComment" size="lg"></fa-icon>
+                  <span>Comment</span>
                 </div>
               </div>
               <div class="bookmark">
@@ -105,7 +113,7 @@
             <div class="comment-title">
               <div class="comment-author">
                 <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
-                <a routerLink="/profile" routerLinkActive="active" title="View Profile" >leobarrientos02</a>
+                <p (click)="goToProfile(user?.userId)" title="View Profile" >leobarrientos02</p>
               </div>
               <div class="comment-option" id="comment-option">
                 <button (click)="openModal('edit', 'comment-modal', comment)" >Edit</button>
@@ -114,7 +122,7 @@
             </div>
             <div class="comment-content">
               <p>{{ comment?.message }}</p>
-              <img *ngIf="comment?.giphyUrl !== ''" src="{{ comment?.giphyUrl }}" alt="Attached Image">
+              <img *ngIf="comment?.giphyUrl != null" src="{{ comment?.giphyUrl }}" alt="Attached Image">
             </div>
 
             <div class="reply-card">
@@ -171,7 +179,7 @@
               </div>
               <div class="reply-content">
                 <p>{{ reply?.message }}</p>
-                <img src="{{ reply?.giphyUrl }}" *ngIf="reply?.giphyUrl !== null" alt="Attached Image">
+                <img src="{{ reply?.giphyUrl }}" *ngIf="reply?.giphyUrl != null" alt="Attached Image">
               </div>
             </div>
             <!-- Replies End -->
@@ -184,6 +192,7 @@
 
       <!-- NO POST AVAILABLE START-->
       <div class="noPost" *ngIf="posts.length == 0">
+
         <h1>No Post</h1>
         <p>Seems like there are no posts available to show</p>
         <p>Sorry for the inconvience.</p>
@@ -204,15 +213,15 @@
     <h3>Create new post</h3>
     <span (click)="closeModal('add', 'post-modal')">x</span>
   </div>
-  <form  #addPostForm="ngForm" (ngSubmit)="addPost(addPostForm)">
+  <form #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)">
     <div class="form-data">
       <h4>Add Image or Youtube Link</h4>
-      <input type="text" name="image" id="image" placeholder="ImageUrl or Youtube Link">
+      <input type="text" ngModel name="image" id="image" placeholder="ImageUrl or Youtube Link">
     </div>
     <div class="form-data">
       <input type="hidden" name="userId" ngModel="{{ post?.userId }}">
       <h4>Write a caption</h4>
-      <textarea name="message" placeholder="Write a caption..." rows="8"></textarea>
+      <textarea name="message" ngModel placeholder="Write a caption..." rows="8"></textarea>
     </div>
     <div class="post-submit">
       <button>Create Post</button>
@@ -227,9 +236,10 @@
     <h3>Edit post</h3>
     <span (click)="closeModal('edit', 'post-modal')">x</span>
   </div>
-  <form>
+  <form #editPostForm="ngForm" (ngSubmit)="onUpdatePost(editPostForm)">
     <div class="form-data">
       <h4>Edit Image or Video</h4>
+      <input type="hidden" name="postId" ngModel="{{ editPost?.postId }}">
       <input type="text" ngModel="{{ editPost?.image }}" name="image" id="image" placeholder="ImageUrl or Youtube Link">
     </div>
     <div class="form-data">
@@ -249,7 +259,7 @@
     <h3>Delete post</h3>
     <span (click)="closeModal('delete', 'post-modal')">x</span>
   </div>
-  <form>
+  <form (ngSubmit)="onDeletePost(deletePost?.postId)">
     <h2>Are you sure you want to delete this post?</h2>
     <span style="font-size: .8rem;">{{ deletePost?.message }}</span>
     <img style="width:8rem;height: 8rem; object-fit:cover;" src="{{ deletePost?.image }}" alt="Image">

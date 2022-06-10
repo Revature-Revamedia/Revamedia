@@ -6,7 +6,7 @@
 
     <groupId>org.revature</groupId>
     <artifactId>Revamedia</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <packaging>war</packaging>
     <name>Revamedia</name>
     <description>P3 Project</description>
@@ -136,6 +136,16 @@
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>5.2.8.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
 
     </dependencies>
 

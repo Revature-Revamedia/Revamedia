@@ -2,14 +2,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars,faFaceGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
-import { CommentService } from 'src/app/Shared/services/user-comments-service/comment.service';
-import { UserPostsService } from 'src/app/Shared/services/user-posts-service/user-posts.service';
+import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
+import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
+import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from 'src/app/Shared/services/user-service/user.service';
-import { GiphyService } from 'src/app/Shared/services/giphy-service/giphy.service';
+import { UserService } from '../../Shared/services/user-service/user.service';
+import { GiphyService } from '../../Shared/services/giphy-service/giphy.service';
 import { ThisReceiver } from '@angular/compiler';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { SearchService } from 'src/app/Shared/services/search-service/search.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -32,14 +35,13 @@ export class HomeComponent implements OnInit {
   // Variables Used In Home Component
   public totalLikes: number = 0;
 
-  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService) { }
-
+  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router, private searchService: SearchService) { }
 
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
     this.posts = [];
-    //this.getCurrentUserData();
+    // this.getCurrentUserData();
     this.userService.getCurrentUser().subscribe({
       next: response => {
         this.user = response;
@@ -47,7 +49,7 @@ export class HomeComponent implements OnInit {
 
         let f: any;
         this.posts = [];
-        for(f of response.following) {
+        for (f of response.following) {
           this.posts.push(f.followedId.postsOwned);
         }
         console.log(this.posts);
@@ -90,8 +92,7 @@ export class HomeComponent implements OnInit {
   // }
 
   // // Back End Work
-  public 
-  (currentPost: any): void {
+  public (currentPost: any): void {
     this.userPostsService.updatePostLikes(this.postToLike).subscribe(
       (data) => {
         // console.log(data.body.likes.length);
@@ -163,11 +164,8 @@ export class HomeComponent implements OnInit {
 
   // }
 
-  addPost(form: NgForm){
-    console.log(form.value);
-  }
   // Add Comment
-  public onAddComment(commentForm: NgForm): void{
+  public onAddComment(commentForm: NgForm): void {
     this.CommentService.addComment(commentForm.value).subscribe(
       (response: any) => {
         // console.log(response);
@@ -184,7 +182,7 @@ export class HomeComponent implements OnInit {
 
   // EDIT COMMENT
 
-  public onEditComment(commentForm: NgForm): void{
+  public onEditComment(commentForm: NgForm): void {
     this.CommentService.updateComment(commentForm.value).subscribe(
       (response: any) => {
         //this.getCurrentUserData();
@@ -197,7 +195,7 @@ export class HomeComponent implements OnInit {
     )
   }
   // DELETE REPLY
-  public onDeleteComment(id: number){
+  public onDeleteComment(id: number) {
     this.CommentService.deleteComment(id).subscribe(
       (response: any) => {
         //console.log(response);
@@ -226,8 +224,78 @@ export class HomeComponent implements OnInit {
   }
 
 
+  onAddPost(postForm: NgForm): void {
+    this.userPostsService.addPost(postForm.value).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('add', 'post-modal');
+        // this.getCurrentUserData();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+    //console.log(postForm.value);
+  }
+
+  onUpdatePost(postForm: NgForm): void {
+    //console.log(postForm.value);
+    this.userPostsService.updatePost(postForm.value).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('edit', 'post-modal');
+        // this.getCurrentUserData();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
+
+  onDeletePost(id: number) {
+    this.userPostsService.deletePost(id).subscribe(
+      (response: any) => {
+        this.closeModal('delete', 'post-modal');
+        // this.getCurrentUserData();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
+
+
+  // get all comments for given post
+
+  // console.log(data.body.comments);
+  // console.log(data.body.comments[0]);
+  // this.comments = data.body.comments;
+
+  // for (var cur of this.comments) {
+  //   console.log(cur);
+  // }
+
+
+  // get all users -> get all owned posts
+
+  // this.userPostsService.getUsers().subscribe((data) => {
+
+  //   this.users = data.body;
+  //   console.log("all users:");
+  //   console.log(this.users);
+
+  //   // loop through all users
+  //   for (var user of this.users) {
+  //     // loop through all owned posts for each user
+  //     for (var post of user.postsOwned)
+  //       // add post to post array
+  //       this.posts.push(post)
+  //   }
+  //   console.log("all posts:");
+  //   console.log(this.posts);
+
   // Add REPLY
-  public onAddReply(replyForm: NgForm): void{
+  public onAddReply(replyForm: NgForm): void {
     this.CommentService.addReply(replyForm.value).subscribe(
       (response: any) => {
         // console.log(response);
@@ -243,7 +311,7 @@ export class HomeComponent implements OnInit {
 
 
   // EDIT REPLY START
-  public onEditReply(replyForm: NgForm): void{
+  public onEditReply(replyForm: NgForm): void {
     let message = replyForm.value.message;
     let replyId = replyForm.value.reply_id;
     this.CommentService.updateReply(message, replyId).subscribe(
@@ -260,7 +328,7 @@ export class HomeComponent implements OnInit {
   // EDIT REPLY END
 
   // DELETE REPLY
-  public onDeleteReply(id: number){
+  public onDeleteReply(id: number) {
     this.CommentService.deleteReply(id).subscribe(
       (response: any) => {
         // console.log(response);
@@ -288,6 +356,10 @@ export class HomeComponent implements OnInit {
   public toggleHideComments(): void {
     this.viewComments = !this.viewComments;
   }
+  public toggleComments():void{
+    this.addComment = !this.addComment;
+  }
+
 
   // Add comment
   public addComment = false;
@@ -355,7 +427,7 @@ export class HomeComponent implements OnInit {
       this.deleteReply = object;
       this.deletePost = object;
     }
-    if(modalType === "add"){
+    if (modalType === "add") {
       this.post = object;
     }
   }
@@ -382,30 +454,30 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  public searchGiphy(){
+  public searchGiphy() {
     const search = document.getElementById(`giphy-search-comment`) as HTMLInputElement;
     let query = search?.value;
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
-    if(query === ""){
+    if (query === "") {
       this.getGifs("happy");
     }
   }
 
-  public searchGiphyForReply(){
+  public searchGiphyForReply() {
     const search = document.getElementById(`giphy-search-reply`) as HTMLInputElement;
     let query = search?.value;
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
-    if(query === ""){
+    if (query === "") {
       this.getGifs("happy");
     }
   }
 
   public selectedGiphy = "";
-  public selectGiphy(url: any){
+  public selectGiphy(url: any) {
     this.selectedGiphy = url;
   }
 
@@ -414,5 +486,39 @@ export class HomeComponent implements OnInit {
     const anim = this.animationService;
     const main = '#main';
     anim.fadeIn(main, 0.5, 0, 0);
+  }
+  public goToProfile(userId: any){
+    this.router.navigate([`profile/${userId}`]);
+  }
+
+  // public me: any;
+  // getNextUser(){
+  //   this.userService.getProfile(1).subscribe(
+  //     (response: any) => {
+  //       console.log(response);
+  //       this.me = response;
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       console.log(error.message)
+  //     }
+  //   )
+  // }
+
+
+  allUsers: any[] = [];
+  searchUser(searchKey: string){
+    // this.data = this.searchService.searchUser(searchKey);
+    this.searchService.searchUser(searchKey).subscribe(
+      (response: any) => {
+        this.allUsers = response;
+        console.log(this.allUsers);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+    if(searchKey === ''){
+      this.allUsers = [];
+    }
   }
 }

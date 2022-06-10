@@ -1,8 +1,6 @@
 package com.revature.Revamedia.beans.services;
 
 import com.revature.Revamedia.beans.repositories.UserRepliesRepository;
-import com.revature.Revamedia.beans.services.UserCommentsService;
-import com.revature.Revamedia.beans.services.UserRepliesService;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserComments;
 import com.revature.Revamedia.entities.UserPosts;
@@ -18,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
