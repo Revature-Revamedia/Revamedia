@@ -38,6 +38,14 @@ export class UserPostsService {
   }
 
   public addYoutube(youtubePost: any): Observable<any> {
-    return this.http.post<any>(`${this.userPostURL}/youtube`, youtubePost);
+    return this.http.post<any>(`${this.userPostURL}/youtube/add`, youtubePost);
+  }
+
+  public editYoutube(youtubePost: any): Observable<any> {
+    return this.http.put<any>(`${this.userPostURL}/youtube/edit`, youtubePost);
+  }
+
+  public deleteYoutube(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.userPostURL}/youtube/delete/${id}`);
   }
 }

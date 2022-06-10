@@ -405,6 +405,8 @@ export class HomeComponent implements OnInit {
   public deleteReply: any;
   public editPost: any;
   public deletePost: any;
+  public editYoutube: any;
+  public deleteYoutube: any;
   public openModal(modalType: string, id: string, object: any) {
     // Screen
     const screen = document.getElementById('screen');
@@ -418,6 +420,7 @@ export class HomeComponent implements OnInit {
       this.editComment = object;
       this.editReply = object;
       this.editPost = object;
+      this.editYoutube = object;
     }
     if (modalType === "delete") {
       this.postsOptionsClicked = false;
@@ -425,6 +428,7 @@ export class HomeComponent implements OnInit {
       this.deleteComment = object;
       this.deleteReply = object;
       this.deletePost = object;
+      this.deleteYoutube = object;
     }
     if (modalType === "add") {
       this.post = object;
@@ -532,6 +536,35 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         console.log(response);
         this.closeModal('add', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
+  }
+  public editVideo(form: NgForm){
+    var editYoutubeDto = {
+      postId: form.value.postId,
+      youtubeLink: form.value.youtubeLink,
+      message: form.value.message
+    }
+    this.userPostsService.editYoutube(editYoutubeDto).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('edit', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
+  }
+  public deleteVideo(id: number){
+    this.userPostsService.deleteYoutube(id).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('delete', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
