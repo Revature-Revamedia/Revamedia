@@ -32,18 +32,12 @@ export class ProfileComponent implements OnInit {
     this.userService.getProfile(id).subscribe(
       (response: any) => {
         this.user = response;
-        console.log(this.user);
+        this.posts = response?.postsOwned;
+        this.posts = this.posts.flat();
+        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
+        console.log(this.user.userId);
         this.followerLength = response.followers.length;
         this.followingLength = response.following.length;
-        let followersId = [];
-        for(let i = 0; i < response.followers.length; i++){
-          followersId.push(response.followers[i].followerId.userId);
-        }
-        if(followersId.includes(this.currentUser.userId)){
-          this.isFollowing = this.isFollowing;
-        }else{
-          this.isFollowing = !this.isFollowing;
-        }
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -118,5 +112,6 @@ export class ProfileComponent implements OnInit {
     window.location.href = `profile/${userId}`;
   }
 
-  public isFollowing: boolean | undefined;
+  // public isFollowing: boolean | undefined;
+
 }

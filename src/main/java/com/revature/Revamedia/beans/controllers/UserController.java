@@ -87,6 +87,20 @@ public class UserController {
         return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     }
 
+    @GetMapping("/isFollowing")
+    public ResponseEntity<UserFollows> isFollowing (@RequestBody UserFollowDto dto){
+        User follower = userService.getUserById(dto.getFollowerId());
+        User followed = userService.getUserById(dto.getFollowedId());
+        for(UserFollows uf : follower.getFollowing()){
+            if(uf.getFollowedId().getUserId().equals(followed.getUserId())){
+                return new ResponseEntity<>(uf, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(null, HttpStatus.OK);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+    }
+
     public void setEncoder(BCryptPasswordEncoder encoder) {
         this.encoder = encoder;
     }

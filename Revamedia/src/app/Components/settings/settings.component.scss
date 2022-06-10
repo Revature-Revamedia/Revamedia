@@ -85,13 +85,13 @@ $darkgrey: rgb(61,66,74);
         button{
           border: none;
           background: $blue;
-          color: black;
+          color: white;
           font-size: 1.1rem;
           cursor: pointer;
-          padding: .3rem .9rem;
+          padding: .2rem .5rem;
           border-radius: 5px;
           &:hover{
-            background: #4eacd1;
+            background: $orange;
           }
         }
         #deleteBtn{
