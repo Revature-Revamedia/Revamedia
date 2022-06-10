@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserPostsService } from '../user-posts-service/user-posts.service';
 import { environment } from 'src/environments/environment';
+import { UserPostsService } from '../user-posts-service/user-posts.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 export class UserService {
   private user: any;
   private userSubject: BehaviorSubject<any>;
+  userURL: string = environment.apiBaseUrl + "/user"
 
   private baseUrl = `${environment.apiBaseUrl}`;
 
@@ -25,8 +26,6 @@ export class UserService {
 
     //sessionStorage.getItem('userid')
   }
-
-  userURL: string = `${this.baseUrl}/user`;
 
   getCurrentUser(): BehaviorSubject<any> {
     return this.userSubject;
