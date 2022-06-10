@@ -9,7 +9,6 @@ package com.revature.Revamedia.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -45,6 +44,9 @@ public class User implements Serializable {
     private String profilePicture;
     @Column(name = "date_created")
     private Timestamp dateCreated;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "followedId", cascade = CascadeType.ALL)
@@ -325,6 +327,14 @@ public class User implements Serializable {
 
     public void removeLikedPost(UserPosts post) {
         this.likedPosts.remove(post);
+    }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 
     @Override
