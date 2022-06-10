@@ -40,10 +40,10 @@
               <a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>
             </div>
             <div class="post-options">
-              <fa-icon (click)="openModal('edit','post-modal', p)" *ngIf="p?.image !== null"  id="editIcon" [icon]="faPenToSquare"></fa-icon>
-              <fa-icon (click)="openModal('delete', 'post-modal', p)" *ngIf="p?.image !== null"   id="trashIcon" [icon]="faTrashCan"></fa-icon>
-              <fa-icon (click)="openModal('edit', 'youtube-modal', p)" *ngIf="p?.image === null" id="editIcon" [icon]="faPenToSquare"></fa-icon>
-              <fa-icon (click)="openModal('delete', 'youtube-modal', p)" *ngIf="p?.image === null" id="trashIcon" [icon]="faTrashCan"></fa-icon>
+              <fa-icon (click)="openModal('edit','post-modal', p)" *ngIf="p?.image === null"  id="editIcon" [icon]="faPenToSquare"></fa-icon>
+              <fa-icon (click)="openModal('delete', 'post-modal', p)" *ngIf="p?.image === null"   id="trashIcon" [icon]="faTrashCan"></fa-icon>
+              <fa-icon (click)="openModal('edit', 'youtube-modal', p)" *ngIf="p?.image !== null" id="editIcon" [icon]="faPenToSquare"></fa-icon>
+              <fa-icon (click)="openModal('delete', 'youtube-modal', p)" *ngIf="p?.image !== null" id="trashIcon" [icon]="faTrashCan"></fa-icon>
             </div>
           </div>
           <div class="post-body" id="post-body">
