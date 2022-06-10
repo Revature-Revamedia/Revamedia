@@ -50,8 +50,11 @@
           </div>
           <div class="post-body">
             <img src="{{ p?.image }}" alt="{{p?.image}}" *ngIf="p?.image !== null">
-            <div class="youtubeLink">
-              <h2 *ngIf="p?.image === null">Youtube: <a href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank" >{{p?.youtubeLink}}</a></h2>
+            <div class="youtube-link">
+              <div class="youtube-logo">
+                <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
+              </div>
+                <a *ngIf="p?.image === null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
             </div>
             <div class="post-description" id="setBackgroundColor">
               <p><a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>{{p?.message}}</p>
@@ -349,7 +352,7 @@
 <!-- ADD Youtube FORM START -->
 <div class="modal" id="add-youtube-modal">
   <div class="form-header">
-    <h3>Share Youtube Video</h3>
+    <h3><img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">Share Youtube Video</h3>
     <span (click)="closeModal('add', 'youtube-modal')">x</span>
   </div>
   <form #youtubePost="ngForm" (ngSubmit)="shareVideo(youtubePost)" ngNativeValidate>
@@ -378,7 +381,7 @@
 <!-- EDIT Youtube FORM START -->
 <div class="modal" id="edit-youtube-modal">
   <div class="form-header">
-    <h3>Edit Youtube Video</h3>
+    <h3><img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">Edit Youtube Post</h3>
     <span (click)="closeModal('edit', 'youtube-modal')">x</span>
   </div>
   <form #editYoutubePost="ngForm" (ngSubmit)="editVideo(editYoutubePost)" ngNativeValidate>
@@ -406,13 +409,13 @@
 <!-- DELETE YOUTUBE FORM START -->
 <div class="modal" id="delete-youtube-modal">
   <div class="form-header">
-    <h3>Delete Youtube Post</h3>
+    <h3><img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">Delete Youtube Post</h3>
     <span (click)="closeModal('delete','youtube-modal')">x</span>
   </div>
   <form (ngSubmit)="deleteVideo(deleteYoutube?.postId)">
     <h2>Are you sure you want to delete this youtube post?</h2>
-    <span style="font-size: .8rem;">{{ deleteYoutube?.youtubeLink }}</span>
-    <span style="font-size: .8rem;">{{ deleteYoutube?.message }}</span>
+    <a style="font-size: .9rem;color: lightskyblue;" href="{{ deleteYoutube?.youtubeLink }}" target="_blank">{{ deleteYoutube?.youtubeLink }}</a>
+    <span style="font-size: .9rem;">{{ deleteYoutube?.message }}</span>
     <div class="post-submit">
       <button id="deleteBtn">Delete</button>
     </div>

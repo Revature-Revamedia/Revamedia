@@ -349,22 +349,27 @@ $darkgrey: rgb(61, 66, 74);
             width: 100%;
             object-fit: cover;
           }
-          .youtubeLink{
-            padding: 2rem .5rem;
+          .youtube-link{
             width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 1rem;
             border-bottom: 1px solid $lightgrey;
-            h2{
-              width: 100%;
-              font-size: 1.3rem;
-              color: $darkgrey;
-              a{
-                cursor: pointer;
-                font-weight: normal;
-                text-decoration: none;
-                color: $blue;
-                &:hover,&:focus{
-                  text-decoration: underline;
-                }
+            .youtube-logo{
+              img{
+                width: 2rem;
+                height: 2rem;
+                margin-right: 1rem;
+              }
+            }
+            a{
+              font-size: 1.4rem;
+              text-decoration: none;
+              color: $blue;
+              font-weight: normal;
+              &:hover{
+                text-decoration: underline;
               }
             }
           }
@@ -1105,6 +1110,14 @@ $darkgrey: rgb(61, 66, 74);
       font-size: 2.2rem;
       color: $darkgrey;
       text-decoration: underline;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      img{
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1rem;
+      }
     }
 
     span {
