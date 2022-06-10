@@ -132,7 +132,7 @@ fdescribe('AuthenticationService', () => {
   it('Logout should delete the user cookie and session storage', () => {
     authService.logout();
     expect(authService.loggedIn).toBeFalse;
-    expect(sessionStorage.removeItem).toHaveBeenCalledWith('loggedIn');
+    expect(sessionStorage.clear).toHaveBeenCalled;
   });
 
   it('Logout should navigate to login', () => {

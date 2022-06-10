@@ -54,18 +54,19 @@ export class AuthenticationService {
       sessionStorage.setItem('userId', response.body.userId.toString());
       sessionStorage.setItem('username', response.body.username);
       this.router.navigateByUrl('/home');
+      sessionStorage.setItem('loggedIn', '1');
+      this.loggedIn.next(true);
     }, (error: HttpErrorResponse) => {
       document.getElementById('invalid')!.style.display = "flex";
       //console.log(error);
     });
-    sessionStorage.setItem('loggedIn', '1');
-    this.loggedIn.next(true);
+
 
   }
 
   public logout() {
     this.loggedIn.next(false);
-    sessionStorage.removeItem('loggedIn');
+    sessionStorage.clear();
     this.router.navigateByUrl('/login');
     this.cookieService.deleteAll();
   }
