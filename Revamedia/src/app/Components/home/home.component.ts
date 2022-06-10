@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
 import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
 import { HttpClient } from '@angular/common/http';
@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit {
         //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
         console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
         //b.date.getTime() - a.date.getTime();
-
       },
       error: err => {
         console.error(err);
@@ -344,12 +343,13 @@ export class HomeComponent implements OnInit {
 
   // Front End Work
   public faHeart = faHeart; //icon
-  public faEllipsis = faEllipsis; //icon
   public faBookmark = faBookmark; //icon
   public faComment = faComment; //icon
   public faShareFromSquare = faShareFromSquare; //icon
   public faFaceGrinStars = faFaceGrinStars; //icon
   public faFaceGrinTongueSquint = faFaceGrinTongueSquint; //icon
+  public faTrashCan = faTrashCan; //icon
+  public faPenToSquare = faPenToSquare; //icon
 
   // hide Comments
   public viewComments = true;
@@ -387,12 +387,6 @@ export class HomeComponent implements OnInit {
     this.addReply = false;
   }
 
-  // post optional
-  public postsOptionsClicked = false;
-  public togglePostsOptions() {
-    this.postsOptionsClicked = !this.postsOptionsClicked;
-  }
-
   //comment options
   // post optional
   public commentOptionsClicked = false;
@@ -406,6 +400,8 @@ export class HomeComponent implements OnInit {
   public deleteReply: any;
   public editPost: any;
   public deletePost: any;
+  public editYoutube: any;
+  public deleteYoutube: any;
   public openModal(modalType: string, id: string, object: any) {
     // Screen
     const screen = document.getElementById('screen');
@@ -414,18 +410,18 @@ export class HomeComponent implements OnInit {
     const form = document.getElementById(`${modalType}-${id}`);
     form?.classList.add('openModal');
     if (modalType === "edit") {
-      this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.editComment = object;
       this.editReply = object;
       this.editPost = object;
+      this.editYoutube = object;
     }
     if (modalType === "delete") {
-      this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.deleteComment = object;
       this.deleteReply = object;
       this.deletePost = object;
+      this.deleteYoutube = object;
     }
     if (modalType === "add") {
       this.post = object;
@@ -520,5 +516,53 @@ export class HomeComponent implements OnInit {
     if(searchKey === ''){
       this.allUsers = [];
     }
+  }
+
+  // Youtube section
+  public shareVideo(form: NgForm){
+    var youtubeDto = {
+      userId: form.value.userId,
+      youtubeLink: form.value.youtubeLink,
+      message: form.value.message
+    }
+    this.userPostsService.addYoutube(youtubeDto).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('add', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
+  }
+  public editVideo(form: NgForm){
+    var editYoutubeDto = {
+      postId: form.value.postId,
+      youtubeLink: form.value.youtubeLink,
+      message: form.value.message
+    }
+    this.userPostsService.editYoutube(editYoutubeDto).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('edit', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
+  }
+  public deleteVideo(id: number){
+    this.userPostsService.deleteYoutube(id).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('delete', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
   }
 }
