@@ -83,9 +83,10 @@ export class UserService {
     return this.http.get<any>(`${this.userURL}/` + id, {observe : `response`})
   }
 
-  public getUser() : Observable<any> {
-    return this.http.get<any>(`${this.userURL}/5`);
+  public getUser(): Observable<any> {
+    return this.http.get<any>(`${this.userURL}/${sessionStorage.getItem('userId')}`);
   }
+
 
   public updateUser(user: any, id: number) : Observable<any> {
     return this.http.put<any>(`${this.userURL}/update/${id}`, user);

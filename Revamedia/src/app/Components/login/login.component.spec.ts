@@ -44,6 +44,7 @@ describe('LoginComponent', () => {
     expect(auth.login).toHaveBeenCalled;
   });
 
+
   it('toggleShowPassword() should flip the value of showPassword', () => {
     let StoreVal = false;
     component.showPassword = false;
