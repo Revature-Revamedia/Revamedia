@@ -1,7 +1,7 @@
 package com.revature.Revamedia.beans.services;
 
 import com.revature.Revamedia.beans.repositories.UserRepository;
-import com.revature.Revamedia.dtos.CookieDto;
+import com.revature.Revamedia.dtos.SearchDto;
 import com.revature.Revamedia.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,20 +60,24 @@ public class UserService {
         return userRepository.getByUsername(username);
     }
 
-    public List<CookieDto> searchByUsername(String username){
+    public List<SearchDto> searchByUsername(String username){
 
         List<User> userList = userRepository.searchByUsername(username);
-        List<CookieDto> cookieDtoList = new ArrayList<>();
+
+        List<SearchDto> searchDtoList = new ArrayList<>();
 
         for (User user : userList) {
-            CookieDto cookieDto = new CookieDto();
-            cookieDto.setUserId(user.getUserId());
-            cookieDto.setUsername(user.getUsername());
-            cookieDto.setEmail(user.getEmail());
-            cookieDtoList.add(cookieDto);
+            SearchDto searchDto = new SearchDto();
+
+            searchDto.setUsername(user.getUsername());
+            searchDto.setFirstName(user.getFirstName());
+            searchDto.setLastName(user.getLastName());
+            searchDto.setUserId(user.getUserId());
+
+            searchDtoList.add(searchDto);
         }
 
-        return cookieDtoList;
+        return searchDtoList;
     }
 
 }
