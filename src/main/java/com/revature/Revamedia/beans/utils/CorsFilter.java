@@ -1,6 +1,6 @@
 /**
  * Author(s): @George Henderson
- * Contributor(s): @Jarod Heng
+ * Contributor(s): @Jarod Heng @Giorgi Amirajibi
  * Purpose: CorsFilter
  */
 package com.revature.Revamedia.beans.utils;
@@ -9,7 +9,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +24,19 @@ public class CorsFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String[] allowDomain = {"http://localhost:4200","http://220328-revamedia-ui.s3-website-us-east-1.amazonaws.com",
+        String[] allowedDomains = {"http://localhost:8080", "http://220328p3revamedia-env.eba-mczbwbpi.us-east-1.elasticbeanstalk.com",
+                                "http://localhost:4200", "http://220328-revamedia-ui.s3-website-us-east-1.amazonaws.com",
                                 "http://revamedia-ui.s3-website-us-west-1.amazonaws.com"};
-        Set<String> allowedOrigins = new HashSet<>(Arrays.asList(allowDomain));
+        Set<String> allowedOrigins = new HashSet<>(Arrays.asList(allowedDomains));
 
-        String originHeader = request.getHeader("Origin");
+        String originHeader;
+        originHeader = request.getHeader("Origin");
+
+        // this header check is to handle some backend requests using the host header (namely password reset)
+        if(request.getHeader("Origin") == null){
+            originHeader = "http://";
+            originHeader += request.getHeader("host");
+        }
 
         if(allowedOrigins.contains(originHeader)) {
             response.setHeader("Access-Control-Allow-Credentials", "true");
