@@ -6,7 +6,7 @@
       <div class="page-subTitle">
         <div class="user">
           <img src="{{ user?.profilePicture }}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
-          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
+          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p></span>
         </div>
       </div>
     </div>
@@ -40,19 +40,19 @@
               <a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>
             </div>
             <div class="post-options">
-              <fa-icon (click)="openModal('edit','post-modal', p)" *ngIf="p?.image === null"  id="editIcon" [icon]="faPenToSquare"></fa-icon>
-              <fa-icon (click)="openModal('delete', 'post-modal', p)" *ngIf="p?.image === null"   id="trashIcon" [icon]="faTrashCan"></fa-icon>
-              <fa-icon (click)="openModal('edit', 'youtube-modal', p)" *ngIf="p?.image !== null" id="editIcon" [icon]="faPenToSquare"></fa-icon>
-              <fa-icon (click)="openModal('delete', 'youtube-modal', p)" *ngIf="p?.image !== null" id="trashIcon" [icon]="faTrashCan"></fa-icon>
+              <fa-icon (click)="openModal('edit','post-modal', p)" *ngIf="p?.image !== null"  id="editIcon" [icon]="faPenToSquare"></fa-icon>
+              <fa-icon (click)="openModal('delete', 'post-modal', p)" *ngIf="p?.image !== null"   id="trashIcon" [icon]="faTrashCan"></fa-icon>
+              <fa-icon (click)="openModal('edit', 'youtube-modal', p)" *ngIf="p?.image === null" id="editIcon" [icon]="faPenToSquare"></fa-icon>
+              <fa-icon (click)="openModal('delete', 'youtube-modal', p)" *ngIf="p?.image === null" id="trashIcon" [icon]="faTrashCan"></fa-icon>
             </div>
           </div>
           <div class="post-body" id="post-body">
             <img src="{{ p?.image }}" alt="{{p?.image}}" *ngIf="p?.image !== null">
-            <div class="youtube-link">
+            <div class="youtube-link" *ngIf="p?.image === null">
               <div class="youtube-logo">
                 <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
               </div>
-                <a *ngIf="p?.image === null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
+              <a *ngIf="p?.image === null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
             </div>
             <div class="post-description" id="setBackgroundColor">
               <p><a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>{{p?.message}}</p>
@@ -222,15 +222,15 @@
     <h3>Create new post</h3>
     <span (click)="closeModal('add', 'post-modal')">x</span>
   </div>
-  <form #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)">
+  <form #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)" ngNativeValidate>
     <div class="form-data">
       <h4>Add Image Link</h4>
-      <input type="text" name="image" id="image" placeholder="Image url...">
+      <input type="url" name="image" ngModel id="image" placeholder="Image url...">
     </div>
     <div class="form-data">
       <input type="hidden" name="userId" ngModel="{{ post?.userId }}">
       <h4>Write a caption</h4>
-      <textarea name="message" ngModel placeholder="Write a caption..." rows="8"></textarea>
+      <textarea name="message" ngModel placeholder="Write a caption..." rows="6"></textarea>
     </div>
     <div class="post-submit">
       <button>Create Post</button>
@@ -245,15 +245,15 @@
     <h3>Edit post</h3>
     <span (click)="closeModal('edit', 'post-modal')">x</span>
   </div>
-  <form #editPostForm="ngForm" (ngSubmit)="onUpdatePost(editPostForm)">
+  <form #editPostForm="ngForm" (ngSubmit)="onUpdatePost(editPostForm)" ngNativeValidate>
     <div class="form-data">
       <h4>Edit Image or Video</h4>
       <input type="hidden" name="postId" ngModel="{{ editPost?.postId }}">
-      <input type="text" ngModel="{{ editPost?.image }}" name="image" id="image" placeholder="ImageUrl or Youtube Link">
+      <input type="url" ngModel="{{ editPost?.image }}" name="image" id="image" placeholder="ImageUrl or Youtube Link">
     </div>
     <div class="form-data">
       <h4>Edit caption</h4>
-      <textarea name="message" placeholder="Write a caption..." ngModel="{{ editPost?.message }}" rows="8"></textarea>
+      <textarea name="message" placeholder="Write a caption..." ngModel="{{ editPost?.message }}" rows="6"></textarea>
     </div>
     <div class="post-submit">
       <button>Update Post</button>

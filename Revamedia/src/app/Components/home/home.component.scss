@@ -40,12 +40,12 @@ $darkgrey: rgb(61, 66, 74);
         align-items: center;
 
         img {
-          width: 1.25rem;
-          height: 1.25rem;
+          width: 2rem;
+          height: 2rem;
           border-radius: 50%;
           border: 1px solid $orange;
           cursor: pointer;
-
+          margin-right: .5rem;
           &:hover {
             border: 1px solid $blue;
           }
