@@ -192,12 +192,20 @@ $darkgrey: rgb(61,66,74);
           border-radius: 9px;
           border: 2px solid $orange;
           padding: 1rem;
-          h3{
+          .youtube-link{
             width: 100%;
-            font-size: 1.2rem;
-            color: $darkgrey;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .youtube-logo{
+              img{
+                width: 2rem;
+                height: 2rem;
+                margin-right: 1rem;
+              }
+            }
             a{
-              font-size: 1rem;
+              font-size: 1.4rem;
               text-decoration: none;
               color: $blue;
               font-weight: normal;

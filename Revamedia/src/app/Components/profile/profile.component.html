@@ -49,7 +49,12 @@
       <h5>Shared Youtube Links</h5>
       <div class="youtube-post-wrapper" *ngFor="let post of user?.postsOwned">
         <div class="youtube-post" *ngIf="post?.image === null">
-          <h3 *ngIf="post?.image === null">Youtube Link: <a href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a></h3>
+          <div class="youtube-link">
+            <div class="youtube-logo">
+              <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
+            </div>
+              <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
+          </div>
           <p *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
         </div>
       </div>
