@@ -29,5 +29,3 @@ public class RevamediaApplication {
                 SendEmailService sendEmailService = context.getBean(SendEmailService.class);
         }
 }
-
-

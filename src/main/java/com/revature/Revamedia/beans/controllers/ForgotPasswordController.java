@@ -4,6 +4,7 @@ import com.revature.Revamedia.beans.services.SendEmailService;
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.AuthDto;
 import com.revature.Revamedia.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,7 @@ public class ForgotPasswordController {
     private final SendEmailService sendEmailService;
     private final UserService userService;
 
+    @Autowired
     public ForgotPasswordController(SendEmailService sendEmailService, UserService userService){
         this.sendEmailService = sendEmailService;
         this.userService = userService;
