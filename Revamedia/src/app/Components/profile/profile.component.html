@@ -41,7 +41,17 @@
     <h4 class="profile-posts-title" id="setBackgroundColor" *ngIf="user?.postsOwned.length != 0">{{ user?.username }}'s Posts</h4>
     <div class="users-post">
       <div class="post" *ngFor="let post of user?.postsOwned">
-        <img src="{{ post?.image }}" alt="POST">
+        <img *ngIf="post?.image !== null" src="{{ post?.image }}" alt="{{ post?.image }}">
+      </div>
+    </div>
+
+    <div class="shared-youtube-links-container">
+      <h5>Shared Youtube Links</h5>
+      <div class="youtube-post-wrapper" *ngFor="let post of user?.postsOwned">
+        <div class="youtube-post" *ngIf="post?.image === null">
+          <h3 *ngIf="post?.image === null">Youtube Link: <a href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a></h3>
+          <p *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
+        </div>
       </div>
     </div>
 
