@@ -37,4 +37,15 @@ export class UserPostsService {
     return this.http.put<any>(`${this.userPostURL}/likes`, updatePostLikesDto, { observe: `response` })
   }
 
+  public addYoutube(youtubePost: any): Observable<any> {
+    return this.http.post<any>(`${this.userPostURL}/youtube/add`, youtubePost);
+  }
+
+  public editYoutube(youtubePost: any): Observable<any> {
+    return this.http.put<any>(`${this.userPostURL}/youtube/edit`, youtubePost);
+  }
+
+  public deleteYoutube(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.userPostURL}/youtube/delete/${id}`);
+  }
 }

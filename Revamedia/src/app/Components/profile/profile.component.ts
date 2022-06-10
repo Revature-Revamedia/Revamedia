@@ -15,7 +15,6 @@ export class ProfileComponent implements OnInit {
 
   constructor(private ARouter: ActivatedRoute, private router: Router, private userService: UserService, public animationService: AnimationService) { }
 
-  public id: any = this.ARouter.snapshot.paramMap.get('id');
   ngOnInit(): void {
     this.getUserData(); // Gets profile
     this.getCurrentUserData(); // Gets current user
@@ -29,12 +28,22 @@ export class ProfileComponent implements OnInit {
   public posts: any[] = [];
   // GET CURRENT USER
   public getUserData(){
-    this.userService.getProfile(this.id).subscribe(
+    let id: any = this.ARouter.snapshot.paramMap.get('id');
+    this.userService.getProfile(id).subscribe(
       (response: any) => {
         this.user = response;
         console.log(this.user);
-        this.followerLength = response.followers.length
-        this.followingLength = response.following.length
+        this.followerLength = response.followers.length;
+        this.followingLength = response.following.length;
+        let followersId = [];
+        for(let i = 0; i < response.followers.length; i++){
+          followersId.push(response.followers[i].followerId.userId);
+        }
+        if(followersId.includes(this.currentUser.userId)){
+          this.isFollowing = this.isFollowing;
+        }else{
+          this.isFollowing = !this.isFollowing;
+        }
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -46,7 +55,6 @@ export class ProfileComponent implements OnInit {
     this.userService.getUser().subscribe(
       (response: any) => {
         this.currentUser = response;
-        console.log(this.currentUser);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -86,7 +94,6 @@ export class ProfileComponent implements OnInit {
         console.log(response);
         this.followerLength = response.followers.length;
         this.getUserData();
-        this.isFollowing = true;
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -100,8 +107,6 @@ export class ProfileComponent implements OnInit {
         console.log(response);
         this.followerLength = response.followers.length;
         this.getUserData();
-        this.isFollowing = false;
-
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -110,8 +115,8 @@ export class ProfileComponent implements OnInit {
   }
 
   public goToProfile(userId: any){
-    this.router.navigate([`profile/${userId}`]);
+    window.location.href = `profile/${userId}`;
   }
 
-  public isFollowing = false;
+  public isFollowing: boolean | undefined;
 }
