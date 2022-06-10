@@ -11,6 +11,7 @@ import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.CreateUserPostsDto;
 import com.revature.Revamedia.dtos.UpdatePostLikesDto;
 import com.revature.Revamedia.dtos.UpdateUserPostsDto;
+import com.revature.Revamedia.dtos.shareYoutubeDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserPosts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,5 +126,19 @@ public class UserPostsController {
         return userPostsService.getPostsByUser(id);
     }
 
+    @PostMapping("/youtube")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<UserPosts> shareYoutube(@RequestBody shareYoutubeDto dto) {
+        User user = userService.getUserById(dto.getUserId());
+        UserPosts post = new UserPosts();
+        post.setMessage(dto.getMessage());
+        post.setYoutubeLink(dto.getYoutubeLink());
+        post.setDateCreated(new Timestamp(System.currentTimeMillis()));
+        post.setOwnerId(user);
+        user.addPost(post);
+        userPostsService.save(post);
+        userService.save(user);
+        return new ResponseEntity<>(post, HttpStatus.CREATED);
+    }
 }
 

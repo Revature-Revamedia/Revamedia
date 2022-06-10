@@ -37,4 +37,7 @@ export class UserPostsService {
     return this.http.put<any>(`${this.userPostURL}/likes`, updatePostLikesDto, { observe: `response` })
   }
 
+  public addYoutube(youtubePost: any): Observable<any> {
+    return this.http.post<any>(`${this.userPostURL}/youtube`, youtubePost);
+  }
 }

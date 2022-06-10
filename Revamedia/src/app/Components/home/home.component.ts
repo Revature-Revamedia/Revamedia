@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
 
   constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router, private searchService: SearchService) { }
 
-
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
@@ -58,7 +57,6 @@ export class HomeComponent implements OnInit {
         //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
         console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
         //b.date.getTime() - a.date.getTime();
-
       },
       error: err => {
         console.error(err);
@@ -521,5 +519,24 @@ export class HomeComponent implements OnInit {
     if(searchKey === ''){
       this.allUsers = [];
     }
+  }
+
+  // Youtube section
+  public shareVideo(form: NgForm){
+    var youtubeDto = {
+      userId: form.value.userId,
+      youtubeLink: form.value.youtubeLink,
+      message: form.value.message
+    }
+    this.userPostsService.addYoutube(youtubeDto).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('add', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
   }
 }
