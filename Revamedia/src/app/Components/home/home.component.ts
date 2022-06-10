@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
 import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
 import { HttpClient } from '@angular/common/http';
@@ -343,12 +343,13 @@ export class HomeComponent implements OnInit {
 
   // Front End Work
   public faHeart = faHeart; //icon
-  public faEllipsis = faEllipsis; //icon
   public faBookmark = faBookmark; //icon
   public faComment = faComment; //icon
   public faShareFromSquare = faShareFromSquare; //icon
   public faFaceGrinStars = faFaceGrinStars; //icon
   public faFaceGrinTongueSquint = faFaceGrinTongueSquint; //icon
+  public faTrashCan = faTrashCan; //icon
+  public faPenToSquare = faPenToSquare; //icon
 
   // hide Comments
   public viewComments = true;
@@ -386,12 +387,6 @@ export class HomeComponent implements OnInit {
     this.addReply = false;
   }
 
-  // post optional
-  public postsOptionsClicked = false;
-  public togglePostsOptions() {
-    this.postsOptionsClicked = !this.postsOptionsClicked;
-  }
-
   //comment options
   // post optional
   public commentOptionsClicked = false;
@@ -415,7 +410,6 @@ export class HomeComponent implements OnInit {
     const form = document.getElementById(`${modalType}-${id}`);
     form?.classList.add('openModal');
     if (modalType === "edit") {
-      this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.editComment = object;
       this.editReply = object;
@@ -423,7 +417,6 @@ export class HomeComponent implements OnInit {
       this.editYoutube = object;
     }
     if (modalType === "delete") {
-      this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.deleteComment = object;
       this.deleteReply = object;
