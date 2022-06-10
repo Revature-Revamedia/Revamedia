@@ -141,7 +141,7 @@ $darkgrey: rgb(61,66,74);
     // Posts title start
     .profile-posts-title{
       color: $darkgrey;
-      font-size: 2.5rem;
+      font-size: 2rem;
       background: white;
       padding: .2rem .4rem;
       border-radius: 2px;
@@ -170,6 +170,11 @@ $darkgrey: rgb(61,66,74);
             border: 2px solid $blue;
           }
         }
+        span{
+          font-size: 1rem;
+          text-align: center;
+          color: $darkgrey;
+        }
       }
       // POST END
     }
@@ -177,10 +182,12 @@ $darkgrey: rgb(61,66,74);
     .shared-youtube-links-container{
       width: 70%;
       h5{
-        font-size: 1.5rem;
+        width: fit-content;
+        font-size: 1.3rem;
         color: $darkgrey;
         background-color: white;
         border-radius: 3px;
+        padding: .2rem .4rem;
       }
       .youtube-post-wrapper{
         width: 100%;
@@ -420,6 +427,31 @@ $darkgrey: rgb(61,66,74);
         grid-row-gap: 3rem;
       }
       // USERS POSTS END
+      .shared-youtube-links-container{
+        width: 95%;
+        .youtube-post-wrapper{
+          .youtube-post{
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: 9px;
+            border: 2px solid $orange;
+            padding: 1rem;
+            .youtube-link{
+              width: 100%;
+              .youtube-logo{
+                img{
+                  width: 2rem;
+                  height: 2rem;
+                  margin-right: 1rem;
+                }
+              }
+              a{
+                font-size: 1.2rem;
+              }
+            }
+          }
+        }
+      }
     }
   }
 

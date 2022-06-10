@@ -42,6 +42,7 @@
     <div class="users-post">
       <div class="post" *ngFor="let post of user?.postsOwned">
         <img *ngIf="post?.image !== null" src="{{ post?.image }}" alt="{{ post?.image }}">
+        <span *ngIf="post?.image !== null">{{ post?.message }}</span>
       </div>
     </div>
 
