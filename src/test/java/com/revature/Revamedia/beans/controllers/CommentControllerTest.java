@@ -190,9 +190,7 @@ public class CommentControllerTest {
 
         this.mockMvc
                 .perform(request)
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message", is("Comment successfully deleted.")))
-                .andExpect(jsonPath("$.statusCode", is(200)));
+                .andExpect(status().isOk());
     }
 
 }
