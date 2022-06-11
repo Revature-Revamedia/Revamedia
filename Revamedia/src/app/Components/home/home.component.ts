@@ -453,23 +453,25 @@ export class HomeComponent implements OnInit {
   }
 
   public searchGiphy() {
-    const search = document.getElementById(`giphy-search-comment`) as HTMLInputElement;
+    var search = document.getElementById('giphy-search-comment') as HTMLInputElement;
+    // console.log(search);
     let query = search?.value;
+    console.log(query);
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
-    if (query === "") {
+    if (query == "") {
       this.getGifs("happy");
     }
   }
 
   public searchGiphyForReply() {
-    const search = document.getElementById(`giphy-search-reply`) as HTMLInputElement;
+    var search = document.getElementById('giphy-search-reply') as HTMLInputElement;
     let query = search?.value;
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
-    if (query === "") {
+    if (query == "") {
       this.getGifs("happy");
     }
   }

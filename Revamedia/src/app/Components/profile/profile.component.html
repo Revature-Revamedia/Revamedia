@@ -41,7 +41,7 @@
     <div class="users-post">
       <div class="post" *ngFor="let post of posts">
         <img *ngIf="post?.image !== null" src="{{ post?.image }}" alt="{{ post?.image }}">
-        <span *ngIf="post?.image !== null">{{ post?.message }}</span>
+        <!-- <span id="profile-post-message" *ngIf="post?.image !== null">{{ post?.message }}</span> -->
       </div>
     </div>
 
@@ -54,7 +54,7 @@
             </div>
               <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
           </div>
-          <p *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
+          <p id="post-message" *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
         </div>
       </div>
     </div>

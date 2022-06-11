@@ -97,8 +97,8 @@
             <div class="reactions">
               <span>Reactions</span>
               <div class="search">
-                <input type="text" id="giphy-search-reply" placeholder="Search GIPHY">
-                <span (click)="searchGiphyForReply()">Search</span>
+                <input type="text" id="giphy-search-comment" placeholder="Search GIPHY">
+                <span (click)="searchGiphy()">Search</span>
               </div>
               <span id="reaction-title">
                 <fa-icon [icon]="faFaceGrinTongueSquint"></fa-icon>
@@ -121,8 +121,8 @@
           <div class="comment" *ngFor="let comment of p?.comments">
             <div class="comment-title">
               <div class="comment-author">
-                <img routerLink="/profile" routerLinkActive="active" src="{{user?.profilePic}}" alt="User">
-                <p (click)="goToProfile(user?.userId)" title="View Profile" >leobarrientos02</p>
+                <img (click)="goToProfile(user?.userId)" src="{{ user?.profilePicture }}" alt="User">
+                <p (click)="goToProfile(user?.userId)" title="View Profile" >{{user?.username}}</p>
               </div>
               <div class="comment-option" id="comment-option">
                 <button (click)="openModal('edit', 'comment-modal', comment)" >Edit</button>
@@ -178,8 +178,8 @@
             <div class="reply" *ngFor="let reply of comment?.replies">
               <div class="reply-title">
                 <div class="reply-author">
-                  <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
-                  <a routerLink="/profile" routerLinkActive="active" title="View Profile" >leobarrientos02</a>
+                  <img (click)="goToProfile(user?.userId)" src="{{user?.profilePicture}}" alt="{{user?.username}}">
+                  <p (click)="goToProfile(user?.userId)" title="View Profile" >{{user?.username}}</p>
                 </div>
                 <div class="reply-option" id="reply-option">
                   <button (click)="openModal('edit', 'reply-modal', reply)" >Edit</button>
