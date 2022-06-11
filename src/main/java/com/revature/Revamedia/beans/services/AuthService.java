@@ -104,7 +104,7 @@ public class AuthService {
         String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretForCurrentUser, email, companyName);
         ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,400,400);
         ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
-        //fileUploadService.uploadFile("image.png",inStream);
+        fileUploadService.uploadFile("image.png",inStream);
         byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("fileholderbucket","image.png").getObjectContent());
         currentUser.setQRCodeImage(byteArray);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
