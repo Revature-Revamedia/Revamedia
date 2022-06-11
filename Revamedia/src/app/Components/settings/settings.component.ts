@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
 import { faSun, faMoon, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { UserService } from '../../Shared/services/user-service/user.service';
 
 
@@ -13,10 +14,11 @@ import { UserService } from '../../Shared/services/user-service/user.service';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private animationService: AnimationService) { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
+    this.openingAnimation();
   }
 
   // Back end work
@@ -100,4 +102,19 @@ export class SettingsComponent implements OnInit {
     form?.classList.remove('openModal');
   }
   // MODALS FUNCTION END
+  public closeAnyModal(){
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form1 = document.getElementById(`edit-account-modal`);
+    form1?.classList.remove('openModal');
+  }
+
+  // ANIMATION
+  public openingAnimation() {
+    const anim = this.animationService;
+    const settings = '#settings';
+    anim.fadeIn(settings, 0.7, 0, 0.6);
+  }
 }

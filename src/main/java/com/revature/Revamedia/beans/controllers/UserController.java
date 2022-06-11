@@ -2,15 +2,20 @@ package com.revature.Revamedia.beans.controllers;
 
 import com.revature.Revamedia.beans.services.UserFollowsService;
 import com.revature.Revamedia.beans.services.UserService;
+import com.revature.Revamedia.dtos.HttpResponseDto;
 import com.revature.Revamedia.dtos.UpdateUserDto;
+import com.revature.Revamedia.dtos.UserCommentsDto;
 import com.revature.Revamedia.dtos.UserFollowDto;
 import com.revature.Revamedia.entities.User;
+import com.revature.Revamedia.entities.UserComments;
 import com.revature.Revamedia.entities.UserFollows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -87,18 +92,31 @@ public class UserController {
         return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     }
 
-    @GetMapping("/isFollowing")
-    public ResponseEntity<UserFollows> isFollowing (@RequestBody UserFollowDto dto){
-        User follower = userService.getUserById(dto.getFollowerId());
-        User followed = userService.getUserById(dto.getFollowedId());
+//    @GetMapping("/isFollowing")
+//    public ResponseEntity<UserFollows> isFollowing (@RequestBody UserFollowDto dto){
+//        User follower = userService.getUserById(dto.getFollowerId());
+//        User followed = userService.getUserById(dto.getFollowedId());
+//        for(UserFollows uf : follower.getFollowing()){
+//            if(uf.getFollowedId().getUserId().equals(followed.getUserId())){
+//                return new ResponseEntity<>(uf, HttpStatus.OK);
+//            }else{
+//                return new ResponseEntity<>(null, HttpStatus.OK);
+//            }
+//        }
+//        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+//    }
+    @GetMapping("/isFollowing/{id1}/{id2}")
+    public HttpResponseDto isFollowing(HttpServletResponse res, @PathVariable Integer id1, @PathVariable Integer id2) {
+        User follower = userService.getUserById(id1);
+        User followed = userService.getUserById(id2);
         for(UserFollows uf : follower.getFollowing()){
-            if(uf.getFollowedId().getUserId().equals(followed.getUserId())){
-                return new ResponseEntity<>(uf, HttpStatus.OK);
-            }else{
-                return new ResponseEntity<>(null, HttpStatus.OK);
+            if(uf.getFollowedId().getUserId().equals(followed.getUserId())) {
+                res.setStatus(200);
+                return new HttpResponseDto(200, "Following", true);
             }
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        res.setStatus(200);
+        return new HttpResponseDto(200, "NotFollowing", false);
     }
 
     public void setEncoder(BCryptPasswordEncoder encoder) {

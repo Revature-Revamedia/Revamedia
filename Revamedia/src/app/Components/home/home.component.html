@@ -36,7 +36,7 @@
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
+              <img src="{{ user?.profilePicture }}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
               <a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>
             </div>
             <div class="post-options">
@@ -55,7 +55,7 @@
               <a *ngIf="p?.image === null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
             </div>
             <div class="post-description" id="setBackgroundColor">
-              <p><a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>{{p?.message}}</p>
+              <p><a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>{{p?.message}}</p>
             </div>
             <div class="post-options" id="setBackgroundColor">
               <div class="container">
@@ -121,7 +121,7 @@
           <div class="comment" *ngFor="let comment of p?.comments">
             <div class="comment-title">
               <div class="comment-author">
-                <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
+                <img routerLink="/profile" routerLinkActive="active" src="{{user?.profilePic}}" alt="User">
                 <p (click)="goToProfile(user?.userId)" title="View Profile" >leobarrientos02</p>
               </div>
               <div class="comment-option" id="comment-option">
@@ -215,7 +215,7 @@
 
 
 <!-- BLACKOUTSCREEN -->
-<div class="screen" id="screen"></div>
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- ADD POST FORM START -->
 <div class="modal" id="add-post-modal">
   <div class="form-header">

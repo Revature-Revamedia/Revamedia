@@ -40,8 +40,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
-    this.posts = [];
     this.getCurrentUserData();
+    this.openingAnimation();
     // this.userService.getCurrentUser().subscribe({
     //   next: response => {
     //     this.user = response;
@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
     //     console.error(err);
     //   }
     // });
-    this.openingAnimation();
   }
 
   // GET CURRENT USER
@@ -484,7 +483,7 @@ export class HomeComponent implements OnInit {
   public openingAnimation() {
     const anim = this.animationService;
     const main = '#main';
-    anim.fadeIn(main, 0.5, 0, 0);
+    anim.fadeIn(main, 0.7, 0, 0.6);
   }
   public goToProfile(userId: any){
     this.router.navigate([`profile/${userId}`]);
@@ -569,6 +568,36 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     )
+  }
 
+  public closeAnyModal(){
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form1 = document.getElementById(`add-post-modal`);
+    form1?.classList.remove('openModal');
+    const form2 = document.getElementById(`edit-post-modal`);
+    form2?.classList.remove('openModal');
+    const form3 = document.getElementById(`delete-post-modal`);
+    form3?.classList.remove('openModal');
+    const form4 = document.getElementById(`add-comment-modal`);
+    form4?.classList.remove('openModal');
+    const form5 = document.getElementById(`edit-comment-modal`);
+    form5?.classList.remove('openModal');
+    const form6 = document.getElementById(`delete-comment-modal`);
+    form6?.classList.remove('openModal');
+    const form7 = document.getElementById(`add-reply-modal`);
+    form7?.classList.remove('openModal');
+    const form8 = document.getElementById(`edit-reply-modal`);
+    form8?.classList.remove('openModal');
+    const form9 = document.getElementById(`delete-reply-modal`);
+    form9?.classList.remove('openModal');
+    const form10 = document.getElementById(`add-youtube-modal`);
+    form10?.classList.remove('openModal');
+    const form11 = document.getElementById(`edit-youtube-modal`);
+    form11?.classList.remove('openModal');
+    const form12 = document.getElementById(`delete-youtube-modal`);
+    form12?.classList.remove('openModal');
   }
 }
