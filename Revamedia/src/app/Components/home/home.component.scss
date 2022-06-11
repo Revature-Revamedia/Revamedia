@@ -420,6 +420,7 @@ $darkgrey: rgb(61, 66, 74);
                 margin-left: 1rem;
                 cursor: pointer;
                 span{
+                  margin-left: .4rem;
                   font-size: .8rem;
                   color: $grey;
                   &:hover{
@@ -430,7 +431,6 @@ $darkgrey: rgb(61, 66, 74);
                   color: lightblue;
                   cursor: pointer;
                   transition: all .3s ease-in-out;
-
                   &:hover {
                     color: $blue;
                   }
@@ -605,7 +605,6 @@ $darkgrey: rgb(61, 66, 74);
           }
         }
       }
-
       @media screen and (max-width: 800px) {
         .add-comment {
           Form {
@@ -626,7 +625,6 @@ $darkgrey: rgb(61, 66, 74);
           }
         }
       }
-
       // ADD COMMENT END
 
       #viewComments {
@@ -659,7 +657,7 @@ $darkgrey: rgb(61, 66, 74);
         }
 
         .comment {
-          border-bottom: 1px solid $lightgrey;
+          border-bottom: 1.5px solid $lightgrey;
           padding-bottom: .5rem;
 
           .comment-title {
@@ -930,7 +928,7 @@ $darkgrey: rgb(61, 66, 74);
 
         .reply {
           border-top: 1px solid $lightgrey;
-          margin: .5rem 0 0 2rem;
+          margin: .75rem 0 0 2rem;
           padding: .5rem 0;
 
           .reply-title {

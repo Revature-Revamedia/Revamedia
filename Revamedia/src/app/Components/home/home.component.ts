@@ -222,6 +222,7 @@ export class HomeComponent implements OnInit {
     p.userId = this.user.userId;
 
     this.totalLikes = this.userService.userLikesPost(p);
+    this.getCurrentUserData();
   }
 
 
