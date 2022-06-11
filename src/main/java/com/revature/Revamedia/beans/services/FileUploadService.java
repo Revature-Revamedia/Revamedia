@@ -9,11 +9,13 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Properties;
 
 @Service
@@ -69,6 +71,16 @@ public class FileUploadService{
             System.err.println(e.getErrorMessage());
         }
         return "No such bucket or file";
+    }
+
+    public S3Object getFile(String bucketName, String fileName){
+        try {
+            return s3Client.getObject(bucketName,fileName);
+        } catch (AmazonServiceException e) {
+            System.err.println(e.getErrorMessage());
+        }
+        return null;
+
     }
 
     public String deleteFile(String bucketName, String fileName)

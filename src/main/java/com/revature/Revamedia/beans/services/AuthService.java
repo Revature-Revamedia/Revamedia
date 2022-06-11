@@ -1,11 +1,13 @@
 package com.revature.Revamedia.beans.services;
 
+import com.amazonaws.util.IOUtils;
 import com.google.zxing.WriterException;
 import com.revature.Revamedia.dtos.AuthDto;
 import com.revature.Revamedia.dtos.CookieDto;
 import com.revature.Revamedia.dtos.TwoFactorAuthDto;
 import com.revature.Revamedia.dtos.UserRegisterDto;
 import com.revature.Revamedia.entities.User;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,9 +15,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
@@ -96,12 +104,25 @@ public class AuthService {
         String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretForCurrentUser, email, companyName);
         ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,400,400);
         ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
-        fileUploadService.uploadFile("image.png",inStream);
+        //fileUploadService.uploadFile("image.png",inStream);
+        byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("fileholderbucket","image.png").getObjectContent());
+        currentUser.setQRCodeImage(byteArray);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+        BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
+        ImageIO.write(bufferedImage, "png", new File("/Users/Laflammex/IdeaProjects/Project3/QRCode.png"));
         String QRCodeUrl = fileUploadService.getFileUrl("fileholderbucket","image.png");
         currentUser.setQRCodeUrl(QRCodeUrl);
         userService.update(currentUser);
-        return ResponseEntity.status(HttpStatus.OK).body(QRCodeUrl);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", byteArray);
+        return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
 
+    }
+
+    public ResponseEntity<Object> disableTwoFactorAuth(TwoFactorAuthDto twoFactorAuthDto){
+        User currentUser = userService.getUserById(twoFactorAuthDto.getUserId());
+        currentUser.setTwoFactorAuth(false);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     public void setEncoder(BCryptPasswordEncoder encoder) {

@@ -58,6 +58,9 @@ public class User implements Serializable {
     @Column(name = "qr_code_url")
     private String QRCodeUrl;
 
+    @Column(name = "qr_code_image")
+    private byte [] QRCodeImage;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "followedId", cascade = CascadeType.ALL)
     private Set<UserFollows> followers;
@@ -373,6 +376,14 @@ public class User implements Serializable {
 
     public void setQRCodeUrl(String QRCodeUrl) {
         this.QRCodeUrl = QRCodeUrl;
+    }
+
+    public byte[] getQRCodeImage() {
+        return QRCodeImage;
+    }
+
+    public void setQRCodeImage(byte[] QRCodeImage) {
+        this.QRCodeImage = QRCodeImage;
     }
 
     @Override
