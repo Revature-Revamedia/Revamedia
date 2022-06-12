@@ -24,6 +24,7 @@ import { ValidateEqualModule } from 'ng-validate-equal';
 import { CookieService } from 'ngx-cookie-service';
 import { ResetComponent } from './Components/reset/reset.component';
 import { ForgotComponent } from './Components/forgot/forgot.component';
+import { QrcodeComponent } from './Components/qrcode/qrcode.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,8 @@ import { ForgotComponent } from './Components/forgot/forgot.component';
     ProfileComponent,
     ResetComponent,
     ForgotComponent,
+    QrcodeComponent,
+
   ],
   imports: [
     BrowserModule,

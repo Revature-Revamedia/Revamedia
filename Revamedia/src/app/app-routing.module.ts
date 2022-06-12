@@ -12,6 +12,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { AuthGuard } from './Shared/guard/auth.guard';
 import { ResetComponent } from './Components/reset/reset.component';
 import { ForgotComponent } from './Components/forgot/forgot.component';
+import { QrcodeComponent } from './Components/qrcode/qrcode.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'profile/:id', component: ProfileComponent,canActivate:[AuthGuard]},
   { path: 'forgot', component: ForgotComponent},
   { path: 'forgot/reset', component: ResetComponent},
-
+  { path: 'qrcode', component: QrcodeComponent},
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: ErrorPageComponent },
 
