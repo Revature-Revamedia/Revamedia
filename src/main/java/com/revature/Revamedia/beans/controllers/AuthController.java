@@ -3,10 +3,7 @@ package com.revature.Revamedia.beans.controllers;
 import com.google.zxing.WriterException;
 import com.revature.Revamedia.beans.services.AuthService;
 import com.revature.Revamedia.beans.services.JsonWebToken;
-import com.revature.Revamedia.dtos.AuthDto;
-import com.revature.Revamedia.dtos.CookieDto;
-import com.revature.Revamedia.dtos.TwoFactorAuthDto;
-import com.revature.Revamedia.dtos.UserRegisterDto;
+import com.revature.Revamedia.dtos.*;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.exceptions.UnauthorizedUserException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URI;
 
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
@@ -26,10 +24,12 @@ import java.io.IOException;
 public class AuthController {
 
     private final AuthService authService;
+    private final JsonWebToken jsonWebToken;
 
     @Autowired
-    public AuthController(AuthService authService){
+    public AuthController(AuthService authService, JsonWebToken jsonWebToken){
         this.authService = authService;
+        this.jsonWebToken = jsonWebToken;
     }
 
     @PostMapping("/register")
@@ -39,7 +39,25 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody AuthDto authDto) {
-        return authService.login(authDto);
+        if(!authService.twoFactorAuthEnabled(authDto)){
+            return authService.login(authDto);
+        }
+        else {
+            if(authService.login(authDto).getStatusCode().is2xxSuccessful()){
+                //return authService.login(authDto);
+                return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://localhost:4200/auth/login/twoFA")).build();
+            }
+            return null;
+        }
+    }
+
+    @PostMapping("/login/twofa")
+    public ResponseEntity<Object> loginWithTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorDto twoFactorDto){
+        CookieDto cookieDto = jsonWebToken.verify(token);
+        if (authService.checkTwoFactorAuthValidity(cookieDto, twoFactorDto)) {
+            return ResponseEntity.status(HttpStatus.OK).body("code is matching");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("code didn't match");
     }
 
     @PostMapping("/enable")

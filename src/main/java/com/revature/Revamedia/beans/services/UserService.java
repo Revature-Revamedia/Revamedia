@@ -58,4 +58,12 @@ public class UserService {
         return userRepository.getByUsername(username);
     }
 
+    public boolean existsByTwoFactorAuth(String username){
+        User currentUser = userRepository.getByUsername(username);
+        if (currentUser.getTwoFactorAuth()){
+            return true;
+        }
+        return false;
+    }
+
 }

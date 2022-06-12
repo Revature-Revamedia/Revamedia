@@ -52,6 +52,7 @@ public class FileUploadService{
 
         try {
             ObjectMetadata objectMetadata = new ObjectMetadata();
+            //check if system defined can be changed on s3 object
             objectMetadata.addUserMetadata("Content-Type", "image/png");
             objectMetadata.addUserMetadata("ContentDisposition", "attachement; filename=image.png");
             objectMetadata.addUserMetadata("ACL","public-read");

@@ -2,10 +2,7 @@ package com.revature.Revamedia.beans.services;
 
 import com.amazonaws.util.IOUtils;
 import com.google.zxing.WriterException;
-import com.revature.Revamedia.dtos.AuthDto;
-import com.revature.Revamedia.dtos.CookieDto;
-import com.revature.Revamedia.dtos.TwoFactorAuthDto;
-import com.revature.Revamedia.dtos.UserRegisterDto;
+import com.revature.Revamedia.dtos.*;
 import com.revature.Revamedia.entities.User;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
 
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
@@ -58,9 +51,6 @@ public class AuthService {
             user.setFirstName(userRegisterDto.getFirstName());
             user.setLastName(userRegisterDto.getLastName());
             user.setEmail(userRegisterDto.getEmail());
-            System.out.println("User in register");
-            System.out.println(user);
-            System.out.println(ResponseEntity.ok(user));
             userService.save(user);
             return ResponseEntity.ok().build();
         }
@@ -95,6 +85,7 @@ public class AuthService {
 
     //handle exceptions
     public ResponseEntity<Object> enableTwoFactorAuth(TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
+        //we need to check if it is the first time they are trying to generate a code
         User currentUser = userService.getUserById(twoFactorAuthDto.getUserId());
         currentUser.setTwoFactorAuth(true);
         String secretForCurrentUser = twoFactorAuthentication.generateSecretKey();
@@ -102,19 +93,20 @@ public class AuthService {
         String email = "revamedia@gmail.com";
         String companyName = "Revamedia";
         String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretForCurrentUser, email, companyName);
-        ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,400,400);
+        ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,100,100);
         ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
-        fileUploadService.uploadFile("image.png",inStream);
+        //fileUploadService.uploadFile("image.png",inStream);
         byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("fileholderbucket","image.png").getObjectContent());
         currentUser.setQRCodeImage(byteArray);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
         BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
         ImageIO.write(bufferedImage, "png", new File("/Users/Laflammex/IdeaProjects/Project3/QRCode.png"));
-        String QRCodeUrl = fileUploadService.getFileUrl("fileholderbucket","image.png");
-        currentUser.setQRCodeUrl(QRCodeUrl);
+        //String QRCodeUrl = fileUploadService.getFileUrl("fileholderbucket","image.png");
+        //currentUser.setQRCodeUrl(QRCodeUrl);
         userService.update(currentUser);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("data", byteArray);
+        // else should be just enable it in the database
         return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
 
     }
@@ -123,6 +115,16 @@ public class AuthService {
         User currentUser = userService.getUserById(twoFactorAuthDto.getUserId());
         currentUser.setTwoFactorAuth(false);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    public boolean twoFactorAuthEnabled(AuthDto authDto){
+        return userService.existsByTwoFactorAuth(authDto.getUsername());
+    }
+
+    public boolean checkTwoFactorAuthValidity(CookieDto cookieDto, TwoFactorDto twoFactorDto){
+        User currentUser = userService.getUserByUsername(cookieDto.getUsername());
+        String currentUserSecretTwoFactorKey = currentUser.getSecretTwoFactorKey();
+        return twoFactorDto.getSixDigitCode().equals(twoFactorAuthentication.getTOTPCode(currentUserSecretTwoFactorKey));
     }
 
     public void setEncoder(BCryptPasswordEncoder encoder) {
