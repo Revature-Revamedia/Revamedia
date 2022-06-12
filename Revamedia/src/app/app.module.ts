@@ -26,7 +26,6 @@ import { ResetComponent } from './Components/reset/reset.component';
 import { ForgotComponent } from './Components/forgot/forgot.component';
 import { QrcodeComponent } from './Components/qrcode/qrcode.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

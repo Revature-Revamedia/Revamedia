@@ -1,5 +1,9 @@
 package com.revature.Revamedia.beans.controllers;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.google.zxing.WriterException;
 import com.revature.Revamedia.beans.services.AuthService;
 import com.revature.Revamedia.beans.services.JsonWebToken;
@@ -34,6 +38,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@Valid @RequestBody UserRegisterDto userRegisterDto) {
+        userRegisterDto.setEmail(userRegisterDto.getEmail().toLowerCase());
         return authService.register(userRegisterDto);
     }
 

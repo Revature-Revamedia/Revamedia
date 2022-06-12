@@ -18,6 +18,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+import java.sql.Timestamp;
+
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
  * @Contributor: Kenneth Strohm, Randall Hale
@@ -51,13 +53,14 @@ public class AuthService {
             user.setFirstName(userRegisterDto.getFirstName());
             user.setLastName(userRegisterDto.getLastName());
             user.setEmail(userRegisterDto.getEmail());
+            user.setDateCreated(new Timestamp(System.currentTimeMillis()));
+            user.setProfilePicture("https://randomuser.me/api/portraits/lego/1.jpg");
             userService.save(user);
             return ResponseEntity.ok().build();
         }
         else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("The username or email is not unique");
         }
-
     }
 
     /**
@@ -73,7 +76,7 @@ public class AuthService {
                 HttpHeaders headers= new HttpHeaders();
                 headers.add("Set-Cookie", "user_session="+ headerValue +"; Max-Age=86400; Path=/;");
                 //If the give password matches hashed password in DB t
-                return ResponseEntity.ok().headers(headers).build();
+                return new ResponseEntity<>(jwt.verify(headerValue), headers, HttpStatus.OK);
             } else {
                 //throw new UnauthorizedUserException("Unauthorized!");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

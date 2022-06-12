@@ -9,14 +9,12 @@ import com.revature.Revamedia.beans.repositories.UserPostsRepository;
 import com.revature.Revamedia.beans.repositories.UserRepository;
 import com.revature.Revamedia.dtos.UpdatePostLikesDto;
 import com.revature.Revamedia.entities.User;
-import com.revature.Revamedia.entities.UserComments;
 import com.revature.Revamedia.entities.UserPosts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Set;
+
 
 @Service
 public class UserPostsService {
@@ -30,8 +28,14 @@ public class UserPostsService {
     }
 
     public UserPosts getPostById(Integer id) {
-        return userPostsRepository.getById(id);
+        UserPosts posts = userPostsRepository.getById(id);
+        return posts;
     }
+
+    /*public List<Object> getUserFeed(Integer id){
+        System.out.println(userPostsRepository.getUserFeed(id));
+        return userPostsRepository.getUserFeed(id);
+    }*/
 
     public UserPosts save(UserPosts post) {
         return userPostsRepository.save(post);

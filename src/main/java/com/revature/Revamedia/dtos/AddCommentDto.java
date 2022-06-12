@@ -1,8 +1,5 @@
 package com.revature.Revamedia.dtos;
 
-import com.revature.Revamedia.entities.User;
-import com.revature.Revamedia.entities.UserPosts;
-
 import java.sql.Timestamp;
 
 public class AddCommentDto {

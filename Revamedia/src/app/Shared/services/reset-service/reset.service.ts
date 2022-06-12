@@ -8,23 +8,20 @@ import { IAuthDto } from '../../interfaces/IAuthDto.interface';
   providedIn: 'root'
 })
 export class ResetService {
+  resetUrl: string = environment.apiBaseUrl + "/forgot/reset";
 
   constructor(private http: HttpClient) { }
 
   public authDto : IAuthDto = {
     username: "",
-    password: ""  
+    password: ""
   }
 
-  resetUrl: string = environment.apiBaseUrl + "/forgot/reset";
   resetPassword(resetForm: NgForm){
-    console.log(resetForm)
     this.authDto.username = resetForm.value.username;
     this.authDto.password = resetForm.value.password;
 
-    console.log(this.authDto);
-
-    this.http.post<any>(this.resetUrl,this.authDto,{
+    this.http.post<any>(this.resetUrl, this.authDto,{
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),

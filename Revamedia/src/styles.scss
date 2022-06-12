@@ -110,6 +110,9 @@ $darkgrey: rgb(61,66,74);
       }
     }
   }
+  #profile-post-message{
+    color: white;
+  }
   #commentSection{
     transition: all 0.4s ease-in-out;
     background-color: rgb(31, 31, 31);
@@ -118,14 +121,20 @@ $darkgrey: rgb(61,66,74);
     h5{
       color: white;
     }
-    a{
+    p,a{
       color: white;
       &:hover{
         color: $blue;
       }
     }
   }
-  #delete-post-modal,#edit-post-modal,#add-post-modal,#following-modal,#followers-modal{
+  #post-body{
+    background-color: rgb(31, 31, 31);
+    a, p, span{
+      color: white;
+    }
+  }
+  #delete-post-modal,#edit-post-modal,#add-post-modal,#following-modal,#followers-modal,#edit-account-modal, #add-youtube-modal, #edit-youtube-modal, #delete-youtube-modal{
     background-color: rgb(31, 31, 31);
     transition: all 0.4s ease-in-out;
     color: white;
