@@ -45,7 +45,6 @@ public class ForgotPasswordController {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
             currentUser.setPassword(encoder.encode(authDto.getPassword()));
             currentUser.setResetPasswordToken(null);
-            currentUser.setTwoFactorAuth(false);
             userService.update(currentUser);
             return ResponseEntity.status(HttpStatus.OK).body("Password reset was successful");
         }
