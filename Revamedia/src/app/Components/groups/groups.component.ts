@@ -105,4 +105,12 @@ export class GroupsComponent implements OnInit {
     const main = '#main';
     anim.fadeIn(main, 0.7, 0, 0.6);
   }
+  public closeAnyModal(){
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form1 = document.getElementById(`new-group-modal`);
+    form1?.classList.remove('openModal');
+  }
 }
