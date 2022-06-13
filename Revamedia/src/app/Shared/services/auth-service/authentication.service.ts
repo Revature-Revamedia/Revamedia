@@ -79,17 +79,17 @@ export class AuthenticationService {
       "sixDigitCode" : twoFactorForm.value.sixDigitCode
     }
 
-    this.http.post(this.authUrl+"/twoFA", data, {
+    this.http.post<any>(this.authUrl+"/twoFA", data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-      }),
-      'withCredentials': true, 'observe': `response`
+      })
     }).subscribe((response: any) => {
       let loggedInUser: any;
       console.log(response);
 
-      sessionStorage.setItem('userId', response.body.userId.toString());
-      sessionStorage.setItem('username', response.body.username);
+      sessionStorage.setItem('userId', response.userId);
+      sessionStorage.setItem('username', response.username);
+      sessionStorage.setItem('email', response.email);
       sessionStorage.setItem('loggedIn', "1");
       console.log(sessionStorage.getItem('username'));
       loggedInUser = this.userService.getUser();

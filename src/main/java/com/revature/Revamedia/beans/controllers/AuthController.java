@@ -78,6 +78,7 @@ public class AuthController {
 
     @PostMapping("/enable")
     public ResponseEntity<Object> enableTwoFactorAuth(@CookieValue("user_session") String token,@RequestBody TwoFactorAuthDto twoFactorAuthDto){
+        System.out.println("We are in enable");
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);
             return ResponseEntity.status(HttpStatus.OK).body(authService.enableTwoFactorAuth(cookieDto,twoFactorAuthDto));

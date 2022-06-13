@@ -16,7 +16,7 @@
       <div class="TwoFactor" id="settingsContainer">
         <div class="title">
           <h5>Two-Factor Authentication
-            <fa-icon [icon]="faInfoCircle" (click)="showInfo('two-factor')" id="info-icon"></fa-icon>
+            <fa-icon [icon]="faInfoCircle" id="info-icon"></fa-icon>
           </h5>
         </div>
         <div class="info1" id="two-factor-info">
@@ -27,13 +27,13 @@
         <div class="action">
           <h3 *ngIf="twoFactor == false">Enable</h3>
           <h3 *ngIf="twoFactor == true">Disable</h3>
-          <button (click)="turnOnTwoFactor()">
+          <button (click)="enableTwoFactorAuth()">
             <fa-icon *ngIf="twoFactor == true" [icon]="faUserShield" size="lg"></fa-icon>
             <fa-icon *ngIf="twoFactor == false" [icon]="faUserShield" size="lg"></fa-icon>
           </button>
         </div>
       </div>
-      <div class="GenerateQrCode" *ngIf="twoFactor == true" id="settingsContainer">
+      <div class="GenerateQrCode" id="settingsContainer">
         <div class="title">
           <h5>
             Generate QRCode
@@ -51,6 +51,9 @@
             <fa-icon [icon]="faRefresh" size="lg"></fa-icon>
           </button>
         </div>
+      </div>
+      <div>
+        <img src="data:image/png;base64,{{image.data}}" />
       </div>
       <div class="Theme">
         <div class="title">
@@ -112,7 +115,7 @@
 
 
 <!-- BLACKOUTSCREEN START-->
-<div class="screen" id="screen" (click)="closeAnyModal()"></div>
+<div class="screen" id="screen"></div>
 <!-- BLACKOUTSCREEN END-->
 
 <!-- EDIT POST FORM START -->

@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 // Icons
 import { faSun, faMoon, faEye, faEyeSlash, faUserShield, faRefresh, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
 import { UserService } from '../../Shared/services/user-service/user.service';
 
 
@@ -14,14 +15,15 @@ import { UserService } from '../../Shared/services/user-service/user.service';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private userService: UserService, private animationService: AnimationService) { }
+  constructor(private userService: UserService, private animationService: AnimationService, private qrcodeService: QrcodeService ) { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
-    this.openingAnimation();
+  
   }
 
   // Back end work
+  public image: any = ""
   public user: any;
   public editUser: any; // Used for edit modal
   public deleteUser: any; // Used for delete modal
@@ -50,6 +52,11 @@ export class SettingsComponent implements OnInit {
         console.log(error.message)
       }
     )
+  }
+
+  enableTwoFactorAuth(){
+      console.log("settings enable")
+      this.qrcodeService.enableTwoFactorAuth().subscribe((data: any) =>{this.image = data.body;});
   }
 
 
