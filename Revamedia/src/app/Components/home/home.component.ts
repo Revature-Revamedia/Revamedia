@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faThList } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
 import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
 import { HttpClient } from '@angular/common/http';
@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
 
   constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router, private searchService: SearchService) { }
 
-
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
@@ -45,29 +44,29 @@ export class HomeComponent implements OnInit {
     this.getCurrentUserData();
     this.getUserFeed();
 
-    //this.getCurrentUserData();
-    // this.userService.getCurrentUser().subscribe({
-    //   next: response => {
-    //     this.user = response;
-    //     console.log(response);
+  
+    // this.getCurrentUserData();
+    this.userService.getCurrentUser().subscribe({
+      next: response => {
+        this.user = response;
+        console.log(response);
 
-    //     let f: any;
-    //     this.posts = [];
-    //     for (f of response.following) {
-    //       this.posts.push(f.followedId.postsOwned);
-    //     }
-    //     console.log(this.posts);
-    //     this.posts = this.posts.flat();
-    //     //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
-    //     console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
-    //     //b.date.getTime() - a.date.getTime();
-
-    //   },
-    //   error: err => {
-    //     console.error(err);
-    //   }
-    // });
-    // this.openingAnimation();
+        let f: any;
+        this.posts = [];
+        for (f of response.following) {
+          this.posts.push(f.followedId.postsOwned);
+        }
+        console.log(this.posts);
+        this.posts = this.posts.flat();
+        //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
+        console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
+        //b.date.getTime() - a.date.getTime();
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+    this.openingAnimation();
   }
 
   // GET CURRENT USER
@@ -113,58 +112,6 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  // likePost(): void {
-
-  // // // Get All Comments
-  // // // public getAllComments(): void{
-  // // //   this.CommentService.getAllComments().subscribe(
-  // // //     (response: any) => {
-  // // //       this.comments.push(response.data);
-  // // //     },
-  // // //     (error: HttpErrorResponse) => {
-  // // //       console.log(error.message)
-  // // //     }
-  // // //   )
-  // // // }
-
-
-  // //    // get all comments for given post
-
-  // //       // console.log(data.body.comments);
-  // //       // console.log(data.body.comments[0]);
-  // //       // this.comments = data.body.comments;
-
-  // //       // for (var cur of this.comments) {
-  // //       //   console.log(cur);
-  // //       // }
-
-
-  // //   // get all users -> get all owned posts
-
-  // //   // this.userPostsService.getUsers().subscribe((data) => {
-
-
-  // //   //   this.users = data.body;
-  // //   //   console.log("all users:");
-  // //   //   console.log(this.users);
-
-  // //   //   // loop through all users
-  // //   //   for (var user of this.users) {
-  // //   //     // loop through all owned posts for each user
-  // //   //     for (var post of user.postsOwned)
-  // //   //       // add post to post array
-  // //   //       this.posts.push(post)
-  // //   //   }
-  // //   //   console.log("all posts:");
-  // //   //   console.log(this.posts);
-
-
-  // //   //   //for (var follow of this.currentuser.following)
-  // //   //       //getuser
-
-  // //   // });
-
-  // }
 
   // Add Comment
   public onAddComment(commentForm: NgForm): void {
@@ -267,35 +214,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-  // get all comments for given post
-
-  // console.log(data.body.comments);
-  // console.log(data.body.comments[0]);
-  // this.comments = data.body.comments;
-
-  // for (var cur of this.comments) {
-  //   console.log(cur);
-  // }
-
-
-  // get all users -> get all owned posts
-
-  // this.userPostsService.getUsers().subscribe((data) => {
-
-  //   this.users = data.body;
-  //   console.log("all users:");
-  //   console.log(this.users);
-
-  //   // loop through all users
-  //   for (var user of this.users) {
-  //     // loop through all owned posts for each user
-  //     for (var post of user.postsOwned)
-  //       // add post to post array
-  //       this.posts.push(post)
-  //   }
-  //   console.log("all posts:");
-  //   console.log(this.posts);
-
   // Add REPLY
   public onAddReply(replyForm: NgForm): void {
     this.CommentService.addReply(replyForm.value).subscribe(
@@ -346,12 +264,13 @@ export class HomeComponent implements OnInit {
 
   // Front End Work
   public faHeart = faHeart; //icon
-  public faEllipsis = faEllipsis; //icon
   public faBookmark = faBookmark; //icon
   public faComment = faComment; //icon
   public faShareFromSquare = faShareFromSquare; //icon
   public faFaceGrinStars = faFaceGrinStars; //icon
   public faFaceGrinTongueSquint = faFaceGrinTongueSquint; //icon
+  public faTrashCan = faTrashCan; //icon
+  public faPenToSquare = faPenToSquare; //icon
 
   // hide Comments
   public viewComments = true;
@@ -389,12 +308,6 @@ export class HomeComponent implements OnInit {
     this.addReply = false;
   }
 
-  // post optional
-  public postsOptionsClicked = false;
-  public togglePostsOptions() {
-    this.postsOptionsClicked = !this.postsOptionsClicked;
-  }
-
   //comment options
   // post optional
   public commentOptionsClicked = false;
@@ -408,6 +321,8 @@ export class HomeComponent implements OnInit {
   public deleteReply: any;
   public editPost: any;
   public deletePost: any;
+  public editYoutube: any;
+  public deleteYoutube: any;
   public openModal(modalType: string, id: string, object: any) {
     // Screen
     const screen = document.getElementById('screen');
@@ -416,18 +331,18 @@ export class HomeComponent implements OnInit {
     const form = document.getElementById(`${modalType}-${id}`);
     form?.classList.add('openModal');
     if (modalType === "edit") {
-      this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.editComment = object;
       this.editReply = object;
       this.editPost = object;
+      this.editYoutube = object;
     }
     if (modalType === "delete") {
-      this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.deleteComment = object;
       this.deleteReply = object;
       this.deletePost = object;
+      this.deleteYoutube = object;
     }
     if (modalType === "add") {
       this.post = object;
@@ -493,18 +408,6 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`profile/${userId}`]);
   }
 
-  // public me: any;
-  // getNextUser(){
-  //   this.userService.getProfile(1).subscribe(
-  //     (response: any) => {
-  //       console.log(response);
-  //       this.me = response;
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       console.log(error.message)
-  //     }
-  //   )
-  // }
 
 
   allUsers: any[] = [];
@@ -522,5 +425,53 @@ export class HomeComponent implements OnInit {
     if(searchKey === ''){
       this.allUsers = [];
     }
+  }
+
+  // Youtube section
+  public shareVideo(form: NgForm){
+    var youtubeDto = {
+      userId: form.value.userId,
+      youtubeLink: form.value.youtubeLink,
+      message: form.value.message
+    }
+    this.userPostsService.addYoutube(youtubeDto).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('add', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
+  }
+  public editVideo(form: NgForm){
+    var editYoutubeDto = {
+      postId: form.value.postId,
+      youtubeLink: form.value.youtubeLink,
+      message: form.value.message
+    }
+    this.userPostsService.editYoutube(editYoutubeDto).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('edit', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
+  }
+  public deleteVideo(id: number){
+    this.userPostsService.deleteYoutube(id).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.closeModal('delete', 'youtube-modal');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+
   }
 }

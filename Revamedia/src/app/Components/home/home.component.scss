@@ -70,7 +70,7 @@ $darkgrey: rgb(61, 66, 74);
     }
 
     .right-side {
-      width: 40%;
+      width: 45%;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -131,27 +131,50 @@ $darkgrey: rgb(61, 66, 74);
           }
         }
       }
-
-      button {
-        border: none;
-        background: $orange;
-        font-size: 1rem;
-        border-radius: 5px;
-        border: none;
-        outline: none;
-        padding: .5rem 1rem;
-        cursor: pointer;
-        color: black;
-        transition: all .3s ease-in-out;
-
-        &:hover {
+      .buttons{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        button {
+          border: none;
+          background: $orange;
+          font-size: 1rem;
+          border-radius: 5px;
+          border: none;
+          outline: none;
+          padding: .25rem .5rem;
+          cursor: pointer;
+          color: black;
+          transition: all .3s ease-in-out;
+          &:hover {
+            background: $blue;
+          }
+        }
+        #share-youtube{
+          margin-left: 2rem;
+          border: none;
           background: $blue;
+          font-size: 1rem;
+          border-radius: 5px;
+          border: none;
+          outline: none;
+          padding: .25rem .5rem;
+          cursor: pointer;
+          color: white;
+          transition: all .3s ease-in-out;
+          &:hover {
+            background: $orange;
+          }
         }
       }
     }
   }
 
   @media screen and (max-width: 800px) {
+    body{
+      background: $lightgrey;
+    }
     .page-title {
       width: 100%;
       padding-right: 0;
@@ -167,9 +190,8 @@ $darkgrey: rgb(61, 66, 74);
       }
 
       .right-side {
-        margin-top: .5rem;
         width: 100%;
-
+        justify-content: space-evenly;
         form {
           input {
             width: 15rem;
@@ -194,10 +216,20 @@ $darkgrey: rgb(61, 66, 74);
             padding: .25rem;
           }
         }
-
-        button {
-          border-radius: 3px;
-          padding: .5rem;
+        .buttons{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          button {
+            font-size: .9rem;
+            border-radius: 5px;
+          }
+          #share-youtube{
+            margin-top:.5rem;
+            margin-left: 0;
+            font-size: .9rem;
+          }
         }
       }
     }
@@ -261,35 +293,23 @@ $darkgrey: rgb(61, 66, 74);
 
           .post-options {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: flex-end;
-
-            #icon {
-              color: $darkgrey;
-              font-size: 1.5rem;
+            #editIcon{
+              color: $blue;
+              font-size: 1.2rem;
               cursor: pointer;
+              &:hover{
+                color: #408eae;
+              }
             }
-
-            ul {
-              border: 1px solid $grey;
-              position: absolute;
-              transform: translate(45%, 25%);
-              list-style: none;
-              background-color: $lightgrey;
-              border-radius: 3px;
-
-              li {
-                background-color: $lightgrey;
-                margin: .75rem 0;
-                width: 100%;
-                padding: .25rem;
-                text-align: center;
-                color: #000;
-                cursor: pointer;
-
-                &:hover {
-                  background-color: $grey;
-                }
+            #trashIcon{
+              cursor: pointer;
+              margin-left: 1rem;
+              color: $orange;
+              font-size: 1.2rem;
+              &:hover{
+                color: #cb8836;
               }
             }
           }
@@ -316,6 +336,30 @@ $darkgrey: rgb(61, 66, 74);
           img {
             width: 100%;
             object-fit: cover;
+          }
+          .youtube-link{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid $lightgrey;
+            .youtube-logo{
+              img{
+                width: 2rem;
+                height: 2rem;
+                margin-right: 1rem;
+              }
+            }
+            a{
+              font-size: 1.4rem;
+              text-decoration: none;
+              color: $blue;
+              font-weight: normal;
+              &:hover{
+                text-decoration: underline;
+              }
+            }
           }
 
           .post-description {
@@ -1051,9 +1095,17 @@ $darkgrey: rgb(61, 66, 74);
     align-items: center;
 
     h3 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       color: $darkgrey;
       text-decoration: underline;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      img{
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1rem;
+      }
     }
 
     span {
@@ -1241,7 +1293,7 @@ $darkgrey: rgb(61, 66, 74);
 }
 
 .openModal {
-  top: 5%;
+  top: 9%;
   left: 20%;
   transform: scale(1);
 }

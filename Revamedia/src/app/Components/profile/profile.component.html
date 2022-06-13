@@ -22,7 +22,7 @@
       <div class="right-card">
         <!-- *ngIf="user?.username != currentUser?.username" -->
         <div class="right-card-container" *ngIf="user?.username != currentUser?.username">
-          <form #followForm="ngForm" (ngSubmit)="followUser(followForm)" >
+          <form #followForm="ngForm" (ngSubmit)="followUser(followForm)">
             <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followerId">
             <input type="hidden" ngModel="{{ user?.userId }}" name="followedId">
             <button>Follow</button>
@@ -41,7 +41,23 @@
     <h4 class="profile-posts-title" id="setBackgroundColor" *ngIf="user?.postsOwned.length != 0">{{ user?.username }}'s Posts</h4>
     <div class="users-post">
       <div class="post" *ngFor="let post of user?.postsOwned">
-        <img src="{{ post?.image }}" alt="POST">
+        <img *ngIf="post?.image !== null" src="{{ post?.image }}" alt="{{ post?.image }}">
+        <span *ngIf="post?.image !== null">{{ post?.message }}</span>
+      </div>
+    </div>
+
+    <div class="shared-youtube-links-container">
+      <h5>Shared Youtube Links</h5>
+      <div class="youtube-post-wrapper" *ngFor="let post of user?.postsOwned">
+        <div class="youtube-post" *ngIf="post?.image === null" id="post-body">
+          <div class="youtube-link">
+            <div class="youtube-logo">
+              <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
+            </div>
+              <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
+          </div>
+          <p *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
+        </div>
       </div>
     </div>
 
@@ -69,12 +85,9 @@
     <div class="follower" *ngFor="let follower of user?.followers">
         <div class="follower-data">
           <img src="{{follower?.followerId?.profilePicture }}" alt="{{follower?.followerId?.username}}" (click)="goToProfile(follower?.followerId?.userId)">
-          <h5 (click)="goToProfile(follower?.followedId?.userId)">{{ follower?.followerId?.username }}</h5>
+          <h5>{{ follower?.followerId?.username }}</h5>
         </div>
-        <div class="follow-option">
-          <button id="unfollow">Unfollow</button>
-          <button >Follow Back</button>
-        </div>
+        <span (click)="goToProfile(follower?.followerId?.userId)">View Profile</span>
       </div>
     <div class="noFollowers" *ngIf="user?.followers.length == 0">
       <h4>0 Followers</h4>
@@ -95,9 +108,7 @@
           <img src="{{following?.followedId?.profilePicture }}" alt="{{following?.followedId?.username}}" (click)="goToProfile(following?.followedId?.userId)">
           <h5 (click)="goToProfile( following?.followedId?.userId )">{{ following?.followedId?.username }}</h5>
         </div>
-        <div class="follow-option">
-          <button id="unfollow">Unfollow</button>
-        </div>
+        <span (click)="goToProfile(following?.followedId?.userId)">View Profile</span>
     </div>
     <div class="noFollowing" *ngIf="user?.following.length == 0">
       <h4>0 Following</h4>

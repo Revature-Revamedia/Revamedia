@@ -1,13 +1,13 @@
-
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserPostsService {
-  userPostURL: string = "http://localhost:8080/posts"
+  userPostURL: string = environment.apiBaseUrl + "/posts"
 
   constructor(private http: HttpClient) { }
 
@@ -41,4 +41,15 @@ export class UserPostsService {
     return this.http.get<any>(`${this.userPostURL}/userFeed/${sessionStorage.getItem('userId')}`)
   }
 
+  public addYoutube(youtubePost: any): Observable<any> {
+    return this.http.post<any>(`${this.userPostURL}/youtube/add`, youtubePost);
+  }
+
+  public editYoutube(youtubePost: any): Observable<any> {
+    return this.http.put<any>(`${this.userPostURL}/youtube/edit`, youtubePost);
+  }
+
+  public deleteYoutube(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.userPostURL}/youtube/delete/${id}`);
+  }
 }

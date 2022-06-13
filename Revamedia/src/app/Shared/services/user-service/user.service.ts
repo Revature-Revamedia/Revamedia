@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { data } from 'jquery';
-
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { UserPostsService } from '../user-posts-service/user-posts.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,9 @@ import { UserPostsService } from '../user-posts-service/user-posts.service';
 export class UserService {
   private user: any;
   private userSubject: BehaviorSubject<any>;
+  userURL: string = environment.apiBaseUrl + "/user"
+
+  private baseUrl = `${environment.apiBaseUrl}`;
 
   constructor(private http: HttpClient, private userPostsService: UserPostsService) {
     this.userSubject = new BehaviorSubject<any>(this.user);
@@ -23,8 +27,6 @@ export class UserService {
 
     //sessionStorage.getItem('userid')
   }
-
-  userURL: string = "http://localhost:8080/user"
 
   getCurrentUser(): BehaviorSubject<any> {
     return this.userSubject;
@@ -43,36 +45,6 @@ export class UserService {
     });
     return num
   }
-
-
-
-  //this.followers = new HashSet<>();
-  //      this.following = new HashSet<>();
-  //      this.postsOwned = new HashSet<>();
-
-  //      this.groupsJoined = new HashSet<>();
-  //      this.groupsOwned = new HashSet<>();
-
-  //      this.eventsJoined = new HashSet<>();
-  //      this.eventsOwned = new HashSet<>();
-
-  // this.conversations = new HashSet<>();
-
-  //     this.likedPosts = new ArrayList<>();
-  //1. when user logs in-
-  //2.you store their user id in local storage.
-  //3. call method to get user information.
-  //4. set user information into user
-
-  //user: any = user.getid(localsessionid);
-
-  //allUserPosts
-  //userTimeline
-  //likeapost()
-  //{
-  //    userTimeline.behavior.next(post.info)
-  // }
-  //
 
 
   getAllUsers(): Observable<any> {
@@ -94,7 +66,7 @@ export class UserService {
   public getProfile(id: number) : Observable<any> {
     return this.http.get<any>(`${this.userURL}/${id}`);
   }
- 
+
 
   public updateUser(user: any, id: number): Observable<any> {
     return this.http.put<any>(`${this.userURL}/update/${id}`, user);

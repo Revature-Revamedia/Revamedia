@@ -25,7 +25,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { ResetComponent } from './Components/reset/reset.component';
 import { ForgotComponent } from './Components/forgot/forgot.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +40,6 @@ import { ForgotComponent } from './Components/forgot/forgot.component';
     ProfileComponent,
     ResetComponent,
     ForgotComponent,
-
   ],
   imports: [
     BrowserModule,
