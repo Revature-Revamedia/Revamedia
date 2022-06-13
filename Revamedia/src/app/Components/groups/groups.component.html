@@ -44,7 +44,7 @@
     <h3>Create New Group</h3>
     <span (click)="closeModal('new-group')">x</span>
   </div>
-  <form #form="ngForm" (ngSubmit)="onAddGroup(form)">
+  <form #form="ngForm" (ngSubmit)="onAddGroup(form)" ngNativeValidate>
     <div class="form-data">
       <h4>Group Name</h4>
       <input type="text" name="title" id="title" ngModel placeholder="Enter group name..." required>

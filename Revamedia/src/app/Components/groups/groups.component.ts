@@ -87,7 +87,6 @@ export class GroupsComponent implements OnInit {
     form?.classList.add('openModal');
   }
 
-
   public closeModal(modalType: string) {
     // Screen
     const screen = document.getElementById('screen');
