@@ -16,8 +16,7 @@
         <div class="users-list" *ngIf="allUsers.length != 0">
           <div *ngFor="let u of allUsers" class="userFound">
             <div class="user" (click)="goToProfile(u?.userId)" title="View {{u?.username}}'s Profile">
-              <!-- <p>{{u?.firstName +" "+ u?.lastName}}</p> -->
-              <p>{{u?.username}}</p>
+              <p>{{u?.firstName +" "+ u?.lastName}}</p>
             </div>
           </div>
         </div>

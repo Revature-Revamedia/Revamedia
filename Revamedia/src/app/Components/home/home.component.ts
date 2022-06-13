@@ -363,7 +363,7 @@ export class HomeComponent implements OnInit {
   public faPenToSquare = faPenToSquare; //icon
 
   // hide Comments
-  public viewComments = true;
+  public viewComments = false;
   public toggleHideComments(): void {
     this.viewComments = !this.viewComments;
   }
