@@ -25,4 +25,7 @@ export class GroupService {
   public getGroupById(id: number): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
+  public updateGroup(group: any): Observable<any>{
+    return this.http.put<any>(`${this.baseUrl}/update`, group);
+  }
 }

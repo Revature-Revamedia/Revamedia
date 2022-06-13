@@ -20,7 +20,7 @@
       <div class="group" *ngFor="let group of groups" (click)="goToGroup(group?.groupId)" id="group">
         <img src="{{group?.imageUrl}}" alt="{{group.title}}">
         <h2>{{group?.title}}</h2>
-        <span>{{ group?.description }}</span>
+        <!-- <span>{{ group?.description }}</span> -->
       </div>
     </div><!-- CLOSES MY GROUPS-->
 
@@ -29,7 +29,7 @@
       <div class="group" *ngFor="let group of allGroups" id="group" (click)="goToGroup(group?.groupId)">
         <img *ngIf="group.imageUrl != null" src="{{group?.imageUrl }}" alt="{{group.title}}">
         <h2>{{ group?.title}}</h2>
-        <span>{{ group?.description }}</span>
+        <!-- <span>{{ group?.description }}</span> -->
       </div>
     </div>
   </div><!-- CLOSES PAGE CONTENT-->

@@ -31,11 +31,11 @@ $darkgrey: rgb(61, 66, 74);
 
     .group-description{
       width: 100%;
+      background-color: white;
       border-bottom: 1px solid $grey;
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding: 1rem;
       .image{
         img{
           width: 12rem;

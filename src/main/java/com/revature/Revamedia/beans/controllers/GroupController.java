@@ -5,11 +5,13 @@ import com.revature.Revamedia.beans.services.JsonWebToken;
 import com.revature.Revamedia.beans.services.UserGroupsService;
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.NewGroupDto;
+import com.revature.Revamedia.dtos.UpdateGroupDto;
 import com.revature.Revamedia.dtos.UserFollowDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserGroups;
 import com.revature.Revamedia.entities.UserPosts;
 import org.hibernate.mapping.Set;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,4 +70,13 @@ public class GroupController {
         return new ResponseEntity<>(group, HttpStatus.ACCEPTED);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<UserGroups> updateGroup(@RequestBody UpdateGroupDto dto){
+        UserGroups group = userGroupsService.getGroupById(dto.getGroupId());
+        group.setTitle(dto.getTitle());
+        group.setDescription(dto.getDescription());
+        group.setImageUrl(dto.getImageUrl());
+        userGroupsService.update(group);
+        return new ResponseEntity<>(group, HttpStatus.OK);
+    }
 }

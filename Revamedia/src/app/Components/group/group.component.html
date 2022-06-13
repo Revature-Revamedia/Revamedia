@@ -11,7 +11,7 @@
   <!-- PAGE CONTENT-->
   <div class="group-content" id="main">
 
-    <div class="group-description">
+    <div class="group-description" id="group-description">
       <div class="image">
         <img src="{{group?.imageUrl}}" alt="{{group?.title}}">
       </div>
@@ -23,8 +23,8 @@
           <button>Leave</button>
         </div> -->
         <div class="admin">
-          <fa-icon (click)="openModal('edit-group', group)" id="editIcon" [icon]="faPenToSquare"></fa-icon>
-          <fa-icon (click)="openModal('delete-group', group)" id="trashIcon" [icon]="faTrashCan"></fa-icon>
+          <fa-icon (click)="openModal('edit-group', group)" id="editIcon" [icon]="faPenToSquare" title="Edit"></fa-icon>
+          <fa-icon (click)="openModal('delete-group', group)" id="trashIcon" [icon]="faTrashCan" title="Delete"></fa-icon>
         </div>
       </div>
     </div><!-- CLOSES GROUP DESCRIPTION-->
@@ -49,13 +49,13 @@
     <h3>Edit Group</h3>
     <span (click)="closeModal('edit-group')">x</span>
   </div>
-  <form #form="ngForm" ngNativeValidate>
+  <form #form="ngForm" (ngSubmit)="onUpdateGroup(form)" ngNativeValidate>
     <div class="form-data">
       <h4>Edit Group Name</h4>
       <input type="text" name="title" id="title" ngModel="{{ editGroup?.title }}" placeholder="Enter group name..." required>
     </div>
     <div class="form-data">
-      <input type="hidden" name="ownerId" ngModel="{{ currentUser?.userId }}">
+      <input type="hidden" name="groupId" ngModel="{{ editGroup?.groupId }}">
       <h4>Edit Group description</h4>
       <textarea name="description" ngModel="{{ editGroup?.description }}" placeholder="Write a breif group description..." rows="4"></textarea>
     </div>

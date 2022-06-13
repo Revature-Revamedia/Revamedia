@@ -5,6 +5,7 @@ import { GroupService } from 'src/app/Shared/services/group-service/group.servic
 import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-group',
@@ -56,6 +57,19 @@ export class GroupComponent implements OnInit {
         this.getGroupData();
         this.getCurrentUserData();
         this.closeModal('delete-group');
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
+
+  public onUpdateGroup(form: NgForm){
+    this.groupService.updateGroup(form.value).subscribe(
+      (response: any) => {
+        this.getGroupData();
+        this.getCurrentUserData();
+        this.closeModal('edit-group');
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
