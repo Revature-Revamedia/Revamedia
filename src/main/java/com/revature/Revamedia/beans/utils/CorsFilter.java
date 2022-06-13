@@ -15,8 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -29,12 +34,21 @@ public class CorsFilter extends OncePerRequestFilter {
                                 "http://revamedia-ui.s3-website-us-west-1.amazonaws.com"};
         Set<String> allowedOrigins = new HashSet<>(Arrays.asList(allowedDomains));
 
+        Map<String, List<String>> headersMap = Collections.list(request.getHeaderNames())
+                .stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        h -> Collections.list(request.getHeaders(h))
+                ));
+
+        System.out.println(headersMap);
+
         String originHeader = request.getHeader("Origin");
 
         // this header check is to handle some backend requests using the host header (namely password reset)
-        if(request.getHeader("Origin") == null && request.getHeader("host") != null){
-            originHeader = "http://";
-            originHeader += request.getHeader("host");
+        if(request.getHeader("Origin") == null){
+//            originHeader = "http://";
+            originHeader = request.getHeader("host");
         }
 
         // System.out.println("Origin: " + originHeader);

@@ -40,12 +40,12 @@ public class SendEmailService {
             User user = userService.findByEmail(email);
             user.setResetPasswordToken(token.toString());
             userService.save(user);
-            message.setFrom("Nolovexx@gmail.com");
+            message.setFrom("revaturerevamedia@gmail.com");
             message.setTo(email);
-            message.setSubject("Password Reset");
+            message.setSubject("Revamedia Password Reset");
 //            message.setText("Please click on this link to reset your password http://localhost:8080/forgot/" + token);
             message.setText("Please click on this link to reset your password " +
-                    "http://220328p3revamedia-env.eba-mczbwbpi.us-east-1.elasticbeanstalk.com" + "/forgot/" + token);
+                    "http://220328p3revamedia-env.eba-mczbwbpi.us-east-1.elasticbeanstalk.com/forgot/" + token);
             emailSender.send(message);
         }
 
