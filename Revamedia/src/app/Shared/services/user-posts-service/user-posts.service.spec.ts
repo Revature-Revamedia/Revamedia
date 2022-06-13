@@ -11,6 +11,8 @@ describe('UserPostsService', () => {
   let httpMock: HttpTestingController;
   let userPostURL: string;
   let dummyPost: object = {};
+  let ytpost: object = {};
+  let updatePostLikesDto: object = {};
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -47,10 +49,10 @@ describe('UserPostsService', () => {
   expect(req.request.method).toBe('GET');
   })
 
-  it('updatePost() should POST and return updated observable', () => {
-    let newObservable = service.updatePost(dummyPost);
-    
-    expect(newObservable).toBeInstanceOf(Observable);
+  it('updatePost() should PUT and return updated observable', () => {
+    service.updatePost(dummyPost).subscribe(any =>{
+      expect(any).toBeInstanceOf(Observable);
+    })
 
     const req = httpMock.expectOne(userPostURL+'/updatePost');
     expect(req.request.method).toBe('PUT');
@@ -63,5 +65,38 @@ describe('UserPostsService', () => {
     })
     const req = httpMock.expectOne(url);
     expect(req.request.method).toBe('DELETE');
+  })
+
+  it('addYoutube() should POST & return observable', () => {
+    service.addYoutube(ytpost).subscribe(any =>{
+      expect(any).toBeInstanceOf(Observable);
+    })
+    const req = httpMock.expectOne(userPostURL+'/youtube/add');
+    expect(req.request.method).toBe('POST');
+  })
+
+  it('editYoutube() should PUT and return updated observable', () => {
+    service.editYoutube(ytpost).subscribe(any =>{
+      expect(any).toBeInstanceOf(Observable);
+    })
+    const req = httpMock.expectOne(userPostURL+'/youtube/edit');
+    expect(req.request.method).toBe('PUT');
+  })
+
+  it('deleteYoutube() should DELETE youtube by ID and return observable', () => {
+    const url = userPostURL+"/youtube/delete/"+1;
+    service.deleteYoutube(1).subscribe(any => {
+      expect(any).toBeInstanceOf(Observable);
+    })
+    const req = httpMock.expectOne(url);
+    expect(req.request.method).toBe('DELETE');
+  })
+
+  it('updatePostLikes() should PUT & return observable', () => {
+    service.updatePostLikes(updatePostLikesDto).subscribe(any =>{
+      expect(any).toBeInstanceOf(Observable);
+    })
+    const req = httpMock.expectOne(userPostURL+'/likes');
+    expect(req.request.method).toBe('PUT');
   })
 });
