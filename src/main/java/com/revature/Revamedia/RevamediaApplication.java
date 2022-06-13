@@ -28,6 +28,7 @@ public class RevamediaApplication {
 
                 SendEmailService sendEmailService = context.getBean(SendEmailService.class);
 
+                //AmazonS3ImageService amazonS3ImageService = context.getBean(AmazonS3ImageService.class);
                 //AmazonClientService amazonClientService = context.getBean(AmazonClientService.class);
                 //s3Service.createBucket("test bucket");
         }

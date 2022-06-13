@@ -2,17 +2,15 @@ package com.revature.Revamedia.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
 @Entity
 @JsonIgnoreProperties
 @Table(name = "amazon_images", schema = _SchemaName.schemaName)
-public class AmazonImage implements Serializable {
+public class ProfilePic implements Serializable {
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "amazon_user_image_id")
@@ -21,10 +19,10 @@ public class AmazonImage implements Serializable {
     @Column(name = "image_url")
     private String imageUrl;
 
-    public AmazonImage() {
+    public ProfilePic() {
     }
 
-    public AmazonImage(Integer amazonUserImageId, String imageUrl) {
+    public ProfilePic(Integer amazonUserImageId, String imageUrl) {
         this.amazonUserImageId = amazonUserImageId;
         this.imageUrl = imageUrl;
     }

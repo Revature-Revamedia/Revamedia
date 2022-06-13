@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 @Service
-public class AmazonClientService {
+public class ProfilePicAmazonClientService {
 
     // AmazonS3 Client, in this object you have all AWS API calls about S3.
     private AmazonS3 amazonS3;
@@ -57,7 +57,7 @@ public class AmazonClientService {
         // Start the client using AmazonS3ClientBuilder, here we goes to make a standard cliente, in the
         // region SA_EAST_1, and the basic credentials.
         this.amazonS3 = AmazonS3ClientBuilder.standard()
-                .withRegion(Regions.SA_EAST_1)
+                .withRegion(Regions.US_EAST_1)
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
     }
