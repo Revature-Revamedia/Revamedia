@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
-import { faSun, faMoon, faEye, faEyeSlash, faUserShield, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faMoon, faEye, faEyeSlash, faUserShield, faRefresh, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../../Shared/services/user-service/user.service';
 
 
@@ -59,6 +59,7 @@ export class SettingsComponent implements OnInit {
   public faEye = faEye;
   public faUserShield = faUserShield;
   public faRefresh = faRefresh;
+  public faInfoCircle = faInfoCircle;
   // ICONS
 
   // DARK THEME
@@ -107,5 +108,11 @@ export class SettingsComponent implements OnInit {
   public twoFactor = false;
   public turnOnTwoFactor(){
     this.twoFactor = !this.twoFactor;
+  }
+
+  public showInfo(type: any) {
+    const info = document.getElementById(`${type}-info`);
+    info?.classList.toggle('showInfo');
+    setTimeout(() => info?.classList.remove('showInfo'), 3000);
   }
 }

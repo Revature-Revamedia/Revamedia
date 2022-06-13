@@ -14,8 +14,17 @@
     <div class="system-settings" id="setBackgroundColor">
       <h4>System Settings</h4>
       <div class="TwoFactor" id="settingsContainer">
-        <h5>Two-Factor Authentication</h5>
-        <div class="toggleTwoFactor">
+        <div class="title">
+          <h5>Two-Factor Authentication
+            <fa-icon [icon]="faInfoCircle" (click)="showInfo('two-factor')" id="info-icon"></fa-icon>
+          </h5>
+        </div>
+        <div class="info1" id="two-factor-info">
+          <span>
+            Enable two-factor authentication for stronger security.
+          </span>
+        </div>
+        <div class="action">
           <h3 *ngIf="twoFactor == false">Enable</h3>
           <h3 *ngIf="twoFactor == true">Disable</h3>
           <button (click)="turnOnTwoFactor()">
@@ -25,17 +34,56 @@
         </div>
       </div>
       <div class="GenerateQrCode" *ngIf="twoFactor == true" id="settingsContainer">
-        <h5>Generate New QrCode</h5>
-        <div class="generate">
+        <div class="title">
+          <h5>
+            Generate QRCode
+            <fa-icon [icon]="faInfoCircle" (click)="showInfo('generate-code')" id="info-icon"></fa-icon>
+          </h5>
+        </div>
+        <div class="info2" id="generate-code-info">
+          <span>
+            Generate a new QrCode for Two-Factor Authentication
+          </span>
+        </div>
+        <div class="action">
           <h3>Generate</h3>
           <button>
             <fa-icon [icon]="faRefresh" size="lg"></fa-icon>
           </button>
         </div>
       </div>
-      <div class="theme">
-        <h5>Change Theme</h5>
-        <div class="changeTheme" id="settingsContainer">
+      <div class="Theme">
+        <div class="title">
+          <h5>Set Post Life Time
+            <fa-icon [icon]="faInfoCircle" (click)="showInfo('post-time')" id="info-icon"></fa-icon>
+          </h5>
+        </div>
+        <div class="info3" id="post-time-info">
+          <span>
+            Remove your posts automatically after a given time frame.
+          </span>
+        </div>
+        <div class="action" id="settingsContainer">
+          <h3 *ngIf="darkTheme == false">Dark Mode</h3>
+          <h3 *ngIf="darkTheme == true">Light Mode</h3>
+          <button (click)="changeTheme()">
+            <fa-icon *ngIf="darkTheme == true" [icon]="faSun" size="lg"></fa-icon>
+            <fa-icon *ngIf="darkTheme == false" [icon]="faMoon" size="lg"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="Theme">
+        <div class="title">
+          <h5>Change Theme
+            <fa-icon [icon]="faInfoCircle" (click)="showInfo('color-scheme')" id="info-icon"></fa-icon>
+          </h5>
+        </div>
+        <div class="info4" id="color-scheme-info">
+          <span>
+            Change the color scheme from normal mode to dark mode.
+          </span>
+        </div>
+        <div class="action" id="settingsContainer">
           <h3 *ngIf="darkTheme == false">Dark Mode</h3>
           <h3 *ngIf="darkTheme == true">Light Mode</h3>
           <button (click)="changeTheme()">
@@ -47,7 +95,7 @@
     </div>
 
     <div class="user-settings" id="setBackgroundColor">
-      <h4>User Settings</h4>
+      <h4>Account Settings</h4>
       <div class="user-settings-title">
         <h3>Edit Account</h3>
         <button (click)="openModal('edit', editUser)">Edit</button>
