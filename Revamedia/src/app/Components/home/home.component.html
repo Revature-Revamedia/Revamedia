@@ -34,11 +34,11 @@
       <div class="post-data" *ngFor="let p of posts">
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
-            <div class="post-author">
-              <img src="{{ user?.profilePicture }}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
-              <a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>
+            <div class="post-author" title="View {{p?.ownerId?.username}} Profile">
+              <img src="{{ p?.ownerId?.profilePicture }}" alt="{{ p?.ownerId?.username  }}" (click)="goToProfile(p?.ownerId?.userId)">
+              <p (click)="goToProfile(p?.ownerId?.userId)">{{ p?.ownerId?.username  }}</p>
             </div>
-            <div class="post-options">
+            <div class="post-options" *ngIf="p?.ownerId?.userId == user?.userId">
               <fa-icon (click)="openModal('edit','post-modal', p)" *ngIf="p?.image !== null"  id="editIcon" [icon]="faPenToSquare"></fa-icon>
               <fa-icon (click)="openModal('delete', 'post-modal', p)" *ngIf="p?.image !== null"   id="trashIcon" [icon]="faTrashCan"></fa-icon>
               <fa-icon (click)="openModal('edit', 'youtube-modal', p)" *ngIf="p?.image === null" id="editIcon" [icon]="faPenToSquare"></fa-icon>
@@ -120,10 +120,10 @@
           <div class="comment" *ngFor="let comment of p?.comments">
             <div class="comment-title">
               <div class="comment-author">
-                <img (click)="goToProfile(user?.userId)" src="{{ user?.profilePicture }}" alt="User">
-                <p (click)="goToProfile(user?.userId)" title="View Profile" >{{user?.username}}</p>
+                <img (click)="goToProfile(comment?.ownerId?.userId)" src="{{ comment?.ownerId?.profilePicture }}" alt="{{comment?.ownerId?.username}}">
+                <p (click)="goToProfile(comment?.ownerId?.userId)" title="View {{comment?.ownerId?.username}} Profile" >{{comment?.ownerId?.username}}</p>
               </div>
-              <div class="comment-option" id="comment-option">
+              <div class="comment-option" id="comment-option" *ngIf="comment?.ownerId?.userId == user?.userId">
                 <button (click)="openModal('edit', 'comment-modal', comment)" >Edit</button>
                 <button (click)="openModal('delete', 'comment-modal', comment)" >Delete</button>
               </div>
@@ -176,11 +176,11 @@
             <!-- Replies Start -->
             <div class="reply" *ngFor="let reply of comment?.replies">
               <div class="reply-title">
-                <div class="reply-author">
-                  <img (click)="goToProfile(user?.userId)" src="{{user?.profilePicture}}" alt="{{user?.username}}">
-                  <p (click)="goToProfile(user?.userId)" title="View Profile" >{{user?.username}}</p>
+                <div class="reply-author" title="View {{reply?.ownerId?.username}} Profile">
+                  <img (click)="goToProfile(reply?.ownerId?.userId)" src="{{reply?.ownerId?.profilePicture}}" alt="{{reply?.ownerId?.username}}">
+                  <p (click)="goToProfile(reply?.ownerId?.userId)">{{reply?.ownerId?.username}}</p>
                 </div>
-                <div class="reply-option" id="reply-option">
+                <div class="reply-option" id="reply-option" *ngIf="reply?.ownerId?.userId == user?.userId">
                   <button (click)="openModal('edit', 'reply-modal', reply)" >Edit</button>
                   <button (click)="openModal('delete', 'reply-modal', reply)" >Delete</button>
                 </div>
