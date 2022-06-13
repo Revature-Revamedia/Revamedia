@@ -12,12 +12,28 @@ export class QrcodeService {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
   public image: any = ""
-  QRCodeUrl = `${environment.apiBaseUrl}/auth/enable`;
-  getQRCodeImage() : Observable<any>{
+  QRCodeUrl = `${environment.apiBaseUrl}/auth`;
+
+  enableTwoFactorAuth() : Observable<any>{
     let authDto = {
-      userId: 1,
       twoFactorAuth: true
     }
-    return this.http.post<any>(this.QRCodeUrl,authDto, {headers: new HttpHeaders({'Content-Type':"application/json"})});
+    return this.http.post<any>(this.QRCodeUrl+"/enable",authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}),'withCredentials': true } );
   
-}}
+  }
+
+  disableTwoFactorAuth() : Observable<any>{
+    let authDto = {
+      twoFactorAuth: false
+    }
+    return this.http.post<any>(this.QRCodeUrl+"/disable", authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}),'withCredentials': true});
+  }
+
+  recreateQRCode(): Observable<any> {
+    let authDto = {
+      twoFactorAuth: true
+    }
+    return this.http.post<any>(this.QRCodeUrl+"/recreate", authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}), 'withCredentials': true});
+  }
+
+}

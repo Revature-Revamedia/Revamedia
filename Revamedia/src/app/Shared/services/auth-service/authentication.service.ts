@@ -49,16 +49,60 @@ export class AuthenticationService {
     }).subscribe((response: any) => {
       let loggedInUser: any;
       console.log(response);
-      sessionStorage.setItem('userId', response.body.userId.toString());
-      sessionStorage.setItem('username', response.body.username);
-      sessionStorage.setItem('loggedIn', "1");
-      console.log(sessionStorage.getItem('username'));
-      loggedInUser = this.userService.getUser();
-      console.log(loggedInUser);
-      this.userService.setCurrentUser(loggedInUser);
+      if(response.body.status != 'redirect'){
+        sessionStorage.setItem('userId', response.body.userId.toString());
+        sessionStorage.setItem('username', response.body.username);
+        sessionStorage.setItem('loggedIn', "1");
+        console.log(sessionStorage.getItem('username'));
+        loggedInUser = this.userService.getUser();
+        console.log(loggedInUser);
+        this.userService.setCurrentUser(loggedInUser);
+  
+        this.loggedIn.next(true);
+        this.router.navigateByUrl('/home');
+      }
+      else{
+        this.router.navigateByUrl('/login/twofa');
+      }
+      
+    }, (error: HttpErrorResponse) => {
+      document.getElementById('invalid')!.style.display = "flex";
+      console.log(error);
+    })
 
-      this.loggedIn.next(true);
-      this.router.navigateByUrl('/home');
+  }
+
+  public loginWithTwoFactor(twoFactorForm: NgForm) {
+
+    let sixDigitCode : any = {
+      "sixDigitCode" : twoFactorForm.value.sixDigitCode
+    } 
+    console.log(sixDigitCode);
+
+    this.http.post(this.authUrl+"/twoFA", sixDigitCode, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      'withCredentials': true, 'observe': `response`
+    }).subscribe((response: any) => {
+      let loggedInUser: any;
+      console.log(response);
+      if(response.body != 'redirect'){
+        sessionStorage.setItem('userId', response.body.userId.toString());
+        sessionStorage.setItem('username', response.body.username);
+        sessionStorage.setItem('loggedIn', "1");
+        console.log(sessionStorage.getItem('username'));
+        loggedInUser = this.userService.getUser();
+        console.log(loggedInUser);
+        this.userService.setCurrentUser(loggedInUser);
+  
+        this.loggedIn.next(true);
+        this.router.navigateByUrl('/home');
+      }
+      else{
+        this.router.navigateByUrl('/login/twofa');
+      }
+      
     }, (error: HttpErrorResponse) => {
       document.getElementById('invalid')!.style.display = "flex";
       console.log(error);

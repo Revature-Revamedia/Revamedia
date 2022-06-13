@@ -13,16 +13,16 @@ export class QrcodeComponent implements OnInit {
   image: any = ""
 
   constructor(private qrcodeService: QrcodeService, private sanitizer: DomSanitizer ) { }
-  ngOnInit(): void {
-    this.getQRCodeImage();
-  }
+  ngOnInit(): void {}
 
-  getQRCodeImage(){
-    this.qrcodeService.getQRCodeImage().subscribe((data: any) => {
-    //console.log(data.data);
-    this.image = data;
-    } 
-    );
+  enableTwoFactorAuth(){
+    this.qrcodeService.enableTwoFactorAuth().subscribe((data: any) =>{this.image = data;});
+  }
+  disableTwoFactorAuth(){
+    this.qrcodeService.disableTwoFactorAuth().subscribe((data: any) => {console.log(data)});
+  }
+  recreateQRCode(){
+    this.qrcodeService.recreateQRCode().subscribe((data:any) => {console.log(data)});
   }
 
 }

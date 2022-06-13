@@ -25,6 +25,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ResetComponent } from './Components/reset/reset.component';
 import { ForgotComponent } from './Components/forgot/forgot.component';
 import { QrcodeComponent } from './Components/qrcode/qrcode.component';
+import { TwofaComponent } from './Components/twofa/twofa.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { QrcodeComponent } from './Components/qrcode/qrcode.component';
     ResetComponent,
     ForgotComponent,
     QrcodeComponent,
+    TwofaComponent,
 
   ],
   imports: [

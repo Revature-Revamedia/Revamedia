@@ -88,7 +88,7 @@ public class AuthService {
 
     //handle exceptions
     public ResponseEntity<Object> enableTwoFactorAuth(CookieDto cookieDto,TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
-        User currentUser = userService.getUserById(twoFactorAuthDto.getUserId());
+        User currentUser = userService.getUserById(cookieDto.getUserId());
         if (!currentUser.isTwoFactorAuth()){
             currentUser.setTwoFactorAuth(twoFactorAuthDto.isTwoFactorAuth());
             String secretForCurrentUser = twoFactorAuthentication.generateSecretKey();
@@ -114,8 +114,8 @@ public class AuthService {
 
     }
 
-    public ResponseEntity<Object> disableTwoFactorAuth(TwoFactorAuthDto twoFactorAuthDto){
-        User currentUser = userService.getUserById(twoFactorAuthDto.getUserId());
+    public ResponseEntity<Object> disableTwoFactorAuth(CookieDto cookieDto, TwoFactorAuthDto twoFactorAuthDto){
+        User currentUser = userService.getUserById(cookieDto.getUserId());
         if (currentUser.isTwoFactorAuth()){
             currentUser.setTwoFactorAuth(false);
             userService.update(currentUser);

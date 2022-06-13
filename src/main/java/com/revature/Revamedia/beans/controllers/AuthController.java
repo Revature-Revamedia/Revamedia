@@ -5,6 +5,7 @@ import com.revature.Revamedia.beans.services.AuthService;
 import com.revature.Revamedia.beans.services.JsonWebToken;
 import com.revature.Revamedia.dtos.*;
 import com.revature.Revamedia.exceptions.UnauthorizedUserException;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +46,15 @@ public class AuthController {
         else {
             if(authService.login(authDto).getStatusCode().is2xxSuccessful()){
                 //return authService.login(authDto);
-                return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://localhost:4200/auth/login/twoFA")).build();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("status", "redirect");
+                return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
             }
-            return null;
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
-    @PostMapping("/login/twofa")
+    @PostMapping("/login/twoFA")
     public ResponseEntity<Object> loginWithTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorDto twoFactorDto){
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);
@@ -86,7 +89,7 @@ public class AuthController {
     public ResponseEntity<Object> disableTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorAuthDto twoFactorAuthDto){
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);
-            return ResponseEntity.status(HttpStatus.OK).body(authService.disableTwoFactorAuth(twoFactorAuthDto));
+            return ResponseEntity.status(HttpStatus.OK).body(authService.disableTwoFactorAuth(cookieDto,twoFactorAuthDto));
         }
         catch (UnauthorizedUserException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
