@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
+    this.posts = [];
     this.getCurrentUserData();
     this.openingAnimation();
     // this.userService.getCurrentUser().subscribe({
@@ -49,7 +50,7 @@ export class HomeComponent implements OnInit {
 
     //     let f: any;
     //     this.posts = [];
-    //     for (f of response.following) {
+    //     for (f of response?.following) {
     //       this.posts.push(f.followedId.postsOwned);
     //     }
     //     console.log(this.posts);
@@ -62,6 +63,8 @@ export class HomeComponent implements OnInit {
     //     console.error(err);
     //   }
     // });
+    this.openingAnimation();
+
   }
 
   // GET CURRENT USER
@@ -70,20 +73,17 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.user = response;
         let userPosts = [];
-        this.posts = response?.postsOwned;
+        userPosts = response?.postsOwned;
         let followingPost = [];
         for(let f of response?.following) {
           followingPost = f?.followedId?.postsOwned;
         }
-        this.posts = this.posts.concat(followingPost);
-        this.posts = this.posts.flat();
-        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
-        // this.posts = followingPost.concat(userPosts);
-        // for(let p of response?.postsOwned){
-        //   this.posts.push(p);
-        //   this.posts = this.posts.flat();
-        // }
-        //this.openingAnimation();
+        this.posts = followingPost.concat(userPosts);
+        for(let p of response?.postsOwned){
+          this.posts.push(p);
+          this.posts = this.posts.flat();
+        }
+        this.openingAnimation();
         // console.log(this.posts);
       },
       (error: HttpErrorResponse) => {

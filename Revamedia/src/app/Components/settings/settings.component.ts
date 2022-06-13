@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
-import { faSun, faMoon, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faMoon, faEye, faEyeSlash, faUserShield, faRefresh, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { UserService } from '../../Shared/services/user-service/user.service';
 
@@ -59,6 +59,9 @@ export class SettingsComponent implements OnInit {
   public faMoon = faMoon;
   public faEyeSlash = faEyeSlash;
   public faEye = faEye;
+  public faUserShield = faUserShield;
+  public faRefresh = faRefresh;
+  public faInfoCircle = faInfoCircle;
   // ICONS
 
   // DARK THEME
@@ -102,19 +105,16 @@ export class SettingsComponent implements OnInit {
     form?.classList.remove('openModal');
   }
   // MODALS FUNCTION END
-  public closeAnyModal(){
-    // Screen
-    const screen = document.getElementById('screen');
-    screen?.classList.remove('openScreen');
-    // Form
-    const form1 = document.getElementById(`edit-account-modal`);
-    form1?.classList.remove('openModal');
+  // Two Factor Authentication
+  public twoFactor = false;
+  public turnOnTwoFactor(){
+    this.twoFactor = !this.twoFactor;
   }
 
-  // ANIMATION
-  public openingAnimation() {
-    const anim = this.animationService;
-    const settings = '#settings';
-    anim.fadeIn(settings, 0.7, 0, 0.6);
+  public showInfo(type: any) {
+    const info = document.getElementById(`${type}-info`);
+    info?.classList.toggle('showInfo');
+    setTimeout(() => info?.classList.remove('showInfo'), 3000);
+
   }
 }

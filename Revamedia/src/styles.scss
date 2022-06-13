@@ -17,7 +17,7 @@ $darkgrey: rgb(61,66,74);
 .darkMode{
   transition: all 0.4s ease-in-out;
   color: white;
-  #home-page,#events-page,#groups-page,#messages-page,#profile-page,#settings-page, #post-page{
+  #home-page,#events-page,#groups-page,#group-page,#messages-page,#profile-page,#settings-page, #post-page{
     background-color: rgb(31, 31, 31);
     transition: all 0.4s ease-in-out;
   }
@@ -128,6 +128,18 @@ $darkgrey: rgb(61,66,74);
       }
     }
   }
+  #group{
+    background-color: rgb(31, 31, 31);
+    color: white;
+    h2,span{
+      color: white;
+    }
+  }
+  #settingsContainer{
+    h3{
+      color: white;
+    }
+  }
   #post-body{
     background-color: rgb(31, 31, 31);
     a, p, span{
@@ -156,5 +168,11 @@ $darkgrey: rgb(61,66,74);
     background-color: rgb(15, 15, 15);
     color: white;
     border-right: .5px solid $orange;
+  }
+  #group-description{
+    background-color: rgb(31, 31, 31);
+    h2,span{
+      color: white;
+    }
   }
 }

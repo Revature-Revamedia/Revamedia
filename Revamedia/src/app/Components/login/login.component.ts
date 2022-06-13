@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   constructor(public auth: AuthenticationService) { }
 
   ngOnInit(): void {
-
+    sessionStorage.removeItem('loggedIn');
   }
 
 
