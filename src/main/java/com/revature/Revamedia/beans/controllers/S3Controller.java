@@ -18,8 +18,8 @@ public class S3Controller {
 
     @CrossOrigin
     @PostMapping("upload")
-    public String upload(@RequestParam("file") MultipartFile file) {
-        return s3Service.saveFile(file);
+    public String upload(@RequestParam("file") MultipartFile file , @RequestParam("fileName") String fileName) {
+        return s3Service.saveFile(file , fileName);
     }
 
     @GetMapping("download/{filename}")

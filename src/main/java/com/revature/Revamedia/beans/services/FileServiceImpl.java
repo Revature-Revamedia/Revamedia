@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FileServiceImpl {
 
-    String saveFile(MultipartFile file);
+    String saveFile(MultipartFile file , String fileName);
 
     byte[] downloadFile(String filename);
 

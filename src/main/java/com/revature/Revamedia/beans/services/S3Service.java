@@ -18,19 +18,20 @@ public class S3Service implements FileServiceImpl{
 
     @Value("${bucketName}")
     private String bucketName;
-
     private  final AmazonS3 s3;
-
     public S3Service(AmazonS3 s3) {
         this.s3 = s3;
     }
+    private UserService userService;
+
+
 
     @Override
-    public String saveFile(MultipartFile file) {
+    public String saveFile(MultipartFile file , String fileName) {
         String originalFilename = file.getOriginalFilename();
         try {
             File file1 = convertMultiPartToFile(file);
-            PutObjectResult putObjectResult = s3.putObject(bucketName, "test", file1);
+            PutObjectResult putObjectResult = s3.putObject(bucketName, fileName, file1);
             return putObjectResult.getContentMd5();
         } catch (IOException e) {
             throw  new RuntimeException(e);
