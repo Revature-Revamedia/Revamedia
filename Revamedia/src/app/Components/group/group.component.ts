@@ -17,17 +17,24 @@ export class GroupComponent implements OnInit {
   }
 
   public group: any = {};
+  public groupPosts: any[] = [];
   // GET CURRENT USER
   public getGroupData(){
     let id: any = this.ARouter.snapshot.paramMap.get('id');
     this.groupService.getGroupById(id).subscribe(
       (response: any) => {
         this.group = response;
+        this.groupPosts = response?.posts;
+        console.log(this.group);
+        console.log(this.groupPosts);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
     );
+  }
+  public goToProfile(userId: any){
+    this.router.navigate([`profile/${userId}`]);
   }
 
 }

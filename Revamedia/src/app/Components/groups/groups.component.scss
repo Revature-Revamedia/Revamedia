@@ -64,7 +64,6 @@ $darkgrey: rgb(61, 66, 74);
 
   .mygroups-container,.allGroups-container{
     width: 100%;
-    margin: 2rem 0;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-column-gap: 3rem;

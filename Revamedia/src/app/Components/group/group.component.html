@@ -1,4 +1,4 @@
-<div class="groups-page" id="groups-page">
+<div class="group-page" id="group-page">
 
   <!-- Page title Start -->
   <div class="page-title" id="page-title">
@@ -9,16 +9,29 @@
   </div><!-- CLOSES PAGE TITLE-->
 
   <!-- PAGE CONTENT-->
-  <div class="groups-content">
+  <div class="group-content">
 
-    <div class="mygroups-container">
-      <div class="group">
+    <div class="group-description">
+      <div class="image">
         <img src="{{group?.imageUrl}}" alt="{{group?.title}}">
+      </div>
+      <div class="text">
         <h2>{{group?.title}}</h2>
         <span>{{ group?.description }}</span>
+        <div class="option">
+          <button>Join</button>
+          <button>Leave</button>
+        </div>
       </div>
-    </div><!-- CLOSES MY GROUPS-->
+    </div><!-- CLOSES GROUP DESCRIPTION-->
+
+    <div class="group-wall">
+      <div class="noPost" *ngIf="groupPosts.length == 0">
+        <h4>No Posts</h4>
+        <span>Seems like no members have posted yet</span>
+      </div>
+    </div>
+
   </div><!-- CLOSES PAGE CONTENT-->
 
 </div><!-- CLOSES GROUPS-PAGE-->
-

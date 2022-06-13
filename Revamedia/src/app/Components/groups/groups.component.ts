@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { GroupService } from 'src/app/Shared/services/group-service/group.service';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 
@@ -12,11 +13,12 @@ import { UserService } from 'src/app/Shared/services/user-service/user.service';
 })
 export class GroupsComponent implements OnInit {
 
-  constructor(public userService: UserService, public groupsService: GroupService,private router: Router) { }
+  constructor(public userService: UserService, public groupsService: GroupService,private router: Router, public animationService: AnimationService) { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
     this.getAllGroups();
+    this.openingAnimation();
   }
 
   public currentUser: any = {};
@@ -98,5 +100,10 @@ export class GroupsComponent implements OnInit {
   public goToGroup(groupId: any){
     this.router.navigate([`group/${groupId}`]);
   }
-
+  // ANIMATION
+  public openingAnimation() {
+    const anim = this.animationService;
+    const main = '#main';
+    anim.fadeIn(main, 0.7, 0, 0.6);
+  }
 }
