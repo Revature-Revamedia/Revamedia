@@ -109,4 +109,8 @@ export class UserService {
     return this.http.post<any>(`${this.userURL}/deleteFollowing`, unfollow);
   }
 
+  public isFollowing(profileId: any): Observable<any>{
+    return this.http.get<any>(`${this.userURL}/isFollowing/${sessionStorage.getItem('userId')}/${profileId}`);
+  }
+
 }
