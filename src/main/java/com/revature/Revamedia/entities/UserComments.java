@@ -24,7 +24,7 @@ public class UserComments implements Serializable {
     private Integer commentId;
 
 
-    @JsonIgnoreProperties({"following", "followers"})
+    @JsonIgnoreProperties({"following", "followers", "likedPosts"})
     @ManyToOne()
     @JoinColumn(name = "comment_owner_id", referencedColumnName = "user_id")
     private User commentOwnerId;
@@ -52,7 +52,7 @@ public class UserComments implements Serializable {
     }
 
     public UserComments(Integer commentId, User commentOwnerId, UserPosts postId, List<UserReplies> replies, String commentMessage,
-            Timestamp dateCreated, String giphyUrl) {
+                        Timestamp dateCreated, String giphyUrl) {
 
         this.commentId = commentId;
         this.commentOwnerId = commentOwnerId;

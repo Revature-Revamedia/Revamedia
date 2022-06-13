@@ -37,6 +37,7 @@ export class UserService {
   }
 
   userLikesPost(currentPost: any): number {
+    console.log('current Post: ', currentPost)
     let num: number = 0;
     this.userPostsService.updatePostLikes(currentPost).subscribe((data) => {
       console.log(data.body);

@@ -78,7 +78,7 @@ public class UserPosts implements Serializable {
     }
 
     public UserPosts(Integer postId, User ownerId, List<UserComments> comments, String message, String youtubeLink,
-            String image, Set<User> likes, String postLifetime, Timestamp dateCreated, UserGroups groupId) {
+                     String image, Set<User> likes, String postLifetime, Timestamp dateCreated, UserGroups groupId) {
         this.postId = postId;
         this.ownerId = ownerId;
         this.comments = comments;

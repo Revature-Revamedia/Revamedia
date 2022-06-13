@@ -8,7 +8,9 @@ package com.revature.Revamedia.beans.controllers;
 
 import com.revature.Revamedia.beans.services.UserPostsService;
 import com.revature.Revamedia.beans.services.UserService;
-import com.revature.Revamedia.dtos.*;
+import com.revature.Revamedia.dtos.CreateUserPostsDto;
+import com.revature.Revamedia.dtos.UpdatePostLikesDto;
+import com.revature.Revamedia.dtos.UpdateUserPostsDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserPosts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class UserPostsController {
         this.userService = userService;
     }
 
-     /**
+    /**
      * Get all posts made by the given user
      * @param id UserId as a path variable
      * @return List of UserPosts owned by user
@@ -78,11 +80,11 @@ public class UserPostsController {
         userPostsService.delete(post);
     }
 
-        /**
-         * Update the like status of a post by a given user
-         * @param dto UpdatePostLikes dto from the HTTP Request Body containing User and Post ids
-         * @return ResponseEntity containing response status and updated UserPost
-         */
+    /**
+     * Update the like status of a post by a given user
+     * @param dto UpdatePostLikes dto from the HTTP Request Body containing User and Post ids
+     * @return ResponseEntity containing response status and updated UserPost
+     */
 
     @PutMapping("/likes")
     public ResponseEntity<UserPosts> updatePostLikes(@RequestBody UpdatePostLikesDto dto) {
@@ -124,37 +126,5 @@ public class UserPostsController {
         return userPostsService.getPostsByUser(id);
     }
 
-    @PostMapping("/youtube/add")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserPosts> shareYoutube(@RequestBody shareYoutubeDto dto) {
-        User user = userService.getUserById(dto.getUserId());
-        UserPosts post = new UserPosts();
-        post.setMessage(dto.getMessage());
-        post.setYoutubeLink(dto.getYoutubeLink());
-        post.setDateCreated(new Timestamp(System.currentTimeMillis()));
-        post.setOwnerId(user);
-        user.addPost(post);
-        userPostsService.save(post);
-        userService.save(user);
-        return new ResponseEntity<>(post, HttpStatus.CREATED);
-    }
-
-    @PutMapping("/youtube/edit")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserPosts> editYoutube(@RequestBody EditYoutubeDto dto) {
-        UserPosts post = userPostsService.getPostById(dto.getPostId());
-        post.setMessage(dto.getMessage());
-        post.setYoutubeLink(dto.getYoutubeLink());
-        userPostsService.update(post);
-        return new ResponseEntity<>(post, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/youtube/delete/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserPosts> deleteYoutube(@PathVariable Integer id) {
-        UserPosts post = userPostsService.getPostById(id);
-        userPostsService.delete(post);
-        return new ResponseEntity<>(post, HttpStatus.OK);
-    }
 }
 

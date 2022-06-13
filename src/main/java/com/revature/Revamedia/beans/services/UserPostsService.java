@@ -67,7 +67,7 @@ public class UserPostsService {
             postsLiked.remove(post);
             user.setLikedPosts(postsLiked);
             userRepository.save(user);
-        // else, add their like
+            // else, add their like
         } else {
             Set<User> usersLiked = post.getLikes();
             usersLiked.add(user);

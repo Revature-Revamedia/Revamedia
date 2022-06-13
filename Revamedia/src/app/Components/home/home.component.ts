@@ -37,40 +37,17 @@ export class HomeComponent implements OnInit {
 
   constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router, private searchService: SearchService) { }
 
+
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
     this.posts = [];
     this.getCurrentUserData();
     this.getUserFeed();
-
-  
-    // this.getCurrentUserData();
-    this.userService.getCurrentUser().subscribe({
-      next: response => {
-        this.user = response;
-        console.log(response);
-
-        let f: any;
-        this.posts = [];
-        for (f of response.following) {
-          this.posts.push(f.followedId.postsOwned);
-        }
-        console.log(this.posts);
-        this.posts = this.posts.flat();
-        //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
-        console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
-        //b.date.getTime() - a.date.getTime();
-      },
-      error: err => {
-        console.error(err);
-      }
-    });
-    this.openingAnimation();
   }
 
   // GET CURRENT USER
-  public getCurrentUserData(){
+  public getCurrentUserData() {
     this.userService.getUser().subscribe(
       (response: any) => {
         console.log("response", response);
@@ -80,20 +57,20 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     );
-    
+
   }
 
-  public postList: any [] = []
-  public getUserFeed(){
+  public postList: any[] = []
+  public getUserFeed() {
     console.log('in get user feed ', this.user);
-    this.userPostsService.getUserFeed().subscribe((response) =>{
+    this.userPostsService.getUserFeed().subscribe((response) => {
       console.log(response);
       this.postList = response
     });
   }
 
   // // Back End Work
-  public (currentPost: any): void {
+  public(currentPost: any): void {
     this.userPostsService.updatePostLikes(this.postToLike).subscribe(
       (data) => {
         // console.log(data.body.likes.length);
@@ -111,7 +88,6 @@ export class HomeComponent implements OnInit {
       }
     )
   }
-
 
   // Add Comment
   public onAddComment(commentForm: NgForm): void {
@@ -213,7 +189,6 @@ export class HomeComponent implements OnInit {
     )
   }
 
-
   // Add REPLY
   public onAddReply(replyForm: NgForm): void {
     this.CommentService.addReply(replyForm.value).subscribe(
@@ -264,20 +239,19 @@ export class HomeComponent implements OnInit {
 
   // Front End Work
   public faHeart = faHeart; //icon
+  public faEllipsis = faEllipsis; //icon
   public faBookmark = faBookmark; //icon
   public faComment = faComment; //icon
   public faShareFromSquare = faShareFromSquare; //icon
   public faFaceGrinStars = faFaceGrinStars; //icon
   public faFaceGrinTongueSquint = faFaceGrinTongueSquint; //icon
-  public faTrashCan = faTrashCan; //icon
-  public faPenToSquare = faPenToSquare; //icon
 
   // hide Comments
   public viewComments = true;
   public toggleHideComments(): void {
     this.viewComments = !this.viewComments;
   }
-  public toggleComments():void{
+  public toggleComments(): void {
     this.addComment = !this.addComment;
   }
 
@@ -308,6 +282,12 @@ export class HomeComponent implements OnInit {
     this.addReply = false;
   }
 
+  // post optional
+  public postsOptionsClicked = false;
+  public togglePostsOptions() {
+    this.postsOptionsClicked = !this.postsOptionsClicked;
+  }
+
   //comment options
   // post optional
   public commentOptionsClicked = false;
@@ -321,8 +301,6 @@ export class HomeComponent implements OnInit {
   public deleteReply: any;
   public editPost: any;
   public deletePost: any;
-  public editYoutube: any;
-  public deleteYoutube: any;
   public openModal(modalType: string, id: string, object: any) {
     // Screen
     const screen = document.getElementById('screen');
@@ -331,18 +309,18 @@ export class HomeComponent implements OnInit {
     const form = document.getElementById(`${modalType}-${id}`);
     form?.classList.add('openModal');
     if (modalType === "edit") {
+      this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.editComment = object;
       this.editReply = object;
       this.editPost = object;
-      this.editYoutube = object;
     }
     if (modalType === "delete") {
+      this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.deleteComment = object;
       this.deleteReply = object;
       this.deletePost = object;
-      this.deleteYoutube = object;
     }
     if (modalType === "add") {
       this.post = object;
@@ -404,14 +382,13 @@ export class HomeComponent implements OnInit {
     const main = '#main';
     anim.fadeIn(main, 0.5, 0, 0);
   }
-  public goToProfile(userId: any){
+  public goToProfile(userId: any) {
     this.router.navigate([`profile/${userId}`]);
   }
 
 
-
   allUsers: any[] = [];
-  searchUser(searchKey: string){
+  searchUser(searchKey: string) {
     // this.data = this.searchService.searchUser(searchKey);
     this.searchService.searchUser(searchKey).subscribe(
       (response: any) => {
@@ -422,13 +399,13 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     )
-    if(searchKey === ''){
+    if (searchKey === '') {
       this.allUsers = [];
     }
   }
 
   // Youtube section
-  public shareVideo(form: NgForm){
+  public shareVideo(form: NgForm) {
     var youtubeDto = {
       userId: form.value.userId,
       youtubeLink: form.value.youtubeLink,
@@ -445,7 +422,7 @@ export class HomeComponent implements OnInit {
     )
 
   }
-  public editVideo(form: NgForm){
+  public editVideo(form: NgForm) {
     var editYoutubeDto = {
       postId: form.value.postId,
       youtubeLink: form.value.youtubeLink,
@@ -462,7 +439,7 @@ export class HomeComponent implements OnInit {
     )
 
   }
-  public deleteVideo(id: number){
+  public deleteVideo(id: number) {
     this.userPostsService.deleteYoutube(id).subscribe(
       (response: any) => {
         console.log(response);

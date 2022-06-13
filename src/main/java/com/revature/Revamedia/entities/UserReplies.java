@@ -50,7 +50,7 @@ public class UserReplies implements Serializable {
     }
 
     public UserReplies(Integer replyId, User replyOwnerId, UserComments commentId, String replyMessage, Timestamp dateCreated,
-            String replyGiphyUrl) {
+                       String replyGiphyUrl) {
         this.replyId = replyId;
         this.replyOwnerId = replyOwnerId;
         this.commentId = commentId;
