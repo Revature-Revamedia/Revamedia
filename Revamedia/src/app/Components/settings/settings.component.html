@@ -139,8 +139,10 @@
     </div>
     <div class="user-settings-row">
       <h5>Profile Pic</h5>
-      <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url...">
+      <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url..."  >
     </div>
+    <input type="file" (change)="onFileSelected($event)">
+    <button type="button" (click)="onUpload()">Upload</button>
     <div class="post-submit">
       <button>Update Account</button>
     </div>
