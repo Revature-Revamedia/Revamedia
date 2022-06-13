@@ -46,6 +46,8 @@ $darkgrey: rgb(61, 66, 74);
         }
       }
       .text{
+        display: flex;
+        flex-direction: column;
         margin-left: 1rem;
         h2{
           font-size: 3rem;
