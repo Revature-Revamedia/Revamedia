@@ -2,13 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
 import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../Shared/services/user-service/user.service';
 import { GiphyService } from '../../Shared/services/giphy-service/giphy.service';
-import { ThisReceiver } from '@angular/compiler';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { SearchService } from 'src/app/Shared/services/search-service/search.service';
 import { Router } from '@angular/router';
@@ -35,28 +33,30 @@ export class HomeComponent implements OnInit {
   // Variables Used In Home Component
   public totalLikes: number = 0;
 
-  constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router, private searchService: SearchService) { }
+  constructor(
+    public CommentService: CommentService,
+    private userPostsService: UserPostsService,
+    public userService: UserService,
+    public gifService: GiphyService,
+    public animationService: AnimationService,
+    public router: Router,
+    private searchService: SearchService)
+  { }
 
   ngOnInit(): void {
-    // this.getAllComments();
     this.getGifs('funny');
     this.posts = [];
-    // this.getCurrentUserData();
+
     this.userService.getCurrentUser().subscribe({
       next: response => {
         this.user = response;
-        console.log(response);
 
         let f: any;
         this.posts = [];
         for (f of response.following) {
           this.posts.push(f.followedId.postsOwned);
         }
-        console.log(this.posts);
         this.posts = this.posts.flat();
-        //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
-        console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
-        //b.date.getTime() - a.date.getTime();
       },
       error: err => {
         console.error(err);
@@ -65,111 +65,26 @@ export class HomeComponent implements OnInit {
     this.openingAnimation();
   }
 
-  // GET CURRENT USER
-  // public getCurrentUserData(){
-  //   this.userService.getUser().subscribe(
-  //     (response: any) => {
-  //       this.user = response;
-  //       let userPosts = [];
-  //       userPosts = response?.postsOwned;
-  //       let followingPost = [];
-  //       for(let f of response?.following) {
-  //         followingPost = f?.followedId?.postsOwned;
+  // public (currentPost: any): void {
+  //   this.userPostsService.updatePostLikes(this.postToLike).subscribe(
+  //     (data) => {
+  //       // console.log(data.body.likes.length);
+  //       // this.totalLikes = data.body.likes.length;
+  //       let p = {
+  //         userId: 0,
+  //         postId: 0,
   //       }
-  //       this.posts = followingPost.concat(userPosts);
-  //       // for(let p of response?.postsOwned){
-  //       //   this.posts.push(p);
-  //       //   this.posts = this.posts.flat();
-  //       // }
-  //       //this.openingAnimation();
-  //       // console.log(this.posts);
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       console.log(error.message)
+  //       p.postId = currentPost.postId;
+  //       p.userId = this.user.userId;
+  //       this.userService.userLikesPost(p);
   //     }
-  //   );
-  // }
-
-  // // Back End Work
-  public (currentPost: any): void {
-    this.userPostsService.updatePostLikes(this.postToLike).subscribe(
-      (data) => {
-        // console.log(data.body.likes.length);
-        // this.totalLikes = data.body.likes.length;
-        let p = {
-          userId: 0,
-          postId: 0,
-        }
-        p.postId = currentPost.postId;
-        p.userId = this.user.userId;
-        console.log(p);
-        // this.getCurrentUserData();
-        this.userService.userLikesPost(p);
-        // this.getCurrentUserData();
-      }
-    )
-  }
-
-  // likePost(): void {
-
-  // // // Get All Comments
-  // // // public getAllComments(): void{
-  // // //   this.CommentService.getAllComments().subscribe(
-  // // //     (response: any) => {
-  // // //       this.comments.push(response.data);
-  // // //     },
-  // // //     (error: HttpErrorResponse) => {
-  // // //       console.log(error.message)
-  // // //     }
-  // // //   )
-  // // // }
-
-
-  // //    // get all comments for given post
-
-  // //       // console.log(data.body.comments);
-  // //       // console.log(data.body.comments[0]);
-  // //       // this.comments = data.body.comments;
-
-  // //       // for (var cur of this.comments) {
-  // //       //   console.log(cur);
-  // //       // }
-
-
-  // //   // get all users -> get all owned posts
-
-  // //   // this.userPostsService.getUsers().subscribe((data) => {
-
-
-  // //   //   this.users = data.body;
-  // //   //   console.log("all users:");
-  // //   //   console.log(this.users);
-
-  // //   //   // loop through all users
-  // //   //   for (var user of this.users) {
-  // //   //     // loop through all owned posts for each user
-  // //   //     for (var post of user.postsOwned)
-  // //   //       // add post to post array
-  // //   //       this.posts.push(post)
-  // //   //   }
-  // //   //   console.log("all posts:");
-  // //   //   console.log(this.posts);
-
-
-  // //   //   //for (var follow of this.currentuser.following)
-  // //   //       //getuser
-
-  // //   // });
-
+  //   )
   // }
 
   // Add Comment
   public onAddComment(commentForm: NgForm): void {
     this.CommentService.addComment(commentForm.value).subscribe(
       (response: any) => {
-        // console.log(response);
-        // console.log(commentForm.value);
-        //this.getCurrentUserData();
         this.addComment = false;
         this.userService.setCurrentUser(response.body);
       },
@@ -207,9 +122,7 @@ export class HomeComponent implements OnInit {
       }
     )
   }
-
   // DELETE REPLY END
-
 
   likePost(currentPost: any): void {
     let p = {
@@ -222,28 +135,22 @@ export class HomeComponent implements OnInit {
     this.totalLikes = this.userService.userLikesPost(p);
   }
 
-
   onAddPost(postForm: NgForm): void {
     this.userPostsService.addPost(postForm.value).subscribe(
       (response: any) => {
-        console.log(response);
         this.closeModal('add', 'post-modal');
-        // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
     )
-    //console.log(postForm.value);
   }
 
   onUpdatePost(postForm: NgForm): void {
-    //console.log(postForm.value);
     this.userPostsService.updatePost(postForm.value).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.closeModal('edit', 'post-modal');
-        // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -255,7 +162,6 @@ export class HomeComponent implements OnInit {
     this.userPostsService.deletePost(id).subscribe(
       (response: any) => {
         this.closeModal('delete', 'post-modal');
-        // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -263,50 +169,17 @@ export class HomeComponent implements OnInit {
     )
   }
 
-
-  // get all comments for given post
-
-  // console.log(data.body.comments);
-  // console.log(data.body.comments[0]);
-  // this.comments = data.body.comments;
-
-  // for (var cur of this.comments) {
-  //   console.log(cur);
-  // }
-
-
-  // get all users -> get all owned posts
-
-  // this.userPostsService.getUsers().subscribe((data) => {
-
-  //   this.users = data.body;
-  //   console.log("all users:");
-  //   console.log(this.users);
-
-  //   // loop through all users
-  //   for (var user of this.users) {
-  //     // loop through all owned posts for each user
-  //     for (var post of user.postsOwned)
-  //       // add post to post array
-  //       this.posts.push(post)
-  //   }
-  //   console.log("all posts:");
-  //   console.log(this.posts);
-
   // Add REPLY
   public onAddReply(replyForm: NgForm): void {
     this.CommentService.addReply(replyForm.value).subscribe(
       (response: any) => {
-        // console.log(response);
-        // console.log(replyForm.value);
-        //this.getCurrentUserData();
         this.addReply = false;
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
     )
-  } // ADD COMMENT END
+  } // ADD REPLY END
 
 
   // EDIT REPLY START
@@ -442,7 +315,6 @@ export class HomeComponent implements OnInit {
     this.gifService.getGIFS(search).subscribe(
       (response: any) => {
         this.gifs = response.data;
-        // console.log(this.gifs);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -487,30 +359,15 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`profile/${userId}`]);
   }
 
-  // public me: any;
-  // getNextUser(){
-  //   this.userService.getProfile(1).subscribe(
-  //     (response: any) => {
-  //       console.log(response);
-  //       this.me = response;
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       console.log(error.message)
-  //     }
-  //   )
-  // }
-
-
   allUsers: any[] = [];
   searchUser(searchKey: string){
     // this.data = this.searchService.searchUser(searchKey);
     this.searchService.searchUser(searchKey).subscribe(
       (response: any) => {
         this.allUsers = response;
-        console.log(this.allUsers);
       },
       (error: HttpErrorResponse) => {
-        console.log(error.message)
+        console.log(error.message);
       }
     )
     if(searchKey === ''){
@@ -527,7 +384,7 @@ export class HomeComponent implements OnInit {
     }
     this.userPostsService.addYoutube(youtubeDto).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.closeModal('add', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
@@ -544,7 +401,7 @@ export class HomeComponent implements OnInit {
     }
     this.userPostsService.editYoutube(editYoutubeDto).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.closeModal('edit', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
@@ -556,7 +413,7 @@ export class HomeComponent implements OnInit {
   public deleteVideo(id: number){
     this.userPostsService.deleteYoutube(id).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.closeModal('delete', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
