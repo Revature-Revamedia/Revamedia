@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
 import java.util.Properties;
 
 @Service
@@ -52,10 +51,6 @@ public class FileUploadService{
 
         try {
             ObjectMetadata objectMetadata = new ObjectMetadata();
-            //check if system defined can be changed on s3 object
-            objectMetadata.addUserMetadata("Content-Type", "image/png");
-            objectMetadata.addUserMetadata("ContentDisposition", "attachement; filename=image.png");
-            objectMetadata.addUserMetadata("ACL","public-read");
             s3Client.putObject(BUCKET, fileName, inputStream , objectMetadata);
         } catch (AmazonServiceException e) {
             System.err.println(e.getErrorMessage());

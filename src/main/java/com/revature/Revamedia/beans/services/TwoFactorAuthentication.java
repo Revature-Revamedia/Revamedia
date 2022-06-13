@@ -10,7 +10,6 @@ import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.*;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
@@ -54,7 +53,6 @@ public class TwoFactorAuthentication {
                 width, height);
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             MatrixToImageWriter.writeToStream(matrix, "png", out);
-            //MatrixToImageWriter.toBufferedImage(matrix);
             return out;
         }
     }

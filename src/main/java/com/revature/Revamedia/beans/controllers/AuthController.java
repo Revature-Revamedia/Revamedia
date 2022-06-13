@@ -1,14 +1,9 @@
 package com.revature.Revamedia.beans.controllers;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.google.zxing.WriterException;
 import com.revature.Revamedia.beans.services.AuthService;
 import com.revature.Revamedia.beans.services.JsonWebToken;
 import com.revature.Revamedia.dtos.*;
-import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.exceptions.UnauthorizedUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,15 +53,61 @@ public class AuthController {
 
     @PostMapping("/login/twofa")
     public ResponseEntity<Object> loginWithTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorDto twoFactorDto){
-        CookieDto cookieDto = jsonWebToken.verify(token);
-        if (authService.checkTwoFactorAuthValidity(cookieDto, twoFactorDto)) {
-            return ResponseEntity.status(HttpStatus.OK).body("code is matching");
+        try {
+            CookieDto cookieDto = jsonWebToken.verify(token);
+            if (authService.checkTwoFactorAuthValidity(cookieDto, twoFactorDto)) {
+                return ResponseEntity.status(HttpStatus.OK).body("code is matching");
+            }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("code didn't match");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("code didn't match");
+        catch (UnauthorizedUserException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
+        }
     }
 
     @PostMapping("/enable")
-    public ResponseEntity<Object> enableTwoFactorAuth(@RequestBody TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
-        return authService.enableTwoFactorAuth(twoFactorAuthDto);
+    public ResponseEntity<Object> enableTwoFactorAuth(@CookieValue("user_session") String token,@RequestBody TwoFactorAuthDto twoFactorAuthDto){
+        try {
+            CookieDto cookieDto = jsonWebToken.verify(token);
+            return ResponseEntity.status(HttpStatus.OK).body(authService.enableTwoFactorAuth(cookieDto,twoFactorAuthDto));
+        }
+        catch (UnauthorizedUserException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PostMapping("/disable")
+    public ResponseEntity<Object> disableTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorAuthDto twoFactorAuthDto){
+        try {
+            CookieDto cookieDto = jsonWebToken.verify(token);
+            return ResponseEntity.status(HttpStatus.OK).body(authService.disableTwoFactorAuth(twoFactorAuthDto));
+        }
+        catch (UnauthorizedUserException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
+        }
+
+    }
+
+    @PostMapping("/recreate")
+    public ResponseEntity<Object> recreateQRCode(@CookieValue("user_session") String token, @RequestBody TwoFactorAuthDto twoFactorAuthDto){
+        try {
+            CookieDto cookieDto = jsonWebToken.verify(token);
+            return ResponseEntity.status(HttpStatus.OK).body(authService.enableTwoFactorAuth(cookieDto,twoFactorAuthDto));
+        }
+        catch (UnauthorizedUserException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
