@@ -61,7 +61,6 @@ public class FileUploadService{
     throws AmazonS3Exception, AmazonServiceException, SdkClientException, IOException {
 
         try {
-            //return s3Client.getObject(BUCKET,fileName);
             return s3Client.getUrl(BUCKET, fileName).toString();
         } catch (AmazonServiceException e) {
             System.err.println(e.getErrorMessage());
@@ -89,7 +88,5 @@ public class FileUploadService{
         }
         return "No such bucket or file";
     }
-
-
 
 }
