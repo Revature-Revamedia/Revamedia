@@ -6,8 +6,6 @@ import { Router } from '@angular/router';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 
 
-
-
 fdescribe('AuthenticationService', () => {
   let authService: AuthenticationService;
   let routerSpy: { navigateByUrl: jasmine.Spy };
@@ -93,12 +91,6 @@ fdescribe('AuthenticationService', () => {
     expect(routerSpy.navigateByUrl).toHaveBeenCalled;
     const request = httpController.expectOne(authService.authUrl);
     request.flush(user, { status: 200, statusText: "OK" });
-    expect(authService.http.post(authService.authUrl, user, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      'withCredentials': true, 'observe': `response`
-    }).subscribe).toHaveBeenCalled;
     expect(sessionStorage.setItem).toHaveBeenCalled;
 
 
