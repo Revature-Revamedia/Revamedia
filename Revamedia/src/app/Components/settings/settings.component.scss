@@ -85,13 +85,13 @@ $darkgrey: rgb(61,66,74);
         button{
           border: none;
           background: $blue;
-          color: black;
+          color: white;
           font-size: 1.1rem;
           cursor: pointer;
-          padding: .3rem .9rem;
+          padding: .2rem .5rem;
           border-radius: 5px;
           &:hover{
-            background: #4eacd1;
+            background: $orange;
           }
         }
         #deleteBtn{
@@ -125,26 +125,36 @@ $darkgrey: rgb(61,66,74);
         margin-bottom: 1rem;
       }
 
-      .theme{
+      .Theme,.TwoFactor, .GenerateQrCode{
         width: 100%;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid $lightgrey;
-        border-top: 1px solid $lightgrey;
         padding: 1rem 0;
-        h5{
-          font-size: 1.25rem;
-          color: $darkgrey;
+
+        .title{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          h5{
+            font-size: 1.25rem;
+            color: $darkgrey;
+            #info-icon{
+              color: $blue;
+              cursor: pointer;
+            }
+          }
         }
-        .changeTheme{
+        .action{
           display: flex;
           flex-direction: row;
           align-items: center;
           h3{
-            font-size: 1.2rem;
-            margin-right: 1rem;
+            font-size: 1rem;
+            color: $darkgrey;
+            margin: 0 1rem;
           }
           button{
             border: none;
@@ -178,6 +188,43 @@ $darkgrey: rgb(61,66,74);
       .system-settings{
         width: 90%;
         padding: 2rem;
+        h4{
+          font-size: 2rem;
+          color: $darkgrey;
+          text-decoration: underline;
+          margin-bottom: 1rem;
+        }
+        .Theme,.TwoFactor, .GenerateQrCode{
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 1px solid $lightgrey;
+          padding: 1rem 0;
+          .title{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            h5{
+              font-size: 1rem;
+            }
+          }
+          .action{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            h3{
+              font-size: 1rem;
+              color: $darkgrey;
+              margin: 0;
+            }
+            button{
+              margin-left: .3rem;
+            }
+          }
+
+        }
       }
     }
   }
@@ -208,7 +255,7 @@ $darkgrey: rgb(61,66,74);
   position: fixed;
   z-index: 15;
   top: -100%;
-  left: -100%;
+  left: 20%;
   transform: scale(0);
   transition: all .4s ease-in-out;
   background-color: white;
@@ -372,3 +419,91 @@ $darkgrey: rgb(61,66,74);
 }
 
 // MODALS CSS END
+
+// INFO POP ups
+.info1{
+  position: absolute;
+  transform: translate(106%, 50%);
+  border-radius: 5px;
+  border-top-left-radius: 0;
+  width: 16rem;
+  padding: .5rem 1rem;
+  background: $orange;
+  scale: 0;
+  opacity: 0;
+  transition: .3s all ease-in-out;
+  text-align: center;
+}
+@media screen and (max-width: 800px) {
+  .info1{
+    transform: translate(70%, 60%);
+    width: 40vw;
+  }
+  .info2{
+    transform: translate(0%, 0%);
+    width: 40vw;
+  }
+}
+.info2{
+  position: absolute;
+  transform: translate(75%, 50%);
+  border-radius: 5px;
+  border-top-left-radius: 0;
+  width: 16rem;
+  padding: .5rem 1rem;
+  background: $orange;
+  scale: 0;
+  opacity: 0;
+  transition: .3s all ease-in-out;
+  text-align: center;
+}
+.info3{
+  position: absolute;
+  transform: translate(80%, 50%);
+  border-radius: 5px;
+  border-top-left-radius: 0;
+  width: 15rem;
+  padding: .5rem 1rem;
+  background: $orange;
+  scale: 0;
+  opacity: 0;
+  transition: .3s all ease-in-out;
+  text-align: center;
+}
+.info4{
+  position: absolute;
+  transform: translate(67%, 50%);
+  border-radius: 5px;
+  border-top-left-radius: 0;
+  width: 15rem;
+  padding: .5rem 1rem;
+  background: $orange;
+  scale: 0;
+  opacity: 0;
+  transition: .3s all ease-in-out;
+  text-align: center;
+}
+@media screen and (max-width: 800px) {
+  .info1{
+    transform: translate(70%, 60%);
+    width: 40vw;
+  }
+  .info2{
+    transform: translate(85%, 50%);
+    width: 40vw;
+  }
+  .info3{
+    transform: translate(5%, 60%);
+    width: 40vw;
+  }
+  .info4{
+    transform: translate(75%, 50%);
+    width: 40vw;
+  }
+}
+
+
+.showInfo{
+  scale: 1;
+  opacity: 1;
+}
