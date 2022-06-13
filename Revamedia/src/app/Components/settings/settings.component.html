@@ -13,14 +13,34 @@
 
     <div class="system-settings" id="setBackgroundColor">
       <h4>System Settings</h4>
+      <div class="TwoFactor" id="settingsContainer">
+        <h5>Two-Factor Authentication</h5>
+        <div class="toggleTwoFactor">
+          <h3 *ngIf="twoFactor == false">Enable</h3>
+          <h3 *ngIf="twoFactor == true">Disable</h3>
+          <button (click)="turnOnTwoFactor()">
+            <fa-icon *ngIf="twoFactor == true" [icon]="faUserShield" size="lg"></fa-icon>
+            <fa-icon *ngIf="twoFactor == false" [icon]="faUserShield" size="lg"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="GenerateQrCode" *ngIf="twoFactor == true" id="settingsContainer">
+        <h5>Generate New QrCode</h5>
+        <div class="generate">
+          <h3>Generate</h3>
+          <button>
+            <fa-icon [icon]="faRefresh" size="lg"></fa-icon>
+          </button>
+        </div>
+      </div>
       <div class="theme">
         <h5>Change Theme</h5>
-        <div class="changeTheme">
+        <div class="changeTheme" id="settingsContainer">
           <h3 *ngIf="darkTheme == false">Dark Mode</h3>
           <h3 *ngIf="darkTheme == true">Light Mode</h3>
           <button (click)="changeTheme()">
-            <fa-icon *ngIf="darkTheme == true" [icon]="faSun"></fa-icon>
-            <fa-icon *ngIf="darkTheme == false" [icon]="faMoon"></fa-icon>
+            <fa-icon *ngIf="darkTheme == true" [icon]="faSun" size="lg"></fa-icon>
+            <fa-icon *ngIf="darkTheme == false" [icon]="faMoon" size="lg"></fa-icon>
           </button>
         </div>
       </div>

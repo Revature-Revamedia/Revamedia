@@ -132,7 +132,6 @@ $darkgrey: rgb(61,66,74);
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid $lightgrey;
-        border-top: 1px solid $lightgrey;
         padding: 1rem 0;
         h5{
           font-size: 1.25rem;
@@ -143,8 +142,83 @@ $darkgrey: rgb(61,66,74);
           flex-direction: row;
           align-items: center;
           h3{
-            font-size: 1.2rem;
-            margin-right: 1rem;
+            font-size: 1rem;
+            color: $darkgrey;
+            margin: 0 1rem;
+          }
+          button{
+            border: none;
+            outline: none;
+            background: $blue;
+            color: white;
+            padding: .3rem .6rem;
+            cursor: pointer;
+            border-radius: 5px;
+            &:hover{
+              background: $orange;
+            }
+          }
+        }
+
+      }
+      .TwoFactor{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid $lightgrey;
+        border-top: 1px solid $lightgrey;
+        padding: 1rem 0;
+        h5{
+          font-size: 1.25rem;
+          color: $darkgrey;
+        }
+        .toggleTwoFactor{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          h3{
+            font-size: 1rem;
+            color: $darkgrey;
+            margin: 0 1rem;
+          }
+          button{
+            border: none;
+            outline: none;
+            background: $blue;
+            color: white;
+            padding: .3rem .6rem;
+            cursor: pointer;
+            border-radius: 5px;
+            &:hover{
+              background: $orange;
+            }
+          }
+        }
+
+      }
+      .GenerateQrCode{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid $lightgrey;
+        border-top: 1px solid $lightgrey;
+        padding: 1rem 0;
+        h5{
+          font-size: 1.25rem;
+          color: $darkgrey;
+        }
+        .generate{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          h3{
+            font-size: 1rem;
+            color: $darkgrey;
+            margin: 0 1rem;
           }
           button{
             border: none;
