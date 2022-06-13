@@ -32,16 +32,18 @@ public class CorsFilter extends OncePerRequestFilter {
         String originHeader = request.getHeader("Origin");
 
         // this header check is to handle some backend requests using the host header (namely password reset)
-        if(request.getHeader("Origin") == null){
+        if(request.getHeader("Origin") == null && request.getHeader("host") != null){
             originHeader = "http://";
             originHeader += request.getHeader("host");
         }
+
+        // System.out.println("Origin: " + originHeader);
 
         if(allowedOrigins.contains(originHeader)) {
             response.setHeader("Access-Control-Allow-Credentials", "true");
             response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
             response.setHeader("Access-Control-Allow-Origin", originHeader); // Cannot be '*'. If in production we change this to production domain url.
-            response.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, mode"); // Cannot be '*'. Add additional headers we need here.
+            response.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, mode, host"); // Cannot be '*'. Add additional headers we need here.
             filterChain.doFilter(request, response);
         }
     }
