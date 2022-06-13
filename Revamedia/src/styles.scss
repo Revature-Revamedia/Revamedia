@@ -125,6 +125,13 @@ $darkgrey: rgb(61,66,74);
       }
     }
   }
+  #group{
+    background-color: rgb(31, 31, 31);
+    color: white;
+    h2,span{
+      color: white;
+    }
+  }
   #settingsContainer{
     h3{
       color: white;

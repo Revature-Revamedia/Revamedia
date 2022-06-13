@@ -54,26 +54,6 @@
       </div>
       <div class="Theme">
         <div class="title">
-          <h5>Set Post Life Time
-            <fa-icon [icon]="faInfoCircle" (click)="showInfo('post-time')" id="info-icon"></fa-icon>
-          </h5>
-        </div>
-        <div class="info3" id="post-time-info">
-          <span>
-            Remove your posts automatically after a given time frame.
-          </span>
-        </div>
-        <div class="action" id="settingsContainer">
-          <h3 *ngIf="darkTheme == false">Dark Mode</h3>
-          <h3 *ngIf="darkTheme == true">Light Mode</h3>
-          <button (click)="changeTheme()">
-            <fa-icon *ngIf="darkTheme == true" [icon]="faSun" size="lg"></fa-icon>
-            <fa-icon *ngIf="darkTheme == false" [icon]="faMoon" size="lg"></fa-icon>
-          </button>
-        </div>
-      </div>
-      <div class="Theme">
-        <div class="title">
           <h5>Change Theme
             <fa-icon [icon]="faInfoCircle" (click)="showInfo('color-scheme')" id="info-icon"></fa-icon>
           </h5>

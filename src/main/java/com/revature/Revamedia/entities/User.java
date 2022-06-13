@@ -48,11 +48,11 @@ public class User implements Serializable {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @OneToMany(mappedBy = "followedId", cascade = CascadeType.ALL)
     private Set<UserFollows> followers;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @OneToMany(mappedBy = "followerId", cascade = CascadeType.ALL)
     private Set<UserFollows> following;
 

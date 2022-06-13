@@ -41,54 +41,54 @@ export class HomeComponent implements OnInit {
     // this.getAllComments();
     this.getGifs('funny');
     this.posts = [];
-    // this.getCurrentUserData();
-    this.userService.getCurrentUser().subscribe({
-      next: response => {
-        this.user = response;
-        console.log(response);
+    this.getCurrentUserData();
+    // this.userService.getCurrentUser().subscribe({
+    //   next: response => {
+    //     this.user = response;
+    //     console.log(response);
 
-        let f: any;
-        this.posts = [];
-        for (f of response.following) {
-          this.posts.push(f.followedId.postsOwned);
-        }
-        console.log(this.posts);
-        this.posts = this.posts.flat();
-        //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
-        console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
-        //b.date.getTime() - a.date.getTime();
-      },
-      error: err => {
-        console.error(err);
-      }
-    });
+    //     let f: any;
+    //     this.posts = [];
+    //     for (f of response?.following) {
+    //       this.posts.push(f.followedId.postsOwned);
+    //     }
+    //     console.log(this.posts);
+    //     this.posts = this.posts.flat();
+    //     //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
+    //     console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
+    //     //b.date.getTime() - a.date.getTime();
+    //   },
+    //   error: err => {
+    //     console.error(err);
+    //   }
+    // });
     this.openingAnimation();
   }
 
   // GET CURRENT USER
-  // public getCurrentUserData(){
-  //   this.userService.getUser().subscribe(
-  //     (response: any) => {
-  //       this.user = response;
-  //       let userPosts = [];
-  //       userPosts = response?.postsOwned;
-  //       let followingPost = [];
-  //       for(let f of response?.following) {
-  //         followingPost = f?.followedId?.postsOwned;
-  //       }
-  //       this.posts = followingPost.concat(userPosts);
-  //       // for(let p of response?.postsOwned){
-  //       //   this.posts.push(p);
-  //       //   this.posts = this.posts.flat();
-  //       // }
-  //       //this.openingAnimation();
-  //       // console.log(this.posts);
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       console.log(error.message)
-  //     }
-  //   );
-  // }
+  public getCurrentUserData(){
+    this.userService.getUser().subscribe(
+      (response: any) => {
+        this.user = response;
+        let userPosts = [];
+        userPosts = response?.postsOwned;
+        let followingPost = [];
+        for(let f of response?.following) {
+          followingPost = f?.followedId?.postsOwned;
+        }
+        this.posts = followingPost.concat(userPosts);
+        for(let p of response?.postsOwned){
+          this.posts.push(p);
+          this.posts = this.posts.flat();
+        }
+        this.openingAnimation();
+        // console.log(this.posts);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    );
+  }
 
   // // Back End Work
   public (currentPost: any): void {
