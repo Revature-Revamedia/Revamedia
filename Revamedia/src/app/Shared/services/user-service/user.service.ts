@@ -39,7 +39,7 @@ export class UserService {
     let num: number = 0;
     this.userPostsService.updatePostLikes(currentPost).subscribe((data) => {
       console.log(data.body);
-      num = data.body.userPosts.likes.length;
+      num = data.body.likes.length;
       this.setCurrentUser(data.body.user);
     });
     return num

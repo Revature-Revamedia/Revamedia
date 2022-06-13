@@ -84,4 +84,8 @@ public class UserService {
         User currentUser = userRepository.getByUsername(username);
         return currentUser.getTwoFactorAuth();
     }
+
+    public void deleteAllPostLikes (Integer postId) {
+        userRepository.removePostLikes(postId);
+    }
 }

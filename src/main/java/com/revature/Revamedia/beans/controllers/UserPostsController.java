@@ -74,8 +74,11 @@ public class UserPostsController {
 
     @DeleteMapping("/delete/{id}")
     public void deletePost(@PathVariable Integer id){
+
         UserPosts post = userPostsService.getPostById(id);
-        userPostsService.delete(post);
+        userService.deleteAllPostLikes(id);
+        System.out.println("pass");
+        userPostsService.deleteById(id);
     }
 
         /**

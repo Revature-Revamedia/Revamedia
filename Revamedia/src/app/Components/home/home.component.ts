@@ -240,7 +240,6 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     );
-    postForm.resetForm();
     //console.log(postForm.value);
   }
 
@@ -314,7 +313,6 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     );
-    replyForm.resetForm();
   } // ADD COMMENT END
 
 
@@ -548,7 +546,6 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     );
-    form.resetForm();
   }
 
   public editVideo(form: NgForm){
