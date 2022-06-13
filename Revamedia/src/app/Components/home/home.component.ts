@@ -63,8 +63,6 @@ export class HomeComponent implements OnInit {
     //     console.error(err);
     //   }
     // });
-    this.openingAnimation();
-
   }
 
   // GET CURRENT USER
@@ -83,7 +81,6 @@ export class HomeComponent implements OnInit {
           this.posts.push(p);
           this.posts = this.posts.flat();
         }
-        this.openingAnimation();
         // console.log(this.posts);
       },
       (error: HttpErrorResponse) => {

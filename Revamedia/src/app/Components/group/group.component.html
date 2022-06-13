@@ -18,6 +18,7 @@
       <div class="text">
         <h2>{{group?.title}}</h2>
         <span>{{ group?.description }}</span>
+        <span>Date Created: {{group?.dateCreated | date}}</span>
         <!-- <div class="option">
           <button>Join</button>
           <button>Leave</button>
@@ -30,10 +31,16 @@
     </div><!-- CLOSES GROUP DESCRIPTION-->
 
     <div class="group-wall">
+
+      <div class="subtitle">
+        <button>Post</button>
+      </div>
+      <!-- NO POST -->
       <div class="noPost" *ngIf="groupPosts.length == 0">
         <h4>No Posts</h4>
         <span>Seems like no members have posted yet</span>
-      </div>
+      </div> <!-- CLOSES NO POST -->
+
     </div>
 
   </div><!-- CLOSES PAGE CONTENT-->
@@ -42,7 +49,7 @@
 
 
 <!-- BLACKOUTSCREEN -->
-<div class="screen" id="screen"></div>
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- EDIT GROUP FORM START -->
 <div class="modal" id="edit-group-modal">
   <div class="form-header">

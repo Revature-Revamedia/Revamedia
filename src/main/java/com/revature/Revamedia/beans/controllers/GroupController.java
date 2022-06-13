@@ -1,24 +1,19 @@
 package com.revature.Revamedia.beans.controllers;
 
-import com.revature.Revamedia.beans.services.AuthService;
-import com.revature.Revamedia.beans.services.JsonWebToken;
-import com.revature.Revamedia.beans.services.UserGroupsService;
-import com.revature.Revamedia.beans.services.UserService;
+import com.revature.Revamedia.beans.services.*;
+import com.revature.Revamedia.dtos.AddGroupPostDto;
+import com.revature.Revamedia.dtos.CreateUserPostsDto;
 import com.revature.Revamedia.dtos.NewGroupDto;
 import com.revature.Revamedia.dtos.UpdateGroupDto;
-import com.revature.Revamedia.dtos.UserFollowDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserGroups;
 import com.revature.Revamedia.entities.UserPosts;
-import org.hibernate.mapping.Set;
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,12 +26,15 @@ public class GroupController {
     private final AuthService authService;
     private final JsonWebToken jsonWebToken;
 
+    private final UserPostsService userPostsService;
+
     @Autowired
-    public GroupController(UserGroupsService userGroupsService, UserService userService, AuthService authService, JsonWebToken jsonWebToken) {
+    public GroupController(UserGroupsService userGroupsService, UserService userService, AuthService authService, JsonWebToken jsonWebToken, UserPostsService userPostsService) {
         this.userGroupsService = userGroupsService;
         this.userService = userService;
         this.authService = authService;
         this.jsonWebToken = jsonWebToken;
+        this.userPostsService = userPostsService;
     }
 
     @GetMapping("/allGroups")
@@ -79,4 +77,22 @@ public class GroupController {
         userGroupsService.update(group);
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
+
+    @PostMapping("/addPost")
+    public ResponseEntity<UserPosts> createPost(@RequestBody AddGroupPostDto dto){
+        User user = userService.getUserById(dto.getUserId());
+        UserGroups group = userGroupsService.getGroupById(dto.getGroupId());
+        UserPosts post = new UserPosts();
+        post.setMessage(dto.getMessage());
+        post.setImage(dto.getImage());
+        post.setDateCreated(new Timestamp(System.currentTimeMillis()));
+        post.setOwnerId(user);
+        user.addPost(post);
+        group.addPost(post);
+        userPostsService.save(post);
+        userGroupsService.update(group);
+        return new ResponseEntity<>(post,HttpStatus.CREATED);
+    }
+
+
 }
