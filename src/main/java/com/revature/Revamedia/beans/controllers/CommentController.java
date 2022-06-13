@@ -87,7 +87,7 @@ public class CommentController {
         newComment.setPostId(post);
 
         userCommentsService.save(newComment);
-        if(newComment.getMessage() != dto.getMessage()) {
+        if(newComment.getMessage().equals(dto.getMessage())) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
             res.setStatus(200);
@@ -103,7 +103,7 @@ public class CommentController {
         userCommentsService.update(comment);
 
         User user = userService.getUserById(jsonWebToken.verify(userSession).getUserId());
-        if(comment.getMessage() != comment.getMessage()) {
+        if(comment.getMessage().equals(comment.getMessage())) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed to update comment", null);
         } else {
