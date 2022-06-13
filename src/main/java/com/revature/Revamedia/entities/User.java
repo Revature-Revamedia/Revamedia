@@ -7,6 +7,7 @@
 
 package com.revature.Revamedia.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class User implements Serializable {
     private String email;
 
     @NotEmpty
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
@@ -44,7 +46,7 @@ public class User implements Serializable {
     private String profilePicture;
     @Column(name = "date_created")
     private Timestamp dateCreated;
-
+    @JsonIgnore
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
@@ -59,7 +61,7 @@ public class User implements Serializable {
 
     // @Transient
     //@JsonManagedReference
-    @JsonIgnoreProperties({""})
+    @JsonIgnoreProperties({"comments", "ownerId"})
     @OneToMany(mappedBy = "ownerId")
     private Set<UserPosts> postsOwned;
 

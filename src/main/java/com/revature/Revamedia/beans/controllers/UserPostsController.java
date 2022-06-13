@@ -108,9 +108,10 @@ public class UserPostsController {
         return userPostsService.getAllPosts();
     }
 
-    @GetMapping("/userFeed")
+    @GetMapping("/userFeed/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Object> getUserFeed(@RequestHeader Integer id) {
+    public List<UserPosts> getUserFeed(@PathVariable Integer id) {
+        System.out.println("Hello World!!!");
         return userPostsService.getUserFeed(id);
     }
 

@@ -28,36 +28,36 @@
   <!-- main feed start -->
   <div class="main" id="main">
       <!-- post start -->
-      <div class="post-data" *ngFor="let p of posts">
+      <div class="post-data" *ngFor="let post of postList">
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
-              <a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>
+              <img src="{{post?.ownerId.profilePicture}}" alt="{{ post?.ownerId.username }}" (click)="goToProfile(post?.ownerId.userId)">
+              <a (click)="goToProfile(post?.ownerId.userId)">{{ post?.ownerId.username }}</a>
             </div>
             <div class="post-options">
               <fa-icon (click)="togglePostsOptions()" id="icon" [icon]="faEllipsis"></fa-icon>
               <ul *ngIf="postsOptionsClicked" id="postOptionMenu">
-                <li (click)="openModal('edit','post-modal', p)">Edit Post</li>
-                <li  (click)="openModal('delete', 'post-modal', p)">Delete Post</li>
+                <li (click)="openModal('edit','post-modal', post)">Edit Post</li>
+                <li  (click)="openModal('delete', 'post-modal', post)">Delete Post</li>
               </ul>
             </div>
           </div>
           <div class="post-body">
-            <img src="{{ p?.image }}" alt="{{p?.image}}">
+            <img src="{{ post?.image }}" alt="{{post?.image}}">
             <div class="post-description" id="setBackgroundColor">
-              <p><a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>{{p?.message}}</p>
+              <p><a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>{{post?.message}}</p>
             </div>
             <div class="post-options" id="setBackgroundColor">
               <div class="container">
-                <div class="likes" (click)="likePost(p)">
+                <div class="likes" (click)="likePost(post)">
                   <fa-icon
                     [icon]="faHeart"
                     size="lg"
-                    [ngClass]="[p?.likes?.length < 1 ? 'NoLike' : 'OneLike']"
+                    [ngClass]="[post?.likes?.length < 1 ? 'NoLike' : 'OneLike']"
                     >
                   </fa-icon>
-                   <span>{{ p?.likes?.length }} likes</span>
+                   <span>{{ post?.likes?.length }} likes</span>
                 </div>
                 <div class="comment" (click)="toggleComments()">
                   <fa-icon id="commentIcon" title="Comment" [icon]="faComment" size="lg"></fa-icon>
@@ -71,8 +71,8 @@
           </div>
         </div>
 
-        <span *ngIf="p?.comments.length === 0">No Comments</span>
-        <span (click)="toggleHideComments()" *ngIf="p?.comments.length !== 0" id="viewComments">{{viewComments ? 'Hide Comments' : 'View Comments' }}</span>
+        <span *ngIf="post?.comments.length === 0">No Comments</span>
+        <span (click)="toggleHideComments()" *ngIf="post?.comments.length !== 0" id="viewComments">{{viewComments ? 'Hide Comments' : 'View Comments' }}</span>
 
         <!-- ADD COMMENT -->
         <div class="add-comment" *ngIf="addComment" id="addCommentReplyForm">
@@ -81,7 +81,7 @@
             <button title="Close" (click)="closeAddComment()" id="closeModal">X</button>
           </div>
           <form #commentForm="ngForm" (ngSubmit)="onAddComment(commentForm)" id="add-comment-form">
-            <input type="hidden" name="post_id" ngModel="{{ p?.postId }}">
+            <input type="hidden" name="post_id" ngModel="{{ post?.postId }}">
             <input type="hidden" name="owner_id" ngModel="{{ user?.userId }}">
             <textarea name="message" id="comment" rows="4" ngModel></textarea>
             <button>Add Comment</button>
@@ -106,14 +106,14 @@
         </div>
         <!-- ADD COMMENT END-->
 
-        <div class="post-comments-section" *ngIf="p?.comments.length > 0 && viewComments == true" id="commentSection">
+        <div class="post-comments-section" *ngIf="post?.comments.length > 0 && viewComments == true" id="commentSection">
           <!-- comments start -->
           <h5>Comments</h5>
-          <div class="comment" *ngFor="let comment of p?.comments">
+          <div class="comment" *ngFor="let comment of post?.comments">
             <div class="comment-title">
               <div class="comment-author">
-                <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
-                <p (click)="goToProfile(user?.userId)" title="View Profile" >leobarrientos02</p>
+                <img src="{{comment?.ownerId.profilePicture}}" alt="{{ comment?.ownerId.username }}" (click)="goToProfile(comment?.ownerId.userId)" alt="{{comment.ownerId.username}}">
+                <p (click)="goToProfile(comment?.ownerId.userId)" title="View Profile" >{{comment.ownerId.username}}</p>
               </div>
               <div class="comment-option" id="comment-option">
                 <button (click)="openModal('edit', 'comment-modal', comment)" >Edit</button>
@@ -169,8 +169,8 @@
             <div class="reply" *ngFor="let reply of comment?.replies">
               <div class="reply-title">
                 <div class="reply-author">
-                  <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
-                  <a routerLink="/profile" routerLinkActive="active" title="View Profile" >leobarrientos02</a>
+                  <img src="{{reply?.ownerId.profilePicture}}" alt="{{ reply?.ownerId.username }}" (click)="goToProfile(reply?.ownerId.userId)" alt="{{reply.ownerId.username}}">
+                <p (click)="goToProfile(reply?.ownerId.userId)" title="View Profile" >{{reply.ownerId.username}}</p>
                 </div>
                 <div class="reply-option" id="reply-option">
                   <button (click)="openModal('edit', 'reply-modal', reply)" >Edit</button>
@@ -224,7 +224,7 @@
       <textarea name="message" placeholder="Write a caption..." rows="8"></textarea>
     </div>
     <div class="post-submit">
-      <button>Create Post</button>
+      <button (click)="onAddPost">Create Post</button>
     </div>
   </form>
 </div>

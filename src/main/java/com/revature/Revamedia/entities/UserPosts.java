@@ -36,12 +36,15 @@ public class UserPosts implements Serializable {
     @Column(name = "post_id")
     private Integer postId;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"following", "followers"})
     @ManyToOne()
     @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
     private User ownerId;
 
+    private String username;
+
     @JsonManagedReference
+    @JsonIgnoreProperties({"commentId", "followedId"})
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
     private List<UserComments> comments;
 
@@ -189,6 +192,7 @@ public class UserPosts implements Serializable {
         return "UserPosts{" +
                 "postId=" + postId +
                 ", ownerId=" + ownerId +
+                ", username='" + username + '\'' +
                 ", comments=" + comments +
                 ", groupId=" + groupId +
                 ", message='" + message + '\'' +
@@ -196,7 +200,7 @@ public class UserPosts implements Serializable {
                 ", image='" + image + '\'' +
                 ", likes=" + likes +
                 ", postLifetime='" + postLifetime + '\'' +
-                ", dateCreated='" + dateCreated + '\'' +
+                ", dateCreated=" + dateCreated +
                 '}';
     }
 }

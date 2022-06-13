@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { data } from 'jquery';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserPostsService } from '../user-posts-service/user-posts.service';
@@ -84,6 +85,9 @@ export class UserService {
   }
 
   public getUser() : Observable<any> {
+    this.http.get<any>(`${this.userURL}/${sessionStorage.getItem('userId')}`).subscribe((data)=>{
+      console.log('logged in user', data);
+    });
     return this.http.get<any>(`${this.userURL}/${sessionStorage.getItem('userId')}`);
   }
 
@@ -106,5 +110,6 @@ export class UserService {
     console.log(`${this.userURL}/deleteFollowing`);
     return this.http.post<any>(`${this.userURL}/deleteFollowing`, unfollow);
   }
+
 
 }

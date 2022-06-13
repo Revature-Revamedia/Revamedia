@@ -37,4 +37,8 @@ export class UserPostsService {
     return this.http.put<any>(`${this.userPostURL}/likes`, updatePostLikesDto, { observe: `response` })
   }
 
+  public getUserFeed() : Observable<any>{
+    return this.http.get<any>(`${this.userPostURL}/userFeed/${sessionStorage.getItem('userId')}`)
+  }
+
 }

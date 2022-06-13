@@ -7,6 +7,8 @@ package com.revature.Revamedia.entities;
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -22,7 +24,7 @@ public class UserComments implements Serializable {
     private Integer commentId;
 
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"following", "followers"})
     @ManyToOne()
     @JoinColumn(name = "comment_owner_id", referencedColumnName = "user_id")
     private User commentOwnerId;
@@ -33,7 +35,6 @@ public class UserComments implements Serializable {
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")
     private UserPosts postId;
 
-//    @JsonIgnore
     @OneToMany(mappedBy = "commentId", cascade = CascadeType.ALL)
     private List<UserReplies> replies;
 
