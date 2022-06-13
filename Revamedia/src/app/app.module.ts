@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,7 +24,7 @@ import { ValidateEqualModule } from 'ng-validate-equal';
 import { CookieService } from 'ngx-cookie-service';
 import { ResetComponent } from './Components/reset/reset.component';
 import { ForgotComponent } from './Components/forgot/forgot.component';
-
+import { ProfilePicComponent } from './Components/profile-pic/profile-pic.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { ForgotComponent } from './Components/forgot/forgot.component';
     ProfileComponent,
     ResetComponent,
     ForgotComponent,
+    ProfilePicComponent
 
   ],
   imports: [

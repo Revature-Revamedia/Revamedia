@@ -23,15 +23,17 @@ public class ProfilePicController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<List<ProfilePic>> insertImages(@RequestPart(value = "images") List<MultipartFile> images) {
+    public ResponseEntity<List<ProfilePic>> insertImages(@RequestParam(value = "file") List<MultipartFile> images) {
         return ResponseEntity.ok(profilePicS3Service.insertImages(images));
     }
-
+/*
     @PostMapping("/upload")
     public ResponseEntity<ProfilePic> insertImages(@RequestPart(value = "image") MultipartFile image) {
         return ResponseEntity.ok(profilePicS3Service.uploadImageToAmazon(image));
     }
 
+
+ */
     @DeleteMapping("/delete")
     public void deleteImage(@RequestPart(value = "delete") ProfilePic profilePic) {
         profilePicS3Service.removeImageFromAmazon(profilePic);

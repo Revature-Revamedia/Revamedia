@@ -1,0 +1,25 @@
+<p>profile-pic works!</p>
+<div style="text-align:center; margin-top: 100px; ">
+    <ul>
+        <li *ngFor="let file of files">
+
+            <span id="file-label">
+
+            </span>
+        </li>
+    </ul>
+
+    <button mat-button color="warn" (click)="onClick()">
+
+        Upload
+    </button>
+
+    <input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*"
+        style="display:none;" />
+</div>
+
+
+
+<div>
+    <button type="submit" ngModel="{{ fileUpload }}">Upload1</button>
+</div>

@@ -92,59 +92,37 @@
   <form #updateUser="ngForm" (ngSubmit)="onUpdateUser(updateUser, editUser?.userId)" ngNativeValidate>
     <div class="user-settings-row">
       <h5>First Name</h5>
-      <input
-        ngModel="{{ editUser?.firstName }}"
-        type="text"
-        name="firstName"
-        required
-        title="Letters Only"
-        pattern="([a-zA-ZÀ-ÿ][-,a-z. ']+[ ]*)+"
-        id="first_name"
-        placeholder="First Name...">
+      <input ngModel="{{ editUser?.firstName }}" type="text" name="firstName" required title="Letters Only"
+        pattern="([a-zA-ZÀ-ÿ][-,a-z. ']+[ ]*)+" id="first_name" placeholder="First Name...">
     </div>
     <div class="user-settings-row">
       <h5>Last Name</h5>
-      <input
-        ngModel="{{ editUser?.lastName }}"
-        type="text"
-        required
-        name="lastName"
-        title="Letters Only"
-        pattern="([a-zA-ZÀ-ÿ][-,a-z. ']+[ ]*)+"
-        id="last_name"
-        placeholder="Last Name...">
+      <input ngModel="{{ editUser?.lastName }}" type="text" required name="lastName" title="Letters Only"
+        pattern="([a-zA-ZÀ-ÿ][-,a-z. ']+[ ]*)+" id="last_name" placeholder="Last Name...">
     </div>
     <div class="user-settings-row">
       <h5>Username</h5>
-      <input
-        ngModel="{{ editUser?.username }}"
-        type="text"
-        name="username"
-        required
-        title="Letters, numbers and special characters"
-        pattern="^(?=[a-zA-Z0-9._]{2,20}$)(?!.*[_.]{2})[^_.].*[^_.]$"
-        id="username"
-        placeholder="Username...">
+      <input ngModel="{{ editUser?.username }}" type="text" name="username" required
+        title="Letters, numbers and special characters" pattern="^(?=[a-zA-Z0-9._]{2,20}$)(?!.*[_.]{2})[^_.].*[^_.]$"
+        id="username" placeholder="Username...">
     </div>
     <div class="user-settings-row">
       <h5>Email</h5>
-      <input
-        ngModel="{{ editUser?.email }}"
-        type="email"
-        required
-        title="Valid Email"
-        name="email"
-        id="email"
+      <input ngModel="{{ editUser?.email }}" type="email" required title="Valid Email" name="email" id="email"
         placeholder="Email...">
     </div>
     <div class="user-settings-row">
       <h5>Profile Pic</h5>
-      <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url...">
+      <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic"
+        placeholder="Image Url...">
     </div>
     <div class="post-submit">
       <button>Update Account</button>
     </div>
+
   </form>
+  <div>
+    <app-profile-pic></app-profile-pic>
+  </div>
 </div>
 <!-- EDIT ACCOUNT FORM END -->
-
