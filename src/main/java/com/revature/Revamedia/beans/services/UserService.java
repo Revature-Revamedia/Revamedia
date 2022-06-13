@@ -60,7 +60,7 @@ public class UserService {
         return userRepository.getByUsername(username);
     }
 
-    public List<SearchDto> searchByUsername(String username){
+    public List<SearchDto> searchByUsername(String username) {
 
         List<User> userList = userRepository.searchByUsername(username);
 
@@ -78,6 +78,11 @@ public class UserService {
         }
 
         return searchDtoList;
+
     }
 
+    public boolean existsByTwoFactorAuth (String username){
+        User currentUser = userRepository.getByUsername(username);
+        return currentUser.getTwoFactorAuth();
+    }
 }

@@ -40,12 +40,12 @@ $darkgrey: rgb(61, 66, 74);
         align-items: center;
 
         img {
-          width: 1.25rem;
-          height: 1.25rem;
+          width: 2rem;
+          height: 2rem;
           border-radius: 50%;
           border: 1px solid $orange;
           cursor: pointer;
-
+          margin-right: .5rem;
           &:hover {
             border: 1px solid $blue;
           }
@@ -368,10 +368,11 @@ $darkgrey: rgb(61, 66, 74);
 
             p {
               a {
+                cursor: pointer;
                 margin-right: 1rem;
                 text-decoration: none;
                 color: $darkgrey;
-                font-weight: 500;
+                font-weight: 600;
                 font-size: 1rem;
 
                 &:hover {
@@ -419,6 +420,7 @@ $darkgrey: rgb(61, 66, 74);
                 margin-left: 1rem;
                 cursor: pointer;
                 span{
+                  margin-left: .4rem;
                   font-size: .8rem;
                   color: $grey;
                   &:hover{
@@ -429,7 +431,6 @@ $darkgrey: rgb(61, 66, 74);
                   color: lightblue;
                   cursor: pointer;
                   transition: all .3s ease-in-out;
-
                   &:hover {
                     color: $blue;
                   }
@@ -497,6 +498,12 @@ $darkgrey: rgb(61, 66, 74);
             font-size: 1rem;
             color: $darkgrey;
             padding: .4rem;
+            outline: none;
+            border-radius: 4px;
+            border: 1.5px solid $grey;
+            &:focus{
+              border: 1.5px solid $blue;
+            }
           }
 
           .reactions {
@@ -598,7 +605,6 @@ $darkgrey: rgb(61, 66, 74);
           }
         }
       }
-
       @media screen and (max-width: 800px) {
         .add-comment {
           Form {
@@ -619,7 +625,6 @@ $darkgrey: rgb(61, 66, 74);
           }
         }
       }
-
       // ADD COMMENT END
 
       #viewComments {
@@ -652,7 +657,7 @@ $darkgrey: rgb(61, 66, 74);
         }
 
         .comment {
-          border-bottom: 1px solid $lightgrey;
+          border-bottom: 1.5px solid $lightgrey;
           padding-bottom: .5rem;
 
           .comment-title {
@@ -673,19 +678,18 @@ $darkgrey: rgb(61, 66, 74);
                 height: 1.5rem;
                 border: 1.5px solid $blue;
                 cursor: pointer;
-
+                margin-right: .5rem;
                 &:hover {
                   border: 1.5px solid $orange;
                 }
               }
 
-              a {
+              p {
+                cursor: pointer;
                 text-decoration: none;
                 color: $darkgrey;
-                margin-left: .5rem;
                 font-size: 1rem;
-                font-weight: 500;
-
+                font-weight: 600;
                 &:hover {
                   text-decoration: underline;
                 }
@@ -789,6 +793,12 @@ $darkgrey: rgb(61, 66, 74);
                 font-size: 1rem;
                 color: $darkgrey;
                 padding: .4rem;
+                border: 1.5px solid $grey;
+                outline: none;
+                border-radius:5px;
+                &:focus{
+                  border: 1.5 solid $blue;
+                }
               }
 
               .reactions {
@@ -918,7 +928,7 @@ $darkgrey: rgb(61, 66, 74);
 
         .reply {
           border-top: 1px solid $lightgrey;
-          margin: .5rem 0 0 2rem;
+          margin: .75rem 0 0 2rem;
           padding: .5rem 0;
 
           .reply-title {
@@ -939,19 +949,18 @@ $darkgrey: rgb(61, 66, 74);
                 height: 1.5rem;
                 border: 1.5px solid $blue;
                 cursor: pointer;
-
+                margin-right: .5rem;
                 &:hover {
                   border: 1.5px solid $orange;
                 }
               }
 
-              a {
+              p {
+                cursor: pointer;
                 text-decoration: none;
                 color: $darkgrey;
-                margin-left: .5rem;
                 font-size: 1rem;
-                font-weight: 500;
-
+                font-weight: 600;
                 &:hover {
                   text-decoration: underline;
                 }

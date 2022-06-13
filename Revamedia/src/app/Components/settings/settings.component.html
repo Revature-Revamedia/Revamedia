@@ -9,7 +9,7 @@
   <!-- Page title End -->
 
   <!-- Settings Content Start -->
-  <div class="settings">
+  <div class="settings" id="settings">
 
     <div class="system-settings" id="setBackgroundColor">
       <h4>System Settings</h4>
@@ -112,11 +112,11 @@
 
 
 <!-- BLACKOUTSCREEN START-->
-<div class="screen" id="screen"></div>
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- BLACKOUTSCREEN END-->
 
 <!-- EDIT POST FORM START -->
-<div class="modal" id="add-post-modal">
+<div class="modal" id="delete-account-modal">
   <div class="form-header">
     <h3>Create new post</h3>
     <span>x</span>

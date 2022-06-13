@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
 import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
 import { HttpClient } from '@angular/common/http';
@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
     this.getGifs('funny');
     this.posts = [];
     this.getCurrentUserData();
+    this.openingAnimation();
     // this.userService.getCurrentUser().subscribe({
     //   next: response => {
     //     this.user = response;
@@ -63,6 +64,7 @@ export class HomeComponent implements OnInit {
     //   }
     // });
     this.openingAnimation();
+
   }
 
   // GET CURRENT USER
@@ -169,9 +171,9 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         // console.log(response);
         // console.log(commentForm.value);
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.addComment = false;
-        this.userService.setCurrentUser(response.body);
+        // this.userService.setCurrentUser(response.body);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -184,9 +186,9 @@ export class HomeComponent implements OnInit {
   public onEditComment(commentForm: NgForm): void {
     this.CommentService.updateComment(commentForm.value).subscribe(
       (response: any) => {
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.closeModal('edit', 'comment-modal');
-        this.userService.setCurrentUser(response.body.data);
+        // this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -198,9 +200,9 @@ export class HomeComponent implements OnInit {
     this.CommentService.deleteComment(id).subscribe(
       (response: any) => {
         //console.log(response);
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.closeModal('delete', 'comment-modal');
-        this.userService.setCurrentUser(response.body.data);
+        // this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -220,15 +222,16 @@ export class HomeComponent implements OnInit {
     p.userId = this.user.userId;
 
     this.totalLikes = this.userService.userLikesPost(p);
+    this.getCurrentUserData();
   }
 
 
   onAddPost(postForm: NgForm): void {
     this.userPostsService.addPost(postForm.value).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.closeModal('add', 'post-modal');
-        // this.getCurrentUserData();
+        this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -243,7 +246,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         console.log(response);
         this.closeModal('edit', 'post-modal');
-        // this.getCurrentUserData();
+        this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -255,7 +258,7 @@ export class HomeComponent implements OnInit {
     this.userPostsService.deletePost(id).subscribe(
       (response: any) => {
         this.closeModal('delete', 'post-modal');
-        // this.getCurrentUserData();
+        this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -299,7 +302,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         // console.log(response);
         // console.log(replyForm.value);
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.addReply = false;
       },
       (error: HttpErrorResponse) => {
@@ -316,7 +319,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.updateReply(message, replyId).subscribe(
       (response: any) => {
         // console.log(response);
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.closeModal('edit', 'reply-modal');
       },
       (error: HttpErrorResponse) => {
@@ -331,7 +334,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.deleteReply(id).subscribe(
       (response: any) => {
         // console.log(response);
-        //this.getCurrentUserData();
+        this.getCurrentUserData();
         this.closeModal('delete', 'reply-modal');
       },
       (error: HttpErrorResponse) => {
@@ -451,23 +454,25 @@ export class HomeComponent implements OnInit {
   }
 
   public searchGiphy() {
-    const search = document.getElementById(`giphy-search-comment`) as HTMLInputElement;
+    var search = document.getElementById('giphy-search-comment') as HTMLInputElement;
+    // console.log(search);
     let query = search?.value;
+    console.log(query);
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
-    if (query === "") {
+    if (query == "") {
       this.getGifs("happy");
     }
   }
 
   public searchGiphyForReply() {
-    const search = document.getElementById(`giphy-search-reply`) as HTMLInputElement;
+    var search = document.getElementById('giphy-search-reply') as HTMLInputElement;
     let query = search?.value;
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
-    if (query === "") {
+    if (query == "") {
       this.getGifs("happy");
     }
   }
@@ -481,7 +486,7 @@ export class HomeComponent implements OnInit {
   public openingAnimation() {
     const anim = this.animationService;
     const main = '#main';
-    anim.fadeIn(main, 0.5, 0, 0);
+    anim.fadeIn(main, 0.7, 0, 0.6);
   }
   public goToProfile(userId: any){
     this.router.navigate([`profile/${userId}`]);
@@ -528,6 +533,7 @@ export class HomeComponent implements OnInit {
     this.userPostsService.addYoutube(youtubeDto).subscribe(
       (response: any) => {
         console.log(response);
+        this.getCurrentUserData();
         this.closeModal('add', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
@@ -545,6 +551,7 @@ export class HomeComponent implements OnInit {
     this.userPostsService.editYoutube(editYoutubeDto).subscribe(
       (response: any) => {
         console.log(response);
+        this.getCurrentUserData();
         this.closeModal('edit', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
@@ -557,12 +564,43 @@ export class HomeComponent implements OnInit {
     this.userPostsService.deleteYoutube(id).subscribe(
       (response: any) => {
         console.log(response);
+        this.getCurrentUserData();
         this.closeModal('delete', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
     )
+  }
 
+  public closeAnyModal(){
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form1 = document.getElementById(`add-post-modal`);
+    form1?.classList.remove('openModal');
+    const form2 = document.getElementById(`edit-post-modal`);
+    form2?.classList.remove('openModal');
+    const form3 = document.getElementById(`delete-post-modal`);
+    form3?.classList.remove('openModal');
+    const form4 = document.getElementById(`add-comment-modal`);
+    form4?.classList.remove('openModal');
+    const form5 = document.getElementById(`edit-comment-modal`);
+    form5?.classList.remove('openModal');
+    const form6 = document.getElementById(`delete-comment-modal`);
+    form6?.classList.remove('openModal');
+    const form7 = document.getElementById(`add-reply-modal`);
+    form7?.classList.remove('openModal');
+    const form8 = document.getElementById(`edit-reply-modal`);
+    form8?.classList.remove('openModal');
+    const form9 = document.getElementById(`delete-reply-modal`);
+    form9?.classList.remove('openModal');
+    const form10 = document.getElementById(`add-youtube-modal`);
+    form10?.classList.remove('openModal');
+    const form11 = document.getElementById(`edit-youtube-modal`);
+    form11?.classList.remove('openModal');
+    const form12 = document.getElementById(`delete-youtube-modal`);
+    form12?.classList.remove('openModal');
   }
 }

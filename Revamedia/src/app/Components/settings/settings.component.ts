@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
 import { faSun, faMoon, faEye, faEyeSlash, faUserShield, faRefresh, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { UserService } from '../../Shared/services/user-service/user.service';
 
 
@@ -13,10 +14,11 @@ import { UserService } from '../../Shared/services/user-service/user.service';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private animationService: AnimationService) { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
+    this.openingAnimation();
   }
 
   // Back end work
@@ -103,7 +105,6 @@ export class SettingsComponent implements OnInit {
     form?.classList.remove('openModal');
   }
   // MODALS FUNCTION END
-
   // Two Factor Authentication
   public twoFactor = false;
   public turnOnTwoFactor(){
@@ -114,5 +115,6 @@ export class SettingsComponent implements OnInit {
     const info = document.getElementById(`${type}-info`);
     info?.classList.toggle('showInfo');
     setTimeout(() => info?.classList.remove('showInfo'), 3000);
+
   }
 }

@@ -6,7 +6,7 @@
       <div class="page-subTitle">
         <div class="user">
           <img src="{{ user?.profilePicture }}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
-          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
+          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p></span>
         </div>
       </div>
     </div>
@@ -16,7 +16,8 @@
         <div class="users-list" *ngIf="allUsers.length != 0">
           <div *ngFor="let u of allUsers" class="userFound">
             <div class="user" (click)="goToProfile(u?.userId)" title="View {{u?.username}}'s Profile">
-              <p>{{u?.firstName +" "+ u?.lastName}}</p>
+              <!-- <p>{{u?.firstName +" "+ u?.lastName}}</p> -->
+              <p>{{u?.username}}</p>
             </div>
           </div>
         </div>
@@ -35,7 +36,7 @@
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img src="{{user?.profilePicture}}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
+              <img src="{{ user?.profilePicture }}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
               <a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>
             </div>
             <div class="post-options">
@@ -47,14 +48,14 @@
           </div>
           <div class="post-body" id="post-body">
             <img src="{{ p?.image }}" alt="{{p?.image}}" *ngIf="p?.image !== null">
-            <div class="youtube-link">
+            <div class="youtube-link" *ngIf="p?.image === null">
               <div class="youtube-logo">
                 <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
               </div>
-                <a *ngIf="p?.image === null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
+              <a *ngIf="p?.image === null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
             </div>
             <div class="post-description" id="setBackgroundColor">
-              <p><a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>{{p?.message}}</p>
+              <p><a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>{{p?.message}}</p>
             </div>
             <div class="post-options" id="setBackgroundColor">
               <div class="container">
@@ -96,8 +97,8 @@
             <div class="reactions">
               <span>Reactions</span>
               <div class="search">
-                <input type="text" id="giphy-search-reply" placeholder="Search GIPHY">
-                <span (click)="searchGiphyForReply()">Search</span>
+                <input type="text" id="giphy-search-comment" placeholder="Search GIPHY">
+                <span (click)="searchGiphy()">Search</span>
               </div>
               <span id="reaction-title">
                 <fa-icon [icon]="faFaceGrinTongueSquint"></fa-icon>
@@ -120,8 +121,8 @@
           <div class="comment" *ngFor="let comment of p?.comments">
             <div class="comment-title">
               <div class="comment-author">
-                <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
-                <p (click)="goToProfile(user?.userId)" title="View Profile" >leobarrientos02</p>
+                <img (click)="goToProfile(user?.userId)" src="{{ user?.profilePicture }}" alt="User">
+                <p (click)="goToProfile(user?.userId)" title="View Profile" >{{user?.username}}</p>
               </div>
               <div class="comment-option" id="comment-option">
                 <button (click)="openModal('edit', 'comment-modal', comment)" >Edit</button>
@@ -177,8 +178,8 @@
             <div class="reply" *ngFor="let reply of comment?.replies">
               <div class="reply-title">
                 <div class="reply-author">
-                  <img routerLink="/profile" routerLinkActive="active" src="https://avatars.githubusercontent.com/u/77355023?v=4" alt="User">
-                  <a routerLink="/profile" routerLinkActive="active" title="View Profile" >leobarrientos02</a>
+                  <img (click)="goToProfile(user?.userId)" src="{{user?.profilePicture}}" alt="{{user?.username}}">
+                  <p (click)="goToProfile(user?.userId)" title="View Profile" >{{user?.username}}</p>
                 </div>
                 <div class="reply-option" id="reply-option">
                   <button (click)="openModal('edit', 'reply-modal', reply)" >Edit</button>
@@ -214,22 +215,22 @@
 
 
 <!-- BLACKOUTSCREEN -->
-<div class="screen" id="screen"></div>
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- ADD POST FORM START -->
 <div class="modal" id="add-post-modal">
   <div class="form-header">
     <h3>Create new post</h3>
     <span (click)="closeModal('add', 'post-modal')">x</span>
   </div>
-  <form #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)">
+  <form #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)" ngNativeValidate>
     <div class="form-data">
       <h4>Add Image Link</h4>
-      <input type="text" name="image" id="image" placeholder="Image url...">
+      <input type="url" name="image" ngModel id="image" placeholder="Image url...">
     </div>
     <div class="form-data">
       <input type="hidden" name="userId" ngModel="{{ post?.userId }}">
       <h4>Write a caption</h4>
-      <textarea name="message" ngModel placeholder="Write a caption..." rows="8"></textarea>
+      <textarea name="message" ngModel placeholder="Write a caption..." rows="6"></textarea>
     </div>
     <div class="post-submit">
       <button>Create Post</button>
@@ -244,15 +245,15 @@
     <h3>Edit post</h3>
     <span (click)="closeModal('edit', 'post-modal')">x</span>
   </div>
-  <form #editPostForm="ngForm" (ngSubmit)="onUpdatePost(editPostForm)">
+  <form #editPostForm="ngForm" (ngSubmit)="onUpdatePost(editPostForm)" ngNativeValidate>
     <div class="form-data">
       <h4>Edit Image or Video</h4>
       <input type="hidden" name="postId" ngModel="{{ editPost?.postId }}">
-      <input type="text" ngModel="{{ editPost?.image }}" name="image" id="image" placeholder="ImageUrl or Youtube Link">
+      <input type="url" ngModel="{{ editPost?.image }}" name="image" id="image" placeholder="ImageUrl or Youtube Link">
     </div>
     <div class="form-data">
       <h4>Edit caption</h4>
-      <textarea name="message" placeholder="Write a caption..." ngModel="{{ editPost?.message }}" rows="8"></textarea>
+      <textarea name="message" placeholder="Write a caption..." ngModel="{{ editPost?.message }}" rows="6"></textarea>
     </div>
     <div class="post-submit">
       <button>Update Post</button>

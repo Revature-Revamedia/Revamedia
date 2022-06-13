@@ -106,11 +106,11 @@ public class UserPostsController {
         return userPostsService.getAllPosts();
     }
 
-    @GetMapping("/userFeed")
+/*    @GetMapping("/userFeed")
     @ResponseStatus(HttpStatus.OK)
     public List<Object> getUserFeed(@RequestHeader Integer id) {
         return userPostsService.getUserFeed(id);
-    }
+    }*/
 
     /**
      * Get all posts made by the given user
