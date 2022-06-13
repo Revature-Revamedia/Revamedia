@@ -25,13 +25,14 @@ $darkgrey: rgb(61,66,74);
       display: flex;
       flex-direction: row;
       align-items: center;
-      img{
-        width: 1.25rem;
-        height: 1.25rem;
+      img {
+        width: 2rem;
+        height: 2rem;
         border-radius: 50%;
         border: 1px solid $orange;
         cursor: pointer;
-        &:hover{
+        margin-right: .5rem;
+        &:hover {
           border: 1px solid $blue;
         }
       }
