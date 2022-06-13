@@ -24,7 +24,7 @@
       </div>
     </div><!-- CLOSES MY GROUPS-->
 
-    <h2 class="groupTitle" id="groupsTitle">All Groups</h2>
+    <h2 class="groupTitle" id="groupsTitle" *ngIf="allGroups.length != 0">All Groups</h2>
     <div class="allGroups-container">
       <div class="group" *ngFor="let group of allGroups" id="group" (click)="goToGroup(group?.groupId)"  title="View {{group?.title}}">
         <img *ngIf="group.imageUrl != null" src="{{group?.imageUrl }}" alt="{{group.title}}">
