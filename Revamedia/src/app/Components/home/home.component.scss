@@ -314,7 +314,6 @@ $darkgrey: rgb(61, 66, 74);
             }
           }
         }
-
         @media screen and (max-width: 800px) {
           .post-title {
             .post-options {
@@ -335,6 +334,7 @@ $darkgrey: rgb(61, 66, 74);
         .post-body {
           img {
             width: 100%;
+            max-height: 28rem;
             object-fit: cover;
           }
           .youtube-link{

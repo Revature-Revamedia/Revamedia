@@ -55,8 +55,13 @@ export class SettingsComponent implements OnInit {
   }
 
   enableTwoFactorAuth(){
-      console.log("settings enable")
-      this.qrcodeService.enableTwoFactorAuth().subscribe((data: any) =>{this.image = data.body;});
+    console.log("settings enable")
+    this.qrcodeService.enableTwoFactorAuth().subscribe(
+      (data: any) =>{
+        this.image = data.body;
+        this.getCurrentUserData();
+      });
+
   }
 
 
@@ -138,5 +143,11 @@ export class SettingsComponent implements OnInit {
     // Form
     const form1 = document.getElementById(`edit-account-modal`);
     form1?.classList.remove('openModal');
+  }
+
+  // View QrCode
+  public showQrCode: boolean = false;
+  public toggleQrCode(){
+    this.showQrCode = !this.showQrCode;
   }
 }
