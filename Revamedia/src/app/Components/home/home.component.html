@@ -32,7 +32,7 @@
         <div class="post">
           <div class="post-title" id="setBackgroundColor">
             <div class="post-author">
-              <img src="{{post?.ownerId.profilePicture}}" alt="{{ post?.ownerId.username }}" (click)="goToProfile(post?.ownerId.userId)">
+              <img src="{{post?.ownerId.profilePicture}}" alt="{{ post?.ownerId?.username }}" (click)="goToProfile(post?.ownerId.userId)">
               <a (click)="goToProfile(post?.ownerId.userId)">{{ post?.ownerId.username }}</a>
             </div>
             <div class="post-options">
@@ -46,7 +46,7 @@
           <div class="post-body">
             <img src="{{ post?.image }}" alt="{{post?.image}}">
             <div class="post-description" id="setBackgroundColor">
-              <p><a routerLink="/profile" routerLinkActive="active">{{ user?.username }}</a>{{post?.message}}</p>
+              <p><a routerLink="/profile" routerLinkActive="active">{{ post?.ownerId?.username }}</a>{{post?.message}}</p>
             </div>
             <div class="post-options" id="setBackgroundColor">
               <div class="container">

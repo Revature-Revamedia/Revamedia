@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit {
   public getCurrentUserData() {
     this.userService.getUser().subscribe(
       (response: any) => {
-        console.log("response", response);
         this.user = response;
       },
       (error: HttpErrorResponse) => {
@@ -62,10 +61,9 @@ export class HomeComponent implements OnInit {
 
   public postList: any[] = []
   public getUserFeed() {
-    console.log('in get user feed ', this.user);
     this.userPostsService.getUserFeed().subscribe((response) => {
-      console.log(response);
-      this.postList = response
+    console.log('User Feed', response);
+    this.postList = response
     });
   }
 
@@ -81,10 +79,8 @@ export class HomeComponent implements OnInit {
         }
         p.postId = currentPost.postId;
         p.userId = this.user.userId;
-        console.log(p);
         // this.getCurrentUserData();
         this.userService.userLikesPost(p);
-        // this.getCurrentUserData();
       }
     )
   }
@@ -95,9 +91,8 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         // console.log(response);
         // console.log(commentForm.value);
-        //this.getCurrentUserData();
+        this.getUserFeed();
         this.addComment = false;
-        this.userService.setCurrentUser(response.body);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -112,7 +107,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         //this.getCurrentUserData();
         this.closeModal('edit', 'comment-modal');
-        this.userService.setCurrentUser(response.body.data);
+        this.getUserFeed();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -126,7 +121,7 @@ export class HomeComponent implements OnInit {
         //console.log(response);
         //this.getCurrentUserData();
         this.closeModal('delete', 'comment-modal');
-        this.userService.setCurrentUser(response.body.data);
+        this.getUserFeed();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -144,8 +139,13 @@ export class HomeComponent implements OnInit {
     }
     p.postId = currentPost.postId;
     p.userId = this.user.userId;
+    // this.totalLikes = this.userService.userLikesPost(p);
 
-    this.totalLikes = this.userService.userLikesPost(p);
+    this.userPostsService.updatePostLikes(p).subscribe((data) =>{
+      this.totalLikes = data.body.likes.length;
+      this.getUserFeed();
+    })
+
   }
 
 
@@ -155,7 +155,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         console.log('this is a new post', response);
         this.closeModal('add', 'post-modal');
-        // this.getCurrentUserData();
+        this.getUserFeed();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -170,7 +170,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         console.log(response);
         this.closeModal('edit', 'post-modal');
-        // this.getCurrentUserData();
+        this.getUserFeed();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -182,7 +182,7 @@ export class HomeComponent implements OnInit {
     this.userPostsService.deletePost(id).subscribe(
       (response: any) => {
         this.closeModal('delete', 'post-modal');
-        // this.getCurrentUserData();
+        this.getUserFeed();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -196,7 +196,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         // console.log(response);
         // console.log(replyForm.value);
-        //this.getCurrentUserData();
+        this.getUserFeed();
         this.addReply = false;
       },
       (error: HttpErrorResponse) => {
@@ -213,7 +213,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.updateReply(message, replyId).subscribe(
       (response: any) => {
         // console.log(response);
-        //this.getCurrentUserData();
+        this.getUserFeed();
         this.closeModal('edit', 'reply-modal');
       },
       (error: HttpErrorResponse) => {
@@ -228,7 +228,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.deleteReply(id).subscribe(
       (response: any) => {
         // console.log(response);
-        //this.getCurrentUserData();
+        this.getUserFeed();
         this.closeModal('delete', 'reply-modal');
       },
       (error: HttpErrorResponse) => {

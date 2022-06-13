@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -8,8 +8,16 @@ import { environment } from 'src/environments/environment';
 })
 export class UserPostsService {
   userPostURL: string = environment.apiBaseUrl + "/posts"
+  public posts: any[] = [];
+  public postsSubject = new BehaviorSubject<any[]>([]);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
+
+
+  public getUserFeed() : Observable<any>{
+    return this.http.get<any>(`${this.userPostURL}/userFeed/${sessionStorage.getItem('userId')}`)
+  }
 
   //update post function sends put requests and updates
 
@@ -34,11 +42,8 @@ export class UserPostsService {
 
   // update post function sends put requests and updates
   updatePostLikes(updatePostLikesDto: any): Observable<any> {
+    console.log('user likes dto', updatePostLikesDto)
     return this.http.put<any>(`${this.userPostURL}/likes`, updatePostLikesDto, { observe: `response` })
-  }
-
-  public getUserFeed() : Observable<any>{
-    return this.http.get<any>(`${this.userPostURL}/userFeed/${sessionStorage.getItem('userId')}`)
   }
 
   public addYoutube(youtubePost: any): Observable<any> {
