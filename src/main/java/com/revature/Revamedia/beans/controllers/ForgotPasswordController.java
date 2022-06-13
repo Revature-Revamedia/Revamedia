@@ -54,7 +54,8 @@ public class ForgotPasswordController {
     public ResponseEntity<Object> redirectToPassReset(@PathVariable String token){
         if (userService.existsByResetPasswordToken(token)){
             System.out.println("Good Token");
-            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://localhost:4200/forgot/reset")).build();
+//            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://localhost:4200/forgot/reset")).build();
+            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://http://220328-revamedia-ui.s3-website-us-east-1.amazonaws.com/forgot/reset")).build();
         }
         else {
             System.out.println("Bad Token");

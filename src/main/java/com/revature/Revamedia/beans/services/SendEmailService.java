@@ -44,7 +44,7 @@ public class SendEmailService {
             message.setTo(email);
             message.setSubject("Password Reset");
 //            message.setText("Please click on this link to reset your password http://localhost:8080/forgot/" + token);
-            message.setText("Please click on this link to reset your password" +
+            message.setText("Please click on this link to reset your password " +
                     "http://220328p3revamedia-env.eba-mczbwbpi.us-east-1.elasticbeanstalk.com" + "/forgot/" + token);
             emailSender.send(message);
         }
