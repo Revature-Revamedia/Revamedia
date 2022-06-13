@@ -25,6 +25,7 @@ public class UserCommentsService {
     }
 
     public UserComments update(UserComments comment) {
+        System.out.println("This is a comment" + comment);
         return userCommentsRepository.save(comment);
     }
 

@@ -213,18 +213,18 @@
     <h3>Create new post</h3>
     <span (click)="closeModal('add', 'post-modal')">x</span>
   </div>
-  <form  #addPostForm="ngForm">
+  <form  #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)" id="add-post-form">
     <div class="form-data">
       <h4>Add Image or Youtube Link</h4>
       <input type="text" name="image" id="image" placeholder="ImageUrl or Youtube Link">
     </div>
     <div class="form-data">
-      <input type="hidden" name="userId" ngModel="{{ post?.userId }}">
+      <input type="hidden" name="userId" ngModel="{{ user?.userId }}">
       <h4>Write a caption</h4>
-      <textarea name="message" placeholder="Write a caption..." rows="8"></textarea>
+      <textarea ngModel name="message" placeholder="Write a caption..." rows="8"></textarea>
     </div>
     <div class="post-submit">
-      <button (click)="onAddPost">Create Post</button>
+      <button>Create Post</button>
     </div>
   </form>
 </div>
@@ -267,7 +267,7 @@
     </div>
   </form>
 </div>
-<!-- ADD POST FORM END -->
+<!-- delete POST FORM END -->
 
 <!-- Edit COMMENT FORM START -->
 <div class="modal" id="edit-comment-modal">
@@ -377,7 +377,7 @@
 <!-- ADD YOUTUBE FORM END -->
 
 <!-- EDIT Youtube FORM START -->
-<!-- <div class="modal" id="edit-youtube-modal">
+<div class="modal" id="edit-youtube-modal">
   <div class="form-header">
     <h3><img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">Edit Youtube Post</h3>
     <span (click)="closeModal('edit', 'youtube-modal')">x</span>
@@ -401,7 +401,7 @@
       <button>Update</button>
     </div>
   </form>
-</div> -->
+</div>
 <!-- EDIT YOUTUBE FORM END -->
 
 <!-- DELETE YOUTUBE FORM START -->

@@ -32,17 +32,12 @@ export class ProfileComponent implements OnInit {
     this.userService.getProfile(id).subscribe(
       (response: any) => {
         this.user = response;
-        console.log(this.user);
+        console.log('user page data', this.user);
         this.followerLength = response.followers.length;
         this.followingLength = response.following.length;
         let followersId = [];
         for(let i = 0; i < response.followers.length; i++){
           followersId.push(response.followers[i].followerId.userId);
-        }
-        if(followersId.includes(this.currentUser.userId)){
-          this.isFollowing = this.isFollowing;
-        }else{
-          this.isFollowing = !this.isFollowing;
         }
       },
       (error: HttpErrorResponse) => {

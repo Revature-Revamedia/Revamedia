@@ -44,7 +44,7 @@ public class UserPosts implements Serializable {
     private String username;
 
     @JsonManagedReference
-    @JsonIgnoreProperties({"commentId", "followedId"})
+    @JsonIgnoreProperties({"followedId"})
     @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL)
     private List<UserComments> comments;
 

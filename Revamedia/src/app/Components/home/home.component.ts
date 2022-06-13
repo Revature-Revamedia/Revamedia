@@ -149,10 +149,11 @@ export class HomeComponent implements OnInit {
   }
 
 
-  onAddPost(postForm: NgForm): void {
-    this.userPostsService.addPost(postForm.value).subscribe(
+  onAddPost(addPostForm: NgForm): void {
+    console.log('made it to post form', addPostForm)
+    this.userPostsService.addPost(addPostForm.value).subscribe(
       (response: any) => {
-        console.log(response);
+        console.log('this is a new post', response);
         this.closeModal('add', 'post-modal');
         // this.getCurrentUserData();
       },
@@ -301,6 +302,8 @@ export class HomeComponent implements OnInit {
   public deleteReply: any;
   public editPost: any;
   public deletePost: any;
+  public editYoutube: any;
+  public deleteYoutube: any;
   public openModal(modalType: string, id: string, object: any) {
     // Screen
     const screen = document.getElementById('screen');
@@ -309,6 +312,7 @@ export class HomeComponent implements OnInit {
     const form = document.getElementById(`${modalType}-${id}`);
     form?.classList.add('openModal');
     if (modalType === "edit") {
+      console.log("Comment to be updated", object);
       this.postsOptionsClicked = false;
       this.commentOptionsClicked = false;
       this.editComment = object;
