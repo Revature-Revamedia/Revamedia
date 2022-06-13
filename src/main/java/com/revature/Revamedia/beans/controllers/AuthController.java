@@ -3,7 +3,9 @@ package com.revature.Revamedia.beans.controllers;
 import com.google.zxing.WriterException;
 import com.revature.Revamedia.beans.services.AuthService;
 import com.revature.Revamedia.beans.services.JsonWebToken;
+import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.*;
+import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.exceptions.UnauthorizedUserException;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.net.URI;
 
 /**
  * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
@@ -24,12 +25,14 @@ import java.net.URI;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
     private final JsonWebToken jsonWebToken;
 
     @Autowired
-    public AuthController(AuthService authService, JsonWebToken jsonWebToken){
+    public AuthController(AuthService authService, JsonWebToken jsonWebToken, UserService userService){
         this.authService = authService;
         this.jsonWebToken = jsonWebToken;
+        this.userService = userService;
     }
 
     @PostMapping("/register")
@@ -48,6 +51,7 @@ public class AuthController {
                 //return authService.login(authDto);
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("status", "redirect");
+                jsonObject.put("username", authDto.getUsername());
                 return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -55,11 +59,15 @@ public class AuthController {
     }
 
     @PostMapping("/login/twoFA")
-    public ResponseEntity<Object> loginWithTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorDto twoFactorDto){
+    public ResponseEntity<Object> loginWithTwoFactorAuth(@RequestBody TwoFactorDto twoFactorDto){
         try {
-            CookieDto cookieDto = jsonWebToken.verify(token);
-            if (authService.checkTwoFactorAuthValidity(cookieDto, twoFactorDto)) {
-                return ResponseEntity.status(HttpStatus.OK).body("code is matching");
+            CookieDto cookieDto = new CookieDto();
+            User currentUser = userService.getUserByUsername(twoFactorDto.getUsername());
+            cookieDto.setUsername(currentUser.getUsername());
+            cookieDto.setUserId(currentUser.getUserId());
+            cookieDto.setEmail(currentUser.getEmail());
+            if (authService.checkTwoFactorAuthValidity(twoFactorDto)) {
+                return ResponseEntity.status(HttpStatus.OK).body(cookieDto);
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("code didn't match");
         }

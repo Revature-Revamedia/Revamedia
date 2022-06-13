@@ -100,9 +100,9 @@ public class AuthService {
             ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
             byte [] byteArray = IOUtils.toByteArray(inStream);
             //fileUploadService.uploadFile("image.png",inStream);
-            //byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("fileholderbucket","image.png").getObjectContent());
+            //byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("","image.png").getObjectContent());
             currentUser.setQRCodeImage(byteArray);
-            //String QRCodeUrl = fileUploadService.getFileUrl("fileholderbucket","image.png");
+            //String QRCodeUrl = fileUploadService.getFileUrl("","image.png");
             //currentUser.setQRCodeUrl(QRCodeUrl);
             userService.update(currentUser);
             JSONObject jsonObject = new JSONObject();
@@ -128,11 +128,13 @@ public class AuthService {
         return userService.existsByTwoFactorAuth(authDto.getUsername());
     }
 
-    public boolean checkTwoFactorAuthValidity(CookieDto cookieDto, TwoFactorDto twoFactorDto){
-        User currentUser = userService.getUserByUsername(cookieDto.getUsername());
+    public boolean checkTwoFactorAuthValidity(TwoFactorDto twoFactorDto){
+        User currentUser = userService.getUserByUsername(twoFactorDto.getUsername());
         String currentUserSecretTwoFactorKey = currentUser.getSecretTwoFactorKey();
+        System.out.println(twoFactorDto.getSixDigitCode().equals(twoFactorAuthentication.getTOTPCode(currentUserSecretTwoFactorKey)));
         return twoFactorDto.getSixDigitCode().equals(twoFactorAuthentication.getTOTPCode(currentUserSecretTwoFactorKey));
     }
+
 
     public void setEncoder(BCryptPasswordEncoder encoder) {
         this.encoder = encoder;

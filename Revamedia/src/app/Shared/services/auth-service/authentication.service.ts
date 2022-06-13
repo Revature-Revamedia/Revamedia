@@ -62,7 +62,7 @@ export class AuthenticationService {
         this.router.navigateByUrl('/home');
       }
       else{
-        this.router.navigateByUrl('/login/twofa');
+        this.router.navigateByUrl('/login/twofa', {state : { username : response.body.username}});
       }
       
     }, (error: HttpErrorResponse) => {
@@ -72,14 +72,14 @@ export class AuthenticationService {
 
   }
 
-  public loginWithTwoFactor(twoFactorForm: NgForm) {
-
-    let sixDigitCode : any = {
+  public loginWithTwoFactor(userData: any,twoFactorForm: NgForm) {
+    console.log("service ", userData)
+    let data : any = {
+      "username" : userData.username,
       "sixDigitCode" : twoFactorForm.value.sixDigitCode
-    } 
-    console.log(sixDigitCode);
+    }
 
-    this.http.post(this.authUrl+"/twoFA", sixDigitCode, {
+    this.http.post(this.authUrl+"/twoFA", data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
@@ -87,21 +87,19 @@ export class AuthenticationService {
     }).subscribe((response: any) => {
       let loggedInUser: any;
       console.log(response);
-      if(response.body != 'redirect'){
-        sessionStorage.setItem('userId', response.body.userId.toString());
-        sessionStorage.setItem('username', response.body.username);
-        sessionStorage.setItem('loggedIn', "1");
-        console.log(sessionStorage.getItem('username'));
-        loggedInUser = this.userService.getUser();
-        console.log(loggedInUser);
-        this.userService.setCurrentUser(loggedInUser);
-  
-        this.loggedIn.next(true);
-        this.router.navigateByUrl('/home');
-      }
-      else{
-        this.router.navigateByUrl('/login/twofa');
-      }
+
+      sessionStorage.setItem('userId', response.body.userId.toString());
+      sessionStorage.setItem('username', response.body.username);
+      sessionStorage.setItem('loggedIn', "1");
+      console.log(sessionStorage.getItem('username'));
+      loggedInUser = this.userService.getUser();
+      console.log(loggedInUser);
+      this.userService.setCurrentUser(loggedInUser);
+
+      this.loggedIn.next(true);
+      this.router.navigateByUrl('/home');
+      
+      
       
     }, (error: HttpErrorResponse) => {
       document.getElementById('invalid')!.style.display = "flex";

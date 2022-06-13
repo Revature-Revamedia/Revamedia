@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthenticationService } from 'src/app/Shared/services/auth-service/authentication.service';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-twofa',
@@ -9,13 +10,15 @@ import { AuthenticationService } from 'src/app/Shared/services/auth-service/auth
 })
 export class TwofaComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService, private location: Location) { }
 
   ngOnInit(): void {
   }
 
   loginWithTwoFactor(twoFactorForm: NgForm){
-      this.authService.loginWithTwoFactor(twoFactorForm);
+      let userData: any = this.location.getState();
+      console.log("component ",userData);
+      this.authService.loginWithTwoFactor(userData, twoFactorForm);
   }
 
 }
