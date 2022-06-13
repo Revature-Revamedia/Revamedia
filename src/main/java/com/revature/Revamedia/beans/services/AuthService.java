@@ -30,16 +30,14 @@ public class AuthService {
     private final UserService userService;
     private final JsonWebToken jwt;
     private final TwoFactorAuthentication twoFactorAuthentication;
-    private final FileUploadService fileUploadService;
 
     BCryptPasswordEncoder encoder;
 
     @Autowired
-    public AuthService(UserService userService, JsonWebToken jwt, TwoFactorAuthentication twoFactorAuthentication, FileUploadService fileUploadService){
+    public AuthService(UserService userService, JsonWebToken jwt, TwoFactorAuthentication twoFactorAuthentication){
         this.jwt=jwt;
         this.userService = userService;
         this.twoFactorAuthentication = twoFactorAuthentication;
-        this.fileUploadService = fileUploadService;
         this.encoder =  new BCryptPasswordEncoder(10);
 
     }
@@ -99,7 +97,8 @@ public class AuthService {
         ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,100,100);
         ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
         //fileUploadService.uploadFile("image.png",inStream);
-        byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("fileholderbucket","image.png").getObjectContent());
+//        byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("fileholderbucket","image.png").getObjectContent());
+        byte[] byteArray = IOUtils.toByteArray(inStream);
         currentUser.setQRCodeImage(byteArray);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
         BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);

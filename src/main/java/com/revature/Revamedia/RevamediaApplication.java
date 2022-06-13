@@ -41,7 +41,6 @@ public class RevamediaApplication {
                 UserConversationsService userConversationsService = context.getBean(UserConversationsService.class);
                 UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
                 SendEmailService sendEmailService = context.getBean(SendEmailService.class);
-                FileUploadService fileUploadService = context.getBean(FileUploadService.class);
                 TwoFactorAuthentication twoFactorAuthentication = context.getBean(TwoFactorAuthentication.class);
 
 //                String email = "revamedia@gmail.com";
