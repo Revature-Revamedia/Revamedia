@@ -85,49 +85,54 @@ public class AuthService {
     }
 
     //handle exceptions
-    public ResponseEntity<Object> enableTwoFactorAuth(TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
-        //we need to check if it is the first time they are trying to generate a code
-        User currentUser = userService.getUserById(twoFactorAuthDto.getUserId());
-        currentUser.setTwoFactorAuth(true);
-        String secretForCurrentUser = twoFactorAuthentication.generateSecretKey();
-        currentUser.setSecretTwoFactorKey(secretForCurrentUser);
-        String email = "revamedia@gmail.com";
-        String companyName = "Revamedia";
-        String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretForCurrentUser, email, companyName);
-        ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,100,100);
-        ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
-        //fileUploadService.uploadFile("image.png",inStream);
-//        byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("fileholderbucket","image.png").getObjectContent());
-        byte[] byteArray = IOUtils.toByteArray(inStream);
-        currentUser.setQRCodeImage(byteArray);
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
-        BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
-        ImageIO.write(bufferedImage, "png", new File("/Users/Laflammex/IdeaProjects/Project3/QRCode.png"));
-        //String QRCodeUrl = fileUploadService.getFileUrl("fileholderbucket","image.png");
-        //currentUser.setQRCodeUrl(QRCodeUrl);
-        userService.update(currentUser);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("data", byteArray);
-        // else should be just enable it in the database
-        return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
 
+    public ResponseEntity<Object> enableTwoFactorAuth(CookieDto cookieDto,TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
+        User currentUser = userService.getUserById(cookieDto.getUserId());
+        if (!currentUser.isTwoFactorAuth()){
+            currentUser.setTwoFactorAuth(twoFactorAuthDto.isTwoFactorAuth());
+            String secretForCurrentUser = twoFactorAuthentication.generateSecretKey();
+            currentUser.setSecretTwoFactorKey(secretForCurrentUser);
+            String email = cookieDto.getEmail();
+            String companyName = "Revamedia";
+            String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretForCurrentUser, email, companyName);
+            ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,100,100);
+            ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
+            byte [] byteArray = IOUtils.toByteArray(inStream);
+            //fileUploadService.uploadFile("image.png",inStream);
+            //byte[] byteArray = IOUtils.toByteArray(fileUploadService.getFile("","image.png").getObjectContent());
+            currentUser.setQRCodeImage(byteArray);
+            //String QRCodeUrl = fileUploadService.getFileUrl("","image.png");
+            //currentUser.setQRCodeUrl(QRCodeUrl);
+            userService.update(currentUser);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("data", byteArray);
+            // else should be just enable it in the database
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
+        }
+        return ResponseEntity.ok("Two Factor Authentication is already enabled");
     }
 
-    public ResponseEntity<Object> disableTwoFactorAuth(TwoFactorAuthDto twoFactorAuthDto){
-        User currentUser = userService.getUserById(twoFactorAuthDto.getUserId());
-        currentUser.setTwoFactorAuth(false);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<Object> disableTwoFactorAuth(CookieDto cookieDto, TwoFactorAuthDto twoFactorAuthDto){
+        User currentUser = userService.getUserById(cookieDto.getUserId());
+        if (currentUser.isTwoFactorAuth()){
+            currentUser.setTwoFactorAuth(false);
+            userService.update(currentUser);
+            return ResponseEntity.status(HttpStatus.OK).body("Two factor authentication was disabled");
+        }
+        return ResponseEntity.ok("Two Factor Authentication is already disabled");
     }
 
     public boolean twoFactorAuthEnabled(AuthDto authDto){
         return userService.existsByTwoFactorAuth(authDto.getUsername());
     }
 
-    public boolean checkTwoFactorAuthValidity(CookieDto cookieDto, TwoFactorDto twoFactorDto){
-        User currentUser = userService.getUserByUsername(cookieDto.getUsername());
+    public boolean checkTwoFactorAuthValidity(TwoFactorDto twoFactorDto){
+        User currentUser = userService.getUserByUsername(twoFactorDto.getUsername());
         String currentUserSecretTwoFactorKey = currentUser.getSecretTwoFactorKey();
+        System.out.println(twoFactorDto.getSixDigitCode().equals(twoFactorAuthentication.getTOTPCode(currentUserSecretTwoFactorKey)));
         return twoFactorDto.getSixDigitCode().equals(twoFactorAuthentication.getTOTPCode(currentUserSecretTwoFactorKey));
     }
+
 
     public void setEncoder(BCryptPasswordEncoder encoder) {
         this.encoder = encoder;

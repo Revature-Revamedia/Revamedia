@@ -49,8 +49,47 @@ export class AuthenticationService {
     }).subscribe((response: any) => {
       let loggedInUser: any;
       console.log(response);
-      sessionStorage.setItem('userId', response.body.userId.toString());
-      sessionStorage.setItem('username', response.body.username);
+      if(response.body.status != 'redirect'){
+        sessionStorage.setItem('userId', response.body.userId.toString());
+        sessionStorage.setItem('username', response.body.username);
+        sessionStorage.setItem('loggedIn', "1");
+        console.log(sessionStorage.getItem('username'));
+        loggedInUser = this.userService.getUser();
+        console.log(loggedInUser);
+        this.userService.setCurrentUser(loggedInUser);
+  
+        this.loggedIn.next(true);
+        this.router.navigateByUrl('/home');
+      }
+      else{
+        this.router.navigateByUrl('/login/twofa', {state : { username : response.body.username}});
+      }
+      
+    }, (error: HttpErrorResponse) => {
+      document.getElementById('invalid')!.style.display = "flex";
+      console.log(error);
+    })
+
+  }
+
+  public loginWithTwoFactor(userData: any,twoFactorForm: NgForm) {
+    console.log("service ", userData)
+    let data : any = {
+      "username" : userData.username,
+      "sixDigitCode" : twoFactorForm.value.sixDigitCode
+    }
+
+    this.http.post<any>(this.authUrl+"/twoFA", data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    }).subscribe((response: any) => {
+      let loggedInUser: any;
+      console.log(response);
+
+      sessionStorage.setItem('userId', response.userId);
+      sessionStorage.setItem('username', response.username);
+      sessionStorage.setItem('email', response.email);
       sessionStorage.setItem('loggedIn', "1");
       console.log(sessionStorage.getItem('username'));
       loggedInUser = this.userService.getUser();
@@ -59,6 +98,9 @@ export class AuthenticationService {
 
       this.loggedIn.next(true);
       this.router.navigateByUrl('/home');
+      
+      
+      
     }, (error: HttpErrorResponse) => {
       document.getElementById('invalid')!.style.display = "flex";
       console.log(error);

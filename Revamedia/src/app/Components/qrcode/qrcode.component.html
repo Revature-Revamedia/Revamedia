@@ -1,1 +1,15 @@
-<img src="data:image/png;base64,{{image.data}}" />
+<div class="qrcode-page" id="qrcode-page">
+  <div class="qrcode-nav">
+    <h1>Revamedia</h1>
+  </div>
+  <div class="qrcode">
+    <img src="https://www.qrcode-monkey.com/img/default-preview-qr.svg" />
+    <div>
+        <input type="button" (click) = "enableTwoFactorAuth()" value="Enable"/>
+        <input type="button" (click) = "disableTwoFactorAuth()" value="Disable"/>
+        <input type="button" (click) = "recreateQRCode()" value="recreate"/>
+    </div>
+    <!-- <img src="data:image/png;base64,{{image.data}}" /> -->
+  </div>
+  
+</div>

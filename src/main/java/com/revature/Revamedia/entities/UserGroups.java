@@ -30,6 +30,12 @@ public class UserGroups {
     @Column
     private String title;
 
+    @Column(name = "description", length = 500)
+    private String description;
+
+    @Column
+    private String imageUrl;
+
     @JsonIgnoreProperties("groupsJoined")
     @ManyToMany(mappedBy = "groupsJoined")
     private Set<User> usersJoined;
@@ -53,6 +59,17 @@ public class UserGroups {
         this.posts = posts;
         this.dateCreated = dateCreated;
 
+    }
+
+    public UserGroups(Integer groupId, User ownerId, String title, String description, String imageUrl, Set<User> usersJoined, Set<UserPosts> posts, Timestamp dateCreated) {
+        this.groupId = groupId;
+        this.ownerId = ownerId;
+        this.title = title;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.usersJoined = usersJoined;
+        this.posts = posts;
+        this.dateCreated = dateCreated;
     }
 
     public Integer getGroupId() {
@@ -119,15 +136,33 @@ public class UserGroups {
         this.dateCreated = dateCreated;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public String toString() {
         return "UserGroups{" +
                 "groupId=" + groupId +
                 ", ownerId=" + ownerId +
                 ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", usersJoined=" + usersJoined +
                 ", posts=" + posts +
-                ", dateCreated='" + dateCreated + '\'' +
+                ", dateCreated=" + dateCreated +
                 '}';
     }
 }
