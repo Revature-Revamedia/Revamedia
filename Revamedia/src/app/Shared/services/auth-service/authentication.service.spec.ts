@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 
 
-describe('AuthenticationService', () => {
+fdescribe('AuthenticationService', () => {
   let authService: AuthenticationService;
   let routerSpy: { navigateByUrl: jasmine.Spy };
   let httpClient: HttpClient;
