@@ -1,14 +1,18 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, NgForm } from '@angular/forms';
 import { of, throwError } from 'rxjs';
+import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 
 import { SettingsComponent } from './settings.component';
 
-describe('SettingsComponent', () => {
+fdescribe('SettingsComponent', () => {
   let component: SettingsComponent;
   let fixture: ComponentFixture<SettingsComponent>;
+  let animationServiceSpy: { fadeIn: jasmine.Spy };
+  let qrcodeServiceSpy: { enableTwoFactorAuth: jasmine.Spy };
   let userServiceSpy: {
     getUser: jasmine.Spy,
     updateUser: jasmine.Spy
@@ -16,13 +20,16 @@ describe('SettingsComponent', () => {
 
   beforeEach(async () => {
     userServiceSpy = jasmine.createSpyObj('UserService', ['getUser', 'updateUser']);
+    animationServiceSpy = jasmine.createSpyObj('AnimationServiceSpy', ['fadeIn']);
+    qrcodeServiceSpy = jasmine.createSpyObj('QrcodeServiceSpy', ['enableTwoFactorAuth']);
 
     await TestBed.configureTestingModule({
       declarations: [ SettingsComponent ],
-      imports: [ FormsModule
-      ],
+      imports: [ FormsModule ],
       providers: [
-        { provide: UserService, useValue: userServiceSpy }
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: AnimationService, useValue: animationServiceSpy },
+        { provide: QrcodeService, useValue: qrcodeServiceSpy }
       ]
     })
     .compileComponents();
@@ -228,5 +235,67 @@ describe('SettingsComponent', () => {
 
     // Assert
     expect(component.deleteUser).toEqual(component.deleteUser);
+  });
+
+  it('#enableTwoFactorAuth should set image', fakeAsync(() => {
+    qrcodeServiceSpy.enableTwoFactorAuth.and.returnValue(of({ body: "image" }));
+
+    component.enableTwoFactorAuth();
+    tick();
+
+    expect(qrcodeServiceSpy.enableTwoFactorAuth).toHaveBeenCalledTimes(1);
+    expect(component.image).toEqual("image");
+  }));
+
+  it('#showInfo should create a toast info message', fakeAsync(() => {
+    const div = document.createElement('div');
+    spyOn(div.classList, 'toggle');
+    spyOn(div.classList, 'remove');
+    spyOn(window, "setTimeout").and.callThrough();
+    spyOn(document, 'getElementById').and.returnValue(div);
+
+    component.showInfo("type");
+    tick(5000);
+
+    expect(div.classList.toggle).toHaveBeenCalledOnceWith('showInfo');
+    expect(window.setTimeout).toHaveBeenCalled();
+  }));
+
+  it('#turnOnTwoFactor should inverse component.twoFactor boolean', () => {
+    component.twoFactor = false;
+
+    component.turnOnTwoFactor();
+
+    expect(component.twoFactor).toBeTrue();
+  });
+
+  it('#openingAnimation should fade in main element', () => {
+    component.openingAnimation();
+
+    expect(animationServiceSpy.fadeIn).toHaveBeenCalledOnceWith('#main', jasmine.any(Number), jasmine.any(Number), jasmine.any(Number));
+  });
+
+  describe('#closeAnyModal', () => {
+    let div: HTMLElement = document.createElement('div');
+
+    beforeEach(() => {
+
+      spyOn(div.classList, 'remove');
+      spyOn(document, 'getElementById').and.returnValue(div);
+    });
+
+    it('should remove openScreen from screen element', () => {
+      component.closeAnyModal();
+
+      expect(document.getElementById).toHaveBeenCalledWith('screen');
+      expect(div.classList.remove).toHaveBeenCalledWith('openScreen');
+    });
+
+    it('should remove openModal from modal element', () => {
+      component.closeAnyModal();
+
+      expect(document.getElementById).toHaveBeenCalledWith('edit-account-modal');
+      expect(div.classList.remove).toHaveBeenCalledWith('openModal');
+    });
   });
 });

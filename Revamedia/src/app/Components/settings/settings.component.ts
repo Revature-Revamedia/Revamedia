@@ -15,7 +15,11 @@ import { UserService } from '../../Shared/services/user-service/user.service';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private userService: UserService, private animationService: AnimationService, private qrcodeService: QrcodeService ) { }
+  constructor(
+    private userService: UserService,
+    private animationService: AnimationService,
+    private qrcodeService: QrcodeService )
+  { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
@@ -55,7 +59,6 @@ export class SettingsComponent implements OnInit {
   }
 
   enableTwoFactorAuth(){
-      console.log("settings enable")
       this.qrcodeService.enableTwoFactorAuth().subscribe((data: any) =>{this.image = data.body;});
   }
 
