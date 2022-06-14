@@ -83,7 +83,7 @@ $darkgrey: rgb(61, 66, 74);
         border-radius: 6px;
         width: 15rem;
         height: 15rem;
-        object-fit: cover;
+        object-fit: fill;
         border: 2px solid $orange;
         transition: all 0.3s ease-in-out;
         cursor: pointer;

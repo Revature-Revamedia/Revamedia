@@ -90,7 +90,7 @@ public class GroupController {
         user.addPost(post);
         group.addPost(post);
         userPostsService.save(post);
-        userGroupsService.update(group);
+        userGroupsService.save(group);
         return new ResponseEntity<>(post,HttpStatus.CREATED);
     }
 

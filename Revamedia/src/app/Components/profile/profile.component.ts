@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
   public openingAnimation() {
     const anim = this.animationService;
     const main = '#profile';
-    anim.fadeIn(main, 0.7, 0, 0.6);
+    anim.fadeIn(main, 0.7, 0, 1);
   }
 
   public followUser(follow: NgForm){

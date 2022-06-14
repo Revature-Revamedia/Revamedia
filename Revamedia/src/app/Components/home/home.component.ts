@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
     private searchService: SearchService)
   { }
 
+
   ngOnInit(): void {
     this.getGifs('funny');
     this.getCurrentUserData();
@@ -76,6 +77,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.getCurrentUserData();
         this.addComment = false;
+        this.viewComments = true;
         this.selectedGiphy = "";
         // this.userService.setCurrentUser(response.body);
       },
@@ -124,7 +126,7 @@ export class HomeComponent implements OnInit {
     p.postId = currentPost.postId;
     p.userId = this.user.userId;
 
-    this.totalLikes = this.userService.userLikesPost(p);
+    this.userService.userLikesPost(p);
     this.getCurrentUserData();
   }
 
@@ -230,7 +232,10 @@ export class HomeComponent implements OnInit {
 
   // hide Comments
   public viewComments = false;
-  public toggleHideComments(): void {
+  public toggleHideComments(id:any): void {
+    console.log(id);
+    const comment = document.getElementById(`addCommentReplyForm${id}`) as HTMLDivElement | null;
+    console.log(comment?.innerHTML);
     this.viewComments = !this.viewComments;
   }
   public toggleComments():void{
@@ -359,7 +364,7 @@ export class HomeComponent implements OnInit {
   public openingAnimation() {
     const anim = this.animationService;
     const main = '#main';
-    anim.fadeIn(main, 0.7, 0, 0.6);
+    anim.fadeIn(main, 0.7, 0, 1);
   }
   public goToProfile(userId: any){
     this.router.navigate([`profile/${userId}`]);

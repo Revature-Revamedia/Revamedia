@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUserData();
     this.isImageTemporarilyUploaded = false;
-
+    this.openingAnimation();
   }
 
   getUserProfilePicture() {
@@ -126,9 +126,6 @@ export class SettingsComponent implements OnInit {
       })
     }
 
-
-
-
   // ICONS
   public faSun = faSun;
   public faMoon = faMoon;
@@ -196,7 +193,7 @@ export class SettingsComponent implements OnInit {
   // ANIMATION
   public openingAnimation() {
     const anim = this.animationService;
-    const main = '#main';
+    const main = '#settings';
     anim.fadeIn(main, 0.7, 0, 0.6);
   }
   public closeAnyModal() {

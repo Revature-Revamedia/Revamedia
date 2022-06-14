@@ -13,6 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.revature.Revamedia.beans.repositories.UserEventsRepository;
 import com.revature.Revamedia.entities.UserEvents;
 
+/**
+* @Author: Qiang Gao
+*/
 @ExtendWith(MockitoExtension.class)
 public class UserEventsServiceTest {
     private UserEventsService userEventsService;
