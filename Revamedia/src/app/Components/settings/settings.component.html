@@ -42,6 +42,7 @@
         <button id="deleteBtn" (click)="openModal('delete', deleteUser)">Delete</button>
       </div> -->
     </div>
+
     <div class="system-settings" id="setBackgroundColor">
       <h4>System Settings</h4>
       <div class="TwoFactor" id="settingsContainer">
@@ -205,9 +206,16 @@
       <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url..." [contentEditable]="false" >
     </div> -->
     <div class="user-settings-row-file">
-        <input type="file" (change)="onFileSelected($event)"  accept="image/png, image/jpeg, image/jpg">
+      <div class="left">
+        <div class="file-input">
+          <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg" id="file" class="file">
+          <label for="file">
+            Select File
+          </label>
+        </div>
         <img *ngIf="getUserProfilePictureTemp() !==''" [src]="getUserProfilePictureTemp()" >
-        <button type="button" (click)="onUpload()">Upload</button>
+      </div>
+      <button (click)="onUpload()">Upload</button>
     </div>
     <div class="post-submit">
       <button>Update Account</button>

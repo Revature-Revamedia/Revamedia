@@ -173,6 +173,7 @@ export class HomeComponent implements OnInit {
         // console.log(commentForm.value);
         this.getCurrentUserData();
         this.addComment = false;
+        this.viewComments = true;
         this.selectedGiphy = "";
         // this.userService.setCurrentUser(response.body);
       },

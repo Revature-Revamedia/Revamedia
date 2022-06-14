@@ -47,11 +47,11 @@
           </div>
           <div class="post-body" id="post-body">
             <img src="{{ p?.image }}" alt="{{p?.image}}" *ngIf="p?.image !== null">
-            <div class="youtube-link" *ngIf="p?.image === null">
-              <div class="youtube-logo">
+            <div class="youtube-link" *ngIf="p?.youtubeLink !== null">
+              <div class="youtube-logo" *ngIf="p?.youtubeLink !== null">
                 <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
               </div>
-              <a *ngIf="p?.image === null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
+              <a *ngIf="p?.youtubeLink !== null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
             </div>
             <div class="post-description" id="setBackgroundColor">
               <p><a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>{{p?.message}}</p>
@@ -269,8 +269,8 @@
   </div>
   <form (ngSubmit)="onDeletePost(deletePost?.postId)">
     <h2>Are you sure you want to delete this post?</h2>
-    <span style="font-size: .8rem;">{{ deletePost?.message }}</span>
-    <img style="width:8rem;height: 8rem; object-fit:cover;" src="{{ deletePost?.image }}" alt="Image">
+    <span style="font-size: .9rem;">{{ deletePost?.message }}</span>
+    <img style="width:8rem;height: 8rem; object-fit:cover;" *ngIf="deletePost?.image !== ''" src="{{ deletePost?.image }}" alt="Image">
     <div class="post-submit">
       <button id="deleteBtn">Delete Post</button>
     </div>
