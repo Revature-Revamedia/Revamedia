@@ -61,7 +61,6 @@ public class UserController {
             if(uf.getFollowedId().getUserId().equals(followed.getUserId())){
                 follower.unFollow(uf);
                 userService.update(follower);
-                System.out.println("deleted user follows " + uf);
                 userFollowsService.delete(uf);
                 return ResponseEntity.status(HttpStatus.OK).body(followed);
             }
@@ -92,19 +91,6 @@ public class UserController {
         return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
     }
 
-//    @GetMapping("/isFollowing")
-//    public ResponseEntity<UserFollows> isFollowing (@RequestBody UserFollowDto dto){
-//        User follower = userService.getUserById(dto.getFollowerId());
-//        User followed = userService.getUserById(dto.getFollowedId());
-//        for(UserFollows uf : follower.getFollowing()){
-//            if(uf.getFollowedId().getUserId().equals(followed.getUserId())){
-//                return new ResponseEntity<>(uf, HttpStatus.OK);
-//            }else{
-//                return new ResponseEntity<>(null, HttpStatus.OK);
-//            }
-//        }
-//        return ResponseEntity.status(HttpStatus.CONFLICT).build();
-//    }
     @GetMapping("/isFollowing/{id1}/{id2}")
     public HttpResponseDto isFollowing(HttpServletResponse res, @PathVariable Integer id1, @PathVariable Integer id2) {
         User follower = userService.getUserById(id1);

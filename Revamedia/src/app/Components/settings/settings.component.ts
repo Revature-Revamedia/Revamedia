@@ -7,9 +7,8 @@ import { AnimationService } from 'src/app/Shared/services/animation/animation.se
 import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
 import { UserService } from '../../Shared/services/user-service/user.service';
 import { UploadService } from '../../Shared/services/upload.service';
-import { interval, take, finalize, map, catchError, of } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import { map, catchError, of } from 'rxjs';
+import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
 

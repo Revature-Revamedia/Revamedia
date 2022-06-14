@@ -28,6 +28,7 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
     private final JsonWebToken jsonWebToken;
+    private final String error = "error";
 
     @Autowired
     public AuthController(AuthService authService, JsonWebToken jsonWebToken, UserService userService){
@@ -54,7 +55,7 @@ public class AuthController {
                 jsonObject.put("username", authDto.getUsername());
                 return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
             }
-            jsonObject.put("error","your credentials are incorrect");
+            jsonObject.put(error,"your credentials are incorrect");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
     }
@@ -67,11 +68,11 @@ public class AuthController {
                 System.out.println("We are supposed to set cookie here");
                 return authService.loginWithTwoFactor(twoFactorDto);
             }
-            jsonObject.put("error","code didn't match");
+            jsonObject.put(error,"code didn't match");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
         catch (UnauthorizedUserException e){
-            jsonObject.put("error","you are unauthorized");
+            jsonObject.put(error,"you are inauthorized");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
     }
@@ -88,15 +89,15 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.OK).body(authService.enableTwoFactorAuth(cookieDto,twoFactorAuthDto));
         }
         catch (UnauthorizedUserException e) {
-            jsonObject.put("error","you are unauthorized");
+            jsonObject.put(error,"you are unauthorized");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
         catch (IOException e) {
-            jsonObject.put("error","qr code was not created successfully");
+            jsonObject.put(error,"qr code was not created successfully");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject);
         }
         catch (WriterException e) {
-            jsonObject.put("error","qr code was not created successfully");
+            jsonObject.put(error,"qr code was not created successfully");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject);
         }
     }
@@ -110,7 +111,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.OK).body(authService.disableTwoFactorAuth(cookieDto,twoFactorAuthDto));
         }
         catch (UnauthorizedUserException e) {
-            jsonObject.put("error","you are unauthorized");
+            jsonObject.put(error,"you are unauthorized");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
 
@@ -124,15 +125,15 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.OK).body(authService.enableTwoFactorAuth(cookieDto,twoFactorAuthDto));
         }
         catch (UnauthorizedUserException e) {
-            jsonObject.put("error","you are unauthorized");
+            jsonObject.put(error,"you are unauthorized");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
         catch (IOException e) {
-            jsonObject.put("error","qr code was not created successfully");
+            jsonObject.put(error,"qr code was not created successfully");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject);
         }
         catch (WriterException e) {
-            jsonObject.put("error","qr code was not created successfully");
+            jsonObject.put(error,"qr code was not created successfully");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject);
         }
     }

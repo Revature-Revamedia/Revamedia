@@ -1,10 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UserPostsService } from './user-posts.service';
-// import { post } from 'jquery';
-import { HttpClient } from '@angular/common/http';
-import { timestamp, Observable } from 'rxjs';
-import { identifierName } from '@angular/compiler';
+import { Observable } from 'rxjs';
 
 describe('UserPostsService', () => {
   let service: UserPostsService;

@@ -37,10 +37,6 @@
         <h5>Profile Pic</h5>
         <img [src]="getUserProfilePicture()" alt="{{ user?.username }}">
       </div>
-      <!-- <div class="user-settings-title">
-        <h3>Delete Account</h3>
-        <button id="deleteBtn" (click)="openModal('delete', deleteUser)">Delete</button>
-      </div> -->
     </div>
 
     <div class="system-settings" id="setBackgroundColor">
@@ -201,10 +197,6 @@
         id="email"
         placeholder="Email...">
     </div>
-    <!-- <div class="user-settings-row">
-      <h5>Profile Pic</h5>
-      <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url..." [contentEditable]="false" >
-    </div> -->
     <div class="user-settings-row-file">
       <div class="left">
         <div class="file-input">
