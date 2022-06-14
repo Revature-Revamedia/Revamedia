@@ -1,0 +1,24 @@
+<div class="navbar" *ngIf="auth.loggedIn.value === true" id="navbar">
+  <ul>
+    <li>
+      <a routerLink="/home" routerLinkActive="active" title="Home">
+        <fa-icon id="icon" [icon]="faHome"></fa-icon>
+      </a>
+    </li>
+   <li>
+      <a routerLink="/groups" routerLinkActive="active" title="Groups">
+        <fa-icon id="icon" [icon]="faUsers"></fa-icon>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/settings" routerLinkActive="active" title="Settings">
+        <fa-icon id="icon" [icon]="faUserGear"></fa-icon>
+      </a>
+    </li>
+    <li>
+      <a (click)="LogOut()" title="Log Out">
+        <fa-icon  title="Log Out" id="icon" [icon]="faDoorOpen"></fa-icon>
+      </a>
+    </li>
+  </ul>
+</div>

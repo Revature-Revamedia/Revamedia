@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiBaseUrl: 'http://localhost:8080',
+  apiKey: 'M4g0SX27EqOQZ9eAipfpXcGPrfYAQsrI',
+  s3Url:'https://social-app-img.s3.amazonaws.com'
 };
 
 /*

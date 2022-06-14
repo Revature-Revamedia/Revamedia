@@ -1,0 +1,66 @@
+<div class="groups-page" id="groups-page">
+
+  <!-- Page title Start -->
+  <div class="page-title" id="page-title">
+    <h3>Revamedia</h3>
+    <div class="page-subTitle">
+      <span>Groups</span>
+    </div><!-- CLOSES PAGE SUBTITLE-->
+  </div><!-- CLOSES PAGE TITLE-->
+
+  <!-- PAGE CONTENT-->
+  <div class="groups-content" id="main">
+
+    <div class="group-subtitle">
+      <button (click)="openModal('new-group', '')">Create Group</button>
+    </div><!-- CLOSES GROUP SUBTITLE-->
+
+    <h2 *ngIf="groups.length != 0" class="groupTitle" id="groupsTitle">My Groups</h2>
+    <div class="mygroups-container">
+      <div class="group" *ngFor="let group of groups" (click)="goToGroup(group?.groupId)" id="group" title="View {{group?.title}}">
+        <img src="{{group?.imageUrl}}" alt="{{group.title}}">
+        <h2>{{group?.title}}</h2>
+        <!-- <span>{{ group?.description }}</span> -->
+      </div>
+    </div><!-- CLOSES MY GROUPS-->
+
+    <h2 class="groupTitle" id="groupsTitle" *ngIf="allGroups.length != 0">All Groups</h2>
+    <div class="allGroups-container">
+      <div class="group" *ngFor="let group of allGroups" id="group" (click)="goToGroup(group?.groupId)"  title="View {{group?.title}}">
+        <img *ngIf="group.imageUrl != null" src="{{group?.imageUrl }}" alt="{{group.title}}">
+        <h2>{{ group?.title}}</h2>
+        <!-- <span>{{ group?.description }}</span> -->
+      </div>
+    </div>
+  </div><!-- CLOSES PAGE CONTENT-->
+
+</div><!-- CLOSES GROUPS-PAGE-->
+
+<!-- BLACKOUTSCREEN -->
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
+<!-- ADD POST FORM START -->
+<div class="modal" id="new-group-modal">
+  <div class="form-header">
+    <h3>Create New Group</h3>
+    <span (click)="closeModal('new-group')">x</span>
+  </div>
+  <form #form="ngForm" (ngSubmit)="onAddGroup(form)" ngNativeValidate>
+    <div class="form-data">
+      <h4>Group Name</h4>
+      <input type="text" name="title" id="title" ngModel placeholder="Enter group name..." required>
+    </div>
+    <div class="form-data">
+      <input type="hidden" name="ownerId" ngModel="{{ currentUser?.userId }}">
+      <h4>Group description</h4>
+      <textarea name="description" ngModel placeholder="Write a breif group description..." rows="4"></textarea>
+    </div>
+    <div class="form-data">
+      <h4>Set Group Image</h4>
+      <input type="url" name="imageUrl" id="imageUrl" ngModel placeholder="Group Image Url Link..." required>
+    </div>
+    <div class="post-submit">
+      <button>Create Group</button>
+    </div>
+  </form>
+</div><!-- ADD POST FORM END -->
+
