@@ -88,7 +88,6 @@ export class SettingsComponent implements OnInit {
         this.getCurrentUserData();
       });
     }
-
   onFileSelected(event: any) {
     console.log(event);
     this.selectedFile = <File>event.target.files[0];
