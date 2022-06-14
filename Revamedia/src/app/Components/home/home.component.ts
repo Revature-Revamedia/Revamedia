@@ -133,7 +133,6 @@ export class HomeComponent implements OnInit {
   onAddPost(postForm: NgForm): void {
     this.userPostsService.addPost(postForm.value).subscribe(
       (response: any) => {
-        // console.log(response);
         this.closeModal('add', 'post-modal');
         this.getCurrentUserData();
       },
@@ -141,13 +140,13 @@ export class HomeComponent implements OnInit {
         console.log(error.message)
       }
     );
-    //console.log(postForm.value);
+
   }
 
   onUpdatePost(postForm: NgForm): void {
     this.userPostsService.updatePost(postForm.value).subscribe(
       (response: any) => {
-        // console.log(response);
+
         this.closeModal('edit', 'post-modal');
         this.getCurrentUserData();
       },
@@ -173,8 +172,6 @@ export class HomeComponent implements OnInit {
   public onAddReply(replyForm: NgForm): void {
     this.CommentService.addReply(replyForm.value).subscribe(
       (response: any) => {
-        // console.log(response);
-        // console.log(replyForm.value);
         this.getCurrentUserData();
         this.addReply = false;
         this.selectedGiphy = "";
@@ -192,7 +189,7 @@ export class HomeComponent implements OnInit {
     let replyId = replyForm.value.reply_id;
     this.CommentService.updateReply(message, replyId).subscribe(
       (response: any) => {
-        // console.log(response);
+
         this.getCurrentUserData();
         this.closeModal('edit', 'reply-modal');
         this.selectedGiphy = "";
@@ -208,7 +205,6 @@ export class HomeComponent implements OnInit {
   public onDeleteReply(id: number) {
     this.CommentService.deleteReply(id).subscribe(
       (response: any) => {
-        // console.log(response);
         this.getCurrentUserData();
         this.closeModal('delete', 'reply-modal');
         this.selectedGiphy = "";
@@ -233,9 +229,6 @@ export class HomeComponent implements OnInit {
   // hide Comments
   public viewComments = false;
   public toggleHideComments(id:any): void {
-    console.log(id);
-    const comment = document.getElementById(`addCommentReplyForm${id}`) as HTMLDivElement | null;
-    console.log(comment?.innerHTML);
     this.viewComments = !this.viewComments;
   }
   public toggleComments():void{
@@ -333,9 +326,7 @@ export class HomeComponent implements OnInit {
 
   public searchGiphy() {
     var search = document.getElementById('giphy-search-comment') as HTMLInputElement;
-    // console.log(search);
     let query = search?.value;
-    console.log(query);
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
     this.getGifs(cleanQuery2);
@@ -395,7 +386,6 @@ export class HomeComponent implements OnInit {
     }
     this.userPostsService.addYoutube(youtubeDto).subscribe(
       (response: any) => {
-        console.log(response);
         this.getCurrentUserData();
         this.closeModal('add', 'youtube-modal');
       },
@@ -413,7 +403,7 @@ export class HomeComponent implements OnInit {
     }
     this.userPostsService.editYoutube(editYoutubeDto).subscribe(
       (response: any) => {
-        console.log(response);
+
         this.getCurrentUserData();
         this.closeModal('edit', 'youtube-modal');
       },
@@ -426,7 +416,6 @@ export class HomeComponent implements OnInit {
   public deleteVideo(id: number){
     this.userPostsService.deleteYoutube(id).subscribe(
       (response: any) => {
-        console.log(response);
         this.getCurrentUserData();
         this.closeModal('delete', 'youtube-modal');
       },
