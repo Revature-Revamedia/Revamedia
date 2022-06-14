@@ -46,7 +46,7 @@ export class SettingsComponent implements OnInit {
   }
 
   getUserProfilePictureTemp() {
-    // return this.isImageTemporarilyUploaded ? `${environment.s3Url}/${this.editUser.username}_temp?${Date.now()}` : '';
+    return this.isImageTemporarilyUploaded ? `${environment.s3Url}/${this.editUser.username}_temp?${Date.now()}` : '';
   }
 
   // GET CURRENT USER
@@ -67,7 +67,7 @@ export class SettingsComponent implements OnInit {
     this.onUpload(false);
     this.userService.updateUser({
       ...updateForm.value,
-      // profilePicture: `${environment.s3Url}/${updateForm.value.username}`
+      profilePicture: `${environment.s3Url}/${updateForm.value.username}`
     }, id).subscribe(
       (response: any) => {
         this.closeModal('edit');
