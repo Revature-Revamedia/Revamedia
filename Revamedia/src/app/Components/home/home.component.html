@@ -54,7 +54,7 @@
               <a *ngIf="p?.youtubeLink !== null" href="{{p?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
             </div>
             <div class="post-description" id="setBackgroundColor">
-              <p><a (click)="goToProfile(user?.userId)">{{ user?.username }}</a>{{p?.message}}</p>
+              <p><a (click)="goToProfile(p?.ownerId?.userId)">{{ p?.ownerId?.username }}</a>{{p?.message}}</p>
             </div>
             <div class="post-options" id="setBackgroundColor">
               <div class="container">
