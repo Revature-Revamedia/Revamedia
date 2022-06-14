@@ -26,7 +26,6 @@ export class QrcodeService {
     let authDto = {
       twoFactorAuth: false
     }
-    console.log("QRCODE SERVICE");
     return this.http.post<any>(this.QRCodeUrl+"/disable", authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}),'withCredentials': true});
   }
 

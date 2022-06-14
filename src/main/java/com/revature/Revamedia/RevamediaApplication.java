@@ -55,29 +55,5 @@ public class RevamediaApplication {
                 SendEmailService sendEmailService = context.getBean(SendEmailService.class);
                 TwoFactorAuthentication twoFactorAuthentication = context.getBean(TwoFactorAuthentication.class);
 
-//                String email = "revamedia@gmail.com";
-//                String companyName = "Revamedia";
-//                TwoFactorAuthentication twoFactorAuthentication = new TwoFactorAuthentication();
-//                String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretKey, email, companyName);
-//                ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,400,400);
-//                ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
-//                fileUploadService.uploadFile("image.png",inStream);
-//
-//
-//                User user = userService.getUserById(1);
-//                String secretKey = user.getSecretTwoFactorKey();
-//                String lastCode = null;
-//                while (true) {
-//                        String code = twoFactorAuthentication.getTOTPCode(secretKey);
-//                        if (!code.equals(lastCode)) {
-//                                System.out.println(code);
-//                        }
-//                        lastCode = code;
-//                        try {
-//                                Thread.sleep(1000);
-//                        } catch (InterruptedException e) {
-//
-//                        }
-//                }
         }
 }
