@@ -493,7 +493,7 @@ export class HomeComponent implements OnInit {
   public openingAnimation() {
     const anim = this.animationService;
     const main = '#main';
-    anim.fadeIn(main, 0.7, 0, 0.6);
+    anim.fadeIn(main, 0.7, 0, 1);
   }
   public goToProfile(userId: any){
     this.router.navigate([`profile/${userId}`]);
