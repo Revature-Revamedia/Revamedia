@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class UploadService {
 
-  SERVER_URL: string = environment.apiBaseUrl + "/upload";
+  SERVER_URL: string = environment.apiBaseUrl + "/s3/upload";
 	constructor(private httpClient: HttpClient) { }
 
   public upload(formData: any ) {
@@ -18,5 +18,10 @@ export class UploadService {
         observe: 'events',
 
       });
+  }
+
+
+  public delete(fineName: string ) {
+    return this.httpClient.delete<any>(`${environment.apiBaseUrl}/s3/${fineName}`);
   }
 }

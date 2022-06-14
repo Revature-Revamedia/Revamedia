@@ -10,6 +10,7 @@ import java.util.List;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 @RestController
+@RequestMapping("/s3")
 public class S3Controller {
 
     @Autowired

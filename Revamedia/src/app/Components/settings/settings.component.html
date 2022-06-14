@@ -101,7 +101,7 @@
       </div>
       <div class="user-settings-row" style="border:none;">
         <h5>Profile Pic</h5>
-        <img src="{{user?.profilePicture}}" alt="{{ user?.username }}">
+        <img [src]="getUserProfilePicture()" alt="{{ user?.username }}">
       </div>
       <!-- <div class="user-settings-title">
         <h3>Delete Account</h3>
@@ -188,12 +188,15 @@
         id="email"
         placeholder="Email...">
     </div>
-    <div class="user-settings-row">
+    <!-- <div class="user-settings-row">
       <h5>Profile Pic</h5>
-      <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url..."  >
+      <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url..." [contentEditable]="false" >
+    </div> -->
+    <div class="user-settings-row">
+        <input type="file" (change)="onFileSelected($event)">
+        <img *ngIf="getUserProfilePictureTemp() !==''" [src]="getUserProfilePictureTemp()" >
+        <button type="button" (click)="onUpload()">Upload</button>
     </div>
-    <input type="file" (change)="onFileSelected($event)">
-    <button type="button" (click)="onUpload()">Upload</button>
     <div class="post-submit">
       <button>Update Account</button>
     </div>

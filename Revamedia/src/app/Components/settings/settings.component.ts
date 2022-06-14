@@ -1,4 +1,4 @@
-
+import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
@@ -25,7 +25,7 @@ export class SettingsComponent implements OnInit {
      public user: any;
      public editUser: any; // Used for edit modal
      public deleteUser: any; // Used for delete modal
-
+ public isImageTemporarilyUploaded = false;
 
   constructor(private userService: UserService, private uploadService: UploadService ,private animationService: AnimationService, private qrcodeService: QrcodeService) { }
   title = 'app';
@@ -37,7 +37,16 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentUserData();
+    this.isImageTemporarilyUploaded = false;
 
+  }
+
+  getUserProfilePicture(){
+    return `${this.user?.profilePicture}?${Date.now()}` || "https://randomuser.me/api/portraits/lego/1.jpg"
+  }
+
+  getUserProfilePictureTemp(){
+    return this.isImageTemporarilyUploaded ? `${environment.s3Url}/${this.editUser.username}_temp?${Date.now()}` : '';
   }
 
   // GET CURRENT USER
@@ -55,7 +64,10 @@ export class SettingsComponent implements OnInit {
 
     // Update User
     public onUpdateUser(updateForm: NgForm, id: number) {
-      this.userService.updateUser(updateForm.value, id).subscribe(
+      this.onUpload(false);
+      this.userService.updateUser({
+        ...updateForm.value,
+        profilePicture : `${environment.s3Url}/${updateForm.value.username}`}, id).subscribe(
         (response: any) => {
           this.closeModal('edit');
           this.getCurrentUserData();
@@ -73,10 +85,11 @@ export class SettingsComponent implements OnInit {
 
     }
 
-  onUpload() {
+  onUpload(isTemp = true) {
+    if(!isTemp) this.uploadService.delete(`${this.editUser.username}_temp`);
     const formData = new FormData();
     formData.append('file', this.selectedFile);
-    formData.append('fileName', this.editUser.username);
+    formData.append('fileName', `${this.editUser.username}${isTemp? '_temp': ''}`);
     console.log(formData)
     this.selectedFile.inProgress = true;
     this.uploadService.upload(formData).pipe(
@@ -96,8 +109,11 @@ export class SettingsComponent implements OnInit {
       })).subscribe((event: any) => {
         if (typeof (event) === 'object') {
           console.log(event.body);
+
         }
-      });
+        if(isTemp) this.isImageTemporarilyUploaded = true;
+        console.log(this.editUser.profilePicture)
+      })
   }
   enableTwoFactorAuth(){
       console.log("settings enable")
