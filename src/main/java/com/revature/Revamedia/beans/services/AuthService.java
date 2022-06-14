@@ -115,6 +115,7 @@ public class AuthService {
         else {
             currentUser.setTwoFactorAuth(twoFactorAuthDto.isTwoFactorAuth());
             byte [] byteArray = currentUser.getQRCodeImage();
+            userService.update(currentUser);
             jsonObject.put("data", byteArray);
             return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
         }
