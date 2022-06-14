@@ -86,7 +86,7 @@ export class SettingsComponent implements OnInit {
     }
 
   onUpload(isTemp = true) {
-    if(!isTemp) this.uploadService.delete(`${this.editUser.username}_temp`);
+    if(!isTemp) this.uploadService.delete(`${this.editUser.username}_temp`).subscribe();
     const formData = new FormData();
     formData.append('file', this.selectedFile);
     formData.append('fileName', `${this.editUser.username}${isTemp? '_temp': ''}`);
