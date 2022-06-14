@@ -58,6 +58,13 @@ import { TwofaComponent } from './Components/twofa/twofa.component';
     HttpClientModule,
     FormsModule,
     ValidateEqualModule,
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [AuthenticationService, CommentService, GiphyService, CookieService],
   bootstrap: [AppComponent]
