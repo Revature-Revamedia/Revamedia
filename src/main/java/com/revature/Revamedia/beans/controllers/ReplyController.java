@@ -48,7 +48,7 @@ public class ReplyController {
 
         userRepliesService.save(newReply);
 
-        if(newReply.getMessage() != dto.getMessage()) {
+        if(!newReply.getMessage().equals(dto.getMessage())) {
             res.setStatus(400);
             return new HttpResponseDto(400, "Failed to save comment", newReply);
         } else {
@@ -64,13 +64,8 @@ public class ReplyController {
         reply.setMessage(message);
         userRepliesService.update(reply);
 
-        if(reply.getMessage() != reply.getMessage()) {
-            res.setStatus(400);
-            return new HttpResponseDto(400, "Failed to update reply", reply);
-        } else {
-            res.setStatus(200);
-            return new HttpResponseDto(200, "Successfully updated reply" + reply.getReplyId(), reply);
-        }
+        res.setStatus(200);
+        return new HttpResponseDto(200, "Successfully updated reply" + reply.getReplyId(), reply);
     }
 
     @DeleteMapping("/delete/{id}")
