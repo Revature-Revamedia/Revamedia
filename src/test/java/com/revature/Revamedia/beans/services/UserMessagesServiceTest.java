@@ -14,6 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.revature.Revamedia.beans.repositories.UserMessagesRepository;
 import com.revature.Revamedia.entities.UserMessages;
 
+/**
+* @Author: Qiang Gao
+*/
 @ExtendWith(MockitoExtension.class)
 public class UserMessagesServiceTest {
     private UserMessagesService userMessagesService;
