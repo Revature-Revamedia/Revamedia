@@ -96,22 +96,28 @@ public class AuthService {
 
     public ResponseEntity<Object> enableTwoFactorAuth(CookieDto cookieDto,TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
         User currentUser = userService.getUserById(cookieDto.getUserId());
-
-        currentUser.setTwoFactorAuth(twoFactorAuthDto.isTwoFactorAuth());
-        String secretForCurrentUser = twoFactorAuthentication.generateSecretKey();
-        currentUser.setSecretTwoFactorKey(secretForCurrentUser);
-        String email = cookieDto.getEmail();
-        String companyName = "Revamedia";
-        String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretForCurrentUser, email, companyName);
-        ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,100,100);
-        ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
-        byte [] byteArray = IOUtils.toByteArray(inStream);
-        currentUser.setQRCodeImage(byteArray);
-        userService.update(currentUser);
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("data", byteArray);
-        return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
-
+        if ((!currentUser.isTwoFactorAuth() && currentUser.getSecretTwoFactorKey() == null) || twoFactorAuthDto.getMode().equals("recreate")){
+            currentUser.setTwoFactorAuth(twoFactorAuthDto.isTwoFactorAuth());
+            String secretForCurrentUser = twoFactorAuthentication.generateSecretKey();
+            currentUser.setSecretTwoFactorKey(secretForCurrentUser);
+            String email = cookieDto.getEmail();
+            String companyName = "Revamedia";
+            String barCodeUrl = twoFactorAuthentication.getGoogleAuthenticatorBarCode(secretForCurrentUser, email, companyName);
+            ByteArrayOutputStream out = twoFactorAuthentication.createQRCode(barCodeUrl,100,100);
+            ByteArrayInputStream inStream = new ByteArrayInputStream(out.toByteArray());
+            byte [] byteArray = IOUtils.toByteArray(inStream);
+            currentUser.setQRCodeImage(byteArray);
+            userService.update(currentUser);
+            jsonObject.put("data", byteArray);
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
+        }
+        else {
+            currentUser.setTwoFactorAuth(twoFactorAuthDto.isTwoFactorAuth());
+            byte [] byteArray = currentUser.getQRCodeImage();
+            jsonObject.put("data", byteArray);
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
+        }
     }
 
     public ResponseEntity<Object> disableTwoFactorAuth(CookieDto cookieDto, TwoFactorAuthDto twoFactorAuthDto){

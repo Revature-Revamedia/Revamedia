@@ -88,4 +88,5 @@ public class UserService {
     public void deleteAllPostLikes (Integer postId) {
         userRepository.removePostLikes(postId);
     }
+
 }
