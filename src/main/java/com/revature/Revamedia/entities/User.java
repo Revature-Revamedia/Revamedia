@@ -110,15 +110,10 @@ public class User implements Serializable {
         this.followers = new HashSet<>();
         this.following = new HashSet<>();
         this.postsOwned = new HashSet<>();
-
         this.groupsJoined = new HashSet<>();
         this.groupsOwned = new HashSet<>();
-
         this.eventsJoined = new HashSet<>();
         this.eventsOwned = new HashSet<>();
-
-//        this.conversations = new HashSet<>();
-
         this.likedPosts = new ArrayList<>();
     }
 
@@ -142,7 +137,6 @@ public class User implements Serializable {
         this.groupsOwned = groupsOwned;
         this.eventsJoined = eventsJoined;
         this.eventsOwned = eventsOwned;
-        // this.conversations = conversations;
     }
 
     public Integer getUserId() {
