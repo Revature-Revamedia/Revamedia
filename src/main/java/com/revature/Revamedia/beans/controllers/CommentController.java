@@ -42,7 +42,7 @@ public class CommentController {
        UserComments comment = userCommentsService.getCommentById(id);
        UserCommentsDto commentsDto = new UserCommentsDto(comment.getOwnerId().getUserId(), comment.getPostId().getPostId(),
                comment.getCommentId(), comment.getMessage(), comment.getDateCreated(), comment.getGiphyUrl());
-        System.out.println(comment.getCommentId());
+
 
         if(comment.getCommentId() != id) {
             res.setStatus(400);
@@ -64,7 +64,6 @@ public class CommentController {
                     comment.getCommentId(), comment.getMessage(), comment.getDateCreated(), comment.getGiphyUrl());
             dtoComments.add(commentsDto);
         }
-        System.out.println(comments);
         res.setStatus(200);
         return new HttpResponseDto(200, "Successfully retrieved all comments.", dtoComments);
     }

@@ -129,7 +129,6 @@ public class AuthService {
     public boolean checkTwoFactorAuthValidity(TwoFactorDto twoFactorDto){
         User currentUser = userService.getUserByUsername(twoFactorDto.getUsername());
         String currentUserSecretTwoFactorKey = currentUser.getSecretTwoFactorKey();
-        System.out.println(twoFactorDto.getSixDigitCode().equals(twoFactorAuthentication.getTOTPCode(currentUserSecretTwoFactorKey)));
         return twoFactorDto.getSixDigitCode().equals(twoFactorAuthentication.getTOTPCode(currentUserSecretTwoFactorKey));
     }
 
