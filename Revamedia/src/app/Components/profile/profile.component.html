@@ -49,25 +49,9 @@
             <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
           </div>
           <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
-
         </div>
-        <!-- <span id="profile-post-message" *ngIf="post?.image !== null">{{ post?.message }}</span> -->
       </div>
     </div>
-
-    <!-- <div class="shared-youtube-links-container">
-      <div class="youtube-post-wrapper" *ngFor="let post of posts">
-        <div class="youtube-post" *ngIf="post?.image === null" id="post-body">
-          <div class="youtube-link">
-            <div class="youtube-logo">
-              <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
-            </div>
-              <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
-          </div>
-          <p id="post-message" *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
-        </div>
-      </div>
-    </div> -->
 
     <!-- NO POST AVAILABLE START-->
     <div class="noPost" *ngIf="posts.length == 0">

@@ -363,7 +363,6 @@ export class HomeComponent implements OnInit {
 
   allUsers: any[] = [];
   searchUser(searchKey: string){
-    // this.data = this.searchService.searchUser(searchKey);
     this.searchService.searchUser(searchKey).subscribe(
       (response: any) => {
         this.allUsers = response;

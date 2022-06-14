@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from 'src/app/Shared/services/group-service/group.service';
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { NgForm } from '@angular/forms';

@@ -21,8 +21,6 @@ export class UserService {
       this.user = response.body;
       this.setCurrentUser(this.user);
     });
-
-    //sessionStorage.getItem('userid')
   }
 
   getCurrentUser(): BehaviorSubject<any> {
@@ -38,37 +36,6 @@ export class UserService {
       this.setCurrentUser(data.body.user);
     });
   }
-
-
-
-  //this.followers = new HashSet<>();
-  //      this.following = new HashSet<>();
-  //      this.postsOwned = new HashSet<>();
-
-  //      this.groupsJoined = new HashSet<>();
-  //      this.groupsOwned = new HashSet<>();
-
-  //      this.eventsJoined = new HashSet<>();
-  //      this.eventsOwned = new HashSet<>();
-
-  // this.conversations = new HashSet<>();
-
-  //     this.likedPosts = new ArrayList<>();
-  //1. when user logs in-
-  //2.you store their user id in local storage.
-  //3. call method to get user information.
-  //4. set user information into user
-
-  //user: any = user.getid(localsessionid);
-
-  //allUserPosts
-  //userTimeline
-  //likeapost()
-  //{
-  //    userTimeline.behavior.next(post.info)
-  // }
-  //
-
 
   getAllUsers(): Observable<any> {
     return this.http.get<any>(`${this.userURL}/allUsers`, { observe: `response` })
