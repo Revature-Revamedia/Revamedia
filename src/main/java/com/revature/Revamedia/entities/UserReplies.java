@@ -22,7 +22,7 @@ public class UserReplies implements Serializable {
     @Column(name = "reply_id")
     private Integer replyId;
 
-    @JsonIgnoreProperties({"userId", "email", "password", "firstName", "lastName", "dateCreated", "resetPasswordToken", "twoFactorAuth", "secretTwoFactorKey", "QRCodeUrl", "QRCodeImage", "followers", "following", "postsOwned", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned"})
+    @JsonIgnoreProperties({"email", "password", "firstName", "lastName", "dateCreated", "resetPasswordToken", "twoFactorAuth", "secretTwoFactorKey", "QRCodeUrl", "QRCodeImage", "followers", "following", "postsOwned", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned"})
     @ManyToOne()
     @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
     private User ownerId;

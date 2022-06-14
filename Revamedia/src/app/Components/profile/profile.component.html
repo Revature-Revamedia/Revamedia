@@ -46,7 +46,7 @@
             <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
           </div>
           <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
-          <p id="post-message" *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
+
         </div>
         <!-- <span id="profile-post-message" *ngIf="post?.image !== null">{{ post?.message }}</span> -->
       </div>

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:8080',
-  apiKey: 'M4g0SX27EqOQZ9eAipfpXcGPrfYAQsrI'
+  apiKey: 'M4g0SX27EqOQZ9eAipfpXcGPrfYAQsrI',
+  s3Url:'https://social-app-img.s3.amazonaws.com'
 };
 
 /*
