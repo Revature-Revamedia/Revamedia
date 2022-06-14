@@ -335,8 +335,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  public searchGiphyForReply() {
-    var search = document.getElementById('giphy-search-reply') as HTMLInputElement;
+  public searchGiphyForReply(type: any) {
+    var search = document.getElementById(`giphy-search-${type}`) as HTMLInputElement;
     let query = search?.value;
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
