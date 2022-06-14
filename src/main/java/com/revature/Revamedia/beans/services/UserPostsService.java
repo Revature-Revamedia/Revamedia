@@ -94,4 +94,9 @@ public class UserPostsService {
         userPostsRepository.delete(post);
     }
 
+    public void deleteById(Integer postId) {
+        userPostsRepository.deleteById(postId);
+    }
+
+
 }

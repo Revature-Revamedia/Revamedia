@@ -76,6 +76,8 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.getCurrentUserData();
         this.addComment = false;
+        this.selectedGiphy = "";
+        // this.userService.setCurrentUser(response.body);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -90,6 +92,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.getCurrentUserData();
         this.closeModal('edit', 'comment-modal');
+        this.selectedGiphy = "";
         // this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
@@ -103,6 +106,8 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.getCurrentUserData();
         this.closeModal('delete', 'comment-modal');
+        this.selectedGiphy = "";
+        // this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -133,7 +138,8 @@ export class HomeComponent implements OnInit {
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
-    )
+    );
+    //console.log(postForm.value);
   }
 
   onUpdatePost(postForm: NgForm): void {
@@ -169,12 +175,13 @@ export class HomeComponent implements OnInit {
         // console.log(replyForm.value);
         this.getCurrentUserData();
         this.addReply = false;
+        this.selectedGiphy = "";
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
-    )
-  } // ADD REPLY END
+    );
+  } // ADD COMMENT END
 
 
   // EDIT REPLY START
@@ -186,6 +193,7 @@ export class HomeComponent implements OnInit {
         // console.log(response);
         this.getCurrentUserData();
         this.closeModal('edit', 'reply-modal');
+        this.selectedGiphy = "";
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -201,6 +209,7 @@ export class HomeComponent implements OnInit {
         // console.log(response);
         this.getCurrentUserData();
         this.closeModal('delete', 'reply-modal');
+        this.selectedGiphy = "";
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -388,9 +397,9 @@ export class HomeComponent implements OnInit {
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
-    )
-
+    );
   }
+
   public editVideo(form: NgForm){
     var editYoutubeDto = {
       postId: form.value.postId,
