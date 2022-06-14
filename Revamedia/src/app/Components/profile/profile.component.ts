@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 
@@ -13,7 +13,7 @@ import { UserService } from 'src/app/Shared/services/user-service/user.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private ARouter: ActivatedRoute, private router: Router, private userService: UserService, public animationService: AnimationService) { }
+  constructor(private ARouter: ActivatedRoute, private userService: UserService, public animationService: AnimationService) { }
 
   ngOnInit(): void {
     this.getUserData(); // Gets profile
@@ -36,7 +36,6 @@ export class ProfileComponent implements OnInit {
         this.posts = response?.postsOwned;
         this.posts = this.posts.flat();
         this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
-        console.log(this.user.userId);
         this.followerLength = response.followers.length;
         this.followingLength = response.following.length;
       },
@@ -86,7 +85,6 @@ export class ProfileComponent implements OnInit {
   public followUser(follow: NgForm){
     this.userService.followUser(follow.value).subscribe(
       (response: any) => {
-        console.log(response);
         this.followerLength = response.followers.length;
         this.getUserData();
         this.isFollowing();
@@ -97,10 +95,8 @@ export class ProfileComponent implements OnInit {
     )
   }
   public unfollowUser(unfollow: NgForm){
-    console.log(unfollow.value)
     this.userService.unfollowUser(unfollow.value).subscribe(
       (response: any) => {
-        console.log(response);
         this.followerLength = response.followers.length;
         this.getUserData();
         this.isFollowing();
@@ -131,9 +127,7 @@ export class ProfileComponent implements OnInit {
     let id: any = this.ARouter.snapshot.paramMap.get('id');
     this.userService.isFollowing(id).subscribe(
       (response: any) => {
-        console.log(response);
         this.follow = response.data;
-        console.log(this.follow);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
