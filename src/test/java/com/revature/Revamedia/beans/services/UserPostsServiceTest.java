@@ -5,170 +5,205 @@
  */
 package com.revature.Revamedia.beans.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import com.revature.Revamedia.beans.repositories.UserPostsRepository;
 import com.revature.Revamedia.beans.repositories.UserRepository;
 import com.revature.Revamedia.dtos.UpdatePostLikesDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserPosts;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
-
-@SpringBootTest
+/**
+* @Author: Qiang Gao
+*/
 @ExtendWith(MockitoExtension.class)
 public class UserPostsServiceTest {
+    UserPostsService userPostsService;
 
-    User user;
-    UserPosts userPosts;
-
-    @MockBean
+    @Mock
     UserPostsRepository userPostsRepository;
 
-    @MockBean
+    @Mock
     UserRepository userRepository;
 
     @BeforeEach
-    public void beforeEach(){
-        user = new User();
+    public void beforeEach() {
+        userPostsService = new UserPostsService(userPostsRepository, userRepository);
+
+    }
+
+    @Test
+    public void getPostByIdTest() {
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+
+        when(userPostsRepository.getById(1)).thenReturn(post);
+
+        assert (userPostsService.getPostById(1).getPostId() == 1);
+
+    }
+
+    @Test
+    public void testSave() {
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+
+        when(userPostsRepository.save(post)).thenReturn(post);
+
+        assertEquals(userPostsService.save(post), post);
+    }
+
+    @Test
+    public void testUpdate() {
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+
+        when(userPostsRepository.save(post)).thenReturn(post);
+
+        assertEquals(userPostsService.update(post), post);
+    }
+
+    @Test
+    public void testGetPostsByUserId() {
+        List<UserPosts> posts = new ArrayList<>();
+
+        User user = new User();
         user.setUserId(1);
-        user.setUsername("username");
-        user.setPassword("password");
-
-        userPosts = new UserPosts();
-        userPosts.setPostId(1);
-
-
-    }
-
-    @Test
-    public void unlikeAPostSuccess(@Autowired UserPostsService userPostsService){
-        UpdatePostLikesDto dto = new UpdatePostLikesDto(user.getUserId(), userPosts.getPostId());
-
-        Set<User> usersLiked = userPosts.getLikes();
-        usersLiked.add(user);
-        userPosts.setLikes(usersLiked);
-        when(userPostsRepository.save(userPosts)).thenReturn(userPosts);
-        userPostsRepository.save(userPosts);
-        verify(userPostsRepository, times(1)).save(userPosts);
-
-
-        List<UserPosts> postsLiked = user.getLikedPosts();
-        postsLiked.add(userPosts);
-        user.setLikedPosts(postsLiked);
-        when(userRepository.save(user)).thenReturn(user);
-        userRepository.save(user);
-        verify(userRepository, times(1)).save(user);
-
-        when(userRepository.getById(1)).thenReturn(user);
-        when(userPostsRepository.getById(1)).thenReturn(userPosts);
-
-        UserPosts returnedPost = userPostsService.updatePostLikes(dto);
-
-        Assertions.assertEquals(userPosts, returnedPost);
-
-    }
-
-    @Test
-    public void likeAPostSuccess(@Autowired UserPostsService userPostsService){
-        UpdatePostLikesDto dto = new UpdatePostLikesDto(user.getUserId(), userPosts.getPostId());
-
-
-        when(userPostsRepository.save(userPosts)).thenReturn(userPosts);
-        userPostsRepository.save(userPosts);
-        verify(userPostsRepository, times(1)).save(userPosts);
-
-
-        when(userRepository.save(user)).thenReturn(user);
-        userRepository.save(user);
-        verify(userRepository, times(1)).save(user);
-
-        when(userRepository.getById(1)).thenReturn(user);
-        when(userPostsRepository.getById(1)).thenReturn(userPosts);
-
-        UserPosts returnedPost = userPostsService.updatePostLikes(dto);
-
-        Assertions.assertEquals(userPosts, returnedPost);
-
-    }
-
-    @Test
-    public void saveSuccess(@Autowired UserPostsService userPostsService){
-        when(userPostsRepository.save(userPosts)).thenReturn(userPosts);
-
-        UserPosts returnedPosts = userPostsService.save(userPosts);
-
-        Assertions.assertEquals(userPosts, returnedPosts);
-        verify(userPostsRepository, times(1)).save(userPosts);
-    }
-
-    @Test
-    public void getPostByIdSuccess(@Autowired UserPostsService userPostsService){
-        when(userPostsRepository.getById(1)).thenReturn(userPosts);
-
-        UserPosts returnedPosts = userPostsService.getPostById(1);
-
-        Assertions.assertEquals(userPosts, returnedPosts);
-        verify(userPostsRepository, times(1)).getById(1);
-    }
-
-    @Test
-    public void getAllPostsSuccessfully(@Autowired UserPostsService userPostsService) {
-        List<UserPosts>postList = new ArrayList<>();
-        User user1 = new User();
-        user1.setFirstName("Brandon");
-        user1.setUsername("b1");
-        user1.setPassword("password");
-
-        User user2 = new User();
-        user2.setFirstName("gio");
-        user2.setUsername("g1");
-        user2.setPassword("password");
-
-        UserPosts post1 = new UserPosts();
-        post1.setOwnerId(user1);
-
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+        post.setOwnerId(user);
         UserPosts post2 = new UserPosts();
-        post2.setOwnerId(user1);
+        post2.setPostId(2);
+        post2.setOwnerId(user);
 
-        UserPosts post3 = new UserPosts();
-        post3.setOwnerId(user2);
-        postList.add(post1);
+        posts.add(post);
+        posts.add(post2);
 
-        postList.add(post2);
+        when(userPostsRepository.getUserPostsByUser(1)).thenReturn(posts);
 
-        when(userPostsRepository.findAll()).thenReturn(postList);
-
-        List<UserPosts> returnedList = userPostsService.getAllPosts();
-
-        assertEquals(postList, returnedList);
-        verify(userPostsRepository, times(1)).findAll();
+        assertEquals(userPostsService.getPostsByUser(1), posts);
     }
-
 
     @Test
-    void delete(@Autowired UserPostsService userPostsService) {
-        User user1 = new User();
-        user1.setFirstName("Brandon");
-        user1.setUsername("b1");
-        user1.setPassword("password");
+    public void getAllPosts() {
+        List<UserPosts> posts = new ArrayList<>();
 
-        UserPosts post1 = new UserPosts();
-        post1.setOwnerId(user1);
+        User user = new User();
+        user.setUserId(1);
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+        post.setOwnerId(user);
+        UserPosts post2 = new UserPosts();
+        post2.setPostId(2);
+        post2.setOwnerId(user);
 
-        userPostsService.delete(post1);
-        verify(userPostsRepository, times(1)).delete(post1);
+        posts.add(post);
+        posts.add(post2);
+
+        when(userPostsRepository.findAll()).thenReturn(posts);
+
+        assertEquals(userPostsService.getAllPosts(), posts);
     }
-}
 
+    @Test
+    public void TestDeleteAllPosts() {
+        List<UserPosts> posts = new ArrayList<>();
+
+        User user = new User();
+        user.setUserId(1);
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+        post.setOwnerId(user);
+        UserPosts post2 = new UserPosts();
+        post2.setPostId(2);
+        post2.setOwnerId(user);
+
+        posts.add(post);
+        posts.add(post2);
+
+        doAnswer(invocation -> {
+            posts.clear();
+            return null;
+        }).when(userPostsRepository).deleteAll();
+
+        userPostsService.deleteAllPosts(posts);
+
+        assertEquals(posts.size(), 0);
+    }
+
+    @Test
+    public void testDeletePost() {
+        List<UserPosts> posts = new ArrayList<>();
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+        posts.add(post);
+
+        doAnswer(invocation -> {
+            posts.remove(post);
+            return null;
+        }).when(userPostsRepository).delete(post);
+
+        userPostsService.delete(post);
+
+        assertEquals(posts.size(), 0);
+    }
+
+    @Test
+    public void testGetPostByOwnerId() {
+        List<UserPosts> posts = new ArrayList<>();
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+        posts.add(post);
+
+        doAnswer(invocation -> {
+            posts.remove(post);
+            return null;
+        }).when(userPostsRepository).deleteById(1);
+
+        userPostsService.deleteById(1);
+
+        assertEquals(posts.size(), 0);
+
+    }
+
+    // @Disabled
+    // @Test
+    // public void testUpdatePostLikes() {
+    //     UpdatePostLikesDto dto = new UpdatePostLikesDto();
+    //     dto.setUserId(1);
+
+    //     UserPosts post = new UserPosts();
+
+    //     User user = new User();
+    //     user.setUserId(1);
+
+    //     Set<User> users = new HashSet<>();
+    //     users.add(user);
+
+    //     List<UserPosts> posts = new ArrayList<>();
+    //     posts.add(post);
+
+    //     post.setLikes(users);
+
+    //     user.setLikedPosts(posts);
+
+    //     when(userPostsRepository.getById(1)).thenReturn(post);
+
+    //     assertEquals(userPostsService.updatePostLikes(dto), post);
+
+    // }
+}
