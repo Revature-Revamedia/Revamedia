@@ -14,6 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.revature.Revamedia.beans.repositories.UserFollowsRepository;
 import com.revature.Revamedia.entities.UserFollows;
 
+/**
+* @Author: Qiang Gao
+*/
 @ExtendWith(MockitoExtension.class)
 public class UserFollowsServiceTest {
     private UserFollowsService userFollowsService;
@@ -52,14 +55,13 @@ public class UserFollowsServiceTest {
     @Test
     void testSave() {
         UserFollows follow = new UserFollows();
-        
+
         UserFollows savedFollow = new UserFollows();
         savedFollow.setId(1);
-        
+
         when(userFollowsRepository.save(follow)).thenReturn(savedFollow);
 
         assert (userFollowsService.save(follow).getId() == 1);
-
 
     }
 
@@ -71,12 +73,9 @@ public class UserFollowsServiceTest {
         UserFollows updatedFollow = new UserFollows();
         updatedFollow.setId(1);
 
-      
-
         when(userFollowsRepository.save(follow)).thenReturn(updatedFollow);
 
         assert (userFollowsService.update(follow).getId() == 1);
-
 
     }
 }

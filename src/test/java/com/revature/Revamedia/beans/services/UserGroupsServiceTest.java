@@ -14,7 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.revature.Revamedia.beans.repositories.UserGroupsRepository;
 import com.revature.Revamedia.entities.UserGroups;
 
-
+/**
+* @Author: Qiang Gao
+*/
 @ExtendWith(MockitoExtension.class)
 public class UserGroupsServiceTest {
 

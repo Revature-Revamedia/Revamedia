@@ -1,116 +1,77 @@
 package com.revature.Revamedia.beans.services;
 
-import com.revature.Revamedia.beans.repositories.UserCommentsRepository;
-import com.revature.Revamedia.entities.User;
-import com.revature.Revamedia.entities.UserComments;
-import com.revature.Revamedia.entities.UserPosts;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest
+import com.revature.Revamedia.beans.repositories.UserCommentsRepository;
+import com.revature.Revamedia.entities.UserComments;
+
+
 @ExtendWith(MockitoExtension.class)
 public class UserCommentsServiceTest {
 
+    private UserCommentsService userCommentsService;
 
-    @MockBean
-    UserCommentsRepository userCommentsRepositoryMock;
-
-    User USER_1;
-    UserPosts POST_1;
-    UserComments COMMENT_1;
-    UserComments COMMENT_2;
-
+    @Mock
+    UserCommentsRepository userCommentsRepository;
 
     @BeforeEach
-    public void beforeEach() {
-
-
-        USER_1 = new User(1, "test", "test@aol.com", "pass", "test", "name", null, null, null, null, null, null, null, null, null, null, null);
-        POST_1 = new UserPosts(1, USER_1, null, "test message", null, null, null, null, null, null);
-        COMMENT_1 = new UserComments(1, USER_1, POST_1, null, "test comment", null, null);
-        COMMENT_2 = new UserComments(2, USER_1, POST_1, null, "test comment number 2", null, null);
-
+    public void setup() {
+        userCommentsService = new UserCommentsService(userCommentsRepository);
     }
 
-
     @Test
-    @DisplayName("Test the comment is retrieved correctly by its ID")
-    public void getCommentByIdSuccessfully(@Autowired UserCommentsService userCommentsService) {
-
-
+    public void testGetCommentById() {
+        Integer id = 1;
         UserComments comment = new UserComments();
-        comment.setCommentId(15);
-        comment.setMessage("The Test Comment");
+        comment.setCommentId(id);
+        when(userCommentsRepository.getById(id)).thenReturn(comment);
 
-        //given(userCommentsRepository.findById(15)).willReturn(Optional.of(comment));
-
-        when(userCommentsRepositoryMock.getById(15)).thenReturn(comment);
-
-        UserComments searchedComment = userCommentsService.getCommentById(15);
-
-        assertEquals(comment, searchedComment);
+        assert userCommentsService.getCommentById(id).equals(comment);
     }
 
     @Test
-    @DisplayName("Test that all comments are retrieved")
-    public void getAllCommentsSuccessfully(@Autowired UserCommentsService userCommentsService) {
-        List<UserComments> commentList = new ArrayList<>();
-        commentList.add(COMMENT_1);
-        commentList.add(COMMENT_2);
+    public void testSave() {
+        UserComments comment = new UserComments();
+        when(userCommentsRepository.save(comment)).thenReturn(comment);
 
-
-        when(userCommentsRepositoryMock.findAll()).thenReturn(commentList);
-
-        List<UserComments> returnedList = userCommentsService.getAllComment();
-
-        assertEquals(commentList, returnedList);
-        verify(userCommentsRepositoryMock, times(1)).findAll();
-
-    }
-
-
-    //test that comment gets created
-    @Test
-    public void commentGetsReturnedAfterCreation(@Autowired UserCommentsService userCommentsService) {
-
-        UserComments commentToCreate = COMMENT_1;
-
-        when(userCommentsRepositoryMock.save(any())).thenReturn(commentToCreate);
-        UserComments comment = userCommentsService.save(commentToCreate);
-
-        assertEquals(commentToCreate, comment);
+        assert userCommentsService.save(comment).equals(comment);
     }
 
     @Test
-    public void updateCallsRepoAndReturnsComment(@Autowired UserCommentsService userCommentsService) {
-        UserComments commentToUpdate = COMMENT_1;
-        when(userCommentsRepositoryMock.save(commentToUpdate)).thenReturn(commentToUpdate);
+    public void testUpdate() {
+        UserComments comment = new UserComments();
+        when(userCommentsRepository.save(comment)).thenReturn(comment);
 
-        UserComments updatedComment = userCommentsService.save(commentToUpdate);
-        assertEquals(commentToUpdate, updatedComment);
-        verify(userCommentsRepositoryMock, times(1)).save(commentToUpdate);
+        assert userCommentsService.update(comment).equals(comment);
     }
 
     @Test
-    @DisplayName("Test that a comment is deleted")
-    void delete(@Autowired UserCommentsService userCommentsService) {
-        UserComments userComments = new UserComments(2, USER_1, POST_1, null,
-                "test comment number 2", null, null);
+    public void testGetAllComment() {
+        List<UserComments> comments = new ArrayList<>();
+        comments.add(new UserComments());
+        comments.add(new UserComments());
+        when(userCommentsRepository.findAll()).thenReturn(comments);
 
-        userCommentsService.delete(userComments);
-        verify(userCommentsRepositoryMock, times(1)).delete(userComments);
+        assert userCommentsService.getAllComment().equals(comments);
+    }
+
+    @Test
+    public void testDelete() {
+        UserComments comment = new UserComments();
+
+        doNothing().when(userCommentsRepository).delete(comment);
+
+        userCommentsService.delete(comment);
+
     }
 }
