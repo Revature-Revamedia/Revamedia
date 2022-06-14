@@ -125,7 +125,7 @@ $darkgrey: rgb(61,66,74);
         margin-bottom: 1rem;
       }
 
-      .Theme,.TwoFactor, .GenerateQrCode{
+      .Theme,.TwoFactor,.GenerateQrCode, .QrCode{
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -166,6 +166,22 @@ $darkgrey: rgb(61,66,74);
             border-radius: 5px;
             &:hover{
               background: $orange;
+            }
+          }
+          img{
+            width: 12rem;
+            height: 12rem;
+            object-fit: cover;
+          }
+          span {
+            width: 100%;
+            text-align: right;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3fb3e1;
+            cursor: pointer;
+            &:hover {
+              color: #eda144;
             }
           }
         }

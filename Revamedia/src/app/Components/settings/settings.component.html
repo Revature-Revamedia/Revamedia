@@ -16,7 +16,7 @@
       <div class="TwoFactor" id="settingsContainer">
         <div class="title">
           <h5>Two-Factor Authentication
-            <fa-icon [icon]="faInfoCircle" id="info-icon"></fa-icon>
+            <fa-icon [icon]="faInfoCircle" (click)="showInfo('two-factor')" id="info-icon"></fa-icon>
           </h5>
         </div>
         <div class="info1" id="two-factor-info">
@@ -25,18 +25,33 @@
           </span>
         </div>
         <div class="action">
-          <h3 *ngIf="twoFactor == false">Enable</h3>
-          <h3 *ngIf="twoFactor == true">Disable</h3>
+          <h3 *ngIf="user?.twoFactorAuth == false">Enable</h3>
+          <h3 *ngIf="user?.twoFactorAuth == true">Disable</h3>
           <button (click)="enableTwoFactorAuth()">
             <fa-icon *ngIf="twoFactor == true" [icon]="faUserShield" size="lg"></fa-icon>
             <fa-icon *ngIf="twoFactor == false" [icon]="faUserShield" size="lg"></fa-icon>
           </button>
         </div>
       </div>
-      <div class="GenerateQrCode" id="settingsContainer">
+
+      <div class="QrCode" *ngIf="user?.twoFactorAuth == true">
+        <div class="title">
+          <h5>View QrCode</h5>
+        </div>
+        <div class="action" id="settingsContainer">
+          <span (click)="toggleQrCode()">
+            <fa-icon *ngIf="showQrCode === false" [icon]="faEye"></fa-icon>
+            <fa-icon *ngIf="showQrCode === true" [icon]="faEyeSlash"></fa-icon>
+            {{showQrCode ? 'Hide QrCode' : 'View QrCode' }}
+          </span>
+          <img *ngIf="showQrCode" src="data:image/png;base64,{{user?.qrcodeImage}}" />
+        </div>
+      </div>
+
+      <div class="GenerateQrCode" *ngIf="user?.twoFactorAuth == true" id="settingsContainer">
         <div class="title">
           <h5>
-            Generate QRCode
+            Generate QrCode
             <fa-icon [icon]="faInfoCircle" (click)="showInfo('generate-code')" id="info-icon"></fa-icon>
           </h5>
         </div>
@@ -52,9 +67,7 @@
           </button>
         </div>
       </div>
-      <div>
-        <img src="data:image/png;base64,{{image.data}}" />
-      </div>
+
       <div class="Theme">
         <div class="title">
           <h5>Change Theme
