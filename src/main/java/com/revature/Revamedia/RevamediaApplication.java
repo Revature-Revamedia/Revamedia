@@ -26,7 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-@SpringBootApplication(scanBasePackages = "com.revature.Revamedia.beans")
+@SpringBootApplication(scanBasePackages = "com.revature.Revamedia")
 public class RevamediaApplication {
 
         public static void main(String[] args) throws IOException, WriterException {
