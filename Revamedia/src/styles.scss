@@ -38,7 +38,7 @@ $darkgrey: rgb(61,66,74);
     transition: all 0.4s ease-in-out;
     background-color: rgb(31, 31, 31);
     color: white;
-    a{
+    a,p{
       color: white;
       &:hover{
         color: $blue;

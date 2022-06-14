@@ -459,7 +459,11 @@ $darkgrey: rgb(61, 66, 74);
       }
 
       //  ADD COMMENT START
+      .showAddComment{
+        display: inline-block;
+      }
       .add-comment {
+        display: none;
         margin: .5rem 0;
         width: 100%;
         background: white;

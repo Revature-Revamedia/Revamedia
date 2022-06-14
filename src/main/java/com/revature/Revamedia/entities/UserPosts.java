@@ -56,7 +56,7 @@ public class UserPosts implements Serializable {
     @Column(name = "youtube_link")
     private String youtubeLink;
 
-    @Column(name = "image")
+    @Column(name = "image", length = 500)
     private String image;
 
     @JsonIgnoreProperties({"followers", "following", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned", "postsOwned"})
