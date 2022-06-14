@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
+
 describe('AuthenticationService', () => {
   let authService: AuthenticationService;
-  let httpSpy: { post: jasmine.Spy };
   let routerSpy: { navigateByUrl: jasmine.Spy };
   let cookieServiceSpy: { deleteAll: jasmine.Spy };
+  let httpSpy: { post: jasmine.Spy };
   let userServiceSpy: {
     getUser: jasmine.Spy,
     setCurrentUser: jasmine.Spy
