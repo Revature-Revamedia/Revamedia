@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
+import { UploadService } from 'src/app/Shared/services/upload.service';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 
 import { SettingsComponent } from './settings.component';
@@ -13,6 +14,7 @@ describe('SettingsComponent', () => {
   let fixture: ComponentFixture<SettingsComponent>;
   let animationServiceSpy: { fadeIn: jasmine.Spy };
   let qrcodeServiceSpy: { enableTwoFactorAuth: jasmine.Spy };
+  let uploadServiceSpy: { delete: jasmine.Spy, upload: jasmine.Spy };
   let userServiceSpy: {
     getUser: jasmine.Spy,
     updateUser: jasmine.Spy
@@ -22,6 +24,7 @@ describe('SettingsComponent', () => {
     userServiceSpy = jasmine.createSpyObj('UserService', ['getUser', 'updateUser']);
     animationServiceSpy = jasmine.createSpyObj('AnimationServiceSpy', ['fadeIn']);
     qrcodeServiceSpy = jasmine.createSpyObj('QrcodeServiceSpy', ['enableTwoFactorAuth']);
+    uploadServiceSpy = jasmine.createSpyObj('UploadServiceSpy', ['delete', 'upload']);
 
     await TestBed.configureTestingModule({
       declarations: [ SettingsComponent ],
@@ -29,7 +32,8 @@ describe('SettingsComponent', () => {
       providers: [
         { provide: UserService, useValue: userServiceSpy },
         { provide: AnimationService, useValue: animationServiceSpy },
-        { provide: QrcodeService, useValue: qrcodeServiceSpy }
+        { provide: QrcodeService, useValue: qrcodeServiceSpy },
+        { provide: UploadService, useValue: uploadServiceSpy },
       ]
     })
     .compileComponents();
@@ -38,7 +42,6 @@ describe('SettingsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SettingsComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
   });
 
   it('should create', () => {

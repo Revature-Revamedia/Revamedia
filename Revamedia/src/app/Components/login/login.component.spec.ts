@@ -34,7 +34,7 @@ describe('LoginComponent', () => {
         password: "Password1!"
       }
     };
-    component.logIn(testForm);
+    // component.TEMPLogIn(testForm);
     fixture.whenStable().then(() => {
       expect(component.auth.login(testForm)).toHaveBeenCalled
     })
