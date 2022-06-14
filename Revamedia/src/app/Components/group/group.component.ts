@@ -14,7 +14,13 @@ import { NgForm } from '@angular/forms';
 })
 export class GroupComponent implements OnInit {
 
-  constructor(public groupService: GroupService,private ARouter: ActivatedRoute, private router: Router, public userService: UserService, public animationService: AnimationService) { }
+  constructor(
+    public groupService: GroupService,
+    private ARouter: ActivatedRoute,
+    private router: Router,
+    public userService: UserService,
+    public animationService: AnimationService)
+  { }
 
   ngOnInit():void {
     this.getGroupData();
