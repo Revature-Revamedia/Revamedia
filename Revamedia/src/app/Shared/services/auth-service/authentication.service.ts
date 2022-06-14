@@ -48,23 +48,20 @@ export class AuthenticationService {
       'withCredentials': true, 'observe': `response`
     }).subscribe((response: any) => {
       let loggedInUser: any;
-      console.log(response);
       if(response.body.status != 'redirect'){
-        sessionStorage.setItem('userId', response.body.userId.toString());
+        sessionStorage.setItem('userId', response.body.userId);
         sessionStorage.setItem('username', response.body.username);
         sessionStorage.setItem('loggedIn', "1");
-        console.log(sessionStorage.getItem('username'));
         loggedInUser = this.userService.getUser();
-        console.log(loggedInUser);
         this.userService.setCurrentUser(loggedInUser);
-  
+
         this.loggedIn.next(true);
         this.router.navigateByUrl('/home');
       }
       else{
         this.router.navigateByUrl('/login/twofa', {state : { username : response.body.username}});
       }
-      
+
     }, (error: HttpErrorResponse) => {
       document.getElementById('invalid')!.style.display = "flex";
       console.log(error);
@@ -73,7 +70,6 @@ export class AuthenticationService {
   }
 
   public loginWithTwoFactor(userData: any,twoFactorForm: NgForm) {
-    console.log("service ", userData)
     let data : any = {
       "username" : userData.username,
       "sixDigitCode" : twoFactorForm.value.sixDigitCode
@@ -82,25 +78,21 @@ export class AuthenticationService {
     this.http.post<any>(this.authUrl+"/twoFA", data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-      })
+      }),
+      'withCredentials': true, 'observe': `response`
     }).subscribe((response: any) => {
       let loggedInUser: any;
       console.log(response);
-
-      sessionStorage.setItem('userId', response.userId);
-      sessionStorage.setItem('username', response.username);
-      sessionStorage.setItem('email', response.email);
+      sessionStorage.setItem('userId', response.body.userId);
+      sessionStorage.setItem('username', response.body.username);
+      sessionStorage.setItem('email', response.body.email);
       sessionStorage.setItem('loggedIn', "1");
-      console.log(sessionStorage.getItem('username'));
       loggedInUser = this.userService.getUser();
-      console.log(loggedInUser);
       this.userService.setCurrentUser(loggedInUser);
 
       this.loggedIn.next(true);
       this.router.navigateByUrl('/home');
-      
-      
-      
+
     }, (error: HttpErrorResponse) => {
       document.getElementById('invalid')!.style.display = "flex";
       console.log(error);

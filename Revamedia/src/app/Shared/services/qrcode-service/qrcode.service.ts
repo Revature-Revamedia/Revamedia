@@ -15,16 +15,17 @@ export class QrcodeService {
   QRCodeUrl = `${environment.apiBaseUrl}/auth`;
 
   enableTwoFactorAuth() : Observable<any>{
-    console.log("qrcode enable")
     let authDto = {
+      mode : "enable",
       twoFactorAuth: true
     }
     return this.http.post<any>(this.QRCodeUrl+"/enable",authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}),'withCredentials': true } );
-  
+
   }
 
   disableTwoFactorAuth() : Observable<any>{
     let authDto = {
+      mode : "disable",
       twoFactorAuth: false
     }
     return this.http.post<any>(this.QRCodeUrl+"/disable", authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}),'withCredentials': true});
@@ -32,6 +33,7 @@ export class QrcodeService {
 
   recreateQRCode(): Observable<any> {
     let authDto = {
+      mode : "recreate",
       twoFactorAuth: true
     }
     return this.http.post<any>(this.QRCodeUrl+"/recreate", authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}), 'withCredentials': true});

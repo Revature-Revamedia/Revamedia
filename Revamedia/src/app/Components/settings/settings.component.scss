@@ -37,6 +37,7 @@ $darkgrey: rgb(61,66,74);
     align-items: center;
 
     .user-settings{
+      margin-top: 2rem;
       width: 75%;
       padding: 2rem;
       border: 1px solid $lightgrey;
@@ -70,6 +71,7 @@ $darkgrey: rgb(61,66,74);
           border-radius: 50%;
         }
       }
+
       .user-settings-title{
         width: 100%;
         display: flex;
@@ -125,7 +127,7 @@ $darkgrey: rgb(61,66,74);
         margin-bottom: 1rem;
       }
 
-      .Theme,.TwoFactor, .GenerateQrCode{
+      .Theme,.TwoFactor,.GenerateQrCode, .QrCode{
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -166,6 +168,23 @@ $darkgrey: rgb(61,66,74);
             border-radius: 5px;
             &:hover{
               background: $orange;
+            }
+          }
+          img{
+            margin-left: 1rem;
+            width: 12rem;
+            height: 12rem;
+            object-fit: cover;
+          }
+          span {
+            width: 100%;
+            text-align: right;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3fb3e1;
+            cursor: pointer;
+            &:hover {
+              color: #eda144;
             }
           }
         }
@@ -327,31 +346,78 @@ $darkgrey: rgb(61,66,74);
           border: 1.2px solid $blue;
         }
       }
-      .password{
-        width: 60%;
+    }
+    .user-settings-row-file{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $lightgrey;
+      padding: .5rem 0;
+      .left{
+        width: 50%;
         display: flex;
-        flex-direction: column;
-        align-items:flex-end;
-        input{
-          width: 100%;
-          border: none;
-          outline: none;
-          padding: .3rem;
-          font-size: 1.1rem;
-          color: $darkgrey;
-          border: 1.2px solid $grey;
-          border-radius: 4px;
-          &:focus{
-            border: 1.2px solid $blue;
-          }
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        .file {
+          opacity: 0;
+          width: 0.1px;
+          height: 0.1px;
+          position: absolute;
         }
-        p{
-          cursor: pointer;
+        .file-input label {
+          margin: .5rem 0;
+          display: block;
+          position: relative;
+          height: 2rem;
+          width: 7rem;
+          border-radius: 8px;
+          background: $lightgrey;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
           font-size: .9rem;
           color: $darkgrey;
-          &:hover{
-            color: $blue;
-          }
+          cursor: pointer;
+          transition: transform .2s ease-out;
+        }
+
+        .file-name {
+          font-size: 0.85rem;
+          color: #555;
+        }
+
+        input:hover + label,
+        input:focus + label {
+          transform: scale(1.02);
+        }
+
+        /* Adding an outline to the label on focus */
+        input:focus + label {
+          outline: 1px solid #000;
+          outline: -webkit-focus-ring-color auto 2px;
+        }
+        img{
+          margin-left: 1rem;
+          width: 2rem;
+          height: 2rem;
+          border-radius: 50%;
+          border: 1px solid $orange;
+        }
+      }
+      .uploadBtn{
+        border: none;
+        padding: .5rem 1rem;
+        border-radius: 4px;
+        background: $lightgrey;
+        font-size: 1rem;
+        color: $darkgrey;
+        cursor: pointer;
+        &:hover{
+          background: $grey;
         }
       }
     }

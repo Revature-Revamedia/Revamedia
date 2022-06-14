@@ -36,7 +36,7 @@ public class UserPosts implements Serializable {
     @Column(name = "post_id")
     private Integer postId;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"email", "password", "firstName", "lastName", "dateCreated", "resetPasswordToken", "twoFactorAuth", "secretTwoFactorKey", "QRCodeUrl", "QRCodeImage", "followers", "following", "postsOwned", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned"})
     @ManyToOne()
     @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
     private User ownerId;
@@ -56,7 +56,7 @@ public class UserPosts implements Serializable {
     @Column(name = "youtube_link")
     private String youtubeLink;
 
-    @Column(name = "image")
+    @Column(name = "image", length = 500)
     private String image;
 
     @JsonIgnoreProperties({"followers", "following", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned", "postsOwned"})

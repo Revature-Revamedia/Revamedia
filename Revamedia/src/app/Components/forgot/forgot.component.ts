@@ -11,7 +11,10 @@ import { AnimationService } from 'src/app/Shared/services/animation/animation.se
 })
 export class ForgotComponent implements OnInit {
 
-  constructor(private forgotService : ForgotService, public animationService: AnimationService) { }
+  constructor(
+    private forgotService : ForgotService,
+    public animationService: AnimationService)
+  { }
 
   ngOnInit(): void {
   }

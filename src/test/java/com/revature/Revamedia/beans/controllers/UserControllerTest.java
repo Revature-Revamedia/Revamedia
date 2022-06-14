@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.Revamedia.beans.services.UserFollowsService;
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.UpdateUserDto;
 import com.revature.Revamedia.dtos.ViewAllUserDto;
@@ -38,6 +39,8 @@ public class UserControllerTest {
 
     @Mock
     private BCryptPasswordEncoder mockEncoder;
+    @MockBean
+    private UserFollowsService userFollowsService;
 
     @MockBean
     private UserService userServiceMock;

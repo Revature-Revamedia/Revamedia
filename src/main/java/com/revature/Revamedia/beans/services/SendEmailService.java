@@ -34,8 +34,6 @@ public class SendEmailService {
             token.append(stringToRandomize.charAt(random.nextInt(stringToRandomize.length())));
         }
 
-        System.out.println(token);
-
         if (userService.existsByEmail(email)){
             User user = userService.findByEmail(email);
             user.setResetPasswordToken(token.toString());

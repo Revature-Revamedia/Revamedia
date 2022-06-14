@@ -64,13 +64,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "followedId", cascade = CascadeType.ALL)
     private Set<UserFollows> followers;
 
-//    @JsonManagedReference
     @OneToMany(mappedBy = "followerId", cascade = CascadeType.ALL)
     private Set<UserFollows> following;
 
-
-    // @Transient
-    //@JsonManagedReference
     @JsonIgnoreProperties({""})
     @OneToMany(mappedBy = "ownerId")
     private Set<UserPosts> postsOwned;
@@ -114,15 +110,10 @@ public class User implements Serializable {
         this.followers = new HashSet<>();
         this.following = new HashSet<>();
         this.postsOwned = new HashSet<>();
-
         this.groupsJoined = new HashSet<>();
         this.groupsOwned = new HashSet<>();
-
         this.eventsJoined = new HashSet<>();
         this.eventsOwned = new HashSet<>();
-
-//        this.conversations = new HashSet<>();
-
         this.likedPosts = new ArrayList<>();
     }
 
@@ -146,7 +137,6 @@ public class User implements Serializable {
         this.groupsOwned = groupsOwned;
         this.eventsJoined = eventsJoined;
         this.eventsOwned = eventsOwned;
-        // this.conversations = conversations;
     }
 
     public Integer getUserId() {

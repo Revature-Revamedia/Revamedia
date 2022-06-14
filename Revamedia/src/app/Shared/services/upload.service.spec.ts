@@ -1,20 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
-import { SearchService } from './search.service';
+import { UploadService } from './upload.service';
 
-describe('SearchService', () => {
-  let service: SearchService;
-  let httpClientSpy: { post: jasmine.Spy };
+describe('UploadService', () => {
+  let service: UploadService;
+
+  let httpClientSpy: { post: jasmine.Spy, delete: jasmine.Spy };
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClientSpy', ['post']);
+    httpClientSpy = jasmine.createSpyObj('HttpClientSpy', ['post', 'delete']);
+
     TestBed.configureTestingModule({
       providers: [
         { provide: HttpClient, useValue: httpClientSpy },
       ]
     });
-    service = TestBed.inject(SearchService);
+    service = TestBed.inject(UploadService);
   });
 
   it('should be created', () => {

@@ -26,7 +26,7 @@ export class ResetService {
         'Content-Type': 'application/json',
       }),
       'withCredentials': true
-    }).subscribe((response: any) => {console.log(response)});
+    }).subscribe((response: any) => {});
   }
 }
 
