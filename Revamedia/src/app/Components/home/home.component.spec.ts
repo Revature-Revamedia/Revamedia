@@ -351,7 +351,7 @@ describe('HomeComponent', () => {
   it('#toggleHideComments should toggle boolean value in component.viewComments', () => {
     component.viewComments = true;
 
-    component.toggleHideComments();
+    component.toggleHideComments(44);
 
     expect(component.viewComments).toBeFalse();
   });
