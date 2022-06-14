@@ -87,6 +87,7 @@ export class SettingsComponent implements OnInit {
         this.image = data.body;
         this.getCurrentUserData();
       });
+    }
 
   onFileSelected(event: any) {
     console.log(event);
@@ -125,7 +126,7 @@ export class SettingsComponent implements OnInit {
         console.log(this.editUser.profilePicture)
       })
     }
-  }
+
 
 
 
