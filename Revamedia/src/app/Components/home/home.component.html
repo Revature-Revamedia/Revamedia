@@ -80,10 +80,11 @@
         </div>
 
         <span *ngIf="p?.comments.length === 0">No Comments</span>
-        <span (click)="toggleHideComments()" *ngIf="p?.comments.length !== 0" id="viewComments">{{viewComments ? 'Hide Comments' : 'View Comments' }}</span>
+        <span (click)="toggleHideComments(p.postId)" *ngIf="p?.comments.length !== 0" id="viewComments">{{viewComments ? 'Hide Comments' : 'View Comments' }}</span>
 
         <!-- ADD COMMENT -->
-        <div class="add-comment" *ngIf="addComment" id="addCommentReplyForm{{p?.postId}}">
+        
+        <div class="add-comment" *ngIf="addComment" id="{{'addCommentReplyForm' + p.postId}}">
           <div class="add-comment-header">
             <h5>Add Comment</h5>
             <button title="Close" (click)="closeAddComment()" id="closeModal">X</button>
@@ -114,7 +115,7 @@
         </div>
         <!-- ADD COMMENT END-->
 
-        <div class="post-comments-section" *ngIf="p?.comments.length > 0 && viewComments == true" id="commentSection">
+        <div class="post-comments-section" *ngIf="p?.comments.length > 0 && viewComments == true" id="{{'commentSection' + p.postId}}">
           <!-- comments start -->
           <h5>Comments</h5>
           <div class="comment" *ngFor="let comment of p?.comments">

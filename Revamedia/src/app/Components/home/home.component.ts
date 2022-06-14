@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit {
 
   constructor(public CommentService: CommentService, private userPostsService: UserPostsService, private http: HttpClient, public userService: UserService, public gifService: GiphyService, public animationService: AnimationService, public router: Router, private searchService: SearchService) { }
 
+
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
@@ -225,7 +226,7 @@ export class HomeComponent implements OnInit {
     p.postId = currentPost.postId;
     p.userId = this.user.userId;
 
-    this.totalLikes = this.userService.userLikesPost(p);
+    this.userService.userLikesPost(p);
     this.getCurrentUserData();
   }
 
@@ -363,7 +364,10 @@ export class HomeComponent implements OnInit {
 
   // hide Comments
   public viewComments = false;
-  public toggleHideComments(): void {
+  public toggleHideComments(id:any): void {
+    console.log(id);
+    const comment = document.getElementById(`addCommentReplyForm${id}`) as HTMLDivElement | null;
+    console.log(comment?.innerHTML);
     this.viewComments = !this.viewComments;
   }
   public toggleComments():void{

@@ -35,14 +35,11 @@ export class UserService {
     this.userSubject.next(user);
   }
 
-  userLikesPost(currentPost: any): number {
-    let num: number = 0;
+  userLikesPost(currentPost: any) {
     this.userPostsService.updatePostLikes(currentPost).subscribe((data) => {
       console.log(data.body);
-      num = data.body.likes.length;
       this.setCurrentUser(data.body.user);
     });
-    return num
   }
 
 
