@@ -1,6 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
+import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 
 import { ProfileComponent } from './profile.component';
@@ -10,22 +13,36 @@ describe('ProfileComponent', () => {
   let fixture: ComponentFixture<ProfileComponent>; // <-- This is the parent of the component class (contains component, debugElement(html template), etc.). We don't need to test html template bindings.
   // Mock UserService (getUser method)
   // We are only using 'getUser' in this component
-  let userServiceSpy: { getUser: jasmine.Spy };
+  let userServiceSpy: {
+    getUser: jasmine.Spy,
+    getProfile: jasmine.Spy,
+    followUser: jasmine.Spy,
+    unfollowUser: jasmine.Spy,
+    isFollowing: jasmine.Spy
+  };
+  let activatedRouteSpy: any;
+  let animationServiceSpy: { fadeIn: jasmine.Spy };
+  const aRouteId: string = "4";
 
   // Spin up Test Module (Notice this is async because of line 28)
   beforeEach(async () => {
     // Initialize the spy before each test & before we inject it in our test module. (If we don't do this some stats that are kept track of, i.e. method invocation count will not be reset each test)
     // Second param is an array of method identifiers you wish to instantiate as spies.
-    userServiceSpy = jasmine.createSpyObj('UserService', ['getUser']);
+    userServiceSpy = jasmine.createSpyObj('UserService', ['getUser', 'getProfile', 'followUser', "unfollowUser", 'isFollowing']);
+    animationServiceSpy = jasmine.createSpyObj('AnimationServiceSpy', ['fadeIn']);
+    activatedRouteSpy = { snapshot: { paramMap: { get: (name: string) => {return 'name'}} } };
 
     await TestBed.configureTestingModule({
       declarations: [ ProfileComponent ],
       // When the component tries to grab the UserService it will be grabbing our spy object instead
       providers: [
-        { provide: UserService, useValue: userServiceSpy }
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: ActivatedRoute, useValue: activatedRouteSpy },
+        { provide: AnimationService, useValue: animationServiceSpy }
       ]
     })
     .compileComponents();
+    spyOn(activatedRouteSpy.snapshot.paramMap, 'get').and.returnValue(aRouteId);
   });
 
   //Test environment is set up. Additional before each statements here.
@@ -121,17 +138,22 @@ describe('ProfileComponent', () => {
   });
 
   // Define Test
-  it('ngOnInit should call getCurrentUserData', () => {
+  it('ngOnInit should load in user data', () => {
     // Arrange
-    // When userService.getUser method is called return empty observable
-    userServiceSpy.getUser.and.returnValue(of());
+    spyOn(component, 'getUserData');
+    spyOn(component, 'getCurrentUserData');
+    spyOn(component, 'openingAnimation');
+    spyOn(component, 'isFollowing');
 
     // Act
     // Call ngOnInit()
     component.ngOnInit();
 
     // Assert
-    expect(userServiceSpy.getUser).toHaveBeenCalledTimes(1);
+    expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
+    expect(component.getUserData).toHaveBeenCalledTimes(1);
+    expect(component.openingAnimation).toHaveBeenCalledTimes(1);
+    expect(component.isFollowing).toHaveBeenCalledTimes(1);
   });
 
   // Define Test
@@ -150,7 +172,7 @@ describe('ProfileComponent', () => {
     component.getCurrentUserData();
 
     // Assert
-    expect(component.user).toEqual(user);
+    expect(component.currentUser).toEqual(user);
   });
 
   // Define Test
@@ -170,5 +192,161 @@ describe('ProfileComponent', () => {
 
     // Assert
     expect(console.log).toHaveBeenCalledWith(customHttpError.message)
+  });
+
+  describe('#getUserData', () => {
+    let response = { postsOwned: [{ post: "post1"}, { post: "post2"}], followers: [{}, {}, {}], following: [{}] };
+
+    it('should set user correctly', fakeAsync(() => {
+      userServiceSpy.getProfile.and.returnValue(of(response));
+
+      component.getUserData();
+      tick();
+
+      expect(component.user).toEqual(response);
+    }));
+    it('should set posts correctly', fakeAsync(() => {
+      userServiceSpy.getProfile.and.returnValue(of(response));
+
+      component.getUserData();
+      tick();
+
+      expect(component.posts).toEqual(jasmine.arrayContaining(response.postsOwned));
+    }));
+    it('should set following/follower correctly', fakeAsync(() => {
+      userServiceSpy.getProfile.and.returnValue(of(response));
+
+      component.getUserData();
+      tick();
+
+      expect(component.followerLength).toEqual(response.followers.length);
+      expect(component.followingLength).toEqual(response.following.length);
+    }));
+    it('should log error on ajax fail', fakeAsync(() => {
+      const error = { message: "Error message" } as HttpErrorResponse;
+      userServiceSpy.getProfile.and.returnValue(throwError(() => error));
+      spyOn(console, 'log');
+
+      component.getUserData();
+      tick();
+
+      expect(console.log).toHaveBeenCalledOnceWith(error.message);
+    }));
+  });
+
+  describe('#closeAnyModal', () => {
+    const div: HTMLElement = document.createElement('div');
+
+    beforeEach(() => {
+      spyOn(document, 'getElementById').and.returnValue(div);
+      spyOn(div.classList, 'remove');
+    });
+
+    it('should remove openScreen class from screen element', () => {
+      component.closeAnyModal();
+
+      expect(document.getElementById).toHaveBeenCalledWith('screen')
+      expect(div.classList.remove).toHaveBeenCalledWith('openScreen');
+    });
+    it('should remove openModal class from following-modal element', () => {
+      component.closeAnyModal();
+
+      expect(document.getElementById).toHaveBeenCalledWith('following-modal')
+      expect(div.classList.remove).toHaveBeenCalledWith('openModal');
+    });
+    it('should remove openModal class from followers-modal element', () => {
+      component.closeAnyModal();
+
+      expect(document.getElementById).toHaveBeenCalledWith('followers-modal')
+      expect(div.classList.remove).toHaveBeenCalledWith('openModal');
+    });
+  });
+
+  it('#openingAnimation fades in main element', () => {
+    component.openingAnimation();
+
+    expect(animationServiceSpy.fadeIn).toHaveBeenCalledOnceWith('#profile', jasmine.any(Number), jasmine.any(Number), jasmine.any(Number));
+  });
+
+  describe('#followUser', () => {
+    const followForm = { value: {
+      followers: [{}, {}, {}]
+      }
+    } as NgForm;
+
+    it('should set user data on successful response', fakeAsync(() => {
+      userServiceSpy.followUser.and.returnValue(of(followForm.value));
+      spyOn(component, 'getUserData');
+      spyOn(component, 'isFollowing');
+
+      component.followUser(followForm);
+      tick();
+
+      expect(component.followerLength).toEqual(followForm.value.followers.length);
+      expect(component.getUserData).toHaveBeenCalledTimes(1);
+      expect(component.isFollowing).toHaveBeenCalledTimes(1);
+    }));
+
+    it('should log error on failed response', fakeAsync(() => {
+      const error = { message: "Error" } as HttpErrorResponse;
+      userServiceSpy.followUser.and.returnValue(throwError(() => error));
+      spyOn(console, 'log');
+
+      component.followUser(followForm);
+      tick();
+
+      expect(console.log).toHaveBeenCalledOnceWith(error.message);
+    }));
+  });
+
+  describe('#unfollowUser', () => {
+    const followForm = { value: {
+      followers: [{}, {}, {}]
+      }
+    } as NgForm;
+
+    it('should set user data on successful response', fakeAsync(() => {
+      userServiceSpy.unfollowUser.and.returnValue(of(followForm.value));
+      spyOn(component, 'getUserData');
+      spyOn(component, 'isFollowing');
+
+      component.unfollowUser(followForm);
+      tick();
+
+      expect(component.followerLength).toEqual(followForm.value.followers.length);
+      expect(component.getUserData).toHaveBeenCalledTimes(1);
+      expect(component.isFollowing).toHaveBeenCalledTimes(1);
+    }));
+
+    it('should log error on failed response', fakeAsync(() => {
+      const error = { message: "Error" } as HttpErrorResponse;
+      userServiceSpy.unfollowUser.and.returnValue(throwError(() => error));
+      spyOn(console, 'log');
+
+      component.unfollowUser(followForm);
+      tick();
+
+      expect(console.log).toHaveBeenCalledWith(error.message);
+    }));
+  });
+
+  describe('#isFollowing', () => {
+    it('should set component.follow on successful response', fakeAsync(() => {
+      userServiceSpy.isFollowing.and.returnValue(of({ data: "data" }));
+
+      component.isFollowing();
+
+      expect(component.follow).toEqual("data");
+    }));
+
+    it('should log error on failed response', fakeAsync(() => {
+      const error = { message: "Error Message" } as HttpErrorResponse;
+      userServiceSpy.isFollowing.and.returnValue(throwError(() => error));
+      spyOn(console, 'log');
+
+      component.isFollowing();
+
+      expect(console.log).toHaveBeenCalledWith(error.message);
+    }));
   });
 });

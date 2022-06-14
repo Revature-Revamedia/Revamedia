@@ -27,6 +27,7 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
     private final JsonWebToken jsonWebToken;
+    private final String error = "error";
 
     @Autowired
     public AuthController(AuthService authService, JsonWebToken jsonWebToken, UserService userService){
@@ -43,23 +44,24 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody AuthDto authDto) {
+        JSONObject jsonObject = new JSONObject();
         if(!authService.twoFactorAuthEnabled(authDto)){
             return authService.login(authDto);
         }
         else {
             if(authService.login(authDto).getStatusCode().is2xxSuccessful()){
-                //return authService.login(authDto);
-                JSONObject jsonObject = new JSONObject();
                 jsonObject.put("status", "redirect");
                 jsonObject.put("username", authDto.getUsername());
                 return ResponseEntity.status(HttpStatus.OK).body(jsonObject);
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            jsonObject.put(error,"your credentials are incorrect");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
     }
 
     @PostMapping("/login/twoFA")
     public ResponseEntity<Object> loginWithTwoFactorAuth(@RequestBody TwoFactorDto twoFactorDto){
+        JSONObject jsonObject = new JSONObject();
         try {
             CookieDto cookieDto = new CookieDto();
             User currentUser = userService.getUserByUsername(twoFactorDto.getUsername());
@@ -69,57 +71,68 @@ public class AuthController {
             if (authService.checkTwoFactorAuthValidity(twoFactorDto)) {
                 return ResponseEntity.status(HttpStatus.OK).body(cookieDto);
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("code didn't match");
+            jsonObject.put(error,"code didn't match");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
         catch (UnauthorizedUserException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
+            jsonObject.put(error,"you are inauthorized");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
     }
 
     @PostMapping("/enable")
     public ResponseEntity<Object> enableTwoFactorAuth(@CookieValue("user_session") String token,@RequestBody TwoFactorAuthDto twoFactorAuthDto){
-        System.out.println("We are in enable");
+        JSONObject jsonObject = new JSONObject();
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);
             return ResponseEntity.status(HttpStatus.OK).body(authService.enableTwoFactorAuth(cookieDto,twoFactorAuthDto));
         }
         catch (UnauthorizedUserException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
+            jsonObject.put(error,"you are unauthorized");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            jsonObject.put(error,"qr code was not created successfully");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject);
         }
         catch (WriterException e) {
-            throw new RuntimeException(e);
+            jsonObject.put(error,"qr code was not created successfully");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject);
         }
     }
 
     @PostMapping("/disable")
     public ResponseEntity<Object> disableTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorAuthDto twoFactorAuthDto){
+        JSONObject jsonObject = new JSONObject();
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);
             return ResponseEntity.status(HttpStatus.OK).body(authService.disableTwoFactorAuth(cookieDto,twoFactorAuthDto));
         }
         catch (UnauthorizedUserException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
+            jsonObject.put(error,"you are unauthorized");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
 
     }
 
     @PostMapping("/recreate")
     public ResponseEntity<Object> recreateQRCode(@CookieValue("user_session") String token, @RequestBody TwoFactorAuthDto twoFactorAuthDto){
+        JSONObject jsonObject = new JSONObject();
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);
             return ResponseEntity.status(HttpStatus.OK).body(authService.enableTwoFactorAuth(cookieDto,twoFactorAuthDto));
         }
         catch (UnauthorizedUserException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you are unauthorized");
+            jsonObject.put(error,"you are unauthorized");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            jsonObject.put(error,"qr code was not created successfully");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject);
         }
         catch (WriterException e) {
-            throw new RuntimeException(e);
+            jsonObject.put(error,"qr code was not created successfully");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject);
         }
     }
 }

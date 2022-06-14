@@ -1,34 +1,36 @@
 package com.revature.Revamedia.beans.services;
 
-import com.revature.Revamedia.beans.repositories.UserRepository;
-import com.revature.Revamedia.dtos.UserServiceDto;
-import com.revature.Revamedia.entities.User;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest
+import com.revature.Revamedia.beans.repositories.UserRepository;
+import com.revature.Revamedia.entities.User;
+
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
     private UserService userService;
 
-    @MockBean
+    @Mock
     private UserRepository mockUserRepository;
 
-
-    //
-    public UserServiceTest(@Autowired UserService userService) {
-        this.userService = userService;
-
+    @BeforeEach
+    public void setup() {
+        userService = new UserService(mockUserRepository);
     }
 
     @Test
@@ -40,12 +42,32 @@ public class UserServiceTest {
         //act
         User returnedUser = userService.getUserById(id);
         //assert
-        verify(mockUserRepository,times(1)).getById(id);
+        verify(mockUserRepository, times(1)).getById(id);
         assertEquals(user, returnedUser);
     }
 
+    /**
+    * @Author: Qiang Gao
+    */
     @Test
-    public void getAllUsersTest(){
+    public void saveTest() {
+        User user = new User();
+        when(mockUserRepository.save(user)).thenReturn(user);
+        assertEquals(user, userService.save(user));
+    }
+
+    /**
+    * @Author: Qiang Gao
+    */
+    @Test
+    public void updateTest() {
+        User user = new User();
+        when(mockUserRepository.save(user)).thenReturn(user);
+        assertEquals(user, userService.update(user));
+    }
+
+    @Test
+    public void getAllUsersTest() {
         //arrange
         List<User> userList = new ArrayList<>();
         when(mockUserRepository.findAll()).thenReturn(userList);
@@ -72,6 +94,35 @@ public class UserServiceTest {
     }
 
     @Test
+    public void findByEmailTest() {
+        User user = new User();
+        when(mockUserRepository.findByEmail(anyString())).thenReturn(user);
+        assertEquals(user, userService.findByEmail(anyString()));
+    }
+
+    @Test
+    public void existsByEmailTest() {
+        Boolean userExists = true;
+        when(mockUserRepository.existsByEmail(anyString())).thenReturn(userExists);
+        assertEquals(userExists, userService.existsByEmail(anyString()));
+    }
+
+    @Test
+    public void findByUsernameAndPasswordTest() {
+        User user = new User();
+        when(mockUserRepository.findByResetPasswordToken(anyString())).thenReturn(user);
+        assertEquals(user, userService.findByResetPasswordToken(anyString()));
+    }
+
+    @Test
+    public void existsByResetPasswordTokenTest() {
+        Boolean userExists = true;
+        when(mockUserRepository.existsByResetPasswordToken(anyString())).thenReturn(userExists);
+        assertEquals(userExists, userService.existsByResetPasswordToken(anyString()));
+
+    }
+
+    @Test
     public void findUserByUsernameTest() {
         //arrange
         String username = "username";
@@ -84,71 +135,31 @@ public class UserServiceTest {
         //assert
         verify(mockUserRepository, times(1)).findByUsername(username);
         assertEquals(user, returnedUser);
-        /*
-        //this working code is testing the repository instead of the service
-        //the specific service method call should be the only thing that's tested
-        //arrange
-        User exampleUser = new User();
-        exampleUser.setUserId(4);
-        exampleUser.setUsername("shady");
-        exampleUser.setPassword("Password0!");
-        exampleUser.setFirstName("Terrell");
-        exampleUser.setLastName("Crawford");
-        ViewAllUserDto userToFind = new ViewAllUserDto("shady");
-        ViewAllUserDto userToFind1 = new ViewAllUserDto("shady1");
-        when(mockUserRepository.existsUserByUsername(any())).thenReturn(false);
-
-        when(mockUserRepository.findByUsername(any())).thenReturn(exampleUser);
-
-        //act
-        mockUserRepository.findByUsername(userToFind.getUserName());
-        //userService.findUserByUsername(userToFind1.getUserName());
-
-        //assert
-        assertEquals(exampleUser, userService.findUserByUsername(userToFind.getUserName()));
-        assertEquals(exampleUser, userService.findUserByUsername(userToFind1.getUserName()));
-        //return false when user doesn't exist
-        //return ture when user exists
-
-         */
     }
 
     @Test
-    public void failToSaveUserWhenUsernameIsDuplicate() {
-        //arrange
-        UserServiceDto userToSave = new UserServiceDto("shady", "Password0!","Terrell","Crawford");
-        User user = new User();
-        user.setUsername(userToSave.getUserName());
-        user.setPassword(userToSave.getPassword());
-        user.setFirstName(userToSave.getFirstName());
-        user.setLastName(userToSave.getLastName());
-
-        when(mockUserRepository.existsUserByUsername(any())).thenReturn(true);
-        when(mockUserRepository.findByUsername(any())).thenReturn(user);
-        //act
-        userService.save(user);
-
-        //assert
-        assertNotEquals(userToSave, user);
+    public void searchByUsernameTest() {
+        String username = "username";
+        List<User> userList = new ArrayList<>();
+        when(mockUserRepository.searchByUsername(username)).thenReturn(userList);
+        assertEquals(userList, userService.searchByUsername(username));
     }
 
     @Test
-    public void failToUpdateUserWhenNewUsernameIsDuplicate() {
-        //arrange
-        UserServiceDto userToUpdate = new UserServiceDto("shady", "Password0!","Terrell","Crawford");
+    public void existsByTwoFactorAuthTest(){
         User user = new User();
-        user.setUsername(userToUpdate.getUserName());
-        user.setPassword(userToUpdate.getPassword());
-        user.setFirstName(userToUpdate.getFirstName());
-        user.setLastName(userToUpdate.getLastName());
+        user.setTwoFactorAuth(true);
+        when(mockUserRepository.getByUsername(anyString())).thenReturn(user);
+        assertEquals(true, userService.existsByTwoFactorAuth(anyString()));
+    }
 
-        when(mockUserRepository.existsUserByUsername(any())).thenReturn(true);
-        when(mockUserRepository.findByUsername(any())).thenReturn(user);
-        //act
-        userService.update(user);
+    @Test
+    public void deleteAllPostLikes(){
+        doNothing().when(mockUserRepository).removePostLikes(anyInt());
 
-        //assert
-        assertNotEquals(userToUpdate, user);
+        userService.deleteAllPostLikes(anyInt());
+
+        verify(mockUserRepository, times(1)).removePostLikes(anyInt());
     }
 
 

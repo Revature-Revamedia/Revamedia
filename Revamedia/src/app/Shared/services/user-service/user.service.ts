@@ -18,13 +18,9 @@ export class UserService {
   constructor(private http: HttpClient, private userPostsService: UserPostsService) {
     this.userSubject = new BehaviorSubject<any>(this.user);
     this.getUserById(sessionStorage.getItem('userId')).subscribe((response: any) => {
-      console.log("1: ", response.body);
       this.user = response.body;
-      console.log("userservice: ", this.user);
       this.setCurrentUser(this.user);
     });
-
-    //sessionStorage.getItem('userid')
   }
 
   getCurrentUser(): BehaviorSubject<any> {
@@ -35,53 +31,17 @@ export class UserService {
     this.userSubject.next(user);
   }
 
-  userLikesPost(currentPost: any): number {
-    let num: number = 0;
+  userLikesPost(currentPost: any) {
     this.userPostsService.updatePostLikes(currentPost).subscribe((data) => {
-      console.log(data.body);
-      num = data.body.likes.length;
       this.setCurrentUser(data.body.user);
     });
-    return num
   }
-
-
-
-  //this.followers = new HashSet<>();
-  //      this.following = new HashSet<>();
-  //      this.postsOwned = new HashSet<>();
-
-  //      this.groupsJoined = new HashSet<>();
-  //      this.groupsOwned = new HashSet<>();
-
-  //      this.eventsJoined = new HashSet<>();
-  //      this.eventsOwned = new HashSet<>();
-
-  // this.conversations = new HashSet<>();
-
-  //     this.likedPosts = new ArrayList<>();
-  //1. when user logs in-
-  //2.you store their user id in local storage.
-  //3. call method to get user information.
-  //4. set user information into user
-
-  //user: any = user.getid(localsessionid);
-
-  //allUserPosts
-  //userTimeline
-  //likeapost()
-  //{
-  //    userTimeline.behavior.next(post.info)
-  // }
-  //
-
 
   getAllUsers(): Observable<any> {
     return this.http.get<any>(`${this.userURL}/allUsers`, { observe: `response` })
   }
 
   getUserById(id: any): Observable<any> {
-    console.log("test");
     return this.http.get<any>(`${this.userURL}/` + id, { observe: `response` })
   }
 
@@ -100,12 +60,10 @@ export class UserService {
 
   // FOLLOW
   public followUser(Follow: any) : Observable<any> {
-    console.log('information from form', Follow);
+
     return this.http.post<any>(`${this.userURL}/userFollows`, Follow);
   }
   public unfollowUser(unfollow: any) : Observable<any> {
-    console.log('information from form', unfollow);
-    console.log(`${this.userURL}/deleteFollowing`);
     return this.http.post<any>(`${this.userURL}/deleteFollowing`, unfollow);
   }
 

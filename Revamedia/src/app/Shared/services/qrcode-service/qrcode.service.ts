@@ -15,7 +15,6 @@ export class QrcodeService {
   QRCodeUrl = `${environment.apiBaseUrl}/auth`;
 
   enableTwoFactorAuth() : Observable<any>{
-    console.log("qrcode enable")
     let authDto = {
       twoFactorAuth: true
     }

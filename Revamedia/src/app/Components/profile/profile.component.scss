@@ -178,6 +178,29 @@ $darkgrey: rgb(61,66,74);
           text-align: center;
           color: $darkgrey;
         }
+        .text-only-post{
+          border-radius: 6px;
+          background: white;
+          width: 100%;
+          height: 17rem;
+          padding:1rem;
+          object-fit: cover;
+          border: 2px solid $orange;
+          transition: all 0.3s ease-in-out;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          &:hover{
+            border: 2px solid $blue;
+          }
+          p{
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: $darkgrey;
+          }
+        }
         .youtube{
           border-radius: 6px;
           background: white;

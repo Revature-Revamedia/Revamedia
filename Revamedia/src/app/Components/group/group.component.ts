@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from 'src/app/Shared/services/group-service/group.service';
-import { faHeart, faEllipsis, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/Shared/services/user-service/user.service';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { NgForm } from '@angular/forms';
@@ -14,7 +14,13 @@ import { NgForm } from '@angular/forms';
 })
 export class GroupComponent implements OnInit {
 
-  constructor(public groupService: GroupService,private ARouter: ActivatedRoute, private router: Router, public userService: UserService, public animationService: AnimationService) { }
+  constructor(
+    public groupService: GroupService,
+    private ARouter: ActivatedRoute,
+    private router: Router,
+    public userService: UserService,
+    public animationService: AnimationService)
+  { }
 
   ngOnInit():void {
     this.getGroupData();
@@ -31,8 +37,6 @@ export class GroupComponent implements OnInit {
       (response: any) => {
         this.group = response;
         this.groupPosts = response?.posts;
-        console.log(this.group);
-        console.log(this.groupPosts);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)

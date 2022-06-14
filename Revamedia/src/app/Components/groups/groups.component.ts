@@ -13,7 +13,12 @@ import { UserService } from 'src/app/Shared/services/user-service/user.service';
 })
 export class GroupsComponent implements OnInit {
 
-  constructor(public userService: UserService, public groupsService: GroupService,private router: Router, public animationService: AnimationService) { }
+  constructor(
+    public userService: UserService,
+    public groupsService: GroupService,
+    private router: Router,
+    public animationService: AnimationService)
+  { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
@@ -30,7 +35,6 @@ export class GroupsComponent implements OnInit {
         this.groups = response?.groupsOwned;
         this.groups = this.groups.concat(response?.groupsJoined);
         this.groups = this.groups.flat();
-        console.log(this.groups);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -43,7 +47,6 @@ export class GroupsComponent implements OnInit {
     this.groupsService.getAllGroups().subscribe(
       (response: any) => {
         this.allGroups = response;
-        console.log(this.allGroups);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -55,7 +58,6 @@ export class GroupsComponent implements OnInit {
   public onAddGroup(form: NgForm){
     this.groupsService.newGroup(form.value).subscribe(
       (response: any) => {
-        // console.log(response);
         this.closeModal('new-group');
         this.getCurrentUserData();
       },
@@ -68,7 +70,7 @@ export class GroupsComponent implements OnInit {
   public onDeleteGroup(id: number){
     this.groupsService.deleteGroup(id).subscribe(
       (response: any) => {
-        // console.log(response);
+
         this.closeModal('delete-group');
         this.getCurrentUserData();
       },

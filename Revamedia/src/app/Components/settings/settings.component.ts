@@ -4,12 +4,12 @@ import { NgForm } from '@angular/forms';
 // Icons
 import { faSun, faMoon, faEye, faEyeSlash, faUserShield, faRefresh, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
 import { UserService } from '../../Shared/services/user-service/user.service';
 import { UploadService } from '../../Shared/services/upload.service';
 import { map, catchError, of } from 'rxjs';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUserData();
     this.isImageTemporarilyUploaded = false;
-
+    this.openingAnimation();
   }
 
   getUserProfilePicture() {
@@ -53,7 +53,6 @@ export class SettingsComponent implements OnInit {
     this.userService.getUser().subscribe(
       (response: any) => {
         this.user = response;
-        console.log(this.user);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -80,19 +79,19 @@ export class SettingsComponent implements OnInit {
 
 
   enableTwoFactorAuth(){
-    console.log("settings enable")
     this.qrcodeService.enableTwoFactorAuth().subscribe(
       (data: any) =>{
         this.image = data.body;
         this.getCurrentUserData();
       });
     }
-
   onFileSelected(event: any) {
-    console.log(event);
     this.selectedFile = <File>event.target.files[0];
-    console.log(this.selectedFile.name);
 
+  }
+
+  disableTwoFactorAuth() {
+    this.qrcodeService.disableTwoFactorAuth().subscribe();
   }
 
   onUpload(isTemp = true) {
@@ -100,7 +99,6 @@ export class SettingsComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.selectedFile);
     formData.append('fileName', `${this.editUser.username}${isTemp ? '_temp' : ''}`);
-    console.log(formData)
     this.selectedFile.inProgress = true;
     this.uploadService.upload(formData).pipe(
       map((event: any) => {
@@ -109,7 +107,6 @@ export class SettingsComponent implements OnInit {
             this.selectedFile.progress = Math.round(event.loaded * 100 / (event?.total));
             break;
           case HttpEventType.Response:
-            console.log("response", Response);
             return event;
         }
       }),
@@ -122,11 +119,8 @@ export class SettingsComponent implements OnInit {
 
         }
         if (isTemp) this.isImageTemporarilyUploaded = true;
-        console.log(this.editUser.profilePicture)
       })
     }
-
-
 
   // ICONS
   public faSun = faSun;
@@ -195,7 +189,7 @@ export class SettingsComponent implements OnInit {
   // ANIMATION
   public openingAnimation() {
     const anim = this.animationService;
-    const main = '#main';
+    const main = '#settings';
     anim.fadeIn(main, 0.7, 0, 0.6);
   }
   public closeAnyModal() {

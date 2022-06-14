@@ -11,6 +11,34 @@
   <!-- Settings Content Start -->
   <div class="settings" id="settings">
 
+    <div class="user-settings" id="setBackgroundColor">
+      <h4>Account Settings</h4>
+      <div class="user-settings-title">
+        <h3>Edit Account</h3>
+        <button (click)="openModal('edit', editUser)">Edit</button>
+      </div>
+      <div class="user-settings-row" style="border-top:1px solid rgb(230,229,222);">
+        <h5>First Name</h5>
+        <span>{{ user?.firstName }}</span>
+      </div>
+      <div class="user-settings-row">
+        <h5>Last Name</h5>
+        <span>{{ user?.lastName }}</span>
+      </div>
+      <div class="user-settings-row">
+        <h5>Username</h5>
+        <span>{{user?.username}}</span>
+      </div>
+      <div class="user-settings-row">
+        <h5>Email</h5>
+        <span>{{user?.email}}</span>
+      </div>
+      <div class="user-settings-row" style="border:none;">
+        <h5>Profile Pic</h5>
+        <img [src]="getUserProfilePicture()" alt="{{ user?.username }}">
+      </div>
+    </div>
+
     <div class="system-settings" id="setBackgroundColor">
       <h4>System Settings</h4>
       <div class="TwoFactor" id="settingsContainer">
@@ -90,45 +118,13 @@
       </div>
     </div>
 
-    <div class="user-settings" id="setBackgroundColor">
-      <h4>Account Settings</h4>
-      <div class="user-settings-title">
-        <h3>Edit Account</h3>
-        <button (click)="openModal('edit', editUser)">Edit</button>
-      </div>
-      <div class="user-settings-row" style="border-top:1px solid rgb(230,229,222);">
-        <h5>First Name</h5>
-        <span>{{ user?.firstName }}</span>
-      </div>
-      <div class="user-settings-row">
-        <h5>Last Name</h5>
-        <span>{{ user?.lastName }}</span>
-      </div>
-      <div class="user-settings-row">
-        <h5>Username</h5>
-        <span>{{user?.username}}</span>
-      </div>
-      <div class="user-settings-row">
-        <h5>Email</h5>
-        <span>{{user?.email}}</span>
-      </div>
-      <div class="user-settings-row" style="border:none;">
-        <h5>Profile Pic</h5>
-        <img [src]="getUserProfilePicture()" alt="{{ user?.username }}">
-      </div>
-      <!-- <div class="user-settings-title">
-        <h3>Delete Account</h3>
-        <button id="deleteBtn" (click)="openModal('delete', deleteUser)">Delete</button>
-      </div> -->
-    </div>
-
   </div>
   <!-- Settings Content End -->
 </div>
 
 
 <!-- BLACKOUTSCREEN START-->
-<div class="screen" id="screen"></div>
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- BLACKOUTSCREEN END-->
 
 <!-- EDIT POST FORM START -->
@@ -201,14 +197,17 @@
         id="email"
         placeholder="Email...">
     </div>
-    <!-- <div class="user-settings-row">
-      <h5>Profile Pic</h5>
-      <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url..." [contentEditable]="false" >
-    </div> -->
-    <div class="user-settings-row">
-        <input type="file" (change)="onFileSelected($event)"  accept="image/png, image/jpeg, image/jpg">
+    <div class="user-settings-row-file">
+      <div class="left">
+        <div class="file-input">
+          <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg" id="file" class="file">
+          <label for="file">
+            Select File
+          </label>
+        </div>
         <img *ngIf="getUserProfilePictureTemp() !==''" [src]="getUserProfilePictureTemp()" >
-        <button type="button" (click)="onUpload()">Upload</button>
+      </div>
+      <input class="uploadBtn" type="button" (click)="onUpload()" value="Upload">
     </div>
     <div class="post-submit">
       <button>Update Account</button>
