@@ -31,12 +31,12 @@ import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication(scanBasePackages = "com.revature.Revamedia.beans")
-//@ComponentScan(
-//        basePackages = {"com.revature.Revamedia.beans"},
-//        excludeFilters = {
-//                @ComponentScan.Filter(
-//                        type = FilterType.ASSIGNABLE_TYPE,
-//                        classes = {S3Service.class, S3Config.class, S3Controller.class})})
+@ComponentScan(
+        basePackages = {"com.revature.Revamedia.beans"},
+        excludeFilters = {
+                @ComponentScan.Filter(
+                        type = FilterType.ASSIGNABLE_TYPE,
+                        classes = {S3Service.class, S3Config.class, S3Controller.class})})
 public class RevamediaApplication {
 
         public static void main(String[] args) throws IOException, WriterException {
@@ -50,8 +50,8 @@ public class RevamediaApplication {
                 UserGroupsService userGroupsService = context.getBean(UserGroupsService.class);
                 UserConversationsService userConversationsService = context.getBean(UserConversationsService.class);
                 UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
-                S3Service S3Service = context.getBean(S3Service.class);
-                S3Config s3Config = context.getBean(S3Config.class);
+//                S3Service S3Service = context.getBean(S3Service.class);
+//                S3Config s3Config = context.getBean(S3Config.class);
                 SendEmailService sendEmailService = context.getBean(SendEmailService.class);
                 TwoFactorAuthentication twoFactorAuthentication = context.getBean(TwoFactorAuthentication.class);
 
