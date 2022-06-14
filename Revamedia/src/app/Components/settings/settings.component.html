@@ -215,7 +215,7 @@
         </div>
         <img *ngIf="getUserProfilePictureTemp() !==''" [src]="getUserProfilePictureTemp()" >
       </div>
-      <button (click)="onUpload()">Upload</button>
+      <input class="uploadBtn" type="button" (click)="onUpload()" value="Upload">
     </div>
     <div class="post-submit">
       <button>Update Account</button>
