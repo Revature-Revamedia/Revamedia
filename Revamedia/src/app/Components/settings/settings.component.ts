@@ -20,14 +20,14 @@ import { Subscription } from 'rxjs';
 })
 export class SettingsComponent implements OnInit {
   uploadUrl: string = "http://localhost:8080/upload";
-     // Back end work
-     public image: any = ""
-     public user: any;
-     public editUser: any; // Used for edit modal
-     public deleteUser: any; // Used for delete modal
- public isImageTemporarilyUploaded = false;
+  // Back end work
+  public image: any = ""
+  public user: any;
+  public editUser: any; // Used for edit modal
+  public deleteUser: any; // Used for delete modal
+  public isImageTemporarilyUploaded = false;
 
-  constructor(private userService: UserService, private uploadService: UploadService ,private animationService: AnimationService, private qrcodeService: QrcodeService) { }
+  constructor(private userService: UserService, private uploadService: UploadService, private animationService: AnimationService, private qrcodeService: QrcodeService) { }
   title = 'app';
   selectedFile: any;
   fileName = "";
@@ -41,11 +41,11 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  getUserProfilePicture(){
+  getUserProfilePicture() {
     return `${this.user?.profilePicture}?${Date.now()}` || "https://randomuser.me/api/portraits/lego/1.jpg"
   }
 
-  getUserProfilePictureTemp(){
+  getUserProfilePictureTemp() {
     return this.isImageTemporarilyUploaded ? `${environment.s3Url}/${this.editUser.username}_temp?${Date.now()}` : '';
   }
 
@@ -62,34 +62,35 @@ export class SettingsComponent implements OnInit {
     );
   }
 
-    // Update User
-    public onUpdateUser(updateForm: NgForm, id: number) {
-      this.onUpload(false);
-      this.userService.updateUser({
-        ...updateForm.value,
-        profilePicture : `${environment.s3Url}/${updateForm.value.username}`}, id).subscribe(
-        (response: any) => {
-          this.closeModal('edit');
-          this.getCurrentUserData();
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.message)
-        }
-      )
-    }
+  // Update User
+  public onUpdateUser(updateForm: NgForm, id: number) {
+    this.onUpload(false);
+    this.userService.updateUser({
+      ...updateForm.value,
+      profilePicture: `${environment.s3Url}/${updateForm.value.username}`
+    }, id).subscribe(
+      (response: any) => {
+        this.closeModal('edit');
+        this.getCurrentUserData();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
 
   onFileSelected(event: any) {
-      console.log(event);
-      this.selectedFile = <File>event.target.files[0];
-      console.log(this.selectedFile.name);
+    console.log(event);
+    this.selectedFile = <File>event.target.files[0];
+    console.log(this.selectedFile.name);
 
-    }
+  }
 
   onUpload(isTemp = true) {
-    if(!isTemp) this.uploadService.delete(`${this.editUser.username}_temp`).subscribe();
+    if (!isTemp) this.uploadService.delete(`${this.editUser.username}_temp`).subscribe();
     const formData = new FormData();
     formData.append('file', this.selectedFile);
-    formData.append('fileName', `${this.editUser.username}${isTemp? '_temp': ''}`);
+    formData.append('fileName', `${this.editUser.username}${isTemp ? '_temp' : ''}`);
     console.log(formData)
     this.selectedFile.inProgress = true;
     this.uploadService.upload(formData).pipe(
@@ -111,13 +112,13 @@ export class SettingsComponent implements OnInit {
           console.log(event.body);
 
         }
-        if(isTemp) this.isImageTemporarilyUploaded = true;
+        if (isTemp) this.isImageTemporarilyUploaded = true;
         console.log(this.editUser.profilePicture)
       })
   }
-  enableTwoFactorAuth(){
-      console.log("settings enable")
-      this.qrcodeService.enableTwoFactorAuth().subscribe((data: any) =>{this.image = data.body;});
+  enableTwoFactorAuth() {
+    console.log("settings enable")
+    this.qrcodeService.enableTwoFactorAuth().subscribe((data: any) => { this.image = data.body; });
   }
 
 
@@ -175,7 +176,7 @@ export class SettingsComponent implements OnInit {
   // MODALS FUNCTION END
   // Two Factor Authentication
   public twoFactor = false;
-  public turnOnTwoFactor(){
+  public turnOnTwoFactor() {
     this.twoFactor = !this.twoFactor;
   }
 
@@ -192,7 +193,7 @@ export class SettingsComponent implements OnInit {
     const main = '#main';
     anim.fadeIn(main, 0.7, 0, 0.6);
   }
-  public closeAnyModal(){
+  public closeAnyModal() {
     // Screen
     const screen = document.getElementById('screen');
     screen?.classList.remove('openScreen');
