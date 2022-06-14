@@ -1,0 +1,5 @@
+<form #twoFactorForm="ngForm">
+    <input type="text" id="sixDigitCode" name="sixDigitCode" ngModel placeholder="six digit code...">
+    <input type="button" (click) = "loginWithTwoFactor(twoFactorForm)" value="submit">
+</form>
+

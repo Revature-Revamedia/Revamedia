@@ -50,11 +50,23 @@ public class User implements Serializable {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
+    @Column(name = "two_factor_auth")
+    private boolean twoFactorAuth;
+
+    @Column(name = "secret_two_factor_key")
+    private String secretTwoFactorKey;
+
+    @Column(name = "qr_code_url")
+    private String QRCodeUrl;
+
+    @Column(name = "qr_code_image")
+    private byte [] QRCodeImage;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "followedId", cascade = CascadeType.ALL)
     private Set<UserFollows> followers;
 
-    @JsonManagedReference
+//    @JsonManagedReference
     @OneToMany(mappedBy = "followerId", cascade = CascadeType.ALL)
     private Set<UserFollows> following;
 
@@ -337,6 +349,42 @@ public class User implements Serializable {
 
     public void setResetPasswordToken(String resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public boolean getTwoFactorAuth() {
+        return twoFactorAuth;
+    }
+
+    public void setTwoFactorAuth(boolean twoFactorAuth) {
+        this.twoFactorAuth = twoFactorAuth;
+    }
+
+    public boolean isTwoFactorAuth() {
+        return twoFactorAuth;
+    }
+
+    public String getSecretTwoFactorKey() {
+        return secretTwoFactorKey;
+    }
+
+    public void setSecretTwoFactorKey(String secretTwoFactorKey) {
+        this.secretTwoFactorKey = secretTwoFactorKey;
+    }
+
+    public String getQRCodeUrl() {
+        return QRCodeUrl;
+    }
+
+    public void setQRCodeUrl(String QRCodeUrl) {
+        this.QRCodeUrl = QRCodeUrl;
+    }
+
+    public byte[] getQRCodeImage() {
+        return QRCodeImage;
+    }
+
+    public void setQRCodeImage(byte[] QRCodeImage) {
+        this.QRCodeImage = QRCodeImage;
     }
 
     @Override

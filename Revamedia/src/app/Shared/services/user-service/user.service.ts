@@ -49,6 +49,7 @@ export class UserService {
   }
 
   getUserById(id: any): Observable<any> {
+    console.log("test");
     return this.http.get<any>(`${this.userURL}/` + id, { observe: `response` })
   }
 
@@ -79,5 +80,8 @@ export class UserService {
     return this.http.post<any>(`${this.userURL}/deleteFollowing`, unfollow);
   }
 
+  public isFollowing(profileId: any): Observable<any>{
+    return this.http.get<any>(`${this.userURL}/isFollowing/${sessionStorage.getItem('userId')}/${profileId}`);
+  }
 
 }

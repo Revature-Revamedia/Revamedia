@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
     this.getUserData(); // Gets profile
     this.getCurrentUserData(); // Gets current user
     this.openingAnimation();
+    this.isFollowing();
   }
   public followingLength: any;
   public followerLength: any;
@@ -33,12 +34,12 @@ export class ProfileComponent implements OnInit {
       (response: any) => {
         this.user = response;
         console.log('user page data', this.user);
+        this.posts = response?.postsOwned;
+        this.posts = this.posts.flat();
+        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
+        console.log(this.user.userId);
         this.followerLength = response.followers.length;
         this.followingLength = response.following.length;
-        let followersId = [];
-        for(let i = 0; i < response.followers.length; i++){
-          followersId.push(response.followers[i].followerId.userId);
-        }
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -89,6 +90,7 @@ export class ProfileComponent implements OnInit {
         console.log(response);
         this.followerLength = response.followers.length;
         this.getUserData();
+        this.isFollowing();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -102,6 +104,7 @@ export class ProfileComponent implements OnInit {
         console.log(response);
         this.followerLength = response.followers.length;
         this.getUserData();
+        this.isFollowing();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -113,5 +116,29 @@ export class ProfileComponent implements OnInit {
     window.location.href = `profile/${userId}`;
   }
 
-  public isFollowing: boolean | undefined;
+  public closeAnyModal(){
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form1 = document.getElementById(`following-modal`);
+    form1?.classList.remove('openModal');
+    const form2 = document.getElementById(`followers-modal`);
+    form2?.classList.remove('openModal');
+  }
+
+  public follow: any;
+  public isFollowing(){
+    let id: any = this.ARouter.snapshot.paramMap.get('id');
+    this.userService.isFollowing(id).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.follow = response.data;
+        console.log(this.follow);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
 }

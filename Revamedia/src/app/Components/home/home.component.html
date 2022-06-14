@@ -6,7 +6,7 @@
       <div class="page-subTitle">
         <div class="user">
           <img src="{{ user?.profilePicture }}" alt="{{ user?.username }}" (click)="goToProfile(user?.userId)">
-          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p>'s Feed</span>
+          <span><p (click)="goToProfile(user?.userId)">{{ user?.username }}</p></span>
         </div>
       </div>
     </div>
@@ -16,12 +16,15 @@
         <div class="users-list" *ngIf="allUsers.length != 0">
           <div *ngFor="let u of allUsers" class="userFound">
             <div class="user" (click)="goToProfile(u?.userId)" title="View {{u?.username}}'s Profile">
-              <p>{{u?.username}}</p>
+              <p>{{u?.firstName +" "+ u?.lastName}}</p>
             </div>
           </div>
         </div>
       </form>
-      <button (click)="openModal('add','post-modal', user)">Add Post</button>
+      <div class="buttons">
+        <button (click)="openModal('add','post-modal', user)">Add Post</button>
+        <button (click)="openModal('add','youtube-modal', user)" id="share-youtube">Share Video</button>
+      </div>
     </div>
   </div>
   <!-- Page title End -->
@@ -36,19 +39,24 @@
               <a (click)="goToProfile(post?.ownerId.userId)">{{ post?.ownerId.username }}</a>
             </div>
             <div class="post-options">
-              <fa-icon (click)="togglePostsOptions()" id="icon" [icon]="faEllipsis"></fa-icon>
-              <ul *ngIf="postsOptionsClicked" id="postOptionMenu">
-                <li (click)="openModal('edit','post-modal', post)">Edit Post</li>
-                <li  (click)="openModal('delete', 'post-modal', post)">Delete Post</li>
-              </ul>
+              <fa-icon (click)="openModal('edit','post-modal', p)" *ngIf="p?.image !== null"  id="editIcon" [icon]="faPenToSquare"></fa-icon>
+              <fa-icon (click)="openModal('delete', 'post-modal', p)" *ngIf="p?.image !== null"   id="trashIcon" [icon]="faTrashCan"></fa-icon>
+              <fa-icon (click)="openModal('edit', 'youtube-modal', p)" *ngIf="p?.image === null" id="editIcon" [icon]="faPenToSquare"></fa-icon>
+              <fa-icon (click)="openModal('delete', 'youtube-modal', p)" *ngIf="p?.image === null" id="trashIcon" [icon]="faTrashCan"></fa-icon>
             </div>
           </div>
-          <div class="post-body">
-            <img src="{{ post?.image }}" alt="{{post?.image}}">
-            <div class="post-description" id="setBackgroundColor">
+          <div class="post-body" id="post-body">
+            <img src="{{ post?.image }}" alt="{{post?.image}}" *ngIf="post?.image !== null">
+            <div class="youtube-link" *ngIf="post?.image === null">
+              <div class="youtube-logo">
+                <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
+              </div>
+              <a *ngIf="p?.image === null" href="{{post?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
+            </div>
+            <div class="post-description" >
               <p><a routerLink="/profile" routerLinkActive="active">{{ post?.ownerId?.username }}</a>{{post?.message}}</p>
             </div>
-            <div class="post-options" id="setBackgroundColor">
+            <div class="post-options" >
               <div class="container">
                 <div class="likes" (click)="likePost(post)">
                   <fa-icon
@@ -88,8 +96,8 @@
             <div class="reactions">
               <span>Reactions</span>
               <div class="search">
-                <input type="text" id="giphy-search-reply" placeholder="Search GIPHY">
-                <span (click)="searchGiphyForReply()">Search</span>
+                <input type="text" id="giphy-search-comment" placeholder="Search GIPHY">
+                <span (click)="searchGiphy()">Search</span>
               </div>
               <span id="reaction-title">
                 <fa-icon [icon]="faFaceGrinTongueSquint"></fa-icon>
@@ -106,10 +114,10 @@
         </div>
         <!-- ADD COMMENT END-->
 
-        <div class="post-comments-section" *ngIf="post?.comments.length > 0 && viewComments == true" id="commentSection">
+        <div class="post-comments-section" *ngIf="p?.comments.length > 0 && viewComments == true" id="commentSection">
           <!-- comments start -->
           <h5>Comments</h5>
-          <div class="comment" *ngFor="let comment of post?.comments">
+          <div class="comment" *ngFor="let comment of p?.comments">
             <div class="comment-title">
               <div class="comment-author">
                 <img src="{{comment?.ownerId.profilePicture}}" alt="{{ comment?.ownerId.username }}" (click)="goToProfile(comment?.ownerId.userId)" alt="{{comment.ownerId.username}}">
@@ -122,7 +130,7 @@
             </div>
             <div class="comment-content">
               <p>{{ comment?.message }}</p>
-              <img *ngIf="comment?.giphyUrl != null" src="{{ comment?.giphyUrl }}" alt="Attached Image">
+              <img *ngIf="comment?.giphyUrl !== ''" src="{{ comment?.giphyUrl }}" alt="Attached Image">
             </div>
 
             <div class="reply-card">
@@ -206,22 +214,22 @@
 
 
 <!-- BLACKOUTSCREEN -->
-<div class="screen" id="screen"></div>
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- ADD POST FORM START -->
 <div class="modal" id="add-post-modal">
   <div class="form-header">
     <h3>Create new post</h3>
     <span (click)="closeModal('add', 'post-modal')">x</span>
   </div>
-  <form  #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)" id="add-post-form">
+  <form #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)" ngNativeValidate>
     <div class="form-data">
-      <h4>Add Image or Youtube Link</h4>
-      <input type="text" name="image" id="image" placeholder="ImageUrl or Youtube Link">
+      <h4>Add Image Link</h4>
+      <input type="url" name="image" ngModel id="image" placeholder="Image url...">
     </div>
     <div class="form-data">
       <input type="hidden" name="userId" ngModel="{{ user?.userId }}">
       <h4>Write a caption</h4>
-      <textarea ngModel name="message" placeholder="Write a caption..." rows="8"></textarea>
+      <textarea name="message" ngModel placeholder="Write a caption..." rows="6"></textarea>
     </div>
     <div class="post-submit">
       <button>Create Post</button>
@@ -236,14 +244,15 @@
     <h3>Edit post</h3>
     <span (click)="closeModal('edit', 'post-modal')">x</span>
   </div>
-  <form>
+  <form #editPostForm="ngForm" (ngSubmit)="onUpdatePost(editPostForm)" ngNativeValidate>
     <div class="form-data">
       <h4>Edit Image or Video</h4>
-      <input type="text" ngModel="{{ editPost?.image }}" name="image" id="image" placeholder="ImageUrl or Youtube Link">
+      <input type="hidden" name="postId" ngModel="{{ editPost?.postId }}">
+      <input type="url" ngModel="{{ editPost?.image }}" name="image" id="image" placeholder="ImageUrl or Youtube Link">
     </div>
     <div class="form-data">
       <h4>Edit caption</h4>
-      <textarea name="message" placeholder="Write a caption..." ngModel="{{ editPost?.message }}" rows="8"></textarea>
+      <textarea name="message" placeholder="Write a caption..." ngModel="{{ editPost?.message }}" rows="6"></textarea>
     </div>
     <div class="post-submit">
       <button>Update Post</button>
@@ -275,10 +284,10 @@
     <h3>Edit comment</h3>
     <span (click)="closeModal('edit', 'comment-modal')">x</span>
   </div>
-  <form #editCommentForm="ngForm" (ngSubmit)="onEditComment(editCommentForm)">
+  <form #editCommentForm="ngForm" (ngSubmit)="onEditComment(editCommentForm)" ngNativeValidate>
     <input type="hidden" name="comment_id" ngModel="{{ editComment?.commentId }}">
     <div class="form-data">
-      <textarea ngModel="{{ editComment?.message }}" name="message" rows="4"></textarea>
+      <textarea ngModel="{{ editComment?.message }}" name="message" required rows="4"></textarea>
     </div>
     <div class="post-submit">
       <button>Update comment</button>
@@ -310,10 +319,10 @@
     <h3>Edit Reply</h3>
     <span (click)="closeModal('edit', 'reply-modal')">x</span>
   </div>
-  <form #editReplyForm="ngForm" (ngSubmit)="onEditReply(editReplyForm)">
+  <form #editReplyForm="ngForm" (ngSubmit)="onEditReply(editReplyForm)" ngNativeValidate>
     <input type="hidden" name="reply_id" ngModel="{{ editReply?.replyId }}">
     <div class="form-data">
-      <textarea ngModel="{{ editReply?.message }}" name="message" rows="4"></textarea>
+      <textarea ngModel="{{ editReply?.message }}" required name="message" rows="4"></textarea>
     </div>
     <div class="post-submit">
       <button>Update Reply</button>
@@ -326,7 +335,7 @@
 <div class="modal" id="delete-reply-modal">
   <div class="form-header">
     <h3>Delete reply</h3>
-    <span (click)="closeModal('delete',  'reply-modal')">x</span>
+    <span (click)="closeModal('delete', 'reply-modal')">x</span>
   </div>
   <form (ngSubmit)="onDeleteReply(deleteReply?.replyId)">
     <h2>Are you sure you want to delete this reply?</h2>
@@ -337,15 +346,6 @@
   </form>
 </div>
 <!-- delete COMMENT FORM END -->
-
-<!-- <div class="file-input">
-  <input type="file" id="file" class="file" (change)="fileName($event, 'edit-post')">
-  <label for="file">
-    Select File
-  </label>
-  <p class="file-name" id="edit-post-fileName"></p>
-</div> -->
-
 
 <!-- ADD Youtube FORM START -->
 <div class="modal" id="add-youtube-modal">
@@ -405,7 +405,7 @@
 <!-- EDIT YOUTUBE FORM END -->
 
 <!-- DELETE YOUTUBE FORM START -->
-<!-- <div class="modal" id="delete-youtube-modal">
+<div class="modal" id="delete-youtube-modal">
   <div class="form-header">
     <h3><img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">Delete Youtube Post</h3>
     <span (click)="closeModal('delete','youtube-modal')">x</span>
@@ -418,5 +418,5 @@
       <button id="deleteBtn">Delete</button>
     </div>
   </form>
-</div> -->
+</div>
 <!-- DELETE YOUTUBE FORM END -->

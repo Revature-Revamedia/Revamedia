@@ -2,7 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // Icons
-import { faSun, faMoon, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faMoon, faEye, faEyeSlash, faUserShield, faRefresh, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
+import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
 import { UserService } from '../../Shared/services/user-service/user.service';
 
 
@@ -13,13 +15,15 @@ import { UserService } from '../../Shared/services/user-service/user.service';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private animationService: AnimationService, private qrcodeService: QrcodeService ) { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
+
   }
 
   // Back end work
+  public image: any = ""
   public user: any;
   public editUser: any; // Used for edit modal
   public deleteUser: any; // Used for delete modal
@@ -50,6 +54,11 @@ export class SettingsComponent implements OnInit {
     )
   }
 
+  enableTwoFactorAuth(){
+      console.log("settings enable")
+      this.qrcodeService.enableTwoFactorAuth().subscribe((data: any) =>{this.image = data.body;});
+  }
+
 
 
   // ICONS
@@ -57,6 +66,9 @@ export class SettingsComponent implements OnInit {
   public faMoon = faMoon;
   public faEyeSlash = faEyeSlash;
   public faEye = faEye;
+  public faUserShield = faUserShield;
+  public faRefresh = faRefresh;
+  public faInfoCircle = faInfoCircle;
   // ICONS
 
   // DARK THEME
@@ -100,4 +112,31 @@ export class SettingsComponent implements OnInit {
     form?.classList.remove('openModal');
   }
   // MODALS FUNCTION END
+  // Two Factor Authentication
+  public twoFactor = false;
+  public turnOnTwoFactor(){
+    this.twoFactor = !this.twoFactor;
+  }
+
+  public showInfo(type: any) {
+    const info = document.getElementById(`${type}-info`);
+    info?.classList.toggle('showInfo');
+    setTimeout(() => info?.classList.remove('showInfo'), 3000);
+
+  }
+
+  // ANIMATION
+  public openingAnimation() {
+    const anim = this.animationService;
+    const main = '#main';
+    anim.fadeIn(main, 0.7, 0, 0.6);
+  }
+  public closeAnyModal(){
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form1 = document.getElementById(`edit-account-modal`);
+    form1?.classList.remove('openModal');
+  }
 }

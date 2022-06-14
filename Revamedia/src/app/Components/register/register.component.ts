@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    sessionStorage.removeItem('loggedIn');
   }
 
   registerHandler(username: string, password: string, fName: string, lName: string, email: string) {
@@ -55,10 +56,10 @@ export class RegisterComponent implements OnInit {
       })
     }
     this.register.createUser(this.user, options).subscribe((data) => {
-      
-      
+
+
       this.router.navigateByUrl('/login')
-      
+
     },(error) => {this.error = error}
     )
   }

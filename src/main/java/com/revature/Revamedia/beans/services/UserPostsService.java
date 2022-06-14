@@ -12,7 +12,6 @@ import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserPosts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Set;
 
@@ -22,13 +21,10 @@ public class UserPostsService {
     private final UserPostsRepository userPostsRepository;
     private final UserRepository userRepository;
 
-
-
     @Autowired
     public UserPostsService(UserPostsRepository userPostsRepository, UserRepository userRepository) {
         this.userPostsRepository = userPostsRepository;
         this.userRepository = userRepository;
-
     }
 
     public UserPosts getPostById(Integer id) {
@@ -36,8 +32,8 @@ public class UserPostsService {
         return posts;
     }
 
-
-    public List<UserPosts> getUserFeed(Integer id){
+    public List<Object> getUserFeed(Integer id){
+        System.out.println(userPostsRepository.getUserFeed(id));
         return userPostsRepository.getUserFeed(id);
     }
 
@@ -67,7 +63,7 @@ public class UserPostsService {
             postsLiked.remove(post);
             user.setLikedPosts(postsLiked);
             userRepository.save(user);
-            // else, add their like
+        // else, add their like
         } else {
             Set<User> usersLiked = post.getLikes();
             usersLiked.add(user);
@@ -97,5 +93,10 @@ public class UserPostsService {
     public void delete(UserPosts post) {
         userPostsRepository.delete(post);
     }
+
+    public void deleteById(Integer postId) {
+        userPostsRepository.deleteById(postId);
+    }
+
 
 }
