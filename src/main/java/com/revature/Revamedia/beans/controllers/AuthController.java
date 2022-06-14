@@ -9,6 +9,7 @@ import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.exceptions.UnauthorizedUserException;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,13 +64,9 @@ public class AuthController {
     public ResponseEntity<Object> loginWithTwoFactorAuth(@RequestBody TwoFactorDto twoFactorDto){
         JSONObject jsonObject = new JSONObject();
         try {
-            CookieDto cookieDto = new CookieDto();
-            User currentUser = userService.getUserByUsername(twoFactorDto.getUsername());
-            cookieDto.setUsername(currentUser.getUsername());
-            cookieDto.setUserId(currentUser.getUserId());
-            cookieDto.setEmail(currentUser.getEmail());
             if (authService.checkTwoFactorAuthValidity(twoFactorDto)) {
-                return ResponseEntity.status(HttpStatus.OK).body(cookieDto);
+                System.out.println("We are supposed to set cookie here");
+                return authService.loginWithTwoFactor(twoFactorDto);
             }
             jsonObject.put(error,"code didn't match");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
@@ -85,6 +82,10 @@ public class AuthController {
         JSONObject jsonObject = new JSONObject();
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);
+            if (authService.twoFactorAuthEnabled(cookieDto.getUsername())){
+                jsonObject.put("error","you have two factor auth already enabled");
+                return ResponseEntity.ok().body(jsonObject);
+            }
             return ResponseEntity.status(HttpStatus.OK).body(authService.enableTwoFactorAuth(cookieDto,twoFactorAuthDto));
         }
         catch (UnauthorizedUserException e) {
@@ -103,6 +104,7 @@ public class AuthController {
 
     @PostMapping("/disable")
     public ResponseEntity<Object> disableTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorAuthDto twoFactorAuthDto){
+        System.out.println("we are in disable method");
         JSONObject jsonObject = new JSONObject();
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);

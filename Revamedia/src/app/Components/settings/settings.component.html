@@ -53,11 +53,11 @@
           </span>
         </div>
         <div class="action">
-          <h3 *ngIf="user?.twoFactorAuth == false">Enable</h3>
-          <h3 *ngIf="user?.twoFactorAuth == true">Disable</h3>
-          <button (click)="enableTwoFactorAuth()">
-            <fa-icon *ngIf="twoFactor == true" [icon]="faUserShield" size="lg"></fa-icon>
-            <fa-icon *ngIf="twoFactor == false" [icon]="faUserShield" size="lg"></fa-icon>
+          <button (click)="enableTwoFactorAuth()" *ngIf="user?.twoFactorAuth == false">
+            Enable
+          </button>
+          <button (click)="disableTwoFactorAuth()" *ngIf="user?.twoFactorAuth == true">
+            Disable
           </button>
         </div>
       </div>
@@ -79,18 +79,18 @@
       <div class="GenerateQrCode" *ngIf="user?.twoFactorAuth == true" id="settingsContainer">
         <div class="title">
           <h5>
-            Generate QrCode
+            Regenerate QrCode
             <fa-icon [icon]="faInfoCircle" (click)="showInfo('generate-code')" id="info-icon"></fa-icon>
           </h5>
         </div>
         <div class="info2" id="generate-code-info">
           <span>
-            Generate a new QrCode for Two-Factor Authentication
+            Regenerate a new QrCode for Two-Factor Authentication
           </span>
         </div>
         <div class="action">
-          <h3>Generate</h3>
-          <button>
+          <h3>Regenerate</h3>
+          <button (click) = "recreateQRCode()">
             <fa-icon [icon]="faRefresh" size="lg"></fa-icon>
           </button>
         </div>
