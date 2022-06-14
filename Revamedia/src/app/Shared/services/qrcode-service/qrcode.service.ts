@@ -19,13 +19,14 @@ export class QrcodeService {
       twoFactorAuth: true
     }
     return this.http.post<any>(this.QRCodeUrl+"/enable",authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}),'withCredentials': true } );
-  
+
   }
 
   disableTwoFactorAuth() : Observable<any>{
     let authDto = {
       twoFactorAuth: false
     }
+    console.log("QRCODE SERVICE");
     return this.http.post<any>(this.QRCodeUrl+"/disable", authDto, {headers: new HttpHeaders({'Content-Type':"application/json"}),'withCredentials': true});
   }
 

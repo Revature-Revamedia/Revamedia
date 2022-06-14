@@ -59,9 +59,12 @@
         <div class="action">
           <h3 *ngIf="user?.twoFactorAuth == false">Enable</h3>
           <h3 *ngIf="user?.twoFactorAuth == true">Disable</h3>
-          <button (click)="enableTwoFactorAuth()">
-            <fa-icon *ngIf="twoFactor == true" [icon]="faUserShield" size="lg"></fa-icon>
-            <fa-icon *ngIf="twoFactor == false" [icon]="faUserShield" size="lg"></fa-icon>
+          <button>
+            <fa-icon [icon]="faUserShield" style="margin-right: 1rem;"></fa-icon>
+            <fa-icon (click)="enableTwoFactorAuth()" *ngIf="twoFactor == false" [icon]="faUserShield" size="lg"></fa-icon>
+          </button>
+          <button (click)="disableTwoFactorAuth()">
+            Disable
           </button>
         </div>
       </div>

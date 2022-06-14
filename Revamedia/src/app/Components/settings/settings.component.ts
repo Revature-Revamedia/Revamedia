@@ -92,7 +92,12 @@ export class SettingsComponent implements OnInit {
   }
 
   disableTwoFactorAuth() {
-    this.qrcodeService.disableTwoFactorAuth().subscribe();
+    this.qrcodeService.disableTwoFactorAuth().subscribe(
+      (data: any) =>{
+        console.log(data);
+        this.getCurrentUserData();
+      }
+    );
   }
 
   onUpload(isTemp = true) {

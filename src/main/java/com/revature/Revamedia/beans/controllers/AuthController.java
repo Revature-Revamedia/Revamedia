@@ -102,6 +102,7 @@ public class AuthController {
 
     @PostMapping("/disable")
     public ResponseEntity<Object> disableTwoFactorAuth(@CookieValue("user_session") String token, @RequestBody TwoFactorAuthDto twoFactorAuthDto){
+        System.out.println("we are in disable method");
         JSONObject jsonObject = new JSONObject();
         try {
             CookieDto cookieDto = jsonWebToken.verify(token);
