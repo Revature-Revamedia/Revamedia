@@ -18,9 +18,7 @@ export class UserService {
   constructor(private http: HttpClient, private userPostsService: UserPostsService) {
     this.userSubject = new BehaviorSubject<any>(this.user);
     this.getUserById(sessionStorage.getItem('userId')).subscribe((response: any) => {
-      console.log("1: ", response.body);
       this.user = response.body;
-      console.log("userservice: ", this.user);
       this.setCurrentUser(this.user);
     });
 
@@ -37,7 +35,6 @@ export class UserService {
 
   userLikesPost(currentPost: any) {
     this.userPostsService.updatePostLikes(currentPost).subscribe((data) => {
-      console.log(data.body);
       this.setCurrentUser(data.body.user);
     });
   }
@@ -78,7 +75,6 @@ export class UserService {
   }
 
   getUserById(id: any): Observable<any> {
-    console.log("test");
     return this.http.get<any>(`${this.userURL}/` + id, { observe: `response` })
   }
 
@@ -97,12 +93,10 @@ export class UserService {
 
   // FOLLOW
   public followUser(Follow: any) : Observable<any> {
-    console.log('information from form', Follow);
+
     return this.http.post<any>(`${this.userURL}/userFollows`, Follow);
   }
   public unfollowUser(unfollow: any) : Observable<any> {
-    console.log('information from form', unfollow);
-    console.log(`${this.userURL}/deleteFollowing`);
     return this.http.post<any>(`${this.userURL}/deleteFollowing`, unfollow);
   }
 

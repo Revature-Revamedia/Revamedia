@@ -31,12 +31,12 @@ import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication(scanBasePackages = "com.revature.Revamedia.beans")
-@ComponentScan(
-        basePackages = {"com.revature.Revamedia.beans"},
-        excludeFilters = {
-                @ComponentScan.Filter(
-                        type = FilterType.ASSIGNABLE_TYPE,
-                        classes = {S3Service.class, S3Config.class, S3Controller.class})})
+//@ComponentScan(
+//        basePackages = {"com.revature.Revamedia.beans"},
+//        excludeFilters = {
+//                @ComponentScan.Filter(
+//                        type = FilterType.ASSIGNABLE_TYPE,
+//                        classes = {S3Service.class, S3Config.class, S3Controller.class})})
 public class RevamediaApplication {
 
         public static void main(String[] args) throws IOException, WriterException {

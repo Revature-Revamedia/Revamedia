@@ -17,7 +17,7 @@ export class TwofaComponent implements OnInit {
 
   loginWithTwoFactor(twoFactorForm: NgForm){
       let userData: any = this.location.getState();
-      console.log("component ",userData);
+
       this.authService.loginWithTwoFactor(userData, twoFactorForm);
   }
 

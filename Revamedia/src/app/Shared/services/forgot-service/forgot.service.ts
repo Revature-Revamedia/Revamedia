@@ -17,6 +17,8 @@ export class ForgotService {
     this.http.post<any>(this.sendEmailUrl,email,{
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-      })}).subscribe((data: any) => console.log(data))
+      })}).subscribe((data: any) => {
+        
+      })
   }
 }
