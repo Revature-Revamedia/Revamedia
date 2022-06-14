@@ -39,7 +39,7 @@ export class UserService {
     let num: number = 0;
     this.userPostsService.updatePostLikes(currentPost).subscribe((data) => {
       console.log(data.body);
-      num = data.body.userPosts.likes.length;
+      num = data.body.likes.length;
       this.setCurrentUser(data.body.user);
     });
     return num
@@ -107,6 +107,10 @@ export class UserService {
     console.log('information from form', unfollow);
     console.log(`${this.userURL}/deleteFollowing`);
     return this.http.post<any>(`${this.userURL}/deleteFollowing`, unfollow);
+  }
+
+  public isFollowing(profileId: any): Observable<any>{
+    return this.http.get<any>(`${this.userURL}/isFollowing/${sessionStorage.getItem('userId')}/${profileId}`);
   }
 
 }

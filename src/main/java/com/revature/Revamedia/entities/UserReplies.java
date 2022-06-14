@@ -7,6 +7,8 @@ package com.revature.Revamedia.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -20,10 +22,10 @@ public class UserReplies implements Serializable {
     @Column(name = "reply_id")
     private Integer replyId;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"userId", "email", "password", "firstName", "lastName", "dateCreated", "resetPasswordToken", "twoFactorAuth", "secretTwoFactorKey", "QRCodeUrl", "QRCodeImage", "followers", "following", "postsOwned", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned"})
     @ManyToOne()
-    @JoinColumn(name = "reply_owner_id", referencedColumnName = "user_id")
-    private User replyOwnerId;
+    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
+    private User ownerId;
 
     @JsonBackReference
     @ManyToOne()
@@ -47,10 +49,10 @@ public class UserReplies implements Serializable {
     public UserReplies() {
     }
 
-    public UserReplies(Integer replyId, User replyOwnerId, UserComments commentId, String replyMessage, Timestamp dateCreated,
+    public UserReplies(Integer replyId, User ownerId, UserComments commentId, String replyMessage, Timestamp dateCreated,
             String replyGiphyUrl) {
         this.replyId = replyId;
-        this.replyOwnerId = replyOwnerId;
+        this.ownerId = ownerId;
         this.commentId = commentId;
         this.replyMessage = replyMessage;
         this.dateCreated = dateCreated;
@@ -66,11 +68,11 @@ public class UserReplies implements Serializable {
     }
 
     public User getOwnerId() {
-        return replyOwnerId;
+        return ownerId;
     }
 
     public void setOwnerId(User ownerId) {
-        this.replyOwnerId = ownerId;
+        this.ownerId = ownerId;
     }
 
     public UserComments getCommentId() {
@@ -110,7 +112,7 @@ public class UserReplies implements Serializable {
         return "UserReplies{" +
 
                 "replyId=" + replyId +
-                ", ownerId=" + replyOwnerId +
+                ", ownerId=" + ownerId +
                 ", message='" + replyMessage + '\'' +
                 ", giphyUrl=" + replyGiphyUrl +
                 ", dateCreated='" + dateCreated + '\'' +

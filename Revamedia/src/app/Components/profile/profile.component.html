@@ -20,14 +20,13 @@
       </div>
 
       <div class="right-card">
-        <!-- *ngIf="user?.username != currentUser?.username" -->
         <div class="right-card-container" *ngIf="user?.username != currentUser?.username">
-          <form #followForm="ngForm" (ngSubmit)="followUser(followForm)">
+          <form #followForm="ngForm" (ngSubmit)="followUser(followForm)" *ngIf="follow == false">
             <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followerId">
             <input type="hidden" ngModel="{{ user?.userId }}" name="followedId">
             <button>Follow</button>
           </form>
-          <form #unfollowForm="ngForm" (ngSubmit)="unfollowUser(unfollowForm)">
+          <form #unfollowForm="ngForm" (ngSubmit)="unfollowUser(unfollowForm)" *ngIf="follow == true">
             <input type="hidden" ngModel="{{ currentUser?.userId }}" name="followerId">
             <input type="hidden" ngModel="{{ user?.userId }}" name="followedId">
             <button id="unFollow">Unfollow</button>
@@ -38,17 +37,23 @@
       </div>
     </div>
 
-    <h4 class="profile-posts-title" id="setBackgroundColor" *ngIf="user?.postsOwned.length != 0">{{ user?.username }}'s Posts</h4>
+    <h4 class="profile-posts-title" id="setBackgroundColor" *ngIf="posts.length != 0">{{ user?.username }}'s Posts</h4>
     <div class="users-post">
-      <div class="post" *ngFor="let post of user?.postsOwned">
+      <div class="post" *ngFor="let post of posts">
         <img *ngIf="post?.image !== null" src="{{ post?.image }}" alt="{{ post?.image }}">
-        <span *ngIf="post?.image !== null">{{ post?.message }}</span>
+        <div class="youtube" *ngIf="post?.image === null">
+          <div class="youtube-logo">
+            <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
+          </div>
+          <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
+          <p id="post-message" *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
+        </div>
+        <!-- <span id="profile-post-message" *ngIf="post?.image !== null">{{ post?.message }}</span> -->
       </div>
     </div>
 
-    <div class="shared-youtube-links-container">
-      <h5>Shared Youtube Links</h5>
-      <div class="youtube-post-wrapper" *ngFor="let post of user?.postsOwned">
+    <!-- <div class="shared-youtube-links-container">
+      <div class="youtube-post-wrapper" *ngFor="let post of posts">
         <div class="youtube-post" *ngIf="post?.image === null" id="post-body">
           <div class="youtube-link">
             <div class="youtube-logo">
@@ -56,13 +61,13 @@
             </div>
               <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
           </div>
-          <p *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
+          <p id="post-message" *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- NO POST AVAILABLE START-->
-    <div class="noPost" *ngIf="user?.postsOwned.length == 0">
+    <div class="noPost" *ngIf="posts.length == 0">
       <h1>No Post</h1>
       <p>Seems like {{ user?.username }} doesn't have any posts.</p>
     </div>
@@ -72,7 +77,7 @@
 </div>
 
 <!-- BLACKOUTSCREEN START-->
-<div class="screen" id="screen"></div>
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- BLACKOUTSCREEN END-->
 
 <!-- FOLLOWERS MODALS START-->

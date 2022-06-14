@@ -74,8 +74,9 @@ public class UserPostsController {
 
     @DeleteMapping("/delete/{id}")
     public void deletePost(@PathVariable Integer id){
-        UserPosts post = userPostsService.getPostById(id);
-        userPostsService.delete(post);
+
+        userService.deleteAllPostLikes(id);
+        userPostsService.deleteById(id);
     }
 
         /**
@@ -106,11 +107,11 @@ public class UserPostsController {
         return userPostsService.getAllPosts();
     }
 
-    @GetMapping("/userFeed")
+/*    @GetMapping("/userFeed")
     @ResponseStatus(HttpStatus.OK)
     public List<Object> getUserFeed(@RequestHeader Integer id) {
         return userPostsService.getUserFeed(id);
-    }
+    }*/
 
     /**
      * Get all posts made by the given user

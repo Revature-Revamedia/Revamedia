@@ -7,6 +7,8 @@ package com.revature.Revamedia.entities;
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -22,10 +24,10 @@ public class UserComments implements Serializable {
     private Integer commentId;
 
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"userId", "email", "password", "firstName", "lastName", "dateCreated", "resetPasswordToken", "twoFactorAuth", "secretTwoFactorKey", "QRCodeUrl", "QRCodeImage", "followers", "following", "postsOwned", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned"})
     @ManyToOne()
-    @JoinColumn(name = "comment_owner_id", referencedColumnName = "user_id")
-    private User commentOwnerId;
+    @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
+    private User ownerId;
 
 
     @JsonIgnore
@@ -50,11 +52,11 @@ public class UserComments implements Serializable {
         this.replies = new ArrayList<>();
     }
 
-    public UserComments(Integer commentId, User commentOwnerId, UserPosts postId, List<UserReplies> replies, String commentMessage,
+    public UserComments(Integer commentId, User ownerId, UserPosts postId, List<UserReplies> replies, String commentMessage,
             Timestamp dateCreated, String giphyUrl) {
 
         this.commentId = commentId;
-        this.commentOwnerId = commentOwnerId;
+        this.ownerId = ownerId;
         this.postId = postId;
         this.replies = replies;
         this.commentMessage = commentMessage;
@@ -71,11 +73,11 @@ public class UserComments implements Serializable {
     }
 
     public User getOwnerId() {
-        return commentOwnerId;
+        return ownerId;
     }
 
     public void setOwnerId(User ownerId) {
-        this.commentOwnerId = ownerId;
+        this.ownerId = ownerId;
     }
 
     public UserPosts getPostId() {
@@ -130,7 +132,7 @@ public class UserComments implements Serializable {
     public String toString() {
         return "UserComments{" +
                 "commentId=" + commentId +
-                ", ownerId=" + commentOwnerId +
+                ", ownerId=" + ownerId +
                 ", replies=" + replies +
                 ", message='" + commentMessage + '\'' +
                 ", giphyUrl=" + giphyUrl +
