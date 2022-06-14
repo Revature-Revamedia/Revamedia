@@ -8,7 +8,7 @@ import { UserService } from 'src/app/Shared/services/user-service/user.service';
 
 import { SettingsComponent } from './settings.component';
 
-fdescribe('SettingsComponent', () => {
+describe('SettingsComponent', () => {
   let component: SettingsComponent;
   let fixture: ComponentFixture<SettingsComponent>;
   let animationServiceSpy: { fadeIn: jasmine.Spy };
