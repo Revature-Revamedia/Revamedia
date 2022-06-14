@@ -35,7 +35,7 @@ describe('HomeComponent', () => {
     deleteYoutube: jasmine.Spy
   };
   let userServiceSpy: {
-    getCurrentUser: jasmine.Spy,
+    getUser: jasmine.Spy,
     userLikesPost: jasmine.Spy,
     setCurrentUser: jasmine.Spy
   };
@@ -50,7 +50,7 @@ describe('HomeComponent', () => {
     commentServiceSpy = jasmine.createSpyObj("CommentServiceSpy", ['addComment', 'updateComment', 'deleteComment', 'addReply', 'updateReply', 'deleteReply']);
     userPostServiceSpy = jasmine.createSpyObj("UserPostServiceSpy", ['updatePostLikes','addPost','updatePost','deletePost','addYoutube','editYoutube','deleteYoutube',])
     giphyServiceSpy = jasmine.createSpyObj("GifServiceSpy", ['getGIFS']);
-    userServiceSpy = jasmine.createSpyObj("UserServiceSpy", ['getCurrentUser', 'userLikesPost', 'setCurrentUser']);
+    userServiceSpy = jasmine.createSpyObj("UserServiceSpy", ['getUser', 'userLikesPost', 'setCurrentUser']);
     animationServiceSpy = jasmine.createSpyObj("AnimationServiceSpy", ['fadeIn']);
     routerSpy = jasmine.createSpyObj("RouterSpy", ['navigate']);
     searchServiceSpy = jasmine.createSpyObj("SearchServiceSpy", ['searchUser']);
@@ -82,67 +82,29 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#ngOnInit calls #getGifs and loads user data into component', fakeAsync(() => {
+  it('#ngOnInit calls #getGifs, triggers opening animation and loads user data into component', () => {
     spyOn(component, 'getGifs');
     spyOn(component, 'openingAnimation');
-    const responseObject = {
-      following: [
-        { followedId: {
-          postsOwned: {
-            post: "This is a post"
-          }
-        }},
-        { followedId: {
-          postsOwned: {
-            post: "This is a second post"
-          }
-        }},
-        { followedId: {
-          postsOwned: {
-            post: "This is a third post"
-          }
-        }},
-      ]
-    };
-    const responseExpected = [
-      { post: "This is a post" },
-      { post: "This is a second post" },
-      { post: "This is a third post" }
-    ];
-    userServiceSpy.getCurrentUser.and.returnValue(of(responseObject));
+    spyOn(component, 'getCurrentUserData');
 
     component.ngOnInit();
-    tick();
 
-    console.log('test response object', responseObject.following);
-    console.log('component posts', component.posts)
-    expect(responseExpected).toEqual(component.posts);
     expect(component.getGifs).toHaveBeenCalledOnceWith('funny');
+    expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
     expect(component.openingAnimation).toHaveBeenCalledTimes(1);
-  }));
-
-  it("#ngOnInit logs error when retrieval of user data fails", fakeAsync(() => {
-    spyOn(component, 'getGifs');
-    spyOn(component, 'openingAnimation');
-    spyOn(console, 'error');
-    userServiceSpy.getCurrentUser.and.returnValue(throwError(() => error));
-
-    component.ngOnInit();
-    tick();
-
-    expect(console.error).toHaveBeenCalledWith(error);
-  }));
+  });
 
   describe('#onAddComment', () => {
     const commentFormToPassIn = { value: "formValue"} as NgForm;
 
     it('should update current user on userService', fakeAsync(() => {
-      commentServiceSpy.addComment.and.returnValue(of(commentFormToPassIn.value))
+      commentServiceSpy.addComment.and.returnValue(of(commentFormToPassIn.value));
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.onAddComment(commentFormToPassIn);
       tick();
 
-      expect(userServiceSpy.setCurrentUser).toHaveBeenCalledTimes(1);
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.addComment).toEqual(false);
     }));
 
@@ -163,13 +125,14 @@ describe('HomeComponent', () => {
     it('should update current user on success', fakeAsync(() => {
       const responseExpected = { body: { data: "data"}};
       commentServiceSpy.updateComment.and.returnValue(of(responseExpected));
+      spyOn(component, 'getCurrentUserData').and.returnValue();
       spyOn(component, 'closeModal');
 
       component.onEditComment(commentFormToPassIn);
       tick();
 
       expect(component.closeModal).toHaveBeenCalledOnceWith('edit', 'comment-modal');
-      expect(userServiceSpy.setCurrentUser).toHaveBeenCalledOnceWith(responseExpected.body.data);
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
     }));
 
     it('should log error on fail', fakeAsync(() => {
@@ -190,13 +153,14 @@ describe('HomeComponent', () => {
     it('should update current user on success', fakeAsync(() => {
       const responseExpected = { body: { data: "data"}};
       commentServiceSpy.deleteComment.and.returnValue(of(responseExpected));
+      spyOn(component, 'getCurrentUserData').and.returnValue();
       spyOn(component, 'closeModal');
 
       component.onDeleteComment(id);
       tick();
 
       expect(component.closeModal).toHaveBeenCalledOnceWith('delete', 'comment-modal');
-      expect(userServiceSpy.setCurrentUser).toHaveBeenCalledOnceWith(responseExpected.body.data);
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
     }));
 
     it('should log error on fail', fakeAsync(() => {
@@ -217,9 +181,11 @@ describe('HomeComponent', () => {
       component.user = { userId: 5 };
       component.totalLikes = 0;
       userServiceSpy.userLikesPost.and.returnValue(100);
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.likePost(currentPost);
 
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(userServiceSpy.userLikesPost).toHaveBeenCalledOnceWith({ userId: component.user.userId, postId: currentPost.postId });
       expect(component.totalLikes).toEqual(100);
     });
@@ -231,10 +197,12 @@ describe('HomeComponent', () => {
     it('should call closeModal with proper arguments on success', fakeAsync(() => {
       userPostServiceSpy.addPost.and.returnValue(of({}));
       spyOn(component, 'closeModal');
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.onAddPost(postFormToPassIn);
       tick();
 
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.closeModal).toHaveBeenCalledWith('add', 'post-modal');
     }));
 
@@ -255,10 +223,12 @@ describe('HomeComponent', () => {
     it('should call closeModal with proper arguments on success', fakeAsync(() => {
       userPostServiceSpy.updatePost.and.returnValue(of({}));
       spyOn(component, 'closeModal');
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.onUpdatePost(postFormToPassIn);
       tick();
 
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.closeModal).toHaveBeenCalledWith('edit', 'post-modal');
     }));
 
@@ -279,11 +249,14 @@ describe('HomeComponent', () => {
     it('should call closeModal with proper arguments on success', fakeAsync(() => {
       userPostServiceSpy.deletePost.and.returnValue(of({}));
       spyOn(component, 'closeModal');
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.onDeletePost(id);
       tick();
 
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.closeModal).toHaveBeenCalledWith('delete', 'post-modal');
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
     }));
 
     it('should log error on fail', fakeAsync(() => {
@@ -302,10 +275,12 @@ describe('HomeComponent', () => {
 
     it('should set addReply to false on success', fakeAsync(() => {
       commentServiceSpy.addReply.and.returnValue(of({}));
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.onAddReply(replyFormToPassIn);
 
       expect(commentServiceSpy.addReply).toHaveBeenCalledOnceWith(replyFormToPassIn.value);
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.addReply).toBeFalse();
     }));
 
@@ -326,12 +301,14 @@ describe('HomeComponent', () => {
 
     it('should call closeModal with proper arguments on success', fakeAsync(() => {
       commentServiceSpy.updateReply.and.returnValue(of({}));
+      spyOn(component, 'getCurrentUserData').and.returnValue();
       spyOn(component, 'closeModal');
 
       component.onEditReply(replyFormToPassIn);
       tick();
 
       expect(component.closeModal).toHaveBeenCalledWith('edit', 'reply-modal');
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
     }));
 
     it('should log error on fail', fakeAsync(() => {
@@ -351,10 +328,12 @@ describe('HomeComponent', () => {
     it('should call closeModal with proper arguments on success', fakeAsync(() => {
       commentServiceSpy.deleteReply.and.returnValue(of({}));
       spyOn(component, 'closeModal');
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.onDeleteReply(id);
       tick();
 
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.closeModal).toHaveBeenCalledWith('delete', 'reply-modal');
     }));
 
@@ -651,10 +630,12 @@ describe('HomeComponent', () => {
     it('should close modal on success', fakeAsync(() => {
       userPostServiceSpy.addYoutube.and.returnValue(of({}));
       spyOn(component, 'closeModal');
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.shareVideo(form);
       tick();
 
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.closeModal).toHaveBeenCalledOnceWith('add', 'youtube-modal');
     }));
 
@@ -681,11 +662,13 @@ describe('HomeComponent', () => {
 
     it('should close modal on success', fakeAsync(() => {
       userPostServiceSpy.editYoutube.and.returnValue(of({}));
+      spyOn(component, 'getCurrentUserData').and.returnValue();
       spyOn(component, 'closeModal');
 
       component.editVideo(form);
       tick();
 
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.closeModal).toHaveBeenCalledOnceWith('edit', 'youtube-modal');
     }));
 
@@ -707,10 +690,12 @@ describe('HomeComponent', () => {
     it('should close modal on success', fakeAsync(() => {
       userPostServiceSpy.deleteYoutube.and.returnValue(of({}));
       spyOn(component, 'closeModal');
+      spyOn(component, 'getCurrentUserData').and.returnValue();
 
       component.deleteVideo(id);
       tick();
 
+      expect(component.getCurrentUserData).toHaveBeenCalledTimes(1);
       expect(component.closeModal).toHaveBeenCalledOnceWith('delete', 'youtube-modal');
     }));
 
@@ -725,4 +710,6 @@ describe('HomeComponent', () => {
       expect(console.log).toHaveBeenCalledOnceWith(error.message)
     }));
   });
+
+  //TODO: 2 MORE METHODS
 });

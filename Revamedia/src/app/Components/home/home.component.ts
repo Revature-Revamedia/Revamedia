@@ -47,26 +47,6 @@ export class HomeComponent implements OnInit {
     this.getGifs('funny');
     this.getCurrentUserData();
     this.openingAnimation();
-    // this.userService.getCurrentUser().subscribe({
-    //   next: response => {
-    //     this.user = response;
-    //     console.log(response);
-
-    //     let f: any;
-    //     this.posts = [];
-    //     for (f of response.following) {
-    //       this.posts.push(f.followedId.postsOwned);
-    //     }
-    //     console.log(this.posts);
-    //     this.posts = this.posts.flat();
-    //     //.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime())
-    //     console.log(this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()));
-    //     //b.date.getTime() - a.date.getTime();
-    //   },
-    //   error: err => {
-    //     console.error(err);
-    //   }
-    // });
   }
 
   // GET CURRENT USER
@@ -82,103 +62,20 @@ export class HomeComponent implements OnInit {
         }
         this.posts = this.posts.concat(followingPost);
         this.posts = this.posts.flat();
-        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
-        // this.posts = followingPost.concat(userPosts);
-        // for(let p of response?.postsOwned){
-        //   this.posts.push(p);
-        //   this.posts = this.posts.flat();
-        // }
-        //this.openingAnimation();
-        // console.log(this.posts);
-      },
+        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());      },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
     );
   }
 
-  // // Back End Work
-  public (currentPost: any): void {
-    this.userPostsService.updatePostLikes(this.postToLike).subscribe(
-      (data) => {
-        // console.log(data.body.likes.length);
-        // this.totalLikes = data.body.likes.length;
-        let p = {
-          userId: 0,
-          postId: 0,
-        }
-        p.postId = currentPost.postId;
-        p.userId = this.user.userId;
-        console.log(p);
-        // this.getCurrentUserData();
-        this.userService.userLikesPost(p);
-        // this.getCurrentUserData();
-      }
-    )
-  }
-
-  // likePost(): void {
-
-  // // // Get All Comments
-  // // // public getAllComments(): void{
-  // // //   this.CommentService.getAllComments().subscribe(
-  // // //     (response: any) => {
-  // // //       this.comments.push(response.data);
-  // // //     },
-  // // //     (error: HttpErrorResponse) => {
-  // // //       console.log(error.message)
-  // // //     }
-  // // //   )
-  // // // }
-
-
-  // //    // get all comments for given post
-
-  // //       // console.log(data.body.comments);
-  // //       // console.log(data.body.comments[0]);
-  // //       // this.comments = data.body.comments;
-
-  // //       // for (var cur of this.comments) {
-  // //       //   console.log(cur);
-  // //       // }
-
-
-  // //   // get all users -> get all owned posts
-
-  // //   // this.userPostsService.getUsers().subscribe((data) => {
-
-
-  // //   //   this.users = data.body;
-  // //   //   console.log("all users:");
-  // //   //   console.log(this.users);
-
-  // //   //   // loop through all users
-  // //   //   for (var user of this.users) {
-  // //   //     // loop through all owned posts for each user
-  // //   //     for (var post of user.postsOwned)
-  // //   //       // add post to post array
-  // //   //       this.posts.push(post)
-  // //   //   }
-  // //   //   console.log("all posts:");
-  // //   //   console.log(this.posts);
-
-
-  // //   //   //for (var follow of this.currentuser.following)
-  // //   //       //getuser
-
-  // //   // });
-
-  // }
 
   // Add Comment
   public onAddComment(commentForm: NgForm): void {
     this.CommentService.addComment(commentForm.value).subscribe(
       (response: any) => {
-        // console.log(response);
-        // console.log(commentForm.value);
         this.getCurrentUserData();
         this.addComment = false;
-        // this.userService.setCurrentUser(response.body);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -204,10 +101,8 @@ export class HomeComponent implements OnInit {
   public onDeleteComment(id: number) {
     this.CommentService.deleteComment(id).subscribe(
       (response: any) => {
-        //console.log(response);
         this.getCurrentUserData();
         this.closeModal('delete', 'comment-modal');
-        // this.userService.setCurrentUser(response.body.data);
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
