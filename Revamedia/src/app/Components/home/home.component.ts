@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
-import { faHeart, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { CommentService } from '../../Shared/services/user-comments-service/comment.service';
 import { UserPostsService } from '../../Shared/services/user-posts-service/user-posts.service';
 import { HttpClient } from '@angular/common/http';
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   public user: any;
   users: any[] = [];
-  posts: any[] = [];
+
   public post: any;
   public comment: any;
 
@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // this.getAllComments();
     this.getGifs('funny');
-    this.posts = [];
     this.getCurrentUserData();
     this.getUserFeed();
     this.openingAnimation();
@@ -50,6 +49,7 @@ export class HomeComponent implements OnInit {
   public getCurrentUserData() {
     this.userService.getUser().subscribe(
       (response: any) => {
+        console.log("getting current user", response)
         this.user = response;
       },
       (error: HttpErrorResponse) => {

@@ -20,6 +20,7 @@ public interface UserPostsRepository extends JpaRepository<UserPosts, Integer> {
     "on uf.followed_id = owner_id "+
     "join users u "+
     "on u.user_id = uf.followed_id "+
+    "where uf.follower_id = :followerIdParam "+
     "order by up.date_created", nativeQuery = true)
     List<UserPosts> getUserFeed(@Param("followerIdParam") Integer id);
 

@@ -32,8 +32,7 @@ public class UserPostsService {
         return posts;
     }
 
-    public List<Object> getUserFeed(Integer id){
-        System.out.println(userPostsRepository.getUserFeed(id));
+    public List<UserPosts> getUserFeed(Integer id){
         return userPostsRepository.getUserFeed(id);
     }
 

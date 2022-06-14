@@ -54,9 +54,7 @@ export class UserService {
   }
 
   public getUser() : Observable<any> {
-    this.http.get<any>(`${this.userURL}/${sessionStorage.getItem('userId')}`).subscribe((data)=>{
-
-    });
+    console.log(sessionStorage.getItem("userId"));
     return this.http.get<any>(`${this.userURL}/${sessionStorage.getItem('userId')}`);
   }
 

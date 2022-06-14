@@ -16,6 +16,7 @@ export class UserPostsService {
 
 
   public getUserFeed() : Observable<any>{
+    console.log("getting user feed: ", sessionStorage.getItem('userId'))
     return this.http.get<any>(`${this.userPostURL}/userFeed/${sessionStorage.getItem('userId')}`)
   }
 

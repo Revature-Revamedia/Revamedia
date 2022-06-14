@@ -8,9 +8,7 @@ package com.revature.Revamedia.beans.controllers;
 
 import com.revature.Revamedia.beans.services.UserPostsService;
 import com.revature.Revamedia.beans.services.UserService;
-import com.revature.Revamedia.dtos.CreateUserPostsDto;
-import com.revature.Revamedia.dtos.UpdatePostLikesDto;
-import com.revature.Revamedia.dtos.UpdateUserPostsDto;
+import com.revature.Revamedia.dtos.*;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserPosts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +110,6 @@ public class UserPostsController {
     @GetMapping("/userFeed/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<UserPosts> getUserFeed(@PathVariable Integer id) {
-
         return userPostsService.getUserFeed(id);
     }
 

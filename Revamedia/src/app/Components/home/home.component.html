@@ -39,10 +39,10 @@
               <a (click)="goToProfile(post?.ownerId.userId)">{{ post?.ownerId.username }}</a>
             </div>
             <div class="post-options">
-              <fa-icon (click)="openModal('edit','post-modal', p)" *ngIf="p?.image !== null"  id="editIcon" [icon]="faPenToSquare"></fa-icon>
-              <fa-icon (click)="openModal('delete', 'post-modal', p)" *ngIf="p?.image !== null"   id="trashIcon" [icon]="faTrashCan"></fa-icon>
-              <fa-icon (click)="openModal('edit', 'youtube-modal', p)" *ngIf="p?.image === null" id="editIcon" [icon]="faPenToSquare"></fa-icon>
-              <fa-icon (click)="openModal('delete', 'youtube-modal', p)" *ngIf="p?.image === null" id="trashIcon" [icon]="faTrashCan"></fa-icon>
+              <fa-icon (click)="openModal('edit','post-modal', post)" *ngIf="post?.image !== null"  id="editIcon" [icon]="faPenToSquare"></fa-icon>
+              <fa-icon (click)="openModal('delete', 'post-modal', post)" *ngIf="post?.image !== null"   id="trashIcon" [icon]="faTrashCan"></fa-icon>
+              <fa-icon (click)="openModal('edit', 'youtube-modal', post)" *ngIf="post?.image === null" id="editIcon" [icon]="faPenToSquare"></fa-icon>
+              <fa-icon (click)="openModal('delete', 'youtube-modal', post)" *ngIf="post?.image === null" id="trashIcon" [icon]="faTrashCan"></fa-icon>
             </div>
           </div>
           <div class="post-body" id="post-body">
@@ -51,10 +51,10 @@
               <div class="youtube-logo">
                 <img src="../../../assets/youtube-svgrepo-com.svg" alt="Youtube">
               </div>
-              <a *ngIf="p?.image === null" href="{{post?.youtubeLink}}" title="{{p?.youtubeLink}}" target="_blank">{{ p?.youtubeLink }}</a>
+              <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" title="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
             </div>
             <div class="post-description" >
-              <p><a routerLink="/profile" routerLinkActive="active">{{ post?.ownerId?.username }}</a>{{post?.message}}</p>
+              <p><a routerLink="/profile" routerLinkActive="active"></a>{{post?.message}}</p>
             </div>
             <div class="post-options" >
               <div class="container">
@@ -114,10 +114,10 @@
         </div>
         <!-- ADD COMMENT END-->
 
-        <div class="post-comments-section" *ngIf="p?.comments.length > 0 && viewComments == true" id="commentSection">
+        <div class="post-comments-section" *ngIf="post?.comments.length > 0 && viewComments == true" id="commentSection">
           <!-- comments start -->
           <h5>Comments</h5>
-          <div class="comment" *ngFor="let comment of p?.comments">
+          <div class="comment" *ngFor="let comment of post?.comments">
             <div class="comment-title">
               <div class="comment-author">
                 <img src="{{comment?.ownerId.profilePicture}}" alt="{{ comment?.ownerId.username }}" (click)="goToProfile(comment?.ownerId.userId)" alt="{{comment.ownerId.username}}">
@@ -199,7 +199,7 @@
     <!-- post end -->
 
       <!-- NO POST AVAILABLE START-->
-      <div class="noPost" *ngIf="posts.length == 0">
+      <div class="noPost" *ngIf="postList.length == 0">
 
         <h1>No Post</h1>
         <p>Seems like there are no posts available to show</p>
