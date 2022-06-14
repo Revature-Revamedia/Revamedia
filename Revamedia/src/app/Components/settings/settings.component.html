@@ -193,7 +193,7 @@
       <input ngModel="{{ editUser?.profilePicture }}" type="url" name="profilePicture" id="profile_pic" placeholder="Image Url..." [contentEditable]="false" >
     </div> -->
     <div class="user-settings-row">
-        <input type="file" (change)="onFileSelected($event)">
+        <input type="file" (change)="onFileSelected($event)"  accept="image/png, image/jpeg, image/jpg">
         <img *ngIf="getUserProfilePictureTemp() !==''" [src]="getUserProfilePictureTemp()" >
         <button type="button" (click)="onUpload()">Upload</button>
     </div>
