@@ -17,7 +17,7 @@ public class _SchemaName {
      *  Public variable to change schemas for database.
      */
 
-    public static final String schemaName = mainSchema;
+    public static final String schemaName = publicSchema;
 
     private _SchemaName() { }
 
