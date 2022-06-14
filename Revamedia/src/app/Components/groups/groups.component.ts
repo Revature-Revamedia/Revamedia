@@ -13,7 +13,12 @@ import { UserService } from 'src/app/Shared/services/user-service/user.service';
 })
 export class GroupsComponent implements OnInit {
 
-  constructor(public userService: UserService, public groupsService: GroupService,private router: Router, public animationService: AnimationService) { }
+  constructor(
+    public userService: UserService,
+    public groupsService: GroupService,
+    private router: Router,
+    public animationService: AnimationService)
+  { }
 
   ngOnInit(): void {
     this.getCurrentUserData();
