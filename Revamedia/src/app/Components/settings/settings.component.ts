@@ -4,13 +4,12 @@ import { NgForm } from '@angular/forms';
 // Icons
 import { faSun, faMoon, faEye, faEyeSlash, faUserShield, faRefresh, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
-import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
 import { UserService } from '../../Shared/services/user-service/user.service';
 import { UploadService } from '../../Shared/services/upload.service';
-import { interval, take, finalize, map, catchError, of } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import { map, catchError, of } from 'rxjs';
+import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { QrcodeService } from 'src/app/Shared/services/qrcode-service/qrcode.service';
 
 
 @Component({
@@ -87,6 +86,7 @@ export class SettingsComponent implements OnInit {
         this.image = data.body;
         this.getCurrentUserData();
       });
+    }
 
   onFileSelected(event: any) {
     console.log(event);
@@ -125,7 +125,6 @@ export class SettingsComponent implements OnInit {
         console.log(this.editUser.profilePicture)
       })
     }
-  }
 
 
 

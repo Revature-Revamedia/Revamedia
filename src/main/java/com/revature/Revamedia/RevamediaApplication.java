@@ -15,36 +15,42 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.google.zxing.WriterException;
+import com.revature.Revamedia.beans.controllers.S3Controller;
 import com.revature.Revamedia.beans.services.*;
 import com.revature.Revamedia.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication(scanBasePackages = "com.revature.Revamedia.beans")
+@ComponentScan(
+        basePackages = {"com.revature.Revamedia.beans"},
+        excludeFilters = {
+                @ComponentScan.Filter(
+                        type = FilterType.ASSIGNABLE_TYPE,
+                        classes = {S3Service.class, S3Config.class, S3Controller.class})})
 public class RevamediaApplication {
 
         public static void main(String[] args) throws IOException, WriterException {
 
                 ConfigurableApplicationContext context = SpringApplication.run(RevamediaApplication.class, args);
-                UserPostsService userPostsService = context.getBean(UserPostsService.class);
-                UserService userService = context.getBean(UserService.class);
-                UserCommentsService userCommentsService = context.getBean(UserCommentsService.class);
-                UserRepliesService userRepliesService = context.getBean(UserRepliesService.class);
-                UserEventsService userEventsService = context.getBean(UserEventsService.class);
-                UserGroupsService userGroupsService = context.getBean(UserGroupsService.class);
-                UserConversationsService userConversationsService = context.getBean(UserConversationsService.class);
-                UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
-                S3Service S3Service = context.getBean(S3Service.class);
-                S3Config s3Config = context.getBean(S3Config.class);
-                SendEmailService sendEmailService = context.getBean(SendEmailService.class);
-                TwoFactorAuthentication twoFactorAuthentication = context.getBean(TwoFactorAuthentication.class);
+//                UserPostsService userPostsService = context.getBean(UserPostsService.class);
+//                UserService userService = context.getBean(UserService.class);
+//                UserCommentsService userCommentsService = context.getBean(UserCommentsService.class);
+//                UserRepliesService userRepliesService = context.getBean(UserRepliesService.class);
+//                UserEventsService userEventsService = context.getBean(UserEventsService.class);
+//                UserGroupsService userGroupsService = context.getBean(UserGroupsService.class);
+//                UserConversationsService userConversationsService = context.getBean(UserConversationsService.class);
+//                UserMessagesService userMessagesService = context.getBean(UserMessagesService.class);
+//                S3Service S3Service = context.getBean(S3Service.class);
+//                S3Config s3Config = context.getBean(S3Config.class);
+//                SendEmailService sendEmailService = context.getBean(SendEmailService.class);
+//                TwoFactorAuthentication twoFactorAuthentication = context.getBean(TwoFactorAuthentication.class);
 
 //                String email = "revamedia@gmail.com";
 //                String companyName = "Revamedia";
