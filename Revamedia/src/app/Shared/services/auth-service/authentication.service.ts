@@ -78,13 +78,14 @@ export class AuthenticationService {
     this.http.post<any>(this.authUrl+"/twoFA", data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-      })
+      }),
+      'withCredentials': true, 'observe': `response`
     }).subscribe((response: any) => {
       let loggedInUser: any;
-
-      sessionStorage.setItem('userId', response.userId);
-      sessionStorage.setItem('username', response.username);
-      sessionStorage.setItem('email', response.email);
+      console.log(response);
+      sessionStorage.setItem('userId', response.body.userId);
+      sessionStorage.setItem('username', response.body.username);
+      sessionStorage.setItem('email', response.body.email);
       sessionStorage.setItem('loggedIn', "1");
       loggedInUser = this.userService.getUser();
       this.userService.setCurrentUser(loggedInUser);
