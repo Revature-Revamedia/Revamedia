@@ -47,7 +47,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getGifs('funny');
     this.getCurrentUserData();
-    // this.getAllPost();
     this.openingAnimation();
   }
 
@@ -62,9 +61,6 @@ export class HomeComponent implements OnInit {
         for(let f of response?.following) {
           this.posts.push(f?.followedId?.postsOwned);
         }
-        console.log(this.posts);
-        // console.log(followingPost);
-        // this.posts = this.posts.concat(followingPost);
         this.posts = this.posts.flat();
         this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
       },
@@ -73,19 +69,6 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
-  // public getAllPost(){
-  //   this.userPostsService.getAll().subscribe(
-  //     (response: any) => {
-  //       this.posts = response;
-  //       this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       console.log(error.message)
-  //     }
-  //   )
-  // }
-
 
   // Add Comment
   public onAddComment(commentForm: NgForm): void {
@@ -110,7 +93,6 @@ export class HomeComponent implements OnInit {
     this.CommentService.updateComment(commentForm.value).subscribe(
       (response: any) => {
         this.getCurrentUserData();
-        // this.getAllPost();
         this.closeModal('edit', 'comment-modal');
         this.selectedGiphy = "";
         // this.userService.setCurrentUser(response.body.data);
@@ -125,7 +107,6 @@ export class HomeComponent implements OnInit {
     this.CommentService.deleteComment(id).subscribe(
       (response: any) => {
         this.getCurrentUserData();
-        // this.getAllPost();
         this.closeModal('delete', 'comment-modal');
         this.selectedGiphy = "";
         // this.userService.setCurrentUser(response.body.data);
@@ -144,10 +125,8 @@ export class HomeComponent implements OnInit {
     }
     p.postId = currentPost.postId;
     p.userId = this.user.userId;
-
     this.userService.userLikesPost(p);
     this.getCurrentUserData();
-    // this.getAllPost();
   }
 
   onAddPost(postForm: NgForm): void {
@@ -155,7 +134,6 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.closeModal('add', 'post-modal');
         this.getCurrentUserData();
-        // this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -170,7 +148,6 @@ export class HomeComponent implements OnInit {
 
         this.closeModal('edit', 'post-modal');
         this.getCurrentUserData();
-        // this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -183,7 +160,6 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.closeModal('delete', 'post-modal');
         this.getCurrentUserData();
-        // this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -198,7 +174,6 @@ export class HomeComponent implements OnInit {
         this.getCurrentUserData();
         this.addReply = false;
         this.selectedGiphy = "";
-        // this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -217,7 +192,6 @@ export class HomeComponent implements OnInit {
         this.getCurrentUserData();
         this.closeModal('edit', 'reply-modal');
         this.selectedGiphy = "";
-        // this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -233,7 +207,6 @@ export class HomeComponent implements OnInit {
         this.getCurrentUserData();
         this.closeModal('delete', 'reply-modal');
         this.selectedGiphy = "";
-        // this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
