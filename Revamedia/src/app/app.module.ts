@@ -30,6 +30,7 @@ import { PostCommentReplyComponent } from './Components/post-comment-reply/post-
 import { PostCommentComponent } from './Components/post-comment/post-comment.component';
 import { PostComponent } from './Components/post/post.component';
 import { HomePageTitleComponent } from './Components/home-page-title/home-page-title.component';
+import { NoPostComponent } from './Components/no-post/no-post.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { HomePageTitleComponent } from './Components/home-page-title/home-page-t
     PostCommentComponent,
     PostComponent,
     HomePageTitleComponent,
+    NoPostComponent,
   ],
   imports: [
     BrowserModule,

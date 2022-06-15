@@ -40,11 +40,8 @@ export class HomeComponent implements OnInit {
     public gifService: GiphyService,
     public animationService: AnimationService,
     public router: Router
-
     )
   { }
-
-
 
   ngOnInit(): void {
     this.getCurrentUserData();
