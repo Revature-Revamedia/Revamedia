@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getGifs('funny');
     this.getCurrentUserData();
+    this.getAllPost();
     this.openingAnimation();
   }
 
@@ -55,19 +56,38 @@ export class HomeComponent implements OnInit {
     this.userService.getUser().subscribe(
       (response: any) => {
         this.user = response;
-        let userPosts = [];
-        this.posts = response?.postsOwned;
-        let followingPost = [];
-        for(let f of response?.following) {
-          followingPost = f?.followedId?.postsOwned;
-        }
-        this.posts = this.posts.concat(followingPost);
-        this.posts = this.posts.flat();
-        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());      },
+        // let userPosts = [];
+        // this.posts = response?.postsOwned;
+        // let following = [];
+        // following = this.user?.following;
+        // let followingPost: any[] = [];
+        // for(let follow of following){
+        //   followingPost.push(follow?.followedId?.postsOwned);
+        //   followingPost = followingPost.flat();
+        // }
+        // let morePosts: any[] = [];
+        // for(let follow of followingPost){
+        //   morePosts.push(follow);
+        //   morePosts = morePosts.flat();
+        // }
+        // this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
+      },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
     );
+  }
+
+  public getAllPost(){
+    this.userPostsService.getAll().subscribe(
+      (response: any) => {
+        this.posts = response;
+        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
   }
 
 
@@ -76,6 +96,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.addComment(commentForm.value).subscribe(
       (response: any) => {
         this.getCurrentUserData();
+        this.getAllPost();
         this.addComment = false;
         this.viewComments = true;
         this.selectedGiphy = "";
@@ -93,6 +114,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.updateComment(commentForm.value).subscribe(
       (response: any) => {
         this.getCurrentUserData();
+        this.getAllPost();
         this.closeModal('edit', 'comment-modal');
         this.selectedGiphy = "";
         // this.userService.setCurrentUser(response.body.data);
@@ -107,6 +129,7 @@ export class HomeComponent implements OnInit {
     this.CommentService.deleteComment(id).subscribe(
       (response: any) => {
         this.getCurrentUserData();
+        this.getAllPost();
         this.closeModal('delete', 'comment-modal');
         this.selectedGiphy = "";
         // this.userService.setCurrentUser(response.body.data);
@@ -128,6 +151,7 @@ export class HomeComponent implements OnInit {
 
     this.userService.userLikesPost(p);
     this.getCurrentUserData();
+    this.getAllPost();
   }
 
   onAddPost(postForm: NgForm): void {
@@ -135,6 +159,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.closeModal('add', 'post-modal');
         this.getCurrentUserData();
+        this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -149,6 +174,7 @@ export class HomeComponent implements OnInit {
 
         this.closeModal('edit', 'post-modal');
         this.getCurrentUserData();
+        this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -161,6 +187,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         this.closeModal('delete', 'post-modal');
         this.getCurrentUserData();
+        this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -175,6 +202,7 @@ export class HomeComponent implements OnInit {
         this.getCurrentUserData();
         this.addReply = false;
         this.selectedGiphy = "";
+        this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -193,6 +221,7 @@ export class HomeComponent implements OnInit {
         this.getCurrentUserData();
         this.closeModal('edit', 'reply-modal');
         this.selectedGiphy = "";
+        this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -208,6 +237,7 @@ export class HomeComponent implements OnInit {
         this.getCurrentUserData();
         this.closeModal('delete', 'reply-modal');
         this.selectedGiphy = "";
+        this.getAllPost();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -386,6 +416,7 @@ export class HomeComponent implements OnInit {
     this.userPostsService.addYoutube(youtubeDto).subscribe(
       (response: any) => {
         this.getCurrentUserData();
+        this.getAllPost();
         this.closeModal('add', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
@@ -404,6 +435,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
 
         this.getCurrentUserData();
+        this.getAllPost();
         this.closeModal('edit', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
@@ -416,6 +448,7 @@ export class HomeComponent implements OnInit {
     this.userPostsService.deleteYoutube(id).subscribe(
       (response: any) => {
         this.getCurrentUserData();
+        this.getAllPost();
         this.closeModal('delete', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {

@@ -33,7 +33,6 @@ export class UserService {
 
   userLikesPost(currentPost: any) {
     this.userPostsService.updatePostLikes(currentPost).subscribe((data) => {
-      this.setCurrentUser(data.body.user);
     });
   }
 
