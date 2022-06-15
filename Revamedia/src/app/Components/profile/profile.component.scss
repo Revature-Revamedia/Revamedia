@@ -168,7 +168,6 @@ $darkgrey: rgb(61,66,74);
           object-fit: cover;
           border: 2px solid $orange;
           transition: all 0.3s ease-in-out;
-          cursor: pointer;
           &:hover{
             border: 2px solid $blue;
           }
