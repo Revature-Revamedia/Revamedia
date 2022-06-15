@@ -28,6 +28,9 @@ export class UserPostsService {
   public deletePost(id: number): Observable<any> {
     return this.http.delete<any>(`${this.userPostURL}/delete/${id}`);
   }
+  public getAllPosts(): Observable<any> {
+    return this.http.get<any>(`${this.userPostURL}/allPosts`)
+  }
 
   //array of posts
   //behavior value of inital value of array of posts
@@ -48,4 +51,6 @@ export class UserPostsService {
   public deleteYoutube(id: number): Observable<any> {
     return this.http.delete<any>(`${this.userPostURL}/youtube/delete/${id}`);
   }
+
+
 }

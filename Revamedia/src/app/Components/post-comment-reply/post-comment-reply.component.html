@@ -1,0 +1,33 @@
+<!-- Edit reply FORM START -->
+<div class="modal" id="edit-reply-modal">
+  <div class="form-header">
+    <h3>Edit Reply</h3>
+    <span (click)="closeModal('edit', 'reply-modal')">x</span>
+  </div>
+  <form #editReplyForm="ngForm" (ngSubmit)="onEditReply(editReplyForm)" ngNativeValidate>
+    <input type="hidden" name="reply_id" ngModel="{{ editReply?.replyId }}">
+    <div class="form-data">
+      <textarea ngModel="{{ editReply?.message }}" required name="message" rows="4"></textarea>
+    </div>
+    <div class="post-submit">
+      <button>Update Reply</button>
+    </div>
+  </form>
+</div>
+
+
+<!-- delete COMMENT FORM START -->
+<!-- <div class="modal" id="delete-reply-modal">
+  <div class="form-header">
+    <h3>Delete reply</h3>
+    <span (click)="closeModal('delete', 'reply-modal')">x</span>
+  </div>
+  <form (ngSubmit)="onDeleteReply(deleteReply?.replyId)">
+    <h2>Are you sure you want to delete this reply?</h2>
+    <span style="font-size: .8rem;">{{ deleteReply?.message }}</span>
+    <div class="post-submit">
+      <button id="deleteBtn">Delete comment</button>
+    </div>
+  </form>
+</div> -->
+<!-- delete COMMENT FORM END -->

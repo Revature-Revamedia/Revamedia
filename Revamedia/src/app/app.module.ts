@@ -26,6 +26,10 @@ import { ResetComponent } from './Components/reset/reset.component';
 import { ForgotComponent } from './Components/forgot/forgot.component';
 import { GroupComponent } from './Components/group/group.component';
 import { TwofaComponent } from './Components/twofa/twofa.component';
+import { PostCommentReplyComponent } from './Components/post-comment-reply/post-comment-reply.component';
+import { PostCommentComponent } from './Components/post-comment/post-comment.component';
+import { PostComponent } from './Components/post/post.component';
+import { HomePageTitleComponent } from './Components/home-page-title/home-page-title.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,10 @@ import { TwofaComponent } from './Components/twofa/twofa.component';
     ForgotComponent,
     GroupComponent,
     TwofaComponent,
+    PostCommentReplyComponent,
+    PostCommentComponent,
+    PostComponent,
+    HomePageTitleComponent,
   ],
   imports: [
     BrowserModule,

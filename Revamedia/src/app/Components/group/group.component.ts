@@ -23,9 +23,9 @@ export class GroupComponent implements OnInit {
   { }
 
   ngOnInit():void {
-    this.getGroupData();
-    this.getCurrentUserData();
-    this.openingAnimation();
+    // this.getGroupData();
+    // this.getCurrentUserData();
+    // this.openingAnimation();
   }
 
   public group: any = {};
