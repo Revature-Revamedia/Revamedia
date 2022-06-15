@@ -59,23 +59,23 @@ export class HomeComponent implements OnInit {
         this.posts = response?.postsOwned;
         let followingPost = [];
         for(let f of response?.following) {
-          followingPost = f?.followedId?.postsOwned;
+          this.posts.push(f?.followedId?.postsOwned);
         }
-        this.posts = this.posts.concat(followingPost);
         this.posts = this.posts.flat();
-        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());      },
+        this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
+      },
       (error: HttpErrorResponse) => {
         console.log(error.message)
       }
     );
   }
 
-
   // Add Comment
   public onAddComment(commentForm: NgForm): void {
     this.CommentService.addComment(commentForm.value).subscribe(
       (response: any) => {
         this.getCurrentUserData();
+        // this.getAllPost();
         this.addComment = false;
         this.viewComments = true;
         this.selectedGiphy = "";
@@ -125,7 +125,6 @@ export class HomeComponent implements OnInit {
     }
     p.postId = currentPost.postId;
     p.userId = this.user.userId;
-
     this.userService.userLikesPost(p);
     this.getCurrentUserData();
   }
@@ -335,8 +334,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  public searchGiphyForReply() {
-    var search = document.getElementById('giphy-search-reply') as HTMLInputElement;
+  public searchGiphyForReply(type: any) {
+    var search = document.getElementById(`giphy-search-${type}`) as HTMLInputElement;
     let query = search?.value;
     let cleanQuery = query.trim();
     let cleanQuery2 = cleanQuery.replace(" ", "+");
@@ -386,6 +385,7 @@ export class HomeComponent implements OnInit {
     this.userPostsService.addYoutube(youtubeDto).subscribe(
       (response: any) => {
         this.getCurrentUserData();
+        // this.getAllPost();
         this.closeModal('add', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
@@ -404,6 +404,7 @@ export class HomeComponent implements OnInit {
       (response: any) => {
 
         this.getCurrentUserData();
+        // this.getAllPost();
         this.closeModal('edit', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {
@@ -416,6 +417,7 @@ export class HomeComponent implements OnInit {
     this.userPostsService.deleteYoutube(id).subscribe(
       (response: any) => {
         this.getCurrentUserData();
+        // this.getAllPost();
         this.closeModal('delete', 'youtube-modal');
       },
       (error: HttpErrorResponse) => {

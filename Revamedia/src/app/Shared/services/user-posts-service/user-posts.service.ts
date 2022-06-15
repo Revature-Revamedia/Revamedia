@@ -17,6 +17,10 @@ export class UserPostsService {
     return this.http.get<any>(`${this.userPostURL}/${id}`)
   }
 
+  public getAll(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.userPostURL}/allPosts`);
+  }
+
   public addPost(post: any): Observable<any> {
     return this.http.post<any>(`${this.userPostURL}/addPost`, post);
   }
