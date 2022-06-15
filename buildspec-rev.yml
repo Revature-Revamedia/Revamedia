@@ -20,7 +20,7 @@ phases:
   build:
     commands:
       - echo ============================build================================
-      - mvn package -q #could remove skip
+      - mvn package -q -DskipTests #could remove skip
       - cd Revamedia/
       # - pwd
       # - ls -al
