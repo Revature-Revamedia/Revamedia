@@ -1,15 +1,14 @@
 package com.revature.Revamedia.beans.controllers;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,6 +27,7 @@ import com.revature.Revamedia.dtos.UpdateGroupDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserGroups;
 import com.revature.Revamedia.entities.UserPosts;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
 * @Author: Qiang Gao
@@ -37,23 +37,23 @@ public class GroupControllerTest {
 
     private MockMvc mockMvc;
 
+    @Autowired
+    GroupController groupController;
+
     @MockBean
     private UserGroupsService userGroupsService;
-
     @MockBean
     private UserService userService;
-
     @MockBean
     private AuthService authService;
-
     @MockBean
     private JsonWebToken jsonWebToken;
-
     @MockBean
     private UserPostsService userPostsService;
 
-    public GroupControllerTest(@Autowired MockMvc mockMvc) {
-        this.mockMvc = mockMvc;
+    @BeforeEach
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(groupController).build();
     }
 
     @Test
@@ -71,7 +71,7 @@ public class GroupControllerTest {
 
         when(userGroupsService.getGroupById(1)).thenReturn(group);
 
-        mockMvc.perform(get("/groups/1")).andExpect(status().isOk());
+        mockMvc.perform(get("/groups/1")).andExpect(status().isAccepted());
     }
 
     @Test
@@ -89,8 +89,7 @@ public class GroupControllerTest {
 
         mockMvc
                 .perform(post("/groups/newGroup").contentType("application/json").content(json))
-                .andExpect(status().isOk());
-
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -100,7 +99,7 @@ public class GroupControllerTest {
 
         when(userGroupsService.getGroupById(1)).thenReturn(group);
 
-        mockMvc.perform(delete("/groups/delete/1")).andExpect(status().isOk());
+        mockMvc.perform(delete("/groups/delete/1")).andExpect(status().isAccepted());
 
     }
 
@@ -121,11 +120,10 @@ public class GroupControllerTest {
 
 
         mockMvc
-                .perform(post("/groups/update/1")
+                .perform(put("/groups/update")
                 .contentType("application/json")
                 .content(json))
                 .andExpect(status().isOk());
-
     }
 
 
@@ -154,6 +152,6 @@ public class GroupControllerTest {
                 .perform(post("/groups/addPost")
                 .contentType("application/json")
                 .content(json))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 }
