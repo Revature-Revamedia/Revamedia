@@ -30,7 +30,7 @@ import com.revature.Revamedia.entities.UserPosts;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
-* @Author: Qiang Gao
+* @Author Qiang Gao
 */
 @WebMvcTest(GroupController.class)
 public class GroupControllerTest {
