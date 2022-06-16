@@ -152,4 +152,3 @@ public class UserPostsController {
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 }
-
