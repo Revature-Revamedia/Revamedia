@@ -31,6 +31,9 @@ import { PostCommentComponent } from './Components/post-comment/post-comment.com
 import { PostComponent } from './Components/post/post.component';
 import { HomePageTitleComponent } from './Components/home-page-title/home-page-title.component';
 import { NoPostComponent } from './Components/no-post/no-post.component';
+import { PostAddComponent } from './post-add/post-add.component';
+import { PostEditComponent } from './post-edit/post-edit.component';
+import { PostDeleteComponent } from './post-delete/post-delete.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,9 @@ import { NoPostComponent } from './Components/no-post/no-post.component';
     PostComponent,
     HomePageTitleComponent,
     NoPostComponent,
+    PostAddComponent,
+    PostEditComponent,
+    PostDeleteComponent,
   ],
   imports: [
     BrowserModule,

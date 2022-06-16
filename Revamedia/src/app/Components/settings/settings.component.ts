@@ -36,9 +36,9 @@ export class SettingsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getCurrentUserData();
-    this.isImageTemporarilyUploaded = false;
-    this.openingAnimation();
+    //this.getCurrentUserData();
+    //this.isImageTemporarilyUploaded = false;
+    //this.openingAnimation();
   }
 
   getUserProfilePicture() {

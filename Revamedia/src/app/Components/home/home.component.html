@@ -1,18 +1,9 @@
 <div class="home-page" id="home-page">
- <app-home-page-title  [user]="user"></app-home-page-title>
-  <!-- main feed start -->
+  <app-home-page-title [user]="user"></app-home-page-title>
   <div class="main" id="main">
-    <!-- post start -->
-      <div class="post-data" *ngFor="let post of posts">
-
-       <app-post [post]="post" ></app-post>
-      </div>
-    <!-- post end -->
-    <!-- NO POST AVAILABLE START-->
-
-
-    <app-no-post [posts]="posts"></app-no-post>
-    <!-- NO POST AVAILABLE END-->
+    <div  class="post-data" *ngFor="let post of posts">
+      <app-post [post]="post" ></app-post>
+    </div>
+    <app-no-post [posts]="posts" ></app-no-post>>
   </div>
-  <!-- main feed end -->
 </div>

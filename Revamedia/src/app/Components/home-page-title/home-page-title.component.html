@@ -11,13 +11,13 @@
   <div class="right-side">
     <form class="searchUser">
       <input type="search" #searchValue id="search-user" placeholder="Search users..." (keyup)="searchUser(searchValue.value)">
-      <div class="users-list" *ngIf="allUsers.length != 0">
-        <div *ngFor="let u of allUsers" class="userFound">
-          <div class="user" (click)="goToProfile(u?.userId)" title="View {{u?.username}}'s Profile">
-            <p>{{u?.firstName +" "+ u?.lastName}}</p>
+      <!-- <div class="users-list" *ngIf="allUsers.length != 0">
+        <div *ngFor="let user of allUsers" class="userFound">
+          <div class="user" (click)="goToProfile(user.userId)" title="View {user.username}}'s Profile">
+            <p>{{user.firstName +" "+ user.lastName}}</p>
           </div>
         </div>
-      </div>
+      </div> -->
     </form>
     <div class="buttons">
       <button (click)="openModal('add','post-modal', user.userId)">Add Post</button>
@@ -26,28 +26,8 @@
   </div>
 </div>
 
-<!-- ADD POST FORM START -->
-<div class="modal" id="add-post-modal">
-  <div class="form-header">
-    <h3>Create new post</h3>
-    <span (click)="closeModal('add', 'post-modal')">x</span>
-  </div>
-  <form #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)" ngNativeValidate>
-    <div class="form-data">
-      <h4>Add Image Link</h4>
-      <input type="url" name="image" ngModel id="image" placeholder="Image url...">
-    </div>
-    <div class="form-data">
-      <input type="text" name="userId" ngModel="{{ user.userId }}">
-      <h4>Write a caption</h4>
-      <textarea name="message" ngModel placeholder="Write a caption..." rows="6"></textarea>
-    </div>
-    <div class="post-submit">
-      <button>Create Post</button>
-    </div>
-  </form>
-</div>
-<!-- ADD POST FORM END -->
+<app-post-add *ngIf=true>sdsd </app-post-add>
+
 
 
 <!-- ADD Youtube FORM START -->

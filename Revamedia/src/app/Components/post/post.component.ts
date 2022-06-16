@@ -51,7 +51,6 @@ export class PostComponent implements OnInit {
 
     ngOnInit(): void {
       //this.getGifs('funny');
-      // this.getCurrentUserData();
       //this.openingAnimation();
     }
 
@@ -79,6 +78,7 @@ export class PostComponent implements OnInit {
       // Add comment
   public addComment = false;
   public openAddComment() {
+    console.log("open add comment fati")
     this.addComment = true;
   }
   public closeAddComment(): void {
@@ -90,7 +90,7 @@ export class PostComponent implements OnInit {
     this.userPostsService.updatePost(postForm.value).subscribe(
       (response: any) => {
 
-        //this.closeModal('edit', 'post-modal');
+        this.closeModal('edit', 'post-modal');
         // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
@@ -146,32 +146,35 @@ export class PostComponent implements OnInit {
     this.router.navigate([`profile/${userId}`]);
   }
 
-  // public closeModal(modalType: string, post: any) {
-  //   // Screen
-  //   const screen = document.getElementById('screen');
-  //   screen?.classList.remove('openScreen');
-  //   // Form
-  //   const form = document.getElementById(`${modalType}-${post}`);
-  //   form?.classList.remove('openModal');
-  // }
+  public closeModal(modalType: string, post: any) {
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form = document.getElementById(`${modalType}-${post}`);
+    form?.classList.remove('openModal');
+  }
 
     // hide Comments
-    public viewComments = false;
+    public viewComments = true;
     public toggleHideComments(id:any): void {
-      this.viewComments = !this.viewComments;
+      // this.viewComments = !this.viewComments;
     }
     public toggleComments():void{
       this.addComment = !this.addComment;
+      console.log("fatima", this.addComment)
     }
 
 
   likePost(currentPost: any): void {
+    console.log("heart")
     let p = {
       userId: 0,
       postId: 0,
     }
     p.postId = currentPost.postId;
     p.userId = this.user.userId;
+    console.log("fati shab" ,this.user  )
 
     this.userService.userLikesPost(p);
     // this.getCurrentUserData();

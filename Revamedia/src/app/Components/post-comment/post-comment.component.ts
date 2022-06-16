@@ -99,6 +99,7 @@ export class PostCommentComponent implements OnInit {
       );
     }
     public onEditComment(commentForm: NgForm): void {
+      console.log("fati")
 
       this.CommentService.updateComment(commentForm.value).subscribe(
         (response: any) => {
