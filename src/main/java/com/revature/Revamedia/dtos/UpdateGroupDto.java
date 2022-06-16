@@ -10,6 +10,8 @@ public class UpdateGroupDto {
 
     private String imageUrl;
 
+    public UpdateGroupDto() {}
+
     public UpdateGroupDto(Integer groupId, String title, String description, String imageUrl) {
         this.groupId = groupId;
         this.title = title;
