@@ -7,7 +7,7 @@ package com.revature.Revamedia.beans.controllers;
 
 import com.revature.Revamedia.beans.services.UserPostsService;
 import com.revature.Revamedia.beans.services.UserService;
-import com.revature.Revamedia.dtos.UpdatePostLikesDto;
+import com.revature.Revamedia.dtos.*;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserPosts;
 import org.junit.jupiter.api.Assertions;
@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import javax.persistence.EntityNotFoundException;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -76,7 +77,77 @@ public class UserPostsControllerTest {
     }
 
     @Test
-    public void getPostsByUserIdSuccess(@Autowired UserPostsController userPostsController){
-        //to do later
+    public void shareYoutubeSavesPostAndUser(@Autowired UserPostsController userPostsController) {
+        shareYoutubeDto dto = new shareYoutubeDto(1, "message", "Link");
+        when(userService.getUserById(any())).thenReturn(new User());
+
+        userPostsController.shareYoutube(dto);
+
+        verify(userPostsService, times(1)).save(any());
+        verify(userService, times(1)).save(any());
+    }
+
+    @Test
+    public void editYoutubeUpdatesPost(@Autowired UserPostsController userPostsController) {
+        EditYoutubeDto editYoutubeDto = new EditYoutubeDto("message", "Link");
+        when(userPostsService.getPostById(any())).thenReturn(new UserPosts());
+
+        userPostsController.editYoutube(editYoutubeDto);
+
+        verify(userPostsService, times(1)).update(any());
+    }
+
+    @Test
+    public void deleteYoutubeDeletesInfoOnPost(@Autowired UserPostsController userPostsController){
+        when(userPostsService.getPostById(any())).thenReturn(new UserPosts());
+
+        userPostsController.deleteYoutube(4);
+
+        verify(userPostsService, times(1)).delete(any());
+    }
+
+    @Test
+    public void createPostSavesPostAndUser(@Autowired UserPostsController userPostsController) {
+        when(userService.getUserById(any())).thenReturn(new User());
+
+        userPostsController.createPost(new CreateUserPostsDto());
+
+        verify(userPostsService, times(1)).save(any(UserPosts.class));
+        verify(userService, times(1)).save(any(User.class));
+    }
+
+    @Test
+    public void updatePostUpdatesPost(@Autowired UserPostsController userPostsController) {
+        when(userPostsService.getPostById(any())).thenReturn(new UserPosts());
+
+        userPostsController.updatePost(new UpdateUserPostsDto());
+
+        verify(userPostsService, times(1)).update(any());
+    }
+
+    @Test
+    public void deletePostDeletesLikesAndPost(@Autowired UserPostsController userPostsController) {
+        userPostsController.deletePost(4);
+
+        verify(userService, times(1)).deleteAllPostLikes(any());
+        verify(userPostsService, times(1)).deleteById(any());
+    }
+
+    @Test
+    public void getPostByPostIdGetsPost(@Autowired UserPostsController userPostsController) {
+        when(userPostsService.getPostById(any())).thenReturn(new UserPosts());
+
+        ResponseEntity response = userPostsController.getPostByPostId(4);
+
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void getPostByPostIdThrowsNotFound(@Autowired UserPostsController userPostsController) {
+        when(userPostsService.getPostById(any())).thenThrow(EntityNotFoundException.class);
+
+        ResponseEntity response = userPostsController.getPostByPostId(4);
+
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 }

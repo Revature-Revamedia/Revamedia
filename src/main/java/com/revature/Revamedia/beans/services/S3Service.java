@@ -19,12 +19,11 @@ public class S3Service implements FileServiceImpl{
     @Value("${bucketName}")
     private String bucketName;
     private  final AmazonS3 s3;
+    private UserService userService;
+
     public S3Service(AmazonS3 s3) {
         this.s3 = s3;
     }
-    private UserService userService;
-
-
 
     @Override
     public String saveFile(MultipartFile file , String fileName) {

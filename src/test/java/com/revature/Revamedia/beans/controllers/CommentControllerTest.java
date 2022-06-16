@@ -1,6 +1,6 @@
 package com.revature.Revamedia.beans.controllers;
 
-import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import java.util.Locale;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.Cookie;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -37,14 +37,18 @@ import com.revature.Revamedia.dtos.UserCommentsDto;
 import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserComments;
 import com.revature.Revamedia.entities.UserPosts;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
-* @Author: Qiang Gao
+* @Author Qiang Gao
 */
 @WebMvcTest(CommentController.class)
 public class CommentControllerTest {
 
     private MockMvc mockMvc;
+
+    @Autowired
+    private CommentController commentController;
 
     @MockBean
     private UserCommentsService userCommentsService;
@@ -57,8 +61,9 @@ public class CommentControllerTest {
     @MockBean
     private JsonWebToken jsonWebTokenMock;
 
-    public CommentControllerTest(@Autowired MockMvc mockMvc) {
-        this.mockMvc = mockMvc;
+    @BeforeEach
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(commentController).build();
     }
 
     @Test
@@ -80,12 +85,48 @@ public class CommentControllerTest {
         when(userCommentsService.getCommentById(2)).thenThrow(EntityNotFoundException.class);
 
         this.mockMvc.perform(get("/comment/1")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetByIdReturns400() throws Exception {
+        UserComments comment = new UserComments();
+
+        User user = new User();
+        user.setUserId(1);
+
+        UserPosts post = new UserPosts();
+        post.setPostId(1);
+
+        comment.setCommentId(1);
+        comment.setOwnerId(user);
+        comment.setPostId(post);
+
+        when(userCommentsService.getCommentById(any())).thenReturn(comment);
+
+        when(userCommentsService.getCommentById(2)).thenThrow(EntityNotFoundException.class);
+
+        this.mockMvc.perform(get("/comment/3")).andExpect(status().isBadRequest());
 
     }
 
     @Test
     public void testGetAll() throws Exception {
         List<UserComments> comments = new ArrayList<>();
+
+        User user = new User();
+        user.setUserId(5);
+
+        UserComments userComments = new UserComments();
+        userComments.setOwnerId(user);
+
+        UserPosts post = new UserPosts();
+        post.setPostId(3);
+
+        userComments.setPostId(post);
+        userComments.setCommentId(4);
+
+        comments.add(userComments);
+        comments.add(userComments);
 
         when(userCommentsService.getAllComment()).thenReturn(comments);
 

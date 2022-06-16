@@ -10,6 +10,8 @@ public class AddGroupPostDto {
     private String image;
     private Timestamp dateCreated;
 
+    public AddGroupPostDto() {}
+
     public AddGroupPostDto(Integer groupId, Integer userId, String message, String image, Timestamp dateCreated) {
         this.groupId = groupId;
         this.userId = userId;

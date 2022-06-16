@@ -5,11 +5,9 @@ import com.revature.Revamedia.beans.services.AuthService;
 import com.revature.Revamedia.beans.services.JsonWebToken;
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.*;
-import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.exceptions.UnauthorizedUserException;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,18 +61,12 @@ public class AuthController {
     @PostMapping("/login/twoFA")
     public ResponseEntity<Object> loginWithTwoFactorAuth(@RequestBody TwoFactorDto twoFactorDto){
         JSONObject jsonObject = new JSONObject();
-        try {
             if (authService.checkTwoFactorAuthValidity(twoFactorDto)) {
                 System.out.println("We are supposed to set cookie here");
                 return authService.loginWithTwoFactor(twoFactorDto);
             }
             jsonObject.put(error,"code didn't match");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
-        }
-        catch (UnauthorizedUserException e){
-            jsonObject.put(error,"you are inauthorized");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
-        }
     }
 
     @PostMapping("/enable")
@@ -114,7 +106,6 @@ public class AuthController {
             jsonObject.put(error,"you are unauthorized");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(jsonObject);
         }
-
     }
 
     @PostMapping("/recreate")

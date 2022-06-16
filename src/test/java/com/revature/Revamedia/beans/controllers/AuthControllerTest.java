@@ -1,14 +1,15 @@
 package com.revature.Revamedia.beans.controllers;
 
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.servlet.http.Cookie;
 
+import com.google.zxing.WriterException;
 import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,11 +30,18 @@ import com.revature.Revamedia.dtos.TwoFactorAuthDto;
 import com.revature.Revamedia.dtos.TwoFactorDto;
 import com.revature.Revamedia.dtos.UserRegisterDto;
 import com.revature.Revamedia.exceptions.UnauthorizedUserException;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
 
 @WebMvcTest(AuthController.class)
 public class AuthControllerTest {
 
     private MockMvc mockMvc;
+
+    @Autowired
+    AuthController authController;
 
     @MockBean
     private AuthService authServiceMock;
@@ -43,13 +52,16 @@ public class AuthControllerTest {
     @MockBean
     private JsonWebToken jsonWebTokenMock;
 
-    public AuthControllerTest(@Autowired MockMvc mockMvc) {
-        this.mockMvc = mockMvc;
+    private ObjectMapper mapper = new ObjectMapper();
+
+    @BeforeEach
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
     }
 
     @Test
     public void testRegister() throws Exception {
-        UserRegisterDto userRegisterDto = new UserRegisterDto("username", "password", "email", "firstName", "lastName");
+        UserRegisterDto userRegisterDto = new UserRegisterDto("Username", "Passw0rd!", "John", "Doe", "email@email.com");
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(userRegisterDto);
@@ -61,7 +73,6 @@ public class AuthControllerTest {
                         .contentType("application/json")
                         .content(json))
                 .andExpect(status().isOk());
-
     }
 
     @Test
@@ -80,6 +91,42 @@ public class AuthControllerTest {
                         .contentType("application/json")
                         .content(json))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testLoginRedirect() throws Exception {
+        AuthDto authDto = new AuthDto("username", "password");
+
+        when(authServiceMock.twoFactorAuthEnabled((AuthDto) any())).thenReturn(true);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(authDto);
+
+        when(authServiceMock.login(any())).thenReturn(ResponseEntity.status(HttpStatus.OK).build());
+
+        mockMvc.perform(
+                        post("/auth/login")
+                                .contentType("application/json")
+                                .content(json))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testLoginInvalidCredentials() throws Exception {
+        AuthDto authDto = new AuthDto("username", "password");
+
+        when(authServiceMock.twoFactorAuthEnabled((AuthDto) any())).thenReturn(true);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(authDto);
+
+        when(authServiceMock.login(any())).thenReturn(ResponseEntity.status(HttpStatus.CONFLICT).build());
+
+        mockMvc.perform(
+                        post("/auth/login")
+                                .contentType("application/json")
+                                .content(json))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -107,7 +154,7 @@ public class AuthControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(twoFactorDto);
 
-        when(authServiceMock.checkTwoFactorAuthValidity(twoFactorDto)).thenReturn(anyBoolean());
+        when(authServiceMock.checkTwoFactorAuthValidity(any())).thenReturn(true);
 
         when(authServiceMock.loginWithTwoFactor(twoFactorDto))
                 .thenReturn(ResponseEntity.status(HttpStatus.OK).body(null));
@@ -126,7 +173,7 @@ public class AuthControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(twoFactorDto);
 
-        when(authServiceMock.checkTwoFactorAuthValidity(twoFactorDto)).thenReturn(false);
+        when(authServiceMock.checkTwoFactorAuthValidity(any())).thenReturn(false);
 
         when(authServiceMock.loginWithTwoFactor(twoFactorDto))
                 .thenReturn(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
@@ -135,8 +182,7 @@ public class AuthControllerTest {
                 post("/auth/login/twoFA")
                         .contentType("application/json")
                         .content(json))
-                .andExpect(status().isOk());
-
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -212,7 +258,49 @@ public class AuthControllerTest {
                 .cookie(cookie);
 
         mockMvc.perform(request)
-                .andExpect(status().isOk());
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void testEnableTwoFactorCatchesIOException() throws Exception {
+        TwoFactorDto twoFactorDto = new TwoFactorDto();
+        CookieDto cookieDto = new CookieDto();
+
+        when(jsonWebTokenMock.verify(anyString())).thenReturn(cookieDto);
+        when(authServiceMock.enableTwoFactorAuth(any(), any())).thenThrow(IOException.class);
+
+
+        Cookie cookie = new Cookie("user_session", "token");
+
+        MvcResult mvcResult = mockMvc.perform(post("/auth/enable")
+                        .contentType("application/json")
+                        .cookie(cookie)
+                        .content(mapper.writeValueAsString(twoFactorDto)))
+                .andExpect(status().isBadRequest()).andReturn();
+
+        JSONObject response = new JSONObject(mvcResult.getResponse().getContentAsString());
+        assertTrue(response.has("error"));
+    }
+
+    @Test
+    public void testEnableTwoFactorCatchesWriterException() throws Exception {
+        TwoFactorDto twoFactorDto = new TwoFactorDto();
+        CookieDto cookieDto = new CookieDto();
+
+        when(jsonWebTokenMock.verify(anyString())).thenReturn(cookieDto);
+        when(authServiceMock.enableTwoFactorAuth(any(), any())).thenThrow(WriterException.class);
+
+
+        Cookie cookie = new Cookie("user_session", "token");
+
+        MvcResult mvcResult = mockMvc.perform(post("/auth/enable")
+                        .contentType("application/json")
+                        .cookie(cookie)
+                        .content(mapper.writeValueAsString(twoFactorDto)))
+                .andExpect(status().isBadRequest()).andReturn();
+
+        JSONObject response = new JSONObject(mvcResult.getResponse().getContentAsString());
+        assertTrue(response.has("error"));
     }
 
     @Test
@@ -230,20 +318,23 @@ public class AuthControllerTest {
         mockMvc.perform(
                 post("/auth/disable")
                         .contentType("application/json")
+                        .content(mapper.writeValueAsString(twoFactorAuthDto))
                         .cookie(new Cookie("user_session", "token")))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testDisableTwoFactorFailure() throws Exception {
+        TwoFactorAuthDto twoFactorAuthDto = new TwoFactorAuthDto();
 
         when(jsonWebTokenMock.verify(anyString())).thenThrow(UnauthorizedUserException.class);
 
         mockMvc.perform(
                 post("/auth/disable")
                         .contentType("application/json")
+                        .content(mapper.writeValueAsString(twoFactorAuthDto))
                         .cookie(new Cookie("user_session", "token")))
-                .andExpect(status().isOk());
+                .andExpect(status().isUnauthorized());
 
     }
 
@@ -260,7 +351,69 @@ public class AuthControllerTest {
         mockMvc.perform(
                 post("/auth/recreate")
                         .contentType("application/json")
-                        .cookie(new Cookie("user_session", "token")))
+                        .cookie(new Cookie("user_session", "token"))
+                        .content(mapper.writeValueAsString(twoFactorAuthDto)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void testRecreateCatchesUnauthorizedUserException() throws Exception {
+        CookieDto cookieDto = new CookieDto();
+        TwoFactorAuthDto twoFactorAuthDto = new TwoFactorAuthDto();
+        when(jsonWebTokenMock.verify(anyString())).thenThrow(UnauthorizedUserException.class);
+
+        when(authServiceMock.enableTwoFactorAuth(cookieDto, twoFactorAuthDto))
+                .thenReturn(ResponseEntity.status(HttpStatus.OK).body(null));
+
+
+        mockMvc.perform(
+                        post("/auth/recreate")
+                                .contentType("application/json")
+                                .cookie(new Cookie("user_session", "token"))
+                                .content(mapper.writeValueAsString(twoFactorAuthDto)))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void testRecreateCatchesIOException() throws Exception {
+        CookieDto cookieDto = new CookieDto();
+        TwoFactorAuthDto twoFactorAuthDto = new TwoFactorAuthDto();
+        when(jsonWebTokenMock.verify(anyString())).thenReturn(cookieDto);
+
+        when(authServiceMock.enableTwoFactorAuth(any(), any()))
+                .thenThrow(IOException.class);
+
+
+        MvcResult result = mockMvc.perform(
+                        post("/auth/recreate")
+                                .contentType("application/json")
+                                .cookie(new Cookie("user_session", "token"))
+                                .content(mapper.writeValueAsString(twoFactorAuthDto)))
+                .andExpect(status().isBadRequest()).andReturn();
+
+        JSONObject jsonObject = new JSONObject(result.getResponse().getContentAsString());
+        assertTrue(jsonObject.has("error"));
+    }
+
+    @Test
+    public void testRecreateCatchesWriterException() throws Exception {
+        CookieDto cookieDto = new CookieDto();
+        TwoFactorAuthDto twoFactorAuthDto = new TwoFactorAuthDto();
+        when(jsonWebTokenMock.verify(anyString())).thenReturn(cookieDto);
+
+        when(authServiceMock.enableTwoFactorAuth(any(), any()))
+                .thenThrow(WriterException.class);
+
+
+        MvcResult result = mockMvc.perform(
+                        post("/auth/recreate")
+                                .contentType("application/json")
+                                .cookie(new Cookie("user_session", "token"))
+                                .content(mapper.writeValueAsString(twoFactorAuthDto)))
+                .andExpect(status().isBadRequest()).andReturn();
+
+        JSONObject jsonObject = new JSONObject(result.getResponse().getContentAsString());
+        assertTrue(jsonObject.has("error"));
+    }
+
 }

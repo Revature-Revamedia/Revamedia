@@ -710,6 +710,4 @@ describe('HomeComponent', () => {
       expect(console.log).toHaveBeenCalledOnceWith(error.message)
     }));
   });
-
-  //TODO: 2 MORE METHODS
 });

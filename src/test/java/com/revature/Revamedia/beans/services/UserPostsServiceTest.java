@@ -1,17 +1,18 @@
 /**
  * Author(s): @Brandon Le, @Arun Mohan, @Anthony Pilletti
- * Contributor(s): @Stan Savelev, @William Bjerke
+ * Contributor(s): @Stan Savelev, @William Bjerke, @Tony Henderson
  * Purpose: Test class to test the functions in the UserPostsService.
  */
 package com.revature.Revamedia.beans.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import com.revature.Revamedia.dtos.UpdatePostLikesDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,22 +25,20 @@ import com.revature.Revamedia.entities.User;
 import com.revature.Revamedia.entities.UserPosts;
 
 /**
-* @Author: Qiang Gao
+* @Author Qiang Gao
 */
 @ExtendWith(MockitoExtension.class)
 public class UserPostsServiceTest {
     UserPostsService userPostsService;
 
     @Mock
-    UserPostsRepository userPostsRepository;
-
+    UserPostsRepository userPostsRepositoryMock;
     @Mock
-    UserRepository userRepository;
+    UserRepository userRepositoryMock;
 
     @BeforeEach
     public void beforeEach() {
-        userPostsService = new UserPostsService(userPostsRepository, userRepository);
-
+        userPostsService = new UserPostsService(userPostsRepositoryMock, userRepositoryMock);
     }
 
     @Test
@@ -47,7 +46,7 @@ public class UserPostsServiceTest {
         UserPosts post = new UserPosts();
         post.setPostId(1);
 
-        when(userPostsRepository.getById(1)).thenReturn(post);
+        when(userPostsRepositoryMock.getById(1)).thenReturn(post);
 
         assert (userPostsService.getPostById(1).getPostId() == 1);
 
@@ -58,7 +57,7 @@ public class UserPostsServiceTest {
         UserPosts post = new UserPosts();
         post.setPostId(1);
 
-        when(userPostsRepository.save(post)).thenReturn(post);
+        when(userPostsRepositoryMock.save(post)).thenReturn(post);
 
         assertEquals(userPostsService.save(post), post);
     }
@@ -68,7 +67,7 @@ public class UserPostsServiceTest {
         UserPosts post = new UserPosts();
         post.setPostId(1);
 
-        when(userPostsRepository.save(post)).thenReturn(post);
+        when(userPostsRepositoryMock.save(post)).thenReturn(post);
 
         assertEquals(userPostsService.update(post), post);
     }
@@ -89,7 +88,7 @@ public class UserPostsServiceTest {
         posts.add(post);
         posts.add(post2);
 
-        when(userPostsRepository.getUserPostsByUser(1)).thenReturn(posts);
+        when(userPostsRepositoryMock.getUserPostsByUser(1)).thenReturn(posts);
 
         assertEquals(userPostsService.getPostsByUser(1), posts);
     }
@@ -110,7 +109,7 @@ public class UserPostsServiceTest {
         posts.add(post);
         posts.add(post2);
 
-        when(userPostsRepository.findAll()).thenReturn(posts);
+        when(userPostsRepositoryMock.findAll()).thenReturn(posts);
 
         assertEquals(userPostsService.getAllPosts(), posts);
     }
@@ -134,7 +133,7 @@ public class UserPostsServiceTest {
         doAnswer(invocation -> {
             posts.clear();
             return null;
-        }).when(userPostsRepository).deleteAll();
+        }).when(userPostsRepositoryMock).deleteAll();
 
         userPostsService.deleteAllPosts(posts);
 
@@ -151,7 +150,7 @@ public class UserPostsServiceTest {
         doAnswer(invocation -> {
             posts.remove(post);
             return null;
-        }).when(userPostsRepository).delete(post);
+        }).when(userPostsRepositoryMock).delete(post);
 
         userPostsService.delete(post);
 
@@ -168,7 +167,7 @@ public class UserPostsServiceTest {
         doAnswer(invocation -> {
             posts.remove(post);
             return null;
-        }).when(userPostsRepository).deleteById(1);
+        }).when(userPostsRepositoryMock).deleteById(1);
 
         userPostsService.deleteById(1);
 
@@ -176,30 +175,73 @@ public class UserPostsServiceTest {
 
     }
 
-    // @Disabled
-    // @Test
-    // public void testUpdatePostLikes() {
-    //     UpdatePostLikesDto dto = new UpdatePostLikesDto();
-    //     dto.setUserId(1);
+     @Test
+     public void testUpdatePostLikesRemovesTheirLikeIfTheyAreAlreadyLikingCurrentPost() {
+         UpdatePostLikesDto dtoToPassIn = new UpdatePostLikesDto();
+         dtoToPassIn.setUserId(1);
+         dtoToPassIn.setPostId(4);
 
-    //     UserPosts post = new UserPosts();
+         UserPosts postReturnedFromPostsRepo = new UserPosts();
+         postReturnedFromPostsRepo.setOwnerId(new User());
+         when(userPostsRepositoryMock.getById(4)).thenReturn(postReturnedFromPostsRepo);
 
-    //     User user = new User();
-    //     user.setUserId(1);
+         User userReturnedFromUserRepo = new User();
+         userReturnedFromUserRepo.setUserId(1);
+         List<UserPosts> likedPosts = new ArrayList<>();
+         likedPosts.add(postReturnedFromPostsRepo);
+         userReturnedFromUserRepo.setLikedPosts(likedPosts);
+         when(userRepositoryMock.getById(1)).thenReturn(userReturnedFromUserRepo);
 
-    //     Set<User> users = new HashSet<>();
-    //     users.add(user);
+         Set<User> usersLiked = postReturnedFromPostsRepo.getLikes();
+         usersLiked.remove(userReturnedFromUserRepo);
+         postReturnedFromPostsRepo.setLikes(usersLiked);
+         when(userPostsRepositoryMock.save(postReturnedFromPostsRepo)).thenReturn(postReturnedFromPostsRepo);
 
-    //     List<UserPosts> posts = new ArrayList<>();
-    //     posts.add(post);
+         List<UserPosts> postsLiked = userReturnedFromUserRepo.getLikedPosts(); // List liked posts
+         postsLiked.remove(postReturnedFromPostsRepo);
+         userReturnedFromUserRepo.setLikedPosts((postsLiked));
 
-    //     post.setLikes(users);
+         // Act
+         UserPosts postReturnedFromAct = userPostsService.updatePostLikes(dtoToPassIn);
 
-    //     user.setLikedPosts(posts);
+         // Assert
+         assertEquals(postReturnedFromPostsRepo, postReturnedFromAct);
+         verify(userRepositoryMock, times(1)).save(userReturnedFromUserRepo);
+         verify(userPostsRepositoryMock, times(1)).save(postReturnedFromPostsRepo);
+     }
 
-    //     when(userPostsRepository.getById(1)).thenReturn(post);
+     @Test
+     public void testUpdatePostLikesAddsTheirLikeIfTheyAreNotCurrentlyLikingPost() {
+         UpdatePostLikesDto dtoToPassIn = new UpdatePostLikesDto();
+         dtoToPassIn.setUserId(1);
+         dtoToPassIn.setPostId(4);
 
-    //     assertEquals(userPostsService.updatePostLikes(dto), post);
+         UserPosts postReturnedFromPostsRepo = new UserPosts();
+         postReturnedFromPostsRepo.setOwnerId(new User());
+         when(userPostsRepositoryMock.getById(4)).thenReturn(postReturnedFromPostsRepo);
 
-    // }
+         User userReturnedFromUserRepo = new User();
+         userReturnedFromUserRepo.setUserId(1);
+//         List<UserPosts> likedPosts = new ArrayList<>();
+//         likedPosts.add(postReturnedFromPostsRepo);
+//         userReturnedFromUserRepo.setLikedPosts(likedPosts);
+         when(userRepositoryMock.getById(1)).thenReturn(userReturnedFromUserRepo);
+
+         Set<User> usersLiked = postReturnedFromPostsRepo.getLikes(); // Set
+         usersLiked.add(userReturnedFromUserRepo);
+         postReturnedFromPostsRepo.setLikes(usersLiked);
+         when(userPostsRepositoryMock.save(postReturnedFromPostsRepo)).thenReturn(postReturnedFromPostsRepo);
+
+         List<UserPosts> postsLiked = userReturnedFromUserRepo.getLikedPosts(); // List liked posts
+         postsLiked.add(postReturnedFromPostsRepo);
+         userReturnedFromUserRepo.setLikedPosts((postsLiked));
+
+         // Act
+         UserPosts postReturnedFromAct = userPostsService.updatePostLikes(dtoToPassIn);
+
+         // Assert
+         assertEquals(postReturnedFromPostsRepo, postReturnedFromAct);
+         verify(userRepositoryMock, times(1)).save(userReturnedFromUserRepo);
+         verify(userPostsRepositoryMock, times(1)).save(postReturnedFromPostsRepo);
+     }
 }

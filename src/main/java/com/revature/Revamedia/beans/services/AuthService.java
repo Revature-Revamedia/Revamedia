@@ -11,18 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 
 import java.sql.Timestamp;
 
 /**
- * @Author: Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
- * @Contributor: Kenneth Strohm, Randall Hale
+ * @Author Giorgi Amirajibi, Mohammad Foroutanyazdian, Fatemeh Goudarzi, Tony Henderson
+ * @Contributor Kenneth Strohm, Randall Hale
  */
 @Service
 public class AuthService {
@@ -62,7 +59,7 @@ public class AuthService {
     }
 
     /**
-     * @Author: Terrell Crawford
+     * @Author Terrell Crawford
      */
     public ResponseEntity<Object> login(AuthDto authDto) {
         //If user exists check stored password hash against given password else respond with code 404
@@ -91,8 +88,6 @@ public class AuthService {
         headers.add("Set-Cookie", "user_session="+ headerValue +"; Max-Age=86400; Path=/;");
         return new ResponseEntity<>(jwt.verify(headerValue), headers, HttpStatus.OK);
     }
-
-    //handle exceptions
 
     public ResponseEntity<Object> enableTwoFactorAuth(CookieDto cookieDto,TwoFactorAuthDto twoFactorAuthDto) throws IOException, WriterException {
         User currentUser = userService.getUserById(cookieDto.getUserId());

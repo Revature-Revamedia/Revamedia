@@ -14,6 +14,8 @@ public class NewGroupDto {
 
     private String imageUrl;
 
+    public NewGroupDto() {}
+
     public NewGroupDto(Integer ownerId, String title, String description, String imageUrl) {
         this.ownerId = ownerId;
         this.title = title;
