@@ -87,14 +87,4 @@ public class S3ServiceTest {
         verify(mockS3, times(1)).listObjectsV2((String) null);
         assertInstanceOf(List.class, returnedValue);
     }
-
-//    @Test
-//    public void convertMultiPartToFileSuccessfullyConvertsMultiPartToFile() {
-//        String originalFileName = "original file name";
-//        MultipartFile mockMultipartFileToPass = new MockMultipartFile(originalFileName, new byte[]{});
-//
-//        s3Service.
-//        // check output is of type File
-//    }
-
 }
