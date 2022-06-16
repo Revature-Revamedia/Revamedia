@@ -1,14 +1,14 @@
 package com.revature.Revamedia.beans.controllers;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.Revamedia.beans.services.UserFollowsService;
 import com.revature.Revamedia.beans.services.UserService;
 import com.revature.Revamedia.dtos.UpdateUserDto;
-import com.revature.Revamedia.dtos.ViewAllUserDto;
+import com.revature.Revamedia.dtos.UserFollowDto;
 import com.revature.Revamedia.entities.User;
+import com.revature.Revamedia.entities.UserFollows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +19,20 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.mockito.Mockito.when;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 /**
  * @Author: Chenxi Zhu
@@ -35,50 +40,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
-    private final MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-    @Mock
-    private BCryptPasswordEncoder mockEncoder;
-    @MockBean
-    private UserFollowsService userFollowsService;
+    @Autowired
+    UserController userController;
 
-    @MockBean
-    private UserService userServiceMock;
+    @Mock private BCryptPasswordEncoder mockEncoder;
 
+    @MockBean private UserFollowsService mockUserFollowsService;
+    @MockBean private UserService mockUserService;
 
+    @Autowired ObjectMapper mapper;
 
-    public UserControllerTest(@Autowired MockMvc mockMvc) {
-        this.mockMvc = mockMvc;
+    @BeforeEach
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
     @Test
     public void getAllUsersTest() throws Exception {
-        //arrange
-        //ViewAllUserDto viewAllUserDto = new ViewAllUserDto();
-        //List<User> users = new ArrayList<>();
-        //HttpHeaders httpHeaders = new HttpHeaders();
-        //httpHeaders.add("Set-Cookie", "user_session=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJKc29uIjoie1widXNlcklkXCI6NCxcInVzZXJuYW1lXCI6XCJzaGFkeVwifSJ9.LSzPbhNAALEFrBWZPpf8KGvREormRNt3tXFkGMTvnU3-MPHw76JD5cmreZJMYaSwNt7H6YJlALCFAWobPAKWbw; Max-Age=86400; Path=/;");
+        List<User> userListToReturn = new ArrayList<>();
+        userListToReturn.add(new User());
+        userListToReturn.add(new User());
+        when(mockUserService.getAllUsers()).thenReturn(userListToReturn);
 
-        // this part solves following casting problem
-        //org.springframework.http.ResponseEntity cannot be cast to class java.util.List
-        //ResponseEntity<List<User>> responseEntity = ResponseEntity.ok().build();
-        List<User> users = new ArrayList<>();
-        users.add(new User());
-        users.add(new User());
-        //-----------------------------------------------------------
-        when(userServiceMock.getAllUsers()).thenReturn((users));
-        ObjectMapper mapper = new ObjectMapper();
-            //act
-            //String content = mapper.writeValueAsString(users);
-            MvcResult result = this.mockMvc.perform(get("/user/allUsers").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
-            System.out.println(result.getResponse().getContentAsString());
-
-            //assert
-            String jsonResponse = result.getResponse().getContentAsString();
-            //json ended up in testing memory location, change to string to test actual value.
-//            List<User> returnedUsers = mapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<User>>(){});
-            String userJson = mapper.writeValueAsString(users);
-            assertEquals(jsonResponse, userJson);
+        mockMvc.perform(get("/user/allUsers")).andExpect(status().isOk());
+        verify(mockUserService, times(1)).getAllUsers();
     }
 
     @Test
@@ -91,7 +78,7 @@ public class UserControllerTest {
         //in WebMvcTest, we can use ObjectMapper to serialize object
         //ResponseEntity<User> responseEntity = ResponseEntity.ok().headers(httpHeaders).build();
         //User user = responseEntity.getBody();
-        when(userServiceMock.getUserById(id)).thenReturn(user);
+        when(mockUserService.getUserById(id)).thenReturn(user);
         ObjectMapper mapper = new ObjectMapper();
         //act
         String content = mapper.writeValueAsString(user);
@@ -109,7 +96,7 @@ public class UserControllerTest {
         UpdateUserDto userToUpdate = new UpdateUserDto("username","profilepic", "firstname","lastname","email","password");
         //HttpHeaders httpHeaders = new HttpHeaders();
         User user = new User();
-        when(userServiceMock.getUserById(id)).thenReturn(user);
+        when(mockUserService.getUserById(id)).thenReturn(user);
         user.setUsername(userToUpdate.getUsername());
         user.setProfilePicture(userToUpdate.getProfilePicture());
         user.setEmail(userToUpdate.getEmail());
@@ -120,7 +107,7 @@ public class UserControllerTest {
         //ResponseEntity<User> responseEntity = ResponseEntity.ok().build();
         //User updatedUser = responseEntity.getBody();
         //System.out.println(updatedUser);
-        when(userServiceMock.update(user)).thenReturn(user);
+        when(mockUserService.update(user)).thenReturn(user);
 
         ObjectMapper mapper = new ObjectMapper();
         //act
@@ -132,5 +119,63 @@ public class UserControllerTest {
         assertEquals(jsonResponse, content);
     }
 
+    @Test
+    public void userFollowsSavesFollower() throws Exception {
+        UserFollowDto userFollowDto = new UserFollowDto();
+        when(mockUserService.getUserById(any())).thenReturn(new User());
 
+        mockMvc.perform(post("/user/userFollows").contentType("application/json").content(mapper.writeValueAsString(userFollowDto))).andExpect(status().isOk());
+        verify(mockUserService, times(1)).save(any());
+    }
+
+    @Test
+    public void userFollowsReturnsConflict() throws Exception {
+        UserFollowDto userFollowDto = new UserFollowDto();
+        User user = new User();
+        user.setUserId(2);
+        Set<UserFollows> userFollowsSet = new HashSet<>();
+        UserFollows userFollows = new UserFollows();
+        User user2 = new User();
+        user2.setUserId(2);
+        userFollows.setFollowedId(user2);
+        userFollowsSet.add(userFollows);
+        user.setFollowing(userFollowsSet);
+        when(mockUserService.getUserById(any())).thenReturn(user);
+
+        mockMvc.perform(post("/user/userFollows").contentType("application/json").content(mapper.writeValueAsString(userFollowDto))).andExpect(status().isConflict());
+    }
+
+    @Test
+    public void deleteFollowingDeletesFollow() throws Exception {
+        UserFollowDto userFollowDto = new UserFollowDto();
+        User user = new User();
+        user.setUserId(2);
+        Set<UserFollows> userFollowsSet = new HashSet<>();
+        UserFollows userFollows = new UserFollows();
+        User user2 = new User();
+        user2.setUserId(2);
+        userFollows.setFollowedId(user2);
+        userFollowsSet.add(userFollows);
+        user.setFollowing(userFollowsSet);
+        when(mockUserService.getUserById(any())).thenReturn(user);
+
+        mockMvc.perform(post("/user/deleteFollowing").contentType("application/json").content(mapper.writeValueAsString(userFollowDto))).andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteFollowingReturnsConflict() throws Exception {
+        UserFollowDto userFollowDto = new UserFollowDto();
+        User user = new User();
+        user.setUserId(5);
+        Set<UserFollows> userFollowsSet = new HashSet<>();
+        UserFollows userFollows = new UserFollows();
+        User user2 = new User();
+        user2.setUserId(2);
+        userFollows.setFollowedId(user2);
+        userFollowsSet.add(userFollows);
+        user.setFollowing(userFollowsSet);
+        when(mockUserService.getUserById(any())).thenReturn(user);
+
+        mockMvc.perform(post("/user/deleteFollowing").contentType("application/json").content(mapper.writeValueAsString(userFollowDto))).andExpect(status().isConflict());
+    }
 }
