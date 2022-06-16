@@ -178,4 +178,38 @@ public class UserControllerTest {
 
         mockMvc.perform(post("/user/deleteFollowing").contentType("application/json").content(mapper.writeValueAsString(userFollowDto))).andExpect(status().isConflict());
     }
+
+    @Test
+    public void isFollowingReturnsFollowing() throws Exception {
+        UserFollowDto userFollowDto = new UserFollowDto();
+        User user = new User();
+        user.setUserId(5);
+        Set<UserFollows> userFollowsSet = new HashSet<>();
+        UserFollows userFollows = new UserFollows();
+        User user2 = new User();
+        user2.setUserId(2);
+        userFollows.setFollowedId(user2);
+        userFollowsSet.add(userFollows);
+        user.setFollowing(userFollowsSet);
+        when(mockUserService.getUserById(any())).thenReturn(user);
+
+        mockMvc.perform(get("/user/isFollowing/1/2")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void isFollowingReturnsNotFollowing() throws Exception {
+        UserFollowDto userFollowDto = new UserFollowDto();
+        User user = new User();
+        user.setUserId(2);
+        Set<UserFollows> userFollowsSet = new HashSet<>();
+        UserFollows userFollows = new UserFollows();
+        User user2 = new User();
+        user2.setUserId(2);
+        userFollows.setFollowedId(user2);
+        userFollowsSet.add(userFollows);
+        user.setFollowing(userFollowsSet);
+        when(mockUserService.getUserById(any())).thenReturn(user);
+
+        mockMvc.perform(get("/user/isFollowing/1/2").contentType("application/json")).andExpect(status().isOk());
+    }
 }
