@@ -10,6 +10,7 @@ import { GiphyService } from '../../Shared/services/giphy-service/giphy.service'
 import { AnimationService } from 'src/app/Shared/services/animation/animation.service';
 import { SearchService } from 'src/app/Shared/services/search-service/search.service';
 import { Router } from '@angular/router';
+import { ProfanityFilterService } from 'src/app/Shared/services/profanity-service/profanity-filter.service';
 
 
 @Component({
@@ -40,7 +41,9 @@ export class HomeComponent implements OnInit {
     public gifService: GiphyService,
     public animationService: AnimationService,
     public router: Router,
-    private searchService: SearchService)
+    private searchService: SearchService,
+    public profanityFilterService: ProfanityFilterService,
+    )
   { }
 
 
@@ -48,6 +51,7 @@ export class HomeComponent implements OnInit {
     this.getGifs('funny');
     this.getCurrentUserData();
     this.openingAnimation();
+    this.validate("I was thinking of you.")
   }
 
   // GET CURRENT USER
@@ -455,5 +459,11 @@ export class HomeComponent implements OnInit {
     form11?.classList.remove('openModal');
     const form12 = document.getElementById(`delete-youtube-modal`);
     form12?.classList.remove('openModal');
+  }
+
+  // Profanity Filter
+  public validate(sentence: string): void {
+    this.profanityFilterService.validate(sentence);
+    console.log(this.profanityFilterService.isValid);
   }
 }

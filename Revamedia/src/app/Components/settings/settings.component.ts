@@ -195,7 +195,7 @@ export class SettingsComponent implements OnInit {
   public showInfo(type: any) {
     const info = document.getElementById(`${type}-info`);
     info?.classList.toggle('showInfo');
-    setTimeout(() => info?.classList.remove('showInfo'), 3000);
+    setTimeout(() => info?.classList.remove('showInfo'), 5000);
 
   }
 
