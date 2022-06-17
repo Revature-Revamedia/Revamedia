@@ -45,7 +45,7 @@ export class SettingsComponent implements OnInit {
   }
 
   getUserProfilePictureTemp() {
-    return this.isImageTemporarilyUploaded ? `${environment.s3Url}/${this.editUser.username}_temp?${Date.now()}` : '';
+    return this.isImageTemporarilyUploaded ? `${environment.s3Url}/${this.editUser.username}_temp?${Date.now()}` : "";
   }
 
   // GET CURRENT USER
@@ -60,15 +60,29 @@ export class SettingsComponent implements OnInit {
     );
   }
 
+
   // Update User
   public onUpdateUser(updateForm: NgForm, id: number) {
+    // this.onUpload(false);
+    this.userService.updateUser(updateForm.value, id).subscribe(
+      (response: any) => {
+        this.closeModal('edit-account')
+        this.getCurrentUserData();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message)
+      }
+    )
+  }
+
+  public onProfilePic(updateForm: NgForm, id: number) {
     this.onUpload(false);
     this.userService.updateUser({
       ...updateForm.value,
       profilePicture: `${environment.s3Url}/${updateForm.value.username}`
     }, id).subscribe(
       (response: any) => {
-        this.closeModal('edit');
+        this.closeModal('upload-picture')
         this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
@@ -167,9 +181,12 @@ export class SettingsComponent implements OnInit {
     const screen = document.getElementById('screen');
     screen?.classList.add('openScreen');
     // Form
-    const form = document.getElementById(`${mode}-account-modal`);
+    const form = document.getElementById(`${mode}-modal`);
     form?.classList.add('openModal');
-    if (mode === 'edit') {
+    if (mode === 'edit-account') {
+      this.editUser = this.user;
+    }
+    if (mode === 'upload-picture') {
       this.editUser = this.user;
     }
     if (mode === 'delete') {
@@ -182,7 +199,7 @@ export class SettingsComponent implements OnInit {
     const screen = document.getElementById('screen');
     screen?.classList.remove('openScreen');
     // Form
-    const form = document.getElementById(`${modalType}-account-modal`);
+    const form = document.getElementById(`${modalType}-modal`);
     form?.classList.remove('openModal');
   }
   // MODALS FUNCTION END

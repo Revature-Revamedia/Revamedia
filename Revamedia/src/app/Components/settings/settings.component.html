@@ -15,7 +15,7 @@
       <h4>Account Settings</h4>
       <div class="user-settings-title">
         <h3>Edit Account</h3>
-        <button (click)="openModal('edit', editUser)">Edit</button>
+        <button (click)="openModal('edit-account', editUser)">Edit</button>
       </div>
       <div class="user-settings-row" style="border-top:1px solid rgb(230,229,222);">
         <h5>First Name</h5>
@@ -33,9 +33,14 @@
         <h5>Email</h5>
         <span>{{user?.email}}</span>
       </div>
-      <div class="user-settings-row" style="border:none;">
+      <div class="user-settings-title">
+        <h3>Upload Profile Picture</h3>
+        <button (click)="openModal('upload-picture', editUser)">Upload</button>
+      </div>
+      <div class="user-settings-row">
         <h5>Profile Pic</h5>
-        <img [src]="getUserProfilePicture()" alt="{{ user?.username }}">
+        <img src="{{ user?.profilePicture }}" alt="{{ user?.username  }}">
+        <!-- <img [src]="getUserProfilePictureTemp()" alt="{{ user?.username }}"> -->
       </div>
     </div>
 
@@ -127,27 +132,11 @@
 <div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- BLACKOUTSCREEN END-->
 
-<!-- EDIT POST FORM START -->
-<div class="modal" id="delete-account-modal">
-  <div class="form-header">
-    <h3>Create new post</h3>
-    <span>x</span>
-  </div>
-  <form>
-    <h6>{{ deleteUser?.firstName }} {{ deleteUser?.lastName }}</h6>
-    <h2>Are you sure you want to delete your account?</h2>
-    <div class="post-submit">
-      <button id="deleteBtn">Delete</button>
-    </div>
-  </form>
-</div>
-<!-- DELETE ACCOUNT FORM END -->
-
 <!-- EDIT ACCOUNT FORM START -->
 <div class="modal" id="edit-account-modal">
   <div class="form-header">
-    <h3>Update Account</h3>
-    <span (click)="closeModal('edit')">x</span>
+    <h3>Edit Account</h3>
+    <span (click)="closeModal('edit-account')">x</span>
   </div>
   <form #updateUser="ngForm" (ngSubmit)="onUpdateUser(updateUser, editUser?.userId)" ngNativeValidate>
     <div class="user-settings-row">
@@ -196,6 +185,40 @@
         name="email"
         id="email"
         placeholder="Email...">
+        <input type="hidden" name="profilePicture" ngModel="{{ editUser?.profilePicture }}" >
+    </div>
+    <!-- <div class="user-settings-row-file">
+      <div class="left">
+        <div class="file-input">
+          <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg, image/jpg" id="file" class="file">
+          <label for="file">
+            Select Photo
+          </label>
+        </div>
+        <img *ngIf="getUserProfilePictureTemp() !==''" [src]="getUserProfilePictureTemp()" >
+      </div>
+      <span style="font-size: .9rem;">Press on Upload</span>
+      <input class="uploadBtn" type="button" (click)="onUpload()" value="Upload">
+    </div> -->
+    <div class="post-submit">
+      <button>Confirm</button>
+    </div>
+  </form>
+</div>
+<!-- EDIT ACCOUNT FORM END -->
+
+<!-- EDIT ACCOUNT FORM START -->
+<div class="modal" id="upload-picture-modal">
+  <div class="form-header">
+    <h3>Upload Profile Picture</h3>
+    <span (click)="closeModal('upload-picture')">x</span>
+  </div>
+  <form #updateUser="ngForm" (ngSubmit)="onProfilePic(updateUser, editUser?.userId)" ngNativeValidate>
+    <div>
+      <input type="hidden" name="firstName" ngModel="{{ editUser?.firstName }}" >
+      <input type="hidden" name="lastName" ngModel="{{ editUser?.lastName }}" >
+      <input type="hidden" name="username" ngModel="{{ editUser?.username }}" >
+      <input type="hidden" name="email" ngModel="{{ editUser?.email }}" >
     </div>
     <div class="user-settings-row-file">
       <div class="left">
@@ -211,7 +234,7 @@
       <input class="uploadBtn" type="button" (click)="onUpload()" value="Upload">
     </div>
     <div class="post-submit">
-      <button>Update Account</button>
+      <button>Update</button>
     </div>
   </form>
 </div>

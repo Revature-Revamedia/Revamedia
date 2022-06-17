@@ -464,6 +464,5 @@ export class HomeComponent implements OnInit {
   // Profanity Filter
   public validate(sentence: string): void {
     this.profanityFilterService.validate(sentence);
-    console.log(this.profanityFilterService.isValid);
   }
 }
