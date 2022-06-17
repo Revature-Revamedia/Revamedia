@@ -2,25 +2,29 @@
   <div class="twofa-nav">
     <h1>Revamedia</h1>
   </div>
-  <div class="twofa">
-    <h2>Two-factor Authentication</h2>
-    <span>Enter 6 digit code</span>
-    <form #twoFactorForm="ngForm" ngNativeValidate>
-      <input
-        type="text"
-        id="sixDigitCode"
-        name="sixDigitCode"
-        ngModel
-        maxlength="6"
-        max="6"
-        min="6"
-        pattern="^[0-9]*$"
-        required
-        placeholder="x-x-x-x-x-x">
-      <div class="submit">
-        <button (click)="loginWithTwoFactor(twoFactorForm)">Submit</button>
-      </div>
-  </form>
+
+  <div class="twofa-container">
+    <div class="twofa">
+      <h2>Two-factor Authentication</h2>
+      <span>Enter 6 digit code</span>
+      <form #twoFactorForm="ngForm" ngNativeValidate>
+        <input
+          type="text"
+          id="sixDigitCode"
+          name="sixDigitCode"
+          ngModel
+          maxlength="6"
+          max="6"
+          min="6"
+          pattern="^[0-9]*$"
+          required
+          placeholder="x-x-x-x-x-x">
+        <div class="submit">
+          <button (click)="loginWithTwoFactor(twoFactorForm)">Submit</button>
+        </div>
+    </form>
+    </div>
   </div>
+
 </div>
 

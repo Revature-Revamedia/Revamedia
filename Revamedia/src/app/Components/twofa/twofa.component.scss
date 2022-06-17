@@ -24,87 +24,97 @@ $darkgrey: rgb(61, 66, 74);
     }
   }
 
-  .twofa {
-    width: 40%;
-    position: fixed;
-    top: 30%;
-    left: 30%;
-    background: white;
-    box-shadow: rgba(0, 0, 0, 0.227) 0px 3px 8px;
-    border-radius: 10px;
-    padding: 2rem;
+  .twofa-container{
+    width: 100%;
+    min-height: 90vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
 
-    h2 {
-      font-size: 1.75rem;
-      color: $darkgrey;
-      width: 100%;
-      text-align: center;
-    }
-
-    span{
-      font-size: 1rem;
-      color: $darkgrey;
-      width: 100%;
-      text-align: center;
-    }
-
-    form{
-      width: 100%;
+    .twofa {
+      width: 40%;
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.227) 0px 3px 8px;
+      border-radius: 10px;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: .5rem 0;
 
-      input{
-        width: 50%;
+      h2 {
+        font-size: 1.75rem;
         color: $darkgrey;
+        width: 100%;
         text-align: center;
-        font-size: 2rem;
-        font-weight: lighter;
-        border: 1.5px solid $lightgrey;
-        outline: none;
-        border-radius: 5px;
-        margin-bottom:  1rem;
-        &:focus-visible{
-          border: 1.5px solid $blue;
-        }
       }
-      .submit{
+
+      span{
+        font-size: 1rem;
+        color: $darkgrey;
+        width: 100%;
+        text-align: center;
+      }
+
+      form{
         width: 100%;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        button {
-          width: 40%;
-          border-radius: 5px;
-          border: none;
-          background: $orange;
-          color: $darkgrey;
-          padding: .3rem 0;
-          font-size: 1.2rem;
-          cursor: pointer;
-          transition: all .3s ease-in-out;
+        padding: .5rem 0;
 
-          &:hover {
-            background: #eda144;
-            color: black;
+        input{
+          width: 50%;
+          color: $darkgrey;
+          text-align: center;
+          font-size: 2rem;
+          font-weight: lighter;
+          border: 1.5px solid $lightgrey;
+          outline: none;
+          border-radius: 5px;
+          margin-bottom:  1rem;
+          &:focus-visible{
+            border: 1.5px solid $blue;
+          }
+        }
+        .submit{
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          button {
+            width: 40%;
+            border-radius: 5px;
+            border: none;
+            background: $orange;
+            color: $darkgrey;
+            padding: .3rem 0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
+
+            &:hover {
+              background: #eda144;
+              color: black;
+            }
           }
         }
       }
     }
   }
+
 }
 
 @media screen and (max-width: 800px) {
-  .login-page {
-    .login {
-      left: 10%;
-      width: 80%;
+  .twofa-page {
+    .twofa-container{
+      width: 100%;
+      min-height: 50vh;
+      .twofa {
+        width: 90%;
+      }
     }
   }
 }

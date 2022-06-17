@@ -2,25 +2,34 @@
   <div class="forgot-nav">
     <h1>Revamedia</h1>
   </div>
-  <div class="forgot">
-    <h2>Reset Password</h2>
-    <form #sendEmailForm="ngForm" (ngSubmit)="sendEmail(sendEmailForm)" ngNativeValidate>
-      <div class="form-row">
-        <label for="email">Email Address</label>
-        <input
-          type="email"
-          required
-          title="Valid Email"
-          name="email"
-          id="email"
-          placeholder="Enter email..."
-          ngModel>
+
+  <div class="forgot-container">
+
+    <div class="forgot">
+      <h2>Reset Password</h2>
+      <form #sendEmailForm="ngForm" (ngSubmit)="sendEmail(sendEmailForm)" ngNativeValidate>
+        <div class="form-row">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            required
+            title="Valid Email"
+            name="email"
+            id="email"
+            placeholder="Enter email..."
+            ngModel>
+        </div>
+        <div class="submit">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <div class="help">
+        <span><a routerLink="/login" routerLinkActive="active">Back to Login</a></span>
       </div>
-      <div class="submit">
-        <button type="submit">Submit</button>
-      </div>
-    </form>
+    </div>
+
   </div>
+
 </div>
 
 <!--NOTIFICATION START-->

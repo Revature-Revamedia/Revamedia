@@ -23,139 +23,225 @@ $darkgrey: rgb(61,66,74);
     }
   }
 
-  .register{
-    width: 50%;
-    position: fixed;
-    top: 20%;
-    left: 25%;
-    background: white;
-    box-shadow: rgba(0, 0, 0, 0.227) 0px 3px 8px;
-    border-radius: 10px;
-    padding: 2rem;
+  .register-container{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
-    h2{
-      font-size: 2.3rem;
-      color: $darkgrey;
-      width: 100%;
-      text-align: center;
-    }
+    .register{
+      width: 55%;
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.227) 0px 3px 8px;
+      border-radius: 10px;
+      padding: 2rem;
 
-    form{
-      border-top: 1px solid $lightgrey;
-      border-bottom: 1px solid $lightgrey;
-      margin: .5rem 0;
-      width: 100%;
-      display: flex;
-      flex-direction:column;
-      padding: .5rem 0;
-
-      .form-row{
+      h2{
+        font-size: 2.3rem;
+        color: $darkgrey;
         width: 100%;
-        margin-bottom: .6rem;
+        text-align: center;
+      }
+
+      form{
+        border-top: 1px solid $lightgrey;
+        border-bottom: 1px solid $lightgrey;
+        margin: .5rem 0;
+        width: 100%;
         display: flex;
-        flex-direction: row;
-        align-items:flex-start;
-        justify-content: space-between;
-        min-height: max-content;
-        div{
-          width: 47%;
+        flex-direction:column;
+        padding: .5rem 0;
+
+        .form-row{
+          width: 100%;
+          margin-bottom: .6rem;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          align-items:flex-start;
+          justify-content: space-between;
+          min-height: max-content;
+          div{
+            width: 47%;
+            display: flex;
+            flex-direction: column;
 
-          label{
-            font-size: 1.1rem;
-            font-weight: bolder;
-            color: $darkgrey;
+            label{
+              font-size: 1.1rem;
+              font-weight: bolder;
+              color: $darkgrey;
+            }
+            input {
+              font-size: 1rem;
+              border-radius: 5px;
+              color: $darkgrey;
+              border: solid 1px $grey;
+              padding: .3rem;
+              width: 100%;
+              outline: none;
+              border: solid 1px $grey;
+
+              &:focus {
+                border: solid 1.4px $orange;
+              }
+            }
+            span{
+              margin-top: .2rem;
+              width: 100%;
+              text-align: right;
+              font-size: .9rem;
+              color: #3fb3e1;
+              cursor: pointer;
+              &:hover{
+                color: #eda144;
+              }
+              &.error{
+                display: inline;
+                text-align: left;
+                color:$lightRed;
+              }
+
+            }
+            .error{
+              color: red
+            }
           }
-          input {
-            font-size: 1rem;
+
+
+        }
+        .submit{
+          margin-bottom: .5rem;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          button{
+            width: 60%;
             border-radius: 5px;
+            border: none;
+            background: $orange;
             color: $darkgrey;
-            border: solid 1px $grey;
-            padding: .3rem;
-            width: 100%;
-            outline: none;
-            border: solid 1px $grey;
-
-            &:focus {
-              border: solid 1.4px $orange;
-            }
-          }
-          span{
-            margin-top: .2rem;
-            width: 100%;
-            text-align: right;
-            font-size: .9rem;
-            color: #3fb3e1;
+            padding: .3rem 0;
+            font-size: 1.2rem;
             cursor: pointer;
+            transition: all .3s ease-in-out;
             &:hover{
-              color: #eda144;
+              background: #eda144;
+              color: black;
             }
-            &.error{
-              display: inline;
-              text-align: left;
-              color:$lightRed;
+            &:disabled{
+              background: #e0d4c5;
+              pointer-events: none;
             }
-
-          }
-          .error{
-            color: red
           }
         }
-
-
       }
-      .submit{
-        margin-bottom: .5rem;
-        width: 100%;
+      .register-help{
         display: flex;
+        flex-direction:column;
         align-items: center;
-        justify-content: center;
-        button{
-          width: 60%;
-          border-radius: 5px;
-          border: none;
-          background: $orange;
-          color: $darkgrey;
-          padding: .3rem 0;
-          font-size: 1.2rem;
-          cursor: pointer;
-          transition: all .3s ease-in-out;
-          &:hover{
-            background: #eda144;
-            color: black;
-          }
-          &:disabled{
-            background: #e0d4c5;
-            pointer-events: none;
-          }
-        }
-      }
-    }
-    .register-help{
-      display: flex;
-      flex-direction:column;
-      align-items: center;
-      color: $darkgrey;
-      font-size: .9rem;
-      a{
-        text-decoration: none;
         color: $darkgrey;
         font-size: 1rem;
-        cursor: pointer;
-        &:hover{
-          text-decoration: underline;
+        a{
+          text-decoration: none;
+          color: $darkgrey;
+          font-size: 1rem;
+          cursor: pointer;
+          &:hover{
+            text-decoration: underline;
+          }
         }
       }
     }
+
   }
 }
 
 @media screen and (max-width: 800px) {
   .register-page{
-    .register{
-      left: 10%;
-      width: 80%;
+    .register-container{
+      width: 100%;
+      min-height: 90vh;
+      .register{
+        width: 90%;
+        form{
+          .form-row{
+            width: 100%;
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            div{
+              width: 100%;
+              margin-bottom: .5rem;
+              input {
+                font-size: 1rem;
+                border-radius: 3px;
+                color: $darkgrey;
+                border: solid 1px $grey;
+                padding: .3rem;
+                width: 100%;
+                outline: none;
+                border: solid 1px $grey;
+
+                &:focus {
+                  border: solid 1.4px $orange;
+                }
+              }
+              span{
+                margin-top: 0;
+                width: 100%;
+                text-align: left;
+                font-size: .9rem;
+                color: #3fb3e1;
+                cursor: pointer;
+                &:hover{
+                  color: #eda144;
+                }
+                &.error{
+                  display: inline;
+                  text-align: left;
+                  color:$lightRed;
+                }
+
+              }
+              .error{
+                color: red
+              }
+            }
+
+
+          }
+          .submit{
+            margin-bottom: .5rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            button{
+              width: 60%;
+              border-radius: 5px;
+              border: none;
+              background: $orange;
+              color: $darkgrey;
+              padding: .3rem 0;
+              font-size: 1.2rem;
+              cursor: pointer;
+              transition: all .3s ease-in-out;
+              &:hover{
+                background: #eda144;
+                color: black;
+              }
+              &:disabled{
+                background: #e0d4c5;
+                pointer-events: none;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

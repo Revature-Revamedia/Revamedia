@@ -24,88 +24,94 @@ $darkgrey: rgb(61, 66, 74);
     }
   }
 
-  .reset{
-    width: 30%;
-    position: fixed;
-    top: 30%;
-    left: 35%;
-    background: white;
-    box-shadow: rgba(0, 0, 0, 0.227) 0px 3px 8px;
-    border-radius: 10px;
-    padding: 2rem;
+  .reset-container {
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
-    h2 {
-      font-size: 2.3rem;
-      color: $darkgrey;
-      width: 100%;
-      text-align: center;
-    }
+    .reset{
+      width: 30%;
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.227) 0px 3px 8px;
+      border-radius: 10px;
+      padding: 2rem;
 
-    form{
-      margin: .5rem 0;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      padding: .5rem 0;
+      h2 {
+        font-size: 2.3rem;
+        color: $darkgrey;
+        width: 100%;
+        text-align: center;
+      }
 
-      .form-row {
+      form{
+        margin: .5rem 0;
         width: 100%;
         display: flex;
         flex-direction: column;
-        margin-bottom: .75rem;
+        padding: .5rem 0;
 
-        label {
-          font-size: 1rem;
-          color: $darkgrey;
-        }
-
-        input {
-          font-size: 1rem;
-          border-radius: 5px;
-          color: $darkgrey;
-          border: solid 1px $grey;
-          padding: .3rem;
+        .form-row {
           width: 100%;
-          outline: none;
-          border: solid 1px $grey;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: .75rem;
 
-          &:focus {
-            border: solid 1.2px $orange;
+          label {
+            font-size: 1rem;
+            color: $darkgrey;
+          }
+
+          input {
+            font-size: 1rem;
+            border-radius: 5px;
+            color: $darkgrey;
+            border: solid 1px $grey;
+            padding: .3rem;
+            width: 100%;
+            outline: none;
+            border: solid 1px $grey;
+
+            &:focus {
+              border: solid 1.2px $orange;
+            }
+          }
+
+          span {
+            margin-top: .3rem;
+            width: 100%;
+            text-align: right;
+            font-size: .9rem;
+            color: #3fb3e1;
+            cursor: pointer;
+            &:hover {
+              color: #eda144;
+            }
           }
         }
-
-        span {
-          margin-top: .3rem;
+        .submit {
           width: 100%;
-          text-align: right;
-          font-size: .9rem;
-          color: #3fb3e1;
-          cursor: pointer;
-          &:hover {
-            color: #eda144;
-          }
-        }
-      }
-      .submit {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-        button {
-          width: 40%;
-          border-radius: 5px;
-          border: none;
-          background: $orange;
-          color: $darkgrey;
-          padding: .3rem 0;
-          font-size: 1.2rem;
-          cursor: pointer;
-          transition: all .3s ease-in-out;
+          button {
+            width: 40%;
+            border-radius: 5px;
+            border: none;
+            background: $orange;
+            color: $darkgrey;
+            padding: .3rem 0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
 
-          &:hover {
-            background: #eda144;
-            color: black;
+            &:hover {
+              background: #eda144;
+              color: black;
+            }
           }
         }
       }
@@ -115,9 +121,12 @@ $darkgrey: rgb(61, 66, 74);
 
 @media screen and (max-width: 800px) {
   .reset-page {
-    .reset {
-      left: 10%;
-      width: 80%;
+    .reset-container{
+      width: 100%;
+      min-height: 50vh;
+      .reset {
+        width: 90%;
+      }
     }
   }
 }
