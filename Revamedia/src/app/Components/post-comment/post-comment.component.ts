@@ -16,20 +16,19 @@ import { CommentService } from '../../Shared/services/user-comments-service/comm
 export class PostCommentComponent implements OnInit {
   public user: any;
   users: any[] = [];
-  posts: any[] = [];
-  public post: any;
-  public comment: any;
+
   public editReply: any;
   public deleteReply: any;
   public editPost: any;
   public deletePost: any;
   public editYoutube: any;
   public deleteYoutube: any;
+  public viewComments=true;
 
   @Input() editComment: any;
   @Input() deleteComment:any;
   @Input() addComment: any;
-  @Input() p:any;
+  @Input() comment: any;
 
   public selectedGiphy = "";
   public selectGiphy(url: any) {
@@ -67,7 +66,6 @@ export class PostCommentComponent implements OnInit {
     public onDeleteComment(id: number) {
       this.CommentService.deleteComment(id).subscribe(
         (response: any) => {
-          this.getCurrentUserData();
           this.closeModal('delete', 'comment-modal');
           this.selectedGiphy = "";
           // this.userService.setCurrentUser(response.body.data);
@@ -79,31 +77,12 @@ export class PostCommentComponent implements OnInit {
     }
     // DELETE REPLY END
 
-    // GET CURRENT USER
-    public getCurrentUserData(){
-      this.userService.getUser().subscribe(
-        (response: any) => {
-          this.user = response;
-          let userPosts = [];
-          this.posts = response?.postsOwned;
-          let followingPost = [];
-          for(let f of response?.following) {
-            followingPost = f?.followedId?.postsOwned;
-          }
-          this.posts = this.posts.concat(followingPost);
-          this.posts = this.posts.flat();
-          this.posts.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());      },
-        (error: HttpErrorResponse) => {
-          console.log(error.message)
-        }
-      );
-    }
+
     public onEditComment(commentForm: NgForm): void {
       console.log("fati")
 
       this.CommentService.updateComment(commentForm.value).subscribe(
         (response: any) => {
-          this.getCurrentUserData();
           this.closeModal('edit', 'comment-modal');
           this.selectedGiphy = "";
           // this.userService.setCurrentUser(response.body.data);
@@ -136,19 +115,22 @@ export class PostCommentComponent implements OnInit {
         this.deleteYoutube = object;
       }
       if (modalType === "add") {
-        this.post = object;
+       // this.post = object;
       }
     }
 
 
   // hide Comments
-  public viewComments = false;
-  public toggleHideComments(id:any): void {
-    this.viewComments = !this.viewComments;
-  }
-  public toggleComments():void{
-    this.addComment = !this.addComment;
-  }
+  // public viewComments = false;
+  // public toggleHideComments(id:any): void {
+  //   this.viewComments = !this.viewComments;
+  // }
+  // public toggleComments():void{
+  //   this.addComment = !this.addComment;
+  // }
 
+  public goToProfile(userId: any){
+    this.router.navigate([`profile/${userId}`]);
+  }
 
 }

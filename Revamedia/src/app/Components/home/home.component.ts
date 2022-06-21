@@ -26,8 +26,7 @@ export class HomeComponent implements OnInit {
 
   public user: any;
   users: any[] = [];
-  posts: any[] = [];
-  public post: any;
+  public posts: any[] = [];
   public comment: any;
 
   // Variables Used In Home Component
@@ -158,7 +157,8 @@ export class HomeComponent implements OnInit {
       this.deleteYoutube = object;
     }
     if (modalType === "add") {
-      this.post = object;
+      console.log("object" , object)
+     // this.post = object;
     }
   }
 

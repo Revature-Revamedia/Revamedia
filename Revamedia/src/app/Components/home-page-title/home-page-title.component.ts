@@ -34,7 +34,7 @@ export class HomePageTitleComponent implements OnInit {
   { }
 
   ngOnInit(): void {
-    console.log("inside title" , this.user)
+
   }
 
 

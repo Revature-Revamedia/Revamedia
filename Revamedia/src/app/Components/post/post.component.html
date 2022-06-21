@@ -35,6 +35,14 @@
       </div>
     </div>
   </div>
+  <div class="post-comments-section" *ngIf="post?.comments.length > 0 && viewComments == true" id="commentSection">
+    <h5>Comments</h5>
+    <div class="comment" *ngFor="let comment of post?.comments">
+      <app-post-comment [comment]="comment"></app-post-comment>
+    </div>
+  </div>
+
+
 </div>
 
- <app-post-comment></app-post-comment>
+
