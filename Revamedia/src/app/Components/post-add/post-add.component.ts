@@ -1,7 +1,8 @@
 import { UserPostsService } from './../../Shared/services/user-posts-service/user-posts.service';
 import { NgForm } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Output } from '@angular/core';
 
 @Component({
   selector: 'app-post-add',
@@ -10,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class PostAddComponent implements OnInit {
   @Input() user:any;
+  @Output() closeNewPostForm = new EventEmitter();
 
   constructor(private userPostsService:UserPostsService) { }
 
@@ -17,23 +19,12 @@ export class PostAddComponent implements OnInit {
   }
 
 
-  public closeModal(modalType: string, post: any  ) {
-    // Screen
-    const screen = document.getElementById('screen');
-    screen?.classList.remove('openScreen');
-    // Form
-    const form = document.getElementById(`${modalType}-${post}`);
-    form?.classList.remove('openModal');
-  }
-
-
   onAddPost(postForm: NgForm): void {
-    console.log("fati")
     console.log(postForm.value);
     this.userPostsService.addPost(postForm.value).subscribe(
 
       (response: any) => {
-        this.closeModal('add', 'post-modal');
+        this.closeNewPostForm.emit();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -41,6 +32,11 @@ export class PostAddComponent implements OnInit {
     );
 
   }
+
+  closeForm() { // You can give any function name
+    this.closeNewPostForm.emit();
+}
+
 
 
 }

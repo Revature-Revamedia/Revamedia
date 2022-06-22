@@ -1,8 +1,9 @@
 <!-- ADD POST FORM START -->
+
 <div class="modal" id="add-post-modal">
   <div class="form-header">
     <h3>Create new post</h3>
-    <span (click)="closeModal('add', 'post-modal')">x</span>
+    <span (click)="closeForm()">x</span>
   </div>
   <form #addPostForm="ngForm" (ngSubmit)="onAddPost(addPostForm)" ngNativeValidate>
     <div class="form-data">

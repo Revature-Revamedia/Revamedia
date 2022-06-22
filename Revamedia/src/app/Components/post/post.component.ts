@@ -35,6 +35,10 @@ export class PostComponent implements OnInit {
     public deletePost: any;
     public editYoutube: any;
     public deleteYoutube: any;
+
+    public viewCommentsIsOn=false;
+    public addComment=true;
+
     @Input() post:any;
     @Input() user:any;
 
@@ -75,23 +79,10 @@ export class PostComponent implements OnInit {
     // }
 
 
-      // Add comment
-  public addComment = false;
-  public openAddComment() {
-    console.log("open add comment fati")
-    this.addComment = true;
-  }
-  public closeAddComment(): void {
-    this.addComment = false;
-  }
-
-
   onUpdatePost(postForm: NgForm): void {
     this.userPostsService.updatePost(postForm.value).subscribe(
       (response: any) => {
 
-        this.closeModal('edit', 'post-modal');
-        // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -102,8 +93,6 @@ export class PostComponent implements OnInit {
   onDeletePost(id: number) {
     this.userPostsService.deletePost(id).subscribe(
       (response: any) => {
-        //this.closeModal('delete', 'post-modal');
-        // this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -111,31 +100,7 @@ export class PostComponent implements OnInit {
     )
   }
 
-  public openModal(modalType: string, id: string, object: any) {
-    // Screen
-    const screen = document.getElementById('screen');
-    screen?.classList.add('openScreen');
-    // Form
-    const form = document.getElementById(`${modalType}-${id}`);
-    form?.classList.add('openModal');
-    if (modalType === "edit") {
-      //this.commentOptionsClicked = false;
-      this.editComment = object;
-      this.editReply = object;
-      this.editPost = object;
-      this.editYoutube = object;
-    }
-    if (modalType === "delete") {
-      //this.commentOptionsClicked = false;
-      this.deleteComment = object;
-      this.deleteReply = object;
-      this.deletePost = object;
-      this.deleteYoutube = object;
-    }
-    if (modalType === "add") {
-      this.post = object;
-    }
-  }
+
 
   public commentOptionsClicked = false;
   public toggleCommentsOptions() {
@@ -146,24 +111,6 @@ export class PostComponent implements OnInit {
     this.router.navigate([`profile/${userId}`]);
   }
 
-  public closeModal(modalType: string, post: any) {
-    // Screen
-    const screen = document.getElementById('screen');
-    screen?.classList.remove('openScreen');
-    // Form
-    const form = document.getElementById(`${modalType}-${post}`);
-    form?.classList.remove('openModal');
-  }
-
-    // hide Comments
-    public viewComments = true;
-    public toggleHideComments(id:any): void {
-      // this.viewComments = !this.viewComments;
-    }
-    public toggleComments():void{
-      this.addComment = !this.addComment;
-      console.log("fatima", this.addComment)
-    }
 
 
   likePost(currentPost: any): void {
@@ -181,6 +128,9 @@ export class PostComponent implements OnInit {
   }
 
 
+  public toggleComments(){
+    this.viewCommentsIsOn = ! this.viewCommentsIsOn
+  }
 
 
 }

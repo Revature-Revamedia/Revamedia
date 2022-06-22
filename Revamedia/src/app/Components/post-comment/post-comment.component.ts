@@ -48,6 +48,8 @@ export class PostCommentComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+
   public commentOptionsClicked = false;
   public toggleCommentsOptions() {
     this.commentOptionsClicked = !this.commentOptionsClicked;
@@ -68,7 +70,6 @@ export class PostCommentComponent implements OnInit {
         (response: any) => {
           this.closeModal('delete', 'comment-modal');
           this.selectedGiphy = "";
-          // this.userService.setCurrentUser(response.body.data);
         },
         (error: HttpErrorResponse) => {
           console.log(error.message)
@@ -79,13 +80,10 @@ export class PostCommentComponent implements OnInit {
 
 
     public onEditComment(commentForm: NgForm): void {
-      console.log("fati")
-
       this.CommentService.updateComment(commentForm.value).subscribe(
         (response: any) => {
           this.closeModal('edit', 'comment-modal');
           this.selectedGiphy = "";
-          // this.userService.setCurrentUser(response.body.data);
         },
         (error: HttpErrorResponse) => {
           console.log(error.message)
@@ -93,41 +91,6 @@ export class PostCommentComponent implements OnInit {
       )
     }
 
-    public openModal(modalType: string, id: string, object: any) {
-      // Screen
-      const screen = document.getElementById('screen');
-      screen?.classList.add('openScreen');
-      // Form
-      const form = document.getElementById(`${modalType}-${id}`);
-      form?.classList.add('openModal');
-      if (modalType === "edit") {
-        this.commentOptionsClicked = false;
-        this.editComment = object;
-        this.editReply = object;
-        this.editPost = object;
-        this.editYoutube = object;
-      }
-      if (modalType === "delete") {
-        this.commentOptionsClicked = false;
-        this.deleteComment = object;
-        this.deleteReply = object;
-        this.deletePost = object;
-        this.deleteYoutube = object;
-      }
-      if (modalType === "add") {
-       // this.post = object;
-      }
-    }
-
-
-  // hide Comments
-  // public viewComments = false;
-  // public toggleHideComments(id:any): void {
-  //   this.viewComments = !this.viewComments;
-  // }
-  // public toggleComments():void{
-  //   this.addComment = !this.addComment;
-  // }
 
   public goToProfile(userId: any){
     this.router.navigate([`profile/${userId}`]);

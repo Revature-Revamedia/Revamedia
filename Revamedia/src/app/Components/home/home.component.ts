@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 //icons
 import { faHeart, faBookmark, faComment, faShareFromSquare, faFaceGrinStars, faFaceGrinTongueSquint, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   users: any[] = [];
   public posts: any[] = [];
   public comment: any;
+  @Input() public addPostIsOn:boolean = false;
 
   // Variables Used In Home Component
   public totalLikes: number = 0;
@@ -135,41 +136,7 @@ export class HomeComponent implements OnInit {
   public deletePost: any;
   public editYoutube: any;
   public deleteYoutube: any;
-  public openModal(modalType: string, id: string, object: any) {
-    // Screen
-    const screen = document.getElementById('screen');
-    screen?.classList.add('openScreen');
-    // Form
-    const form = document.getElementById(`${modalType}-${id}`);
-    form?.classList.add('openModal');
-    if (modalType === "edit") {
-      this.commentOptionsClicked = false;
-      this.editComment = object;
-      this.editReply = object;
-      this.editPost = object;
-      this.editYoutube = object;
-    }
-    if (modalType === "delete") {
-      this.commentOptionsClicked = false;
-      this.deleteComment = object;
-      this.deleteReply = object;
-      this.deletePost = object;
-      this.deleteYoutube = object;
-    }
-    if (modalType === "add") {
-      console.log("object" , object)
-     // this.post = object;
-    }
-  }
 
-  public closeModal(modalType: string, post: any) {
-    // Screen
-    const screen = document.getElementById('screen');
-    screen?.classList.remove('openScreen');
-    // Form
-    const form = document.getElementById(`${modalType}-${post}`);
-    form?.classList.remove('openModal');
-  }
 
 
 
@@ -178,6 +145,14 @@ export class HomeComponent implements OnInit {
   }
 
 
+  public openNewPostForm(){
+    this.addPostIsOn = true;
+    console.log("tina",this.addPostIsOn)
+  }
+
+  closeNewPostForm() {
+    this.addPostIsOn = false;
+}
 
 
 

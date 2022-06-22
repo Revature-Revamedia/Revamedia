@@ -34,6 +34,7 @@ import { NoPostComponent } from './Components/no-post/no-post.component';
 import { PostAddComponent } from './Components/post-add/post-add.component';
 import { PostEditComponent } from './post-edit/post-edit.component';
 import { PostDeleteComponent } from './post-delete/post-delete.component';
+import { PostCommentAddComponent } from './Components/post-comment-add/post-comment-add.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { PostDeleteComponent } from './post-delete/post-delete.component';
     PostAddComponent,
     PostEditComponent,
     PostDeleteComponent,
+    PostCommentAddComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,27 @@
+<div class="add-comment-header">
+  <h5>Add Comment</h5>
+  <!-- <button title="Close" (click)="closeAddComment()" id="closeModal">X</button> -->
+</div>
+<form #commentForm="ngForm" (ngSubmit)="onAddComment(commentForm)" id="add-comment-form">
+  <input type="text" name="post_id" ngModel="{{post.postId }}">
+  <input type="text" name="owner_id" ngModel="{{user.userId }}">
+  <textarea name="message" id="comment" rows="4" ngModel></textarea>
+  <button>Add Comment</button>
+  <div class="reactions">
+    <span>Reactions</span>
+    <div class="search">
+      <input type="text" id="giphy-search-comment" placeholder="Search GIPHY">
+      <span (click)="searchGiphyForReply('comment')">Search</span>
+    </div>
+    <span id="reaction-title">
+      <fa-icon [icon]="faFaceGrinTongueSquint"></fa-icon>
+      gifs
+    </span>
+    <div class="gifs">
+      <div class="gif" *ngFor="let gif of gifs">
+        <img (click)="selectGiphy(gif.images.downsized.url)" src="{{ gif.images.downsized.url }}" alt="{{ gif.title }}">
+      </div>
+      <input type="hidden" name="giphyUrl" ngModel="{{selectedGiphy}}">
+    </div>
+  </div>
+</form>

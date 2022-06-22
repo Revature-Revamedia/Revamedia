@@ -23,12 +23,10 @@ $darkgrey: rgb(61, 66, 74);
     .post-data {
       width: 55%;
       margin: 2rem 0;
-
-
   }
 
-  // main end
 }
+  // main end
 
 // media queries for homepage
 @media screen and (max-width: 800px) {
@@ -47,11 +45,5 @@ $darkgrey: rgb(61, 66, 74);
   }
 }
 
-// media queries for modals
-@media screen and (max-width: 800px) {
-  .openModal {
-    top: 5%;
-    left: 5%;
-  }
-}
+
 }

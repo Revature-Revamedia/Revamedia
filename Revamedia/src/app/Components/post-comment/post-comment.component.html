@@ -6,8 +6,8 @@
     <p (click)="goToProfile(comment?.ownerId?.userId)" title="View {{comment?.ownerId?.username}} Profile" >{{comment?.ownerId?.username}}</p>
   </div>
   <div class="comment-option" id="comment-option" *ngIf="comment?.ownerId?.userId == user?.userId">
-    <button (click)="openModal('edit', 'comment-modal', comment)" >Edit</button>
-    <button (click)="openModal('delete', 'comment-modal', comment)" >Delete</button>
+    <button  >Edit</button>
+    <button  >Delete</button>
   </div>
 </div>
 <div class="comment-content">

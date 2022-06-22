@@ -12,73 +12,82 @@ $darkgrey: rgb(61, 66, 74);
   background: white;
   box-shadow: rgba(0, 0, 0, 0.075) 0px 3px 8px;
 
-  // POST TITLE START
-  .post-title {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid $lightgrey;
-    padding: 1rem;
+        // POST TITLE START
+        .post-title {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid $lightgrey;
+          padding: 1rem;
 
-    .post-author {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+          .post-author {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
 
-      img {
-        cursor: pointer;
-        border-radius: 50%;
-        width: 1.5rem;
-        height: 1.5rem;
-        border: 1.5px solid $blue;
+            img {
+              cursor: pointer;
+              border-radius: 50%;
+              width: 1.5rem;
+              height: 1.5rem;
+              border: 1.5px solid $blue;
 
-        &:hover {
-          border: 1.5px solid $orange;
+              &:hover {
+                border: 1.5px solid $orange;
+              }
+            }
+
+            p {
+              cursor: pointer;
+              text-decoration: none;
+              color: $darkgrey;
+              margin-left: .5rem;
+              font-size: 1rem;
+              font-weight: 500;
+              &:hover{
+                text-decoration: underline;
+              }
+            }
+          }
+
+          .post-options {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            #editIcon{
+              color: $blue;
+              font-size: 1.2rem;
+              cursor: pointer;
+              &:hover{
+                color: #408eae;
+              }
+            }
+            #trashIcon{
+              cursor: pointer;
+              margin-left: 1rem;
+              color: $orange;
+              font-size: 1.2rem;
+              &:hover{
+                color: #cb8836;
+              }
+            }
+          }
         }
-      }
+        @media screen and (max-width: 800px) {
+          .post-title {
+            .post-options {
+              #icon {
+                font-size: 1.2rem;
+              }
 
-      p {
-        cursor: pointer;
-        text-decoration: none;
-        color: $darkgrey;
-        margin-left: .5rem;
-        font-size: 1rem;
-        font-weight: 500;
-
-        &:hover {
-          text-decoration: underline;
+              ul {
+                width: 20%;
+                transform: translate(40%, 24%);
+              }
+            }
+          }
         }
-      }
-    }
-
-    .post-options {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-end;
-
-      #editIcon {
-        color: $blue;
-        font-size: 1.2rem;
-        cursor: pointer;
-
-        &:hover {
-          color: #408eae;
-        }
-      }
-
-      #trashIcon {
-        cursor: pointer;
-        margin-left: 1rem;
-        color: $orange;
-        font-size: 1.2rem;
-
-        &:hover {
-          color: #cb8836;
-        }
-      }
-    }
-  }
 
   // POST BODY START
   .post-body {
@@ -189,6 +198,15 @@ $darkgrey: rgb(61, 66, 74);
       }
     }
 
+    .add-comment {
+      margin: .5rem 0;
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      box-shadow: rgba(0, 0, 0, 0.075) 0px 3px 8px;
+      padding: 1rem;
+
+    }
 
     .post-comments-section {
       margin-top: .5rem;
@@ -210,8 +228,14 @@ $darkgrey: rgb(61, 66, 74);
         padding-bottom: .5rem;
       }
     }
+
+
   }
 }
+
+
+
+
 
 
 
