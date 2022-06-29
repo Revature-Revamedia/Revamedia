@@ -103,15 +103,14 @@ export class PostComponent implements OnInit {
         this.deletePost = object;
         this.deleteYoutube = object;
       }
-      if (modalType === "add") {
-        this.post = object;
-      }
     }
 
 
   onUpdatePost(postForm: NgForm): void {
     this.userPostsService.updatePost(postForm.value).subscribe(
       (response: any) => {
+        this.closeModal('edit', 'post-modal');
+        //this.getCurrentUserData();
 
       },
       (error: HttpErrorResponse) => {

@@ -6,7 +6,7 @@
       <p (click)="goToProfile(post.ownerId.userId)">{{ post.ownerId.username }}</p>
     </div>
     <div class="post-options">
-      <fa-icon  id="editIcon" [icon]="faPenToSquare" ></fa-icon>
+      <fa-icon (click)="openModal('edit','post-modal', post)" id="editIcon" [icon]="faPenToSquare" ></fa-icon>
       <fa-icon (click)="openModal('delete', 'post-modal', post)"  id="trashIcon" [icon]="faTrashCan"></fa-icon>
     </div>
   </div>
@@ -62,3 +62,26 @@
     </div>
   </form>
 </div>
+
+<!-- Edit POST FORM START -->
+<div class="modal" id="edit-post-modal">
+  <div class="form-header">
+    <h3>Edit post</h3>
+    <span (click)="closeModal('edit', 'post-modal')">x</span>
+  </div>
+  <form #editPostForm="ngForm" (ngSubmit)="onUpdatePost(editPostForm)" ngNativeValidate>
+    <div class="form-data">
+      <h4>Edit Image or Video</h4>
+      <input type="hidden" name="postId" ngModel="{{ editPost?.postId }}">
+      <input type="url" ngModel="{{ editPost?.image }}" name="image" id="image" placeholder="ImageUrl or Youtube Link">
+    </div>
+    <div class="form-data">
+      <h4>Edit caption</h4>
+      <textarea name="message" placeholder="Write a caption..." ngModel="{{ editPost?.message }}" rows="6"></textarea>
+    </div>
+    <div class="post-submit">
+      <button>Update Post</button>
+    </div>
+  </form>
+</div>
+<!-- Edit POST FORM END -->
