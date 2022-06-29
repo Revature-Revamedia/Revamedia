@@ -78,6 +78,36 @@ export class PostComponent implements OnInit {
     //   )
     // }
 
+    public openModal(modalType: string, id: string, object: any) {
+         console.log("id",id)
+         console.log("modalType",modalType)
+
+      // Screen
+      const screen = document.getElementById('screen');
+      screen?.classList.add('openScreen');
+      // Form
+      const form = document.getElementById(`${modalType}-${id}`);
+
+      form?.classList.add('openModal');
+      if (modalType === "edit") {
+        this.commentOptionsClicked = false;
+        this.editComment = object;
+        this.editReply = object;
+        this.editPost = object;
+        this.editYoutube = object;
+      }
+      if (modalType === "delete") {
+        this.commentOptionsClicked = false;
+        this.deleteComment = object;
+        this.deleteReply = object;
+        this.deletePost = object;
+        this.deleteYoutube = object;
+      }
+      if (modalType === "add") {
+        this.post = object;
+      }
+    }
+
 
   onUpdatePost(postForm: NgForm): void {
     this.userPostsService.updatePost(postForm.value).subscribe(
@@ -93,6 +123,8 @@ export class PostComponent implements OnInit {
   onDeletePost(id: number) {
     this.userPostsService.deletePost(id).subscribe(
       (response: any) => {
+        this.closeModal('delete', 'post-modal');
+        //this.getCurrentUserData();
       },
       (error: HttpErrorResponse) => {
         console.log(error.message)
@@ -114,14 +146,12 @@ export class PostComponent implements OnInit {
 
 
   likePost(currentPost: any): void {
-    console.log("heart")
     let p = {
       userId: 0,
       postId: 0,
     }
     p.postId = currentPost.postId;
     p.userId = this.user.userId;
-    console.log("fati shab" ,this.user  )
 
     this.userService.userLikesPost(p);
     // this.getCurrentUserData();
@@ -130,6 +160,48 @@ export class PostComponent implements OnInit {
 
   public toggleComments(){
     this.viewCommentsIsOn = ! this.viewCommentsIsOn
+  }
+
+
+  public closeModal(modalType: string, post: any) {
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form = document.getElementById(`${modalType}-${post}`);
+    form?.classList.remove('openModal');
+  }
+
+
+  public closeAnyModal(){
+    // Screen
+    const screen = document.getElementById('screen');
+    screen?.classList.remove('openScreen');
+    // Form
+    const form1 = document.getElementById(`add-post-modal`);
+    form1?.classList.remove('openModal');
+    const form2 = document.getElementById(`edit-post-modal`);
+    form2?.classList.remove('openModal');
+    const form3 = document.getElementById(`delete-post-modal`);
+    form3?.classList.remove('openModal');
+    const form4 = document.getElementById(`add-comment-modal`);
+    form4?.classList.remove('openModal');
+    const form5 = document.getElementById(`edit-comment-modal`);
+    form5?.classList.remove('openModal');
+    const form6 = document.getElementById(`delete-comment-modal`);
+    form6?.classList.remove('openModal');
+    const form7 = document.getElementById(`add-reply-modal`);
+    form7?.classList.remove('openModal');
+    const form8 = document.getElementById(`edit-reply-modal`);
+    form8?.classList.remove('openModal');
+    const form9 = document.getElementById(`delete-reply-modal`);
+    form9?.classList.remove('openModal');
+    const form10 = document.getElementById(`add-youtube-modal`);
+    form10?.classList.remove('openModal');
+    const form11 = document.getElementById(`edit-youtube-modal`);
+    form11?.classList.remove('openModal');
+    const form12 = document.getElementById(`delete-youtube-modal`);
+    form12?.classList.remove('openModal');
   }
 
 

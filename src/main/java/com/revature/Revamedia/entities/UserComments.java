@@ -24,6 +24,7 @@ public class UserComments implements Serializable {
     private Integer commentId;
 
 
+
     @JsonIgnoreProperties({"email", "password", "firstName", "lastName", "dateCreated", "resetPasswordToken", "twoFactorAuth", "secretTwoFactorKey", "QRCodeUrl", "QRCodeImage", "followers", "following", "postsOwned", "likedPosts", "groupsJoined", "groupsOwned", "eventsJoined", "eventsOwned"})
     @ManyToOne()
     @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
@@ -64,6 +65,7 @@ public class UserComments implements Serializable {
         this.giphyUrl = giphyUrl;
     }
 
+
     public Integer getCommentId() {
         return commentId;
     }
@@ -72,9 +74,6 @@ public class UserComments implements Serializable {
         this.commentId = commentId;
     }
 
-    public User getOwnerId() {
-        return ownerId;
-    }
 
     public void setOwnerId(User ownerId) {
         this.ownerId = ownerId;
