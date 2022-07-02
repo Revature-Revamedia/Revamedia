@@ -16,6 +16,7 @@ export class PostCommentAddComponent implements OnInit {
 
   @Input() post: any;
   public user: any;
+  public addComment = false;
   public faFaceGrinTongueSquint = faFaceGrinTongueSquint; //icon
   constructor(private CommentService:CommentService , public gifService: GiphyService, private userService: UserService) { }
 
@@ -24,8 +25,6 @@ export class PostCommentAddComponent implements OnInit {
     console.log("fatima inside add comment", this.user);
     this.getGifs('funny');
   }
-
-  
 
 
     // GET CURRENT USER
@@ -44,15 +43,22 @@ export class PostCommentAddComponent implements OnInit {
 
     // Add Comment
     public onAddComment(commentForm: NgForm): void {
+      console.log("commentForm",commentForm.value)
       this.CommentService.addComment(commentForm.value).subscribe(
         (response: any) => {
+         // this.getCurrentUserData();
+          // this.getAllPost();
+          this.addComment = false;
+         // this.viewComments = true;
           this.selectedGiphy = "";
+          // this.userService.setCurrentUser(response.body);
         },
         (error: HttpErrorResponse) => {
           console.log(error.message)
         }
       )
     } // ADD COMMENT END
+
 
     public selectedGiphy = "";
     public selectGiphy(url: any) {
@@ -92,6 +98,9 @@ export class PostCommentAddComponent implements OnInit {
     if (query == "") {
       this.getGifs("happy");
     }
+  }
+  public closeAddComment(): void {
+    this.addComment = false;
   }
 
 }

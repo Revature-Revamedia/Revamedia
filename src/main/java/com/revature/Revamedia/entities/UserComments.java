@@ -138,4 +138,7 @@ public class UserComments implements Serializable {
                 ", dateCreated='" + dateCreated + '\'' +
                 '}';
     }
+    public User getOwnerId() {
+        return ownerId;
+    }
 }

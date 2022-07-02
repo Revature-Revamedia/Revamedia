@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   public posts: any[] = [];
   public comment: any;
   @Input() public addPostIsOn:boolean = false;
+  @Input() public addYoutubeIsOn:boolean = false;
 
   // Variables Used In Home Component
   public totalLikes: number = 0;
@@ -146,12 +147,20 @@ export class HomeComponent implements OnInit {
 
 
   public openNewPostForm(){
+    this.addYoutubeIsOn = false;
     this.addPostIsOn = true;
-    console.log("tina",this.addPostIsOn)
   }
 
   closeNewPostForm() {
     this.addPostIsOn = false;
+    this.addYoutubeIsOn = false;
+}
+
+
+public openNewYoutubeForm(){
+  this.addPostIsOn = false;
+  this.addYoutubeIsOn = true;
+
 }
 
 

@@ -20,7 +20,6 @@ export class PostAddComponent implements OnInit {
 
 
   onAddPost(postForm: NgForm): void {
-    console.log(postForm.value);
     this.userPostsService.addPost(postForm.value).subscribe(
 
       (response: any) => {

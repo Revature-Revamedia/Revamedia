@@ -36,7 +36,7 @@ export class SettingsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //this.getCurrentUserData();
+    this.getCurrentUserData();
     //this.isImageTemporarilyUploaded = false;
     //this.openingAnimation();
   }

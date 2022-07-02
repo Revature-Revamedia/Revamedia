@@ -122,4 +122,3 @@ public class CommentController {
         return new HttpResponseDto(200, "Comment successfully deleted.", user);
     }
 }
-

@@ -32,9 +32,10 @@ import { PostComponent } from './Components/post/post.component';
 import { HomePageTitleComponent } from './Components/home-page-title/home-page-title.component';
 import { NoPostComponent } from './Components/no-post/no-post.component';
 import { PostAddComponent } from './Components/post-add/post-add.component';
-import { PostEditComponent } from './post-edit/post-edit.component';
-import { PostDeleteComponent } from './post-delete/post-delete.component';
+import { PostEditComponent } from './Components/post-edit/post-edit.component';
+import { PostDeleteComponent } from './Components/post-delete/post-delete.component';
 import { PostCommentAddComponent } from './Components/post-comment-add/post-comment-add.component';
+import { YoutubeAddComponent } from './Components/youtube-add/youtube-add.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { PostCommentAddComponent } from './Components/post-comment-add/post-comm
     PostEditComponent,
     PostDeleteComponent,
     PostCommentAddComponent,
+    YoutubeAddComponent,
   ],
   imports: [
     BrowserModule,

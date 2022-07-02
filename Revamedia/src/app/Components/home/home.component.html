@@ -3,13 +3,16 @@
     <div class="main" id="main">
     <div class="buttons">
       <button (click)="openNewPostForm()">Add Post</button>
-      <button  id="share-youtube">Share Video</button>
+      <button  (click)="openNewYoutubeForm()"id="share-youtube">Share Video</button>
     </div>
     <div class="post-data">
       <app-post-add *ngIf="addPostIsOn" [user]="user"  (closeNewPostForm)='closeNewPostForm()'></app-post-add>
     </div>
+    <div class="post-data">
+      <app-youtube-add *ngIf="addYoutubeIsOn" [user]="user"  (closeNewPostForm)='closeNewPostForm()'></app-youtube-add>
+    </div>
     <div class="post-data" *ngFor="let post of posts">
-      <app-post [post]="post"  ></app-post>
+      <app-post [post]="post"></app-post>
     </div>
     <app-no-post [posts]="posts"></app-no-post>>
   </div>

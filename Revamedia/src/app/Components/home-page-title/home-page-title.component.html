@@ -11,13 +11,13 @@
   <div class="right-side">
     <form class="searchUser">
       <input type="search" #searchValue id="search-user" placeholder="Search users..." (keyup)="searchUser(searchValue.value)">
-      <!-- <div class="users-list" *ngIf="allUsers.length != 0">
+      <div class="users-list" *ngIf="allUsers.length != 0">
         <div *ngFor="let user of allUsers" class="userFound">
           <div class="user" (click)="goToProfile(user.userId)" title="View {user.username}}'s Profile">
             <p>{{user.firstName +" "+ user.lastName}}</p>
           </div>
         </div>
-      </div> -->
+      </div>
     </form>
   </div>
 </div>

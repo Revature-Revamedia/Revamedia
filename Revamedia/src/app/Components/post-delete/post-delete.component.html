@@ -1,0 +1,17 @@
+<!-- BLACKOUTSCREEN -->
+<div class="screen openScreen" id="screen" (click)="closeAnyModal()"></div>
+ <!--delete POST FORM START -->
+  <div class="modal openModal" id="delete-post-modal">
+   <div class="form-header">
+     <h3>Delete post</h3>
+     <span (click)="closeForm()">x</span>
+   </div>
+   <form (ngSubmit)="onDeletePost()">
+     <h2>Are you sure you want to delete this post?</h2>
+     <span style="font-size: .9rem;">{{ post.message }}</span>
+     <img style="width:8rem;height: 8rem; object-fit:cover;" *ngIf="post.image !== ''" src="{{post.image}}" alt="Image">
+     <div class="post-submit">
+       <button id="deleteBtn">Delete Post</button>
+     </div>
+   </form>
+ </div>

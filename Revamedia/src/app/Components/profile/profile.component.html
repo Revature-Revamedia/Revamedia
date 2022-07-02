@@ -1,6 +1,6 @@
 <div class="profile-page" id="profile-page">
   <!-- Page title Start -->
-  <!-- <div class="page-title" id="page-title">
+  <div class="page-title" id="page-title">
     <h3>Revamedia</h3>
     <div class="page-subTitle">
       <div class="user">
@@ -8,11 +8,11 @@
         <span><p>{{ user?.username }}</p>'s Profile</span>
       </div>
     </div>
-  </div> -->
+  </div>
   <!-- Page title End -->
 
   <!-- PROFILE START -->
-  <!-- <div class="profile" id="profile">
+  <div class="profile" id="profile">
     <div class="profile-header" id="setBackgroundColor">
       <div class="left-card">
         <img src="{{user?.profilePicture}}" alt="{{ user?.username }}">
@@ -50,12 +50,12 @@
           </div>
           <a *ngIf="post?.image === null" href="{{post?.youtubeLink}}" target="_blank">{{ post?.youtubeLink }}</a>
 
-        </div> -->
-        <!-- <span id="profile-post-message" *ngIf="post?.image !== null">{{ post?.message }}</span> -->
-      <!-- </div>
-    </div> -->
+        </div>
+        <span id="profile-post-message" *ngIf="post?.image !== null">{{ post?.message }}</span>
+      </div>
+    </div>
 
-    <!-- <div class="shared-youtube-links-container">
+    <div class="shared-youtube-links-container">
       <div class="youtube-post-wrapper" *ngFor="let post of posts">
         <div class="youtube-post" *ngIf="post?.image === null" id="post-body">
           <div class="youtube-link">
@@ -67,25 +67,25 @@
           <p id="post-message" *ngIf="post?.image === null"><span>{{ user?.username }}</span>{{ post?.message }}</p>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- NO POST AVAILABLE START-->
-    <!-- <div class="noPost" *ngIf="posts.length == 0">
+    <div class="noPost" *ngIf="posts.length == 0">
       <h1>No Post</h1>
       <p>Seems like {{ user?.username }} doesn't have any posts.</p>
-    </div> -->
+    </div>
     <!-- NO POST AVAILABLE END-->
-  <!-- </div> -->
+  </div>
   <!-- PROFILE END -->
 </div>
 
 <!-- BLACKOUTSCREEN START-->
-<!-- <div class="screen" id="screen" (click)="closeAnyModal()"></div> -->
+<div class="screen" id="screen" (click)="closeAnyModal()"></div>
 <!-- BLACKOUTSCREEN END-->
 
 <!-- FOLLOWERS MODALS START-->
 <!-- <div class="modal" id="followers-modal">
-  <div class="modal-header">
+   <div class="modal-header">
     <h3>Followers</h3>
     <span (click)="closeModal('followers')">x</span>
   </div>
@@ -101,11 +101,11 @@
       <h4>0 Followers</h4>
     </div>
   </div>
-</div> -->
+</div>
 <!-- FOLLOWERS MODALS END-->
 
 <!-- FOLLOWING MODALS START-->
-<!-- <div class="modal" id="following-modal">
+<div class="modal" id="following-modal">
   <div class="modal-header">
     <h3>Following</h3>
     <span (click)="closeModal('following')">x</span>
@@ -122,6 +122,6 @@
       <h4>0 Following</h4>
     </div>
   </div>
-</div> -->
+</div>
 <!-- FOLLOWING MODALS END-->
 
